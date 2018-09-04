@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ActivityHome">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_background_home" />
+
+    <View
+        android:id="@+id/view_center"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <ImageView
+        android:id="@+id/btn_lambaitap"
+        android:layout_width="@dimen/dp250"
+        android:layout_height="@dimen/dp45"
+        android:layout_above="@+id/btn_ketquahoctap"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp20"
+        android:src="@drawable/img_btn_home1" />
+
+    <ImageView
+        android:id="@+id/btn_ketquahoctap"
+        android:layout_width="@dimen/dp250"
+        android:layout_height="@dimen/dp45"
+        android:layout_above="@id/view_center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp10"
+        android:src="@drawable/img_btn_home2" />
+
+    <ImageView
+        android:id="@+id/btn_vuichoi"
+        android:layout_width="@dimen/dp250"
+        android:layout_height="@dimen/dp45"
+        android:layout_below="@+id/view_center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp10"
+        android:src="@drawable/img_btn_home3" />
+
+    <ImageView
+        android:id="@+id/btn_bxh"
+        android:layout_width="@dimen/dp250"
+        android:layout_height="@dimen/dp45"
+        android:layout_below="@+id/btn_vuichoi"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp20"
+        android:src="@drawable/img_btn_home4" />
+
+    <ImageView
+        android:id="@+id/img_mute"
+
+        android:layout_width="@dimen/dp40"
+        android:layout_height="@dimen/dp40"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/img_mute" />
+</RelativeLayout>

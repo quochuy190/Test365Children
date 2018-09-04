@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#ff0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="black">#060606</color>
+    <color name="green">#90d437</color>
+    <color name="black_mo">#6c6767</color>
+    <color name="orange">#f4a609</color>
+    <color name="background_login">#f2f6f9</color>
+    <color name="red_test365">#c21b37</color>
+    <color name="gray">#bcbdbf</color>
+    <color name="app_bar">#4a365e</color>
+    <color name="hint_white">#6cf1efef</color>
+    <color name="btn_back">#727d9f</color>
+    <color name="click_item">#c8c2cf</color>
+    <color name="bottom_bar">#B3B4B4</color>
+    <color name="tab_layout">#eddfa5af</color>
+    <color name="background_item_children">#8adddadf</color>
+    <color name="btn_danglam">#78a4e8</color>
+    <color name="txt_lable">#8c909d</color>
+    <color name="title_quahan">#ce2039</color>
+    <color name="title_chualam">#a88bc1</color>
+    <color name="title_danglam">#80a5d9</color>
+    <color name="title_dalam">#89d1cd</color>
+    <color name="txt_baitap_detail">#727d9f</color>
+    <color name="txt_bottom_cauhoi">#00727d9f</color>
+    <color name="color_background">#f2f2f2</color>
+    <color name="lable_lambai">#006fbc</color>
+    <color name="mau_tim">#7c007c</color>
+</resources>
