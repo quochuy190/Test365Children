@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
@@ -29,11 +33,13 @@ import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Config.Config;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 import neo.vn.test365children.Untils.TimeUtils;
 
 
@@ -60,8 +66,8 @@ public class FragmentNgheAudio extends BaseFragment implements MediaPlayer.OnPre
     TextView txtDuration;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
-    @BindView(R.id.txt_question)
-    TextView txt_question;
+    @BindView(R.id.txt_cauhoi)
+    LinearLayout ll_cauhoi;
     @BindView(R.id.recycler_dapan)
     RecyclerView recycle_dapan;
     List<DapAn> mLis;
@@ -71,6 +77,10 @@ public class FragmentNgheAudio extends BaseFragment implements MediaPlayer.OnPre
     private boolean isTraloi = false;
     private boolean isClickXemdiem = false;
     RecyclerView.LayoutManager mLayoutManager;
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.btn_nopbai)
+    ImageView btn_nopbai;
     public static FragmentNgheAudio newInstance(CauhoiDetail restaurant) {
         FragmentNgheAudio restaurantDetailFragment = new FragmentNgheAudio();
         Bundle args = new Bundle();
@@ -100,6 +110,24 @@ public class FragmentNgheAudio extends BaseFragment implements MediaPlayer.OnPre
     }
 
     private void initEvent() {
+        btn_nopbai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
+                        false, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
+                            }
+
+                            @Override
+                            public void onClickNoDialog() {
+
+                            }
+                        });
+
+            }
+        });
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,11 +226,54 @@ public class FragmentNgheAudio extends BaseFragment implements MediaPlayer.OnPre
          }
      };*/
     private void initData() {
+        btn_nopbai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
+                        false, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
+                            }
+
+                            @Override
+                            public void onClickNoDialog() {
+
+                            }
+                        });
+
+            }
+        });
         if (mCauhoi != null) {
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
             // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
-            txt_question.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": "+ mCauhoi.getsQUESTION()));
+          //  txt_question.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
+            if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
+                katex.hourglass.in.mathlib.MathView mathView = new katex.hourglass.in.mathlib.MathView(getContext());
+                mathView.setClickable(true);
+                mathView.setTextSize(17);
+                mathView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mathView.setDisplayText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
+                mathView.setViewBackgroundColor(getContext().getResources().getColor(R.color.bg_item_dapan));
+                ll_cauhoi.addView(mathView);
+            } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
+                ImageView txt_dapan = new ImageView(getContext());
+                int hight_image =  (int) getContext().getResources().getDimension(R.dimen.item_dapan);
+                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        hight_image));
+                Glide.with(getContext()).load(Config.URL_IMAGE+mCauhoi.getsQUESTION()).into(txt_dapan);
+                ll_cauhoi.addView(txt_dapan);
+            } else {
+                TextView txt_dapan = new TextView(getContext());
+                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                txt_dapan.setTextSize(17);
+                txt_dapan.setTextColor(getContext().getResources().getColor(R.color.black));
+                txt_dapan.setText(Html.fromHtml(mCauhoi.getsQUESTION()));
+                ll_cauhoi.addView(txt_dapan);
+            }
         }
+        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         try {
             mPlayer.reset();
             String url = Config.URL_VIDEO + mCauhoi.getsAudioPath();

@@ -31,8 +31,6 @@
         android:layout_above="@id/img_header2"
         android:layout_below="@id/img_header_1"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/margin_recycle"
-        android:layout_marginRight="@dimen/margin_recycle"
         android:padding="@dimen/dp5">
 
     </android.support.v7.widget.RecyclerView>
@@ -52,8 +50,6 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@id/img_header2"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/margin_recycle"
-        android:layout_marginRight="@dimen/margin_recycle"
         android:padding="@dimen/dp5">
 
     </android.support.v7.widget.RecyclerView>

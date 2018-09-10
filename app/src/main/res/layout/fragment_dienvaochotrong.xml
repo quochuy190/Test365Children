@@ -6,10 +6,11 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/background_lambai" />
+         />
 
     <LinearLayout
         android:id="@+id/ll_lable"
@@ -70,12 +71,7 @@
     <ImageView
         android:id="@+id/btn_xemdiem"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,12 +85,7 @@
         android:text="Xem điểm"
         android:id="@+id/txt_xemdiem"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -103,12 +94,7 @@
     <ImageView
         android:id="@+id/btn_nopbai"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_nopbai"
         app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"

@@ -7,10 +7,11 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/background_lambai" />
+   />
 
     <LinearLayout
         android:id="@+id/ll_lable"

@@ -25,6 +25,7 @@ import neo.vn.test365children.Adapter.AdapterDapanXemanh;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Config.Config;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
@@ -60,7 +61,10 @@ public class FragmentXemanhtraloi extends BaseFragment {
     @BindView(R.id.btn_xemdiem)
     ImageView btn_xemdiem;
     private boolean isTraloi = false;
-
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.btn_nopbai)
+    ImageView btn_nopbai;
     public static FragmentXemanhtraloi newInstance(CauhoiDetail restaurant) {
         FragmentXemanhtraloi restaurantDetailFragment = new FragmentXemanhtraloi();
         Bundle args = new Bundle();
@@ -88,6 +92,23 @@ public class FragmentXemanhtraloi extends BaseFragment {
     }
     private boolean isClickXemdiem = false;
     private void initEvent() {
+        btn_nopbai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
+                        false, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
+                            }
+
+                            @Override
+                            public void onClickNoDialog() {
+
+                            }
+                        });
+            }
+        });
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,6 +174,7 @@ public class FragmentXemanhtraloi extends BaseFragment {
 
 
     private void initData() {
+        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         if (mCauhoi != null && mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null) {
             txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
             txt_question.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));

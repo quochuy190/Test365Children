@@ -14,16 +14,20 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cauhoi implements Parcelable {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class Cauhoi extends RealmObject implements Parcelable {
     @SerializedName("ERROR")
     String sERROR;
     @SerializedName("MESSAGE")
     String sMESSAGE;
     @SerializedName("RESULT")
     String sRESULT;
-
     @SerializedName("INFO")
-    List<CauhoiDetail> lisInfo;
+    RealmList<CauhoiDetail> lisInfo;
+    @PrimaryKey
     @SerializedName("ID")
     String sID;
     @SerializedName("EXCERCISE_ID")
@@ -50,8 +54,6 @@ public class Cauhoi implements Parcelable {
     String sPATH_AUDIO;
     @SerializedName("UPDATETIME")
     String sUPDATETIME;
-
-
     String mOption;
 
     public Cauhoi(String sERROR, String sMESSAGE, String sRESULT, String mOption) {
@@ -64,7 +66,7 @@ public class Cauhoi implements Parcelable {
     public Cauhoi() {
     }
 
-    public Cauhoi(String sERROR, String sMESSAGE, String sRESULT, List<CauhoiDetail> lisInfo, String sID, String sEXCERCISE_ID, String sQUESTION_NUMBER, String sKIEU, String sHUONGDAN, String sTEXT, String sIMAGE_ID, String sAUDIO_ID, String sPATH_IMAGE, String sPATH_AUDIO, String sUPDATETIME, String mOption) {
+    public Cauhoi(String sERROR, String sMESSAGE, String sRESULT, RealmList<CauhoiDetail> lisInfo, String sID, String sEXCERCISE_ID, String sQUESTION_NUMBER, String sKIEU, String sHUONGDAN, String sTEXT, String sIMAGE_ID, String sAUDIO_ID, String sPATH_IMAGE, String sPATH_AUDIO, String sUPDATETIME, String mOption) {
         this.sERROR = sERROR;
         this.sMESSAGE = sMESSAGE;
         this.sRESULT = sRESULT;
@@ -87,7 +89,7 @@ public class Cauhoi implements Parcelable {
         sERROR = in.readString();
         sMESSAGE = in.readString();
         sRESULT = in.readString();
-        lisInfo = in.createTypedArrayList(CauhoiDetail.CREATOR);
+       // lisInfo = in.createTypedArrayList(CauhoiDetail.CREATOR);
         sID = in.readString();
         sEXCERCISE_ID = in.readString();
         sQUESTION_NUMBER = in.readString();
@@ -175,11 +177,11 @@ public class Cauhoi implements Parcelable {
         this.sRESULT = sRESULT;
     }
 
-    public List<CauhoiDetail> getLisInfo() {
+    public RealmList<CauhoiDetail> getLisInfo() {
         return lisInfo;
     }
 
-    public void setLisInfo(List<CauhoiDetail> lisInfo) {
+    public void setLisInfo(RealmList<CauhoiDetail> lisInfo) {
         this.lisInfo = lisInfo;
     }
 

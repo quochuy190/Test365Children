@@ -29,6 +29,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.R;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
@@ -219,7 +220,7 @@ public class BaseFragment extends Fragment {
     }
 
 
-   /* public void showDialogComfirm(String title, String message, boolean is_hide_cancel,
+    public void showDialogComfirm(String title, String message, boolean is_hide_cancel,
                                   final ClickDialog clickDialog){
         final Dialog dialog_yes = new Dialog(getContext());
         dialog_yes.setCancelable(false);
@@ -227,14 +228,12 @@ public class BaseFragment extends Fragment {
         dialog_yes.setContentView(R.layout.dialog_warning);
         dialog_yes.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView txt_title = (TextView) dialog_yes.findViewById(R.id.txt_warning_title);
-        ImageView img_warning = (ImageView) dialog_yes.findViewById(R.id.img_warning);
         TextView txt_message = (TextView) dialog_yes.findViewById(R.id.txt_warning_message);
         TextView btn_ok = (TextView) dialog_yes.findViewById(R.id.btn_warning_ok);
         TextView btn_cancel = (TextView) dialog_yes.findViewById(R.id.btn_warning_cancel);
         View view_warning = (View) dialog_yes.findViewById(R.id.view_warning);
         txt_title.setText(title);
         txt_message.setText(message);
-        img_warning.setVisibility(View.GONE);
         // txt_buysongs.setText(Html.fromHtml("Để hoàn tất đăng ký dịch vụ RingTunes, Quý khách vui lòng thực hiện thao tác soạn tin nhắn <font color='#060606'>\"Y2 gửi 9194\"</font> từ số điện thoại giá cước: 3.000Đ/7 ngày. Cảm ơn Quý khách!"));
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,7 +258,7 @@ public class BaseFragment extends Fragment {
         }
         dialog_yes.show();
 
-    }*/
+    }
 
     public void showDialogNotify(String title, String message) {
         final Dialog dialog_yes = new Dialog(getContext());

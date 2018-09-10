@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
@@ -26,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
@@ -95,6 +98,10 @@ public class FragmentXepTrung extends BaseFragment {
     private boolean isTraloi = false;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.btn_nopbai)
+    ImageView btn_nopbai;
     public static FragmentXepTrung newInstance(CauhoiDetail restaurant) {
         FragmentXepTrung restaurantDetailFragment = new FragmentXepTrung();
         Bundle args = new Bundle();
@@ -137,7 +144,7 @@ public class FragmentXepTrung extends BaseFragment {
 
     private void initData() {
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
-
+        Glide.with(this).load(R.drawable.bg_xep_trung).into(img_background);
         String[] egg1 = mCauhoi.getsEGG_1().split("::");
         String[] egg2 = mCauhoi.getsEGG_2().split("::");
         String[] egg3 = mCauhoi.getsEGG_3().split("::");
@@ -175,7 +182,23 @@ public class FragmentXepTrung extends BaseFragment {
     private boolean isClickXemdiem = false;
 
     private void initEvent() {
+        btn_nopbai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
+                        false, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
+                            }
 
+                            @Override
+                            public void onClickNoDialog() {
+
+                            }
+                        });
+            }
+        });
         rl_trung1.setOnTouchListener(onTouchListener());
         rl_trung2.setOnTouchListener(onTouchListener());
         rl_trung3.setOnTouchListener(onTouchListener());

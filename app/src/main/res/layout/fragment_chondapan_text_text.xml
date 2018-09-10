@@ -6,11 +6,10 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/background_lambai" />
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:id="@+id/ll_lable"
@@ -55,82 +54,71 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <ImageView
         android:id="@+id/btn_xemdiem"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
+
     <TextView
-        android:fontFamily="@font/font1"
-        android:gravity="center"
-        android:textSize="@dimen/text_13sp"
-        android:textColor="@color/white"
-        android:text="Xem điểm"
         android:id="@+id/txt_xemdiem"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
+
+        android:fontFamily="@font/font1"
+        android:gravity="center"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
+        android:text="Xem điểm"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_13sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
+
     <ImageView
         android:id="@+id/btn_nopbai"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
+
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_nopbai"
-        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_cauhoi"
-        android:gravity="center_vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
-        <TextView
+        <LinearLayout
             android:id="@+id/txt_cauhoi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="@dimen/dp5"
-            android:text="Câu 1: Chọn đán án đúng"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_content_cauhoi" />
+            android:orientation="vertical"
+            android:padding="@dimen/dp5">
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/txt_zoom_text"
-            android:tint="@color/blue"
-            android:src="@drawable/ic_zoom"
-            android:layout_margin="@dimen/dp5"
             android:layout_width="@dimen/dp40"
-            android:layout_height="@dimen/dp40" />
+            android:layout_height="@dimen/dp40"
+            android:layout_margin="@dimen/dp5"
+            android:src="@drawable/ic_zoom"
+            android:tint="@color/blue"
+            android:visibility="gone" />
     </LinearLayout>
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_dapan"
@@ -138,9 +126,7 @@
         android:layout_height="0dp"
         android:padding="@dimen/dp5"
         app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/img_background"
+        app:layout_constraintStart_toStartOf="@+id/img_background"
         app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi" />
-
-
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'realm-android'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -15,6 +15,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    realm {
+        syncEnabled = true;
     }
 }
 
@@ -48,5 +51,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
     //Eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
+    // Biểu thức toán học
+    implementation 'io.github.kexanie.library:MathView:0.0.6'
+    implementation 'in.hourglass.mathrender:katexmathview:1.0'
+    // realm in android
+
 }
 apply plugin: 'com.google.gms.google-services'

@@ -62,4 +62,15 @@
     <dimen name="text_time_flight">25dp</dimen>
     <dimen name="img_avata_airline_flight">60dp</dimen>
     <dimen name="margin_flight">5dp</dimen>
+
+    <!--xếp trứng margin-->
+    <dimen name="width_egg">160dp</dimen>
+    <dimen name="hight_egg">120dp</dimen>
+    <dimen name="margin_egg_2">170dp</dimen>
+    <dimen name="margin_egg_3">340dp</dimen>
+    <dimen name="margin_egg_4">510dp</dimen>
+    <!--view chào mừng-->
+    <dimen name="hight_img_chaomung">90dp</dimen>
+    <!--giải cứu công chúa-->
+    <dimen name="item_congchua">80dp</dimen>
 </resources>

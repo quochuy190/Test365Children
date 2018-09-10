@@ -15,13 +15,17 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CauhoiDetail implements Parcelable, Serializable {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class CauhoiDetail extends RealmObject implements Parcelable, Serializable {
     @SerializedName("ERROR")
     String sERROR;
     @SerializedName("MESSAGE")
     String sMESSAGE;
     @SerializedName("RESULT")
     String sRESULT;
+    @PrimaryKey
     @SerializedName("ID")
     String sID;
     @SerializedName("PART_ID")
@@ -80,6 +84,7 @@ public class CauhoiDetail implements Parcelable, Serializable {
     boolean mRight;
     boolean isAnserTrue;
     boolean isDalam;
+
     public CauhoiDetail(String sERROR, String sMESSAGE, String sRESULT) {
         this.sERROR = sERROR;
         this.sMESSAGE = sMESSAGE;

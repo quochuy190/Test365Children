@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import neo.vn.test365children.Models.Cauhoi;
 
 public class App extends Application {
@@ -22,7 +24,22 @@ public class App extends Application {
         sInstance = this;
         mGSon = new Gson();
         mLisCauhoi = new ArrayList<>();
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("test365.realm")
+               // .encryptionKey(getKey())
+                .schemaVersion(42)
+                .deleteRealmIfMigrationNeeded()
+                //.modules(new MySchemaModule())
+               // .migration(new MyMigration())
+                .build();
 
+      /*  RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
+                .name(Realm.DEFAULT_REALM_NAME)
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();*/
+        Realm.setDefaultConfiguration(config);
     }
 
     public Gson getGSon() {

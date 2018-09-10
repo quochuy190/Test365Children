@@ -47,6 +47,11 @@ public class ActivityCauhoiCongchua extends BaseActivity {
         initEvent();
     }
 
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+    }
+
     boolean isTrue = false;
     private String sDapan = "";
 

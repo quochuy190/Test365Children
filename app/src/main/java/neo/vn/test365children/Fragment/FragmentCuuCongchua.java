@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
@@ -25,6 +27,7 @@ import neo.vn.test365children.Adapter.AdapterCongchua;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Config.Constants;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.CauhoiDetail;
@@ -54,7 +57,10 @@ public class FragmentCuuCongchua extends BaseFragment {
     ImageView img_done;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
-
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.btn_nopbai)
+    ImageView btn_nopbai;
     public static FragmentCuuCongchua newInstance(CauhoiDetail restaurant) {
         FragmentCuuCongchua restaurantDetailFragment = new FragmentCuuCongchua();
         Bundle args = new Bundle();
@@ -90,7 +96,26 @@ public class FragmentCuuCongchua extends BaseFragment {
     }
 
     private void initData() {
+        btn_nopbai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
+                        false, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
+                            }
+
+                            @Override
+                            public void onClickNoDialog() {
+
+                            }
+                        });
+
+            }
+        });
         txt_lable.setText("Bài: " + mCauhoi.getsHUONGDAN());
+        Glide.with(this).load(R.drawable.bg_cuu_cong_chua).into(img_background);
         // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
         //txtCauhoi.setText(mCauhoi.getsQUESTION());
         iStart.add(2);

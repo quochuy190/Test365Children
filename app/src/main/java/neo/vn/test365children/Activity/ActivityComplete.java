@@ -1,18 +1,32 @@
 package neo.vn.test365children.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import io.realm.Realm;
+import io.realm.RealmList;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.CauhoiDetail;
+import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.R;
+import neo.vn.test365children.RealmController.RealmController;
 
 public class ActivityComplete extends BaseActivity {
+    private static final String TAG = "ActivityComplete";
     @BindView(R.id.txt_pointlambai)
     TextView txt_pointlambai;
+    ExerciseAnswer objExer;
+    Realm mRealm;
+    @BindView(R.id.btn_guidiem)
+    Button btn_guidiem;
     @Override
     public int setContentViewId() {
         return R.layout.activity_comple_baitap;
@@ -21,10 +35,30 @@ public class ActivityComplete extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRealm = RealmController.getInstance().getRealm();
         initData();
+        initEvent();
     }
+
+    private void initEvent() {
+        btn_guidiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK, new Intent());
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+    }
+
     private float fPoint = 0;
+    private RealmList<Cauhoi> mRealmList = new RealmList<>();
     private void initData() {
+        objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);
 
         for (int j = 0; j < App.mLisCauhoi.size(); j++) {
             Cauhoi obj = App.mLisCauhoi.get(j);
@@ -37,6 +71,21 @@ public class ActivityComplete extends BaseActivity {
                 }
             }
         }
-        txt_pointlambai.setText("Điểm con đạt được: "+fPoint);
+
+        objExer.setsPoint(""+fPoint);
+        mRealmList.addAll(App.mLisCauhoi);
+        objExer.setmLisCauhoi(mRealmList);
+        txt_pointlambai.setText("Điểm con đạt được: "+fPoint + "điểm");
+        mRealm.beginTransaction();
+        mRealm.copyToRealmOrUpdate(objExer);
+        mRealm.commitTransaction();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setResult(RESULT_OK, new Intent());
+        App.mLisCauhoi.clear();
+        Log.i(TAG, "onDestroy: ");
     }
 }

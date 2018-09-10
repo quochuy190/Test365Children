@@ -16,6 +16,12 @@ public interface ImpBaitap {
         void get_api_get_excercise_needed(String sUserMe, String sUserCon, String sDay);
 
         void get_api_get_excercise_expired(String sUserMe, String sUserCon);
+
+        void get_api_start_taken(String sUserMe, String sUserCon, String sId_baitap, String time_lambai, String thoiluonglambai);
+
+        void get_api_submit_execercise(String sUserMe, String sUserCon, String sId_baitap,
+                                       String time_giaobai, String time_bdlambai, String time_ktlambai, String tong_time_lambai,
+                                       String sKieunop, String sDiem, String sDanhsachcau);
     }
 
     interface View {
@@ -28,5 +34,9 @@ public interface ImpBaitap {
         void show_get_excercise_needed(List<Baitap_Tuan> mLis);
 
         void show_get_excercise_expired(List<Baitap_Tuan> mLis);
+
+        void show_start_taken(List<ErrorApi> mLis);
+
+        void show_submit_execercise(List<ErrorApi> mLis);
     }
 }

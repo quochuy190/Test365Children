@@ -2,21 +2,27 @@ package neo.vn.test365children.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import katex.hourglass.in.mathlib.MathView;
+import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -52,32 +58,58 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
-        if (obj.getsImage() != null && obj.getsImage().length() > 0) {
+/*        if (obj.getsImage() != null && obj.getsImage().length() > 0) {
             holder.img_dapan.setVisibility(View.VISIBLE);
             holder.txt_dapan.setVisibility(View.GONE);
         } else {
             holder.img_dapan.setVisibility(View.GONE);
             holder.txt_dapan.setVisibility(View.VISIBLE);
 
-            holder.txt_dapan.setText(Html.fromHtml(obj.getsContent(), Html.FROM_HTML_MODE_COMPACT));
+            holder.txt_dapan.setText(StringUtil.StringFraction_Dapan(obj.getsContent()));
+        }*/
+        holder.ll_dapan_all.removeAllViews();
+        if (obj.getsContent().indexOf("//") > 0) {
+            MathView mathView = new MathView(context);
+            mathView.setClickable(true);
+            mathView.setTextSize(16);
+            mathView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
+            mathView.setDisplayText(StringUtil.StringFraction(obj.getsContent()));
+            mathView.setViewBackgroundColor(context.getResources().getColor(R.color.bg_item_dapan));
+            holder.ll_dapan_all.addView(mathView);
+        } else if (obj.getsContent().indexOf("image") > 0) {
+            ImageView txt_dapan = new ImageView(context);
+            int hight_image =  (int) context.getResources().getDimension(R.dimen.item_dapan);
+            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    hight_image));
+            Glide.with(context).load(Config.URL_IMAGE+obj.getsContent()).into(txt_dapan);
+            holder.ll_dapan_all.addView(txt_dapan);
+        } else {
+            TextView txt_dapan = new TextView(context);
+            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            txt_dapan.setTextSize(16);
+            txt_dapan.setTextColor(context.getResources().getColor(R.color.black));
+            txt_dapan.setText(obj.getsContent());
+            holder.ll_dapan_all.addView(txt_dapan);
         }
+
 
         if (obj.isClick()) {
             if (obj.getsName().equals(obj.getsDapan_Traloi())) {
                 holder.checkbox.setImageResource(R.drawable.ic_checked);
-                holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.red));
+
             }
             if (obj.getsName().equals(obj.getsDapan_Dung())) {
                 holder.checkbox.setImageResource(R.drawable.ic_checked_blue);
-                holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.blue));
+
             }
         } else {
             if (obj.getsName().equals(obj.getsDapan_Traloi())) {
                 holder.checkbox.setImageResource(R.drawable.ic_checked_blue);
-                holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.blue));
-            }else {
+
+            } else {
                 holder.checkbox.setImageResource(R.drawable.ic_checker);
-                holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.black));
+
             }
         }
     }
@@ -89,8 +121,8 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
 
     public class TopicViewHoder extends RecyclerView.ViewHolder implements
             View.OnClickListener, View.OnLongClickListener {
-        @BindView(R.id.txt_dapan)
-        TextView txt_dapan;
+        @BindView(R.id.ll_dapan_all)
+        LinearLayout ll_dapan_all;
         @BindView(R.id.checkbox_dapan)
         ImageView checkbox;
         @BindView(R.id.img_dapan)

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-
+    android:layout_gravity="center_horizontal|center_vertical"
     android:layout_marginLeft="@dimen/dp20"
     android:layout_marginRight="@dimen/dp20"
     android:background="@drawable/spr_dialog_background"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <TextView

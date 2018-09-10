@@ -1,9 +1,9 @@
 package neo.vn.test365children.Fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
@@ -23,14 +26,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import katex.hourglass.in.mathlib.MathView;
 import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Config;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -47,11 +54,10 @@ import neo.vn.test365children.R;
 public class FragmentChondapanKieu1 extends BaseFragment {
     private static final String TAG = "FragmentCauhoi";
     private CauhoiDetail mCauhoi;
-
     @BindView(R.id.txt_lable)
     TextView txt_lable;
     @BindView(R.id.txt_cauhoi)
-    TextView txt_cauhoi;
+    LinearLayout ll_cauhoi;
     List<DapAn> mLis;
     AdapterDapan adapter;
     @BindView(R.id.recycle_dapan)
@@ -62,7 +68,10 @@ public class FragmentChondapanKieu1 extends BaseFragment {
     @BindView(R.id.btn_xemdiem)
     ImageView btn_xemdiem;
     private boolean isTraloi = false;
-
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.btn_nopbai)
+    ImageView btn_nopbai;
     public static FragmentChondapanKieu1 newInstance(CauhoiDetail restaurant) {
         FragmentChondapanKieu1 restaurantDetailFragment = new FragmentChondapanKieu1();
         Bundle args = new Bundle();
@@ -88,6 +97,23 @@ public class FragmentChondapanKieu1 extends BaseFragment {
     }
     private boolean isClickXemdiem = false;
     private void initEvent() {
+        btn_nopbai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
+                        false, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
+                            }
+
+                            @Override
+                            public void onClickNoDialog() {
+
+                            }
+                        });
+            }
+        });
         img_zoom.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
@@ -119,20 +145,38 @@ public class FragmentChondapanKieu1 extends BaseFragment {
             }
         });
     }
-
-    @SuppressLint("NewApi")
     private void initData() {
         if (mCauhoi.getsTextDebai() != null && mCauhoi.getsTextDebai().length() > 0) {
             img_zoom.setVisibility(View.VISIBLE);
         } else img_zoom.setVisibility(View.GONE);
-        //txtCauhoi.setText(mCauhoi.getsQUESTION());
-        // txt_current.setText("Bài: "+mCauhoi.getsNumberDe()+" - Câu hỏi: "+mCauhoi.getsSubNumberCau());
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
-        // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
-        txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": "
-                + mCauhoi.getsQUESTION(), Html.FROM_HTML_MODE_COMPACT));
-        //txt_debai_huongdan.setText(Html.fromHtml(mCauhoi.getsCauhoi_huongdan(), Html.FROM_HTML_MODE_COMPACT));
-        //   txt_debai_huongdan.setText(mCauhoi.getsCauhoi_huongdan());
+        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
+       // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
+        if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
+            MathView mathView = new MathView(getContext());
+            mathView.setClickable(true);
+            mathView.setTextSize(17);
+            mathView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+            mathView.setDisplayText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
+            mathView.setViewBackgroundColor(getContext().getResources().getColor(R.color.bg_item_dapan));
+            ll_cauhoi.addView(mathView);
+        } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
+            ImageView txt_dapan = new ImageView(getContext());
+            int hight_image =  (int) getContext().getResources().getDimension(R.dimen.item_dapan);
+            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    hight_image));
+            Glide.with(getContext()).load(Config.URL_IMAGE+mCauhoi.getsQUESTION()).into(txt_dapan);
+            ll_cauhoi.addView(txt_dapan);
+        } else {
+            TextView txt_dapan = new TextView(getContext());
+            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            txt_dapan.setTextSize(17);
+            txt_dapan.setTextColor(getContext().getResources().getColor(R.color.black));
+            txt_dapan.setText(Html.fromHtml(mCauhoi.getsQUESTION()));
+            ll_cauhoi.addView(txt_dapan);
+        }
+
         mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
         mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
         mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));
@@ -180,4 +224,5 @@ public class FragmentChondapanKieu1 extends BaseFragment {
             }
         });
     }
+
 }

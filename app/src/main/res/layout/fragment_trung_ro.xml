@@ -7,11 +7,11 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/img_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-        android:src="@drawable/bg_xep_trung"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView5">
+        app:layout_constraintTop_toTopOf="@+id/img_background">
 
         <ImageView
             android:layout_width="@dimen/margin_left_lambai"
@@ -43,7 +43,7 @@
             android:background="@drawable/spr_lable_lambai"
             android:fontFamily="@font/font1"
             android:padding="@dimen/dp5"
-            android:text="Câu 3: Bắt sâu"
+            android:text=""
             android:textColor="@color/lable_lambai"
             android:textSize="@dimen/text_16sp"
             android:textStyle="bold" />
@@ -82,7 +82,7 @@
         android:layout_height="0dp"
 
         app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
-        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="@+id/img_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_cauhoi">
 
@@ -93,20 +93,20 @@
             android:id="@+id/img_rotrung_1"
             android:layout_width="0dp"
             android:layout_height="@dimen/hight_egg"
-            android:padding="@dimen/dp10"
+            android:padding="@dimen/dp7"
             android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/img_rotrung_2" />
         <TextView
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_15sp"
             android:text="Rổ trứng 1"
             android:id="@+id/txt_rotrung_1"
             android:layout_width="0dp"
-            android:layout_height="@dimen/hight_egg"
-            android:padding="@dimen/dp10"
+            android:layout_height="wrap_content"
+
             android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -117,20 +117,20 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/hight_egg"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/dp10"
+            android:padding="@dimen/dp7"
             android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/img_rotrung_1"
             app:layout_constraintRight_toLeftOf="@id/img_rotrung_3" />
         <TextView
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_15sp"
             android:text="Rổ trứng 2"
             android:id="@+id/txt_rotrung_2"
             android:layout_width="0dp"
-            android:layout_height="@dimen/hight_egg"
-            android:padding="@dimen/dp10"
+            android:layout_height="wrap_content"
+
             android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/img_rotrung_1"
@@ -139,20 +139,20 @@
             android:id="@+id/img_rotrung_3"
             android:layout_width="0dp"
             android:layout_height="@dimen/hight_egg"
-            android:padding="@dimen/dp10"
+            android:padding="@dimen/dp7"
             android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/img_rotrung_2"
             app:layout_constraintRight_toLeftOf="@id/img_rotrung_4" />
         <TextView
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_15sp"
             android:text="Rổ trứng 3"
             android:id="@+id/txt_rotrung_3"
             android:layout_width="0dp"
-            android:layout_height="@dimen/hight_egg"
-            android:padding="@dimen/dp10"
+            android:layout_height="wrap_content"
+
             android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/img_rotrung_2"
@@ -163,20 +163,19 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/hight_egg"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/dp10"
+            android:padding="@dimen/dp7"
             android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/img_rotrung_3"
             app:layout_constraintRight_toRightOf="parent" />
         <TextView
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_15sp"
             android:text="Rổ trứng 4"
             android:id="@+id/txt_rotrung_4"
             android:layout_width="0dp"
-            android:layout_height="@dimen/hight_egg"
-            android:padding="@dimen/dp10"
+            android:layout_height="wrap_content"
             android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/img_rotrung_3"
@@ -192,7 +191,7 @@
                 android:id="@+id/img_trung1"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp15"
+                android:padding="@dimen/dp20"
                 android:src="@drawable/egg_yellow" />
 
             <TextView
@@ -218,7 +217,7 @@
                 android:id="@+id/img_trung2"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp15"
+                android:padding="@dimen/dp20"
                 android:src="@drawable/egg_pink" />
 
             <TextView
@@ -244,7 +243,7 @@
                 android:id="@+id/img_trung3"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp15"
+                android:padding="@dimen/dp20"
                 android:src="@drawable/egg_blue" />
 
             <TextView
@@ -270,7 +269,7 @@
                 android:id="@+id/img_trung4"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp15"
+                android:padding="@dimen/dp20"
                 android:src="@drawable/egg_red" />
 
             <TextView
@@ -291,12 +290,7 @@
     <ImageView
         android:id="@+id/btn_xemdiem"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -310,12 +304,7 @@
         android:text="Xem điểm"
         android:id="@+id/txt_xemdiem"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -324,12 +313,7 @@
     <ImageView
         android:id="@+id/btn_nopbai"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_nopbai"
         app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"

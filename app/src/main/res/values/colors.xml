@@ -31,4 +31,5 @@
     <color name="color_background">#f2f2f2</color>
     <color name="lable_lambai">#006fbc</color>
     <color name="mau_tim">#7c007c</color>
+    <color name="bg_item_dapan">#00f2f2f2</color>
 </resources>

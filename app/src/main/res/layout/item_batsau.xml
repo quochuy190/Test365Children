@@ -6,32 +6,34 @@
     android:orientation="vertical"
     android:padding="@dimen/dp3">
 
-    <TextView
-        android:id="@+id/txt_dapan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/spr_txt_batsau"
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
         android:gravity="center"
-        android:maxLines="3"
-        android:padding="@dimen/dp10"
-        android:text="3"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_17sp" />
+        android:id="@+id/ll_dapan_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp5">
+    </LinearLayout>
+
 
     <ImageView
+        android:src="@drawable/icon_la_cay"
         android:id="@+id/img_lasau"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/txt_dapan"
+        android:layout_below="@id/ll_dapan_all"
         android:padding="@dimen/dp5"
-        android:src="@drawable/icon_la_cay" />
+       />
 
     <ImageView
+        android:src="@drawable/icon_sau"
         android:id="@+id/img_consau"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/txt_dapan"
+        android:layout_below="@id/ll_dapan_all"
         android:padding="@dimen/dp5"
-        android:src="@drawable/icon_sau" />
+       />
 
 </RelativeLayout>

@@ -69,12 +69,6 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
     }
 
     private void initEvent() {
-     /*   relative_tiengviet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ActivityMenuBaitap.this, ActivityStartBaitap.class));
-            }
-        });*/
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,13 +92,6 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
         showDialogLoading();
         mPresenter.get_api_get_excercise_needed(sUserMe, sUserCon, get_current_time());
         mPresenter.get_api_get_excercise_expired(sUserMe, sUserCon);
-      /*  lisBaitap.add(new ObjBaitap("Tiếng việt", "Tiếng việt", "Tiếng việt"));
-        lisBaitap.add(new ObjBaitap("Tiếng việt", "Tiếng việt", "Tiếng việt"));
-        lisBaitap.add(new ObjBaitap("Tiếng việt", "Tiếng việt", "Tiếng việt"));
-*//*        lisBaitap.add(new ObjBaitap("Tiếng việt", "Tiếng việt", "Tiếng việt"));
-        lisBaitap.add(new ObjBaitap("Tiếng việt", "Tiếng việt", "Tiếng việt"));
-        lisBaitap.add(new ObjBaitap("Tiếng việt", "Tiếng việt", "Tiếng việt"));*//*
-        adapter.notifyDataSetChanged();*/
     }
 
     private void init_baitap_quahan() {
@@ -187,6 +174,7 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
     @Override
     public void show_get_excercise_needed(List<Baitap_Tuan> mLis) {
         hideDialogLoading();
+        lisBaitap.clear();
         if (mLis!=null&&mLis.get(0).getsERROR().equals("0000")){
             lisBaitap.addAll(mLis);
             adapter_baitaptuan.notifyDataSetChanged();
@@ -197,11 +185,24 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
     @Override
     public void show_get_excercise_expired(List<Baitap_Tuan> mLis) {
         hideDialogLoading();
+        lisBaitap_quanhan.clear();
         if (mLis!=null&&mLis.get(0).getsERROR().equals("0000")){
             lisBaitap_quanhan.addAll(mLis);
-            recycleBaitap.scrollToPosition(1);
+
             adapter.notifyDataSetChanged();
+            recycleBaitap.scrollToPosition(0);
 
         }
+    }
+
+    @Override
+    public void show_start_taken(List<ErrorApi> mLis) {
+        hideDialogLoading();
+    }
+
+    @Override
+    public void show_submit_execercise(List<ErrorApi> mLis) {
+        hideDialogLoading();
+
     }
 }

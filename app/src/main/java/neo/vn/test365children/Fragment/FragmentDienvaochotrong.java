@@ -1,21 +1,26 @@
 package neo.vn.test365children.Fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
+import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.CauhoiDetail;
+import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
 
 
@@ -34,7 +39,13 @@ public class FragmentDienvaochotrong extends BaseFragment {
     private static final String TAG = "FragmentCauhoi";
     private CauhoiDetail mCauhoi;
     @BindView(R.id.webview_dienchotrong)
-    WebView webView;
+    WebView browser;
+    @BindView(R.id.btn_xemdiem)
+    ImageView btn_xemdiem;
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.btn_nopbai)
+    ImageView btn_nopbai;
 
     public static FragmentDienvaochotrong newInstance(CauhoiDetail restaurant) {
         FragmentDienvaochotrong restaurantDetailFragment = new FragmentDienvaochotrong();
@@ -51,83 +62,63 @@ public class FragmentDienvaochotrong extends BaseFragment {
         mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
     }
 
+    String sHtml;
+
     @SuppressLint("JavascriptInterface")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dienvaochotrong, container, false);
         ButterKnife.bind(this, view);
-        //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
-        //     initData();
-        String s_new = replaceXML("<<", ">>", mCauhoi.getsQUESTION());
-        String s_Traloi = s_new.replaceAll("<<",
-                "<input class=\"form-control\" type=\"text\" size=\"2\" style=\"text-align:center;\">")
-                .replaceAll(">>", "</input>");
-        WebView webview = (WebView) view.findViewById(R.id.webview_dienchotrong);
-        webview.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(new MyJavaScriptInterface(new String()), "INTERFACE");
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url)
-            {
-                view.loadUrl("javascript:window.INTERFACE.processContent(document.getElementsByTagName('body')[0].innerText);");
-            }
-        });
-        webview.loadDataWithBaseURL("", s_Traloi, "text/html", "UTF-8", "");
-      /*  webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-            @Override
-            public void onPageStarted (WebView view, String url, Bitmap favicon){
-                String jsScript= "javascript:var functions_array = ['testNativeMethod'];";
-                jsScript+="var jsinterface = {};";
-                jsScript+="functions_array.map(function(id){";
-                jsScript+="jsinterface[id]= function() {";
-                jsScript+="try{return temp_obj[id].apply(temp_obj, arguments);}";
-                jsScript+="catch(e) { console.log('ERROR: ' + e + ', method ' + id);";
-                jsScript+="return false;}}})";
-                view.loadUrl(jsScript);
-            }
-        });*/
+        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
+        browser.setWebChromeClient(new WebChromeClient());
+        browser.getSettings().setJavaScriptEnabled(true);
+        browser.getSettings();
+        browser.setBackgroundColor(Color.TRANSPARENT);
+        sHtml = replaceXML("<<",
+                ">>", mCauhoi.getsQUESTION());
+        browser.loadDataWithBaseURL("", sHtml, "text/html", "UTF-8", "");
+
+        initEvent();
         return view;
     }
 
-    public class testClass {
-        public testClass() {
-        }
+    private void initEvent() {
+        btn_nopbai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
+                        false, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
+                            }
 
-        @JavascriptInterface
-        public String testNativeMethod() {
-            return "Java method called!!";
-        }
-    }
+                            @Override
+                            public void onClickNoDialog() {
 
-    class MyJavaScriptInterface {
-        private String contentView;
+                            }
+                        });
 
-        public MyJavaScriptInterface(String sString) {
-            contentView = sString;
-        }
-        @SuppressWarnings("unused")
-        public void processContent(String aContent) {
-            final String content = aContent;
-            App.mLisCauhoi.get(0).getLisInfo().get(0).setsANSWER_CHILD(aContent);
-          /*  contentView.post(new Runnable()
-            {
-                public void run()
-                {
-                    contentView.setText(content);
-                }
-            });*/
-        }
+            }
+        });
+        btn_xemdiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sHtml = replaceXML("<<",
+                        ">>", mCauhoi.getsQUESTION()) + "<br /><br> Đáp án <br /><br>" + mCauhoi.getsQUESTION().replaceAll("<<", "<u><b><font color='blue'>")
+                        .replaceAll(">>", "</font></b></u>");
+                browser.clearFormData();
+                browser.loadDataWithBaseURL("", sHtml, "text/html", "UTF-8", "");
+            }
+        });
     }
 
     public String replaceStringBuffer(int first, int last, String st) {
         String s = "";
         StringBuffer sbf = new StringBuffer(st);
-        s = String.valueOf(sbf.replace(first, last, "<<>"));
+        s = String.valueOf(sbf.replace(first, last, "<input class=\"form-control\" pading=\"5\" type=\"text\" size=\"2\" style=\"text-align:center;\"></input>"));
+        // s = String.valueOf(sbf.replace(first, last, "<img src=\"http://content1.test365.vn//upload//image/toan//tamgiacvuong.PNG\" style=\"height:10%; width:10%;\">"));
+
         return s;
     }
 

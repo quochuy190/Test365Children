@@ -44,7 +44,7 @@
     <dimen name="margin_item">10dp</dimen>
     <!--activity làm bài tập-->
     <dimen name="text_content_cauhoi">17sp</dimen>
-    <dimen name="image_next">45dp</dimen>
+    <dimen name="image_next">35dp</dimen>
     <dimen name="margin_top_lambai">10dp</dimen>
     <dimen name="margin_left_lambai">40dp</dimen>
     <!--text size-->
@@ -69,13 +69,14 @@
     <dimen name="img_avata_airline_flight">60dp</dimen>
     <dimen name="margin_flight">5dp</dimen>
     <!--xếp trứng margin-->
-    <dimen name="width_egg">150dp</dimen>
-    <dimen name="hight_egg">110dp</dimen>
-    <dimen name="margin_egg_2">165dp</dimen>
-    <dimen name="margin_egg_3">330dp</dimen>
-    <dimen name="margin_egg_4">490dp</dimen>
+    <dimen name="width_egg">160dp</dimen>
+    <dimen name="hight_egg">120dp</dimen>
+    <dimen name="margin_egg_2">170dp</dimen>
+    <dimen name="margin_egg_3">340dp</dimen>
+    <dimen name="margin_egg_4">510dp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
     <!--giải cứu công chúa-->
     <dimen name="item_congchua">80dp</dimen>
+    <dimen name="item_dapan">200dp</dimen>
 </resources>

@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
@@ -27,6 +29,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterSapxep;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.OnStartDragListener;
 import neo.vn.test365children.Listener.RecyclerViewItemClickInterface;
 import neo.vn.test365children.Listener.RecyclerViewItemTouchHelperCallback;
@@ -64,6 +67,8 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
     @BindView(R.id.btn_xemdiem)
     ImageView btn_xemdiem;
     private ItemTouchHelper mItemTouchHelper;
+    @BindView(R.id.img_background)
+    ImageView img_background;
 
     public static FragmentSapxep newInstance(CauhoiDetail restaurant) {
         FragmentSapxep restaurantDetailFragment = new FragmentSapxep();
@@ -99,7 +104,18 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         btn_nopbai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterSapxep.getList();
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
+                        false, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
+                            }
+
+                            @Override
+                            public void onClickNoDialog() {
+
+                            }
+                        });
             }
         });
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
@@ -116,11 +132,16 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
 
                 boolean isa = Arrays.equals(string_start, string_sapxep);
                 if (!isClickXemdiem) {
-                    if (isa)
+                    if (isa) {
                         EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        //  EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                    else
+                        txt_cauhoi.setVisibility(View.GONE);
+                    }
+                    //  EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));
+                    else {
+                        txt_cauhoi.setVisibility(View.VISIBLE);
                         EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                    }
+
                     isClickXemdiem = true;
                     for (DapAn obj : mLis) {
                         obj.setClick(true);
@@ -136,11 +157,13 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
 
     @SuppressLint("NewApi")
     private void initData() {
+        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
-        String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
-        txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + debai[0]));
+        // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
+        txt_cauhoi.setText(Html.fromHtml("Đáp án: " + mCauhoi.getsQUESTION().replace("::", " ")));
+        txt_cauhoi.setVisibility(View.GONE);
         mLis = new ArrayList<>();
-        String[] dapan = debai[1].split("::");
+        String[] dapan = mCauhoi.getsQUESTION().split("::");
         List<String> mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
         //   mLisStart.addAll(mLiDapan);
         for (String s : mLiDapan) {

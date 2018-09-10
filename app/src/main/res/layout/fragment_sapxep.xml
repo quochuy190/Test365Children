@@ -6,11 +6,11 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView3"
+
+        android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/background_lambai" />
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:id="@+id/ll_lable"
@@ -59,12 +59,8 @@
     <ImageView
         android:id="@+id/btn_xemdiem"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
+
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -74,12 +70,7 @@
     <TextView
         android:id="@+id/txt_xemdiem"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:fontFamily="@font/font1"
         android:gravity="center"
         android:padding="@dimen/dp5"
@@ -94,12 +85,7 @@
     <ImageView
         android:id="@+id/btn_nopbai"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_nopbai"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -121,10 +107,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="@dimen/dp5"
+            android:padding="@dimen/dp10"
             android:text="Câu 1: Chọn đán án đúng"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_content_cauhoi" />
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_18sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/txt_zoom_text"
@@ -132,31 +119,28 @@
             android:layout_height="@dimen/dp40"
             android:layout_margin="@dimen/dp5"
             android:src="@drawable/ic_zoom"
-            android:tint="@color/blue" />
+            android:tint="@color/blue"
+            android:visibility="gone" />
     </LinearLayout>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_dapan"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipChildren="true"
-        android:padding="@dimen/dp5"
-        app:layout_constraintBottom_toTopOf="@+id/recycle_dapan_dung"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi" />
-
-    <android.support.v7.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/recycle_dapan_dung"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:clipChildren="true"
-        android:padding="@dimen/dp5"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/recycle_dapan" />
+        app:layout_constraintEnd_toEndOf="@+id/img_background"
+        app:layout_constraintStart_toStartOf="@+id/img_background"
+        app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_dapan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clipChildren="true"
+            android:padding="@dimen/dp5" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

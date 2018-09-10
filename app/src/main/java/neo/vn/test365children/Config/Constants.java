@@ -18,6 +18,7 @@ public class Constants {
         public static final int GET_KHOIHOC = 10003;
         public static final int GET_KHO_BAITAP = 1004;
         public static final int GET_IMAGE = 1005;
+        public static final int GET_START_LAMBAI = 1006;
     }
 
     public static final String KEY_TOKEN = "KEY_TOKEN";
@@ -34,4 +35,5 @@ public class Constants {
     public static final String KEY_SEND_CAUHOI_CONGCHUA = "KEY_SEND_CAUHOI_CONGCHUA";
     public static final String KEY_SEND_TRALOI = "KEY_SEND_TRALOI";
     public static final String KEY_SEND_DAPAN_CONCHUA = "KEY_SEND_DAPAN_CONCHUA";
+    public static final String KEY_SEND_EXERCISE_ANSWER = "KEY_SEND_EXERCISE_ANSWER";
 }

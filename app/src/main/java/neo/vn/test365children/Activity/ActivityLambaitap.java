@@ -3,6 +3,8 @@ package neo.vn.test365children.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,10 +14,15 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
+import io.realm.RealmList;
 import neo.vn.test365children.Adapter.AdapterViewpager;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
@@ -25,13 +32,18 @@ import neo.vn.test365children.Fragment.FragmentChemchuoi;
 import neo.vn.test365children.Fragment.FragmentChondapanKieu1;
 import neo.vn.test365children.Fragment.FragmentCuuCongchua;
 import neo.vn.test365children.Fragment.FragmentDienvaochotrong;
+import neo.vn.test365children.Fragment.FragmentDocvaTraloi;
 import neo.vn.test365children.Fragment.FragmentNgheAudio;
 import neo.vn.test365children.Fragment.FragmentSapxep;
 import neo.vn.test365children.Fragment.FragmentXemanhtraloi;
 import neo.vn.test365children.Fragment.FragmentXepTrung;
 import neo.vn.test365children.Models.Baitap_Tuan;
 import neo.vn.test365children.Models.Cauhoi;
+import neo.vn.test365children.Models.CauhoiAnswer;
+import neo.vn.test365children.Models.CauhoiDetail;
+import neo.vn.test365children.Models.CauhoiDetailAnswer;
 import neo.vn.test365children.Models.ErrorApi;
+import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.Models.TuanDamua;
 import neo.vn.test365children.Presenter.ImpBaitap;
@@ -51,7 +63,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     }
 
     @BindView(R.id.viewpager_lambai)
-    CustomViewPager viewpager_lambai;
+    ViewPager viewpager_lambai;
     AdapterViewpager adapterViewpager;
     PresenterBaitap mPresenter;
     String sUserMe, sUserCon, sMon;
@@ -118,23 +130,47 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                 }
                 txt_time.setText(TimeUtils.formatDuration((int) event.time));
             } else {
+                put_api_nopbai("1");
              /*   Toast.makeText(this, "Thời gian làm bài kết thúc", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "onMessageEvent: " + App.mLisCauhoi);*/
                 Intent intent = new Intent(ActivityLambaitap.this, ActivityComplete.class);
-                startActivity(intent);
+                intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, objExer);
+                startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
                 finish();
             }
-        } else {
-            if (event.message.equals("Point_true")) {
-                Log.i(TAG, "onMessageEvent: " + App.mLisCauhoi);
-                play_mp3_true();
-                fPoint = fPoint + event.point;
-                txt_point.setText("" + fPoint);
-            } else {
-                play_mp3_false();
-            }
-
+        } else if (event.message.equals("Point_true")) {
+            Log.i(TAG, "onMessageEvent: " + App.mLisCauhoi);
+            play_mp3_true();
+            fPoint = fPoint + event.point;
+            txt_point.setText("" + fPoint);
+        } else if (event.message.equals("Point_false")) {
+            play_mp3_false();
+        } else if (event.message.equals("nop_bai")) {
+            put_api_nopbai("0");
+            Intent intent = new Intent(ActivityLambaitap.this, ActivityComplete.class);
+            intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, objExer);
+            startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
         }
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Constants.RequestCode.GET_START_LAMBAI:
+                if (resultCode == RESULT_OK) {
+                    setResult(RESULT_OK, new Intent());
+                    finish();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
     }
 
     @Override
@@ -164,14 +200,14 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         });
     }
 
+    private ExerciseAnswer objExer;
 
     private void initData() {
+        objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);
         mLisCauhoi = new ArrayList<>();
         mLisCauhoi.addAll(App.mLisCauhoi);
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-       /* showDialogLoading();
-        mPresenter.get_api_get_part(sUserMe, sUserCon, "144");*/
         if (mLisCauhoi != null) {
             //  viewpager_lambai = new CustomViewPager(this);
             adapterViewpager = new AdapterViewpager(getSupportFragmentManager());
@@ -203,7 +239,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                         } else if (obj.getsKIEU().equals("6")) {
                             adapterViewpager.addFragment(FragmentDienvaochotrong.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("7")) {
-                            adapterViewpager.addFragment(FragmentChondapanKieu1.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentDocvaTraloi.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("8")) {
                             adapterViewpager.addFragment(FragmentXemanhtraloi.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("9")) {
@@ -256,6 +292,16 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     }
 
     @Override
+    public void show_start_taken(List<ErrorApi> mLis) {
+
+    }
+
+    @Override
+    public void show_submit_execercise(List<ErrorApi> mLis) {
+
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "onPause: ");
@@ -267,5 +313,49 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         EventBus.getDefault().unregister(this);
         stopService(intent_service);
         App.mLisCauhoi.clear();
+    }
+
+    public void put_api_nopbai(String sKieunop) {
+        fPoint = 0;
+        List<CauhoiAnswer> mListCauhoiAnswer = new ArrayList<>();
+        //  String sDanhsachcau = App.self().getGSon().toJson(App.mLisCauhoi);
+        for (int j = 0; j < App.mLisCauhoi.size(); j++) {
+            Cauhoi obj = App.mLisCauhoi.get(j);
+            if (obj.getLisInfo() != null) {
+                RealmList<CauhoiDetailAnswer> mLisCauhoiDetailAnswer = new RealmList<>();
+                for (int i = 0; i < obj.getLisInfo().size(); i++) {
+                    CauhoiDetail objCauhoiDetail = App.mLisCauhoi.get(j).getLisInfo().get(i);
+                    mLisCauhoiDetailAnswer.add(new CauhoiDetailAnswer(objCauhoiDetail.getsID(), objCauhoiDetail.getsPART_ID(),
+                            get_current_time(), objCauhoiDetail.getsANSWER_CHILD(),
+                            objCauhoiDetail.getsRESULT_CHILD(), objCauhoiDetail.getsPOINT_CHILD()));
+                    if (objCauhoiDetail.isAnserTrue()) {
+                        fPoint = fPoint + Float.parseFloat(objCauhoiDetail.getsPOINT());
+                    }
+                }
+                mListCauhoiAnswer.add(new CauhoiAnswer(mLisCauhoiDetailAnswer, obj.getsID(), obj.getsEXCERCISE_ID()
+                        , obj.getsKIEU(), obj.getsUPDATETIME()));
+            }
+        }
+        String sDanhsachcau = App.self().getGSon().toJson(mListCauhoiAnswer);
+        objExer.setsPoint("" + fPoint);
+        Log.i(TAG, "put_api_nopbai: " + sDanhsachcau);
+        mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise(),
+                objExer.getsTimebatdaulambai(), objExer.getsTimebatdaulambai(), get_current_time(), "300",
+                sKieunop, objExer.getsPoint(), sDanhsachcau);
+    }
+
+    Calendar cal;
+    Date date;
+    SimpleDateFormat dft = null;
+
+    private String get_current_time() {
+        String date = "";
+        //Set ngày giờ hiện tại khi mới chạy lần đầu
+        cal = Calendar.getInstance();
+        //Định dạng kiểu ngày / tháng /năm
+        dft = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        date = dft.format(cal.getTime());
+        //hiển thị lên giao diện
+        return date;
     }
 }
