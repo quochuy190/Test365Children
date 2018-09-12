@@ -25,7 +25,16 @@
             android:screenOrientation="sensorLandscape">
 
         </activity>
+        <activity
+            android:name=".Activity.ActivityBaitapdalam"
+            android:screenOrientation="sensorLandscape">
 
+        </activity>
+        <activity
+            android:name=".Activity.ActivityExercisesDetail"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
         <service android:name=".Service.ServiceDownTime" />
 
         <activity

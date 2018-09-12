@@ -39,7 +39,7 @@
             android:padding="@dimen/dp7"
             android:text="Câu 3: Bắt sâu"
             android:textColor="@color/lable_lambai"
-            android:textSize="@dimen/text_15sp"
+            android:textSize="@dimen/text_14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

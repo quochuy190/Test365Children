@@ -314,7 +314,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         stopService(intent_service);
         App.mLisCauhoi.clear();
     }
-
+    // result chil 2 trường hợp: 0 là sai,1 là đúng
     public void put_api_nopbai(String sKieunop) {
         fPoint = 0;
         List<CauhoiAnswer> mListCauhoiAnswer = new ArrayList<>();

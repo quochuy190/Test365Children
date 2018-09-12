@@ -88,10 +88,13 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
 
         obj_answer = new ExerciseAnswer();
+        obj_answer.setsIdTuan(objBaitapTuan.getsWEEK_ID());
         obj_answer.setsId_exercise(objBaitapTuan.getsID());
         obj_answer.setsId_userMe(sUserMe);
         obj_answer.setsId_userCon(sUserCon);
         obj_answer.setsMonhoc(objBaitapTuan.getsSUBJECT_ID());
+        // Trạng thái làm bài 0: chưa làm
+        obj_answer.setIsTrangthailambai("0");
         mRealm.beginTransaction();
         mRealm.copyToRealmOrUpdate(obj_answer);
         mRealm.commitTransaction();
@@ -114,6 +117,8 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
             public void onClick(View v) {
                 mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(), get_current_time(), "30");
                 obj_answer.setsTimebatdaulambai(get_current_time());
+                // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã nộp bài
+                obj_answer.setIsTrangthailambai("1");
                 Intent intent = new Intent(ActivityStartBaitap.this, ActivityLambaitap.class);
                 App.mLisCauhoi.addAll(mLisCauhoi);
                 intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, obj_answer);

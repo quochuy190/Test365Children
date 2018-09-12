@@ -66,12 +66,12 @@ public class RealmController {
     }
 
     //find all objects in the Book.class
-    public RealmResults<ExerciseAnswer> getBooks() {
+    public RealmResults<ExerciseAnswer> getExercises() {
         return realm.where(ExerciseAnswer.class).findAll();
     }
 
     //query a single item with the given id
-    public ExerciseAnswer getBook(String id) {
+    public ExerciseAnswer getExer(String id) {
         return realm.where(ExerciseAnswer.class).equalTo("id", id).findFirst();
     }
 

@@ -44,7 +44,6 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
     String sANSWER;
     @SerializedName("EXPLAIN")
     String sEXPLAIN;
-
     @SerializedName("UPDATETIME")
     String sUPDATETIME;
     @SerializedName("TYPE")

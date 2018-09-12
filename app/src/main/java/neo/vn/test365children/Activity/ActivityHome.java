@@ -36,6 +36,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener {
 
     private void initEvent() {
         btn_lambaitap.setOnClickListener(this);
+        btn_ketquahoctap.setOnClickListener(this);
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,12 +55,16 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_lambaitap:
                 startActivity(new Intent(ActivityHome.this, ActivityMenuBaitap.class));
                 break;
+            case R.id.btn_ketquahoctap:
+                startActivity(new Intent(ActivityHome.this, ActivityBaitapdalam.class));
+                break;
         }
     }
+
     MediaPlayer mp3;
 
     public void play_mp3() {
@@ -67,10 +72,11 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener {
         mp3 = MediaPlayer.create(ActivityHome.this, R.raw.cheerful);
         mp3.start();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
-        if (mp3!=null)
+        if (mp3 != null)
             mp3.pause();
     }
 }

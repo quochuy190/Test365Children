@@ -102,6 +102,7 @@ public class FragmentXepTrung extends BaseFragment {
     ImageView img_background;
     @BindView(R.id.btn_nopbai)
     ImageView btn_nopbai;
+
     public static FragmentXepTrung newInstance(CauhoiDetail restaurant) {
         FragmentXepTrung restaurantDetailFragment = new FragmentXepTrung();
         Bundle args = new Bundle();
@@ -462,9 +463,7 @@ public class FragmentXepTrung extends BaseFragment {
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsEGG_4_RESULT(map_answer_chil.get("egg_4"));
                                 String s = map_answer_chil.get("egg_4");
-                                Log.i(TAG, "get dap án: " + s);
                                 if (map_answer_chil.get("egg_4").equals(map_answer_true.get("egg_4"))) {
-                                    Log.i(TAG, "onTouch: Trứng 4 đúng");
                                     isEgg4 = true;
                                 }
                             }
@@ -472,9 +471,24 @@ public class FragmentXepTrung extends BaseFragment {
                             if (isEgg1 && isEgg2 && isEgg3 && isEgg4) {
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-                            } else
+                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+                            } else {
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                            }
+                            String sAnswerChil = App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsEGG_1_RESULT() + "#*#" +
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsEGG_2_RESULT() + "#*#" +
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsEGG_3_RESULT() + "#*#" +
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsEGG_4_RESULT();
+                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnswerChil);
                             break;
                         }
 

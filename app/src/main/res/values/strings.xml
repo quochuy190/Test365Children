@@ -14,5 +14,7 @@
     <string name="masseger_edt_null">Vui lòng nhập vào đầy đủ thông tin và tiếp tục!</string>
     <string name="notify_city_null">Bạn vui lòng chọn tỉnh/thành phố</string>
     <string name="txt_web"> <i><u>https://home.test365.vn</u></i></string>
-
+    <string name="txt_lable_nhanxet">NHẬN XÉT CỦA HỆ THỐNG</string>
+    <string name="txt_exer_point">Điểm hệ thống</string>
+    <string name="txt_exer_xephang">Xếp hạng</string>
 </resources>

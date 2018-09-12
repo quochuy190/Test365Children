@@ -217,7 +217,7 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
         mMap.put("P7", tong_time_lambai);
         mMap.put("P8", sKieunop);
         mMap.put("P9", sDiem);
-        mMap.put("P10", "");
+        mMap.put("P10", sDanhsachcau);
         mApiService.getApiService(new CallbackData<String>() {
 
             @Override

@@ -36,4 +36,6 @@ public class Constants {
     public static final String KEY_SEND_TRALOI = "KEY_SEND_TRALOI";
     public static final String KEY_SEND_DAPAN_CONCHUA = "KEY_SEND_DAPAN_CONCHUA";
     public static final String KEY_SEND_EXERCISE_ANSWER = "KEY_SEND_EXERCISE_ANSWER";
+    public static final String KEY_SEND_EXERCISES_DETAIL = "KEY_SEND_EXERCISES_DETAIL";
+    public static final String KEY_SEND_EXERCISES_DETAIL_POINT = "KEY_SEND_EXERCISES_DETAIL_POINT";
 }

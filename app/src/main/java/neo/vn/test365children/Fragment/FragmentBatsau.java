@@ -71,6 +71,7 @@ public class FragmentBatsau extends BaseFragment {
 
     @BindView(R.id.btn_nopbai)
     ImageView btn_nopbai;
+
     public static FragmentBatsau newInstance(CauhoiDetail restaurant) {
         FragmentBatsau restaurantDetailFragment = new FragmentBatsau();
         Bundle args = new Bundle();
@@ -149,11 +150,12 @@ public class FragmentBatsau extends BaseFragment {
             }
         });
     }
+
     private void initData() {
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
-       // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
+        // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
         if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
             MathView mathView = new MathView(getContext());
             mathView.setClickable(true);
@@ -164,10 +166,10 @@ public class FragmentBatsau extends BaseFragment {
             ll_cauhoi.addView(mathView);
         } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
             ImageView txt_dapan = new ImageView(getContext());
-            int hight_image =  (int) getContext().getResources().getDimension(R.dimen.item_dapan);
+            int hight_image = (int) getContext().getResources().getDimension(R.dimen.item_dapan);
             txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     hight_image));
-            Glide.with(getContext()).load(Config.URL_IMAGE+mCauhoi.getsQUESTION()).into(txt_dapan);
+            Glide.with(getContext()).load(Config.URL_IMAGE + mCauhoi.getsQUESTION()).into(txt_dapan);
             ll_cauhoi.addView(txt_dapan);
         } else {
             TextView txt_dapan = new TextView(getContext());
@@ -178,7 +180,6 @@ public class FragmentBatsau extends BaseFragment {
             txt_dapan.setText(Html.fromHtml(mCauhoi.getsQUESTION()));
             ll_cauhoi.addView(txt_dapan);
         }
-
         mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
         mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
         mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));
@@ -213,11 +214,16 @@ public class FragmentBatsau extends BaseFragment {
                                 if (obj.getsDapan_Dung().equals(obj.getsName())) {
                                     App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-                                } else
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+                                } else{
                                     App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                                }
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsContent());
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
                                 obj.setsDapan_Traloi(obj.getsName());
                             } else {
                                 obj.setsDapan_Traloi("");

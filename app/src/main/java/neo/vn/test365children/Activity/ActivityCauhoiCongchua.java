@@ -1,6 +1,5 @@
 package neo.vn.test365children.Activity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,11 +9,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
-import neo.vn.test365children.Adapter.AdapterDapan;
+import neo.vn.test365children.Adapter.AdapterCauhoiCongchua;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
@@ -25,13 +27,16 @@ import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityCauhoiCongchua extends BaseActivity {
+    private static final String TAG = "ActivityCauhoiCongchua";
     CauhoiDetail mCauhoi;
-    @BindView(R.id.txt_lable)
-    TextView txt_lable;
     @BindView(R.id.txt_cauhoi)
     TextView txt_cauhoi;
     @BindView(R.id.btn_xemdiem)
     ImageView btn_xemdiem;
+    @BindView(R.id.imageView3)
+    ImageView img_background;
+    int[] arr_image = {R.drawable.bg_congchua1, R.drawable.bg_congchua2, R.drawable.bg_congchua3,
+            R.drawable.bg_congchua4, R.drawable.bg_congchua5, R.drawable.bg_congchua6};
 
     @Override
     public int setContentViewId() {
@@ -49,7 +54,7 @@ public class ActivityCauhoiCongchua extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-       // super.onBackPressed();
+        // super.onBackPressed();
     }
 
     boolean isTrue = false;
@@ -86,14 +91,14 @@ public class ActivityCauhoiCongchua extends BaseActivity {
 
     boolean isLambai = false;
     List<DapAn> mLis;
-    AdapterDapan adapter;
+    AdapterCauhoiCongchua adapter;
     @BindView(R.id.recycle_dapan)
     RecyclerView recycle_dapan;
     RecyclerView.LayoutManager mLayoutManager;
 
     private void init() {
         mLis = new ArrayList<>();
-        adapter = new AdapterDapan(mLis, this);
+        adapter = new AdapterCauhoiCongchua(mLis, this);
         mLayoutManager = new GridLayoutManager(this,
                 2, GridLayoutManager.VERTICAL, false);
         //mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
@@ -105,10 +110,13 @@ public class ActivityCauhoiCongchua extends BaseActivity {
 
     }
 
-    @SuppressLint("NewApi")
+    int iRandom;
+
     private void initData() {
-        txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
-        txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION(), Html.FROM_HTML_MODE_COMPACT));
+        Random ran = new Random();
+        iRandom = ran.nextInt(arr_image.length);
+        Glide.with(this).load(arr_image[iRandom]).into(img_background);
+        txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));
         mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
         mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
         mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));

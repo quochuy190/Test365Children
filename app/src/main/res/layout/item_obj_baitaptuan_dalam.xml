@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/item_baitaptuan_dalam"
+    android:layout_height="@dimen/item_baitaptuan_dalam"
+    android:layout_margin="@dimen/dp3"
+    android:id="@+id/holder"
+    android:padding="@dimen/dp5"
+    app:cardCornerRadius="@dimen/dp10">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img_bg"
+            android:src="@drawable/mark_0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+
+            android:layout_above="@+id/view_centrer"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/txt_monhoc"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:maxLines="2"
+            android:padding="@dimen/dp5"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_17sp" />
+        <TextView
+            android:id="@+id/view_centrer"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <TextView
+            android:layout_below="@id/view_centrer"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/txt_diem"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="@dimen/dp5"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_17sp" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

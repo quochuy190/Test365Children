@@ -115,7 +115,7 @@ public class FragmentCuuCongchua extends BaseFragment {
             }
         });
         txt_lable.setText("Bài: " + mCauhoi.getsHUONGDAN());
-        Glide.with(this).load(R.drawable.bg_cuu_cong_chua).into(img_background);
+        Glide.with(this).load(R.drawable.bg_congchua).into(img_background);
         // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
         //txtCauhoi.setText(mCauhoi.getsQUESTION());
         iStart.add(2);
@@ -208,10 +208,15 @@ public class FragmentCuuCongchua extends BaseFragment {
                         if (obj.getsKIEU().equals("10")) {
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setAnserTrue(true);
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setDalam(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setDalam(true);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsRESULT_CHILD("1");
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsANSWER_CHILD(sDapan);
                           /*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
                                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
+                        }else {
+                         /*   App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setAnserTrue(false);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setDalam(true);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsRESULT_CHILD("0");
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsANSWER_CHILD("");*/
                         }
                     }
                 } else {

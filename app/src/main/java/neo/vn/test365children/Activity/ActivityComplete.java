@@ -71,7 +71,8 @@ public class ActivityComplete extends BaseActivity {
                 }
             }
         }
-
+        // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã nộp bài
+        objExer.setIsTrangthailambai("2");
         objExer.setsPoint(""+fPoint);
         mRealmList.addAll(App.mLisCauhoi);
         objExer.setmLisCauhoi(mRealmList);

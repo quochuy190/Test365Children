@@ -20,7 +20,7 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     private String sTimeketthuclambai;
     private String sThoiluonglambai;
     private String sKieunopbai;
-
+    private String sIdTuan;
 
     public ExerciseAnswer(String sId_exercise, String sId_userMe, String sId_userCon, String sPoint, String sMonhoc,
                           String isTrangthailambai, RealmList<Cauhoi> mLisCauhoi) {
@@ -34,6 +34,14 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     }
 
     public ExerciseAnswer() {
+    }
+
+    public String getsIdTuan() {
+        return sIdTuan;
+    }
+
+    public void setsIdTuan(String sIdTuan) {
+        this.sIdTuan = sIdTuan;
     }
 
     public String getsTimebatdaulambai() {

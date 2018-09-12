@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_nghe_nhin" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+
+        android:layout_height="@dimen/exercises_hight_title"
+        android:layout_marginLeft="@dimen/exercises_margin_leght"
+        android:layout_marginRight="@dimen/exercises_margin_leght"
+        android:layout_marginTop="@dimen/dp10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_exer_nhatxet" />
+
+        <TextView
+            android:id="@+id/lable_nhanxet"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fontFamily="@font/font1"
+            android:gravity="center"
+            android:padding="@dimen/dp5"
+            android:text="@string/txt_lable_nhanxet"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lable_nhanxet_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/lable_nhanxet_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:padding="@dimen/dp5"
+            android:text="Con hoc rat tot"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_exer_xephang"
+            app:layout_constraintStart_toEndOf="@+id/txt_exer_point"
+            app:layout_constraintTop_toBottomOf="@id/lable_nhanxet" />
+
+        <ImageView
+            android:id="@+id/img_point"
+            android:layout_width="@dimen/exercises_icon_point"
+            android:layout_height="@dimen/exercises_icon_point"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/exer_icon_diem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintStart_toStartOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/txt_exer_point"
+            android:layout_width="@dimen/exercises_icon_point"
+            android:layout_height="@dimen/exercises_icon_point"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/font1"
+            android:gravity="center"
+            android:src="@drawable/exer_icon_diem"
+            android:text="9"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintStart_toStartOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/txt_exer_point"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/img_point"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_xephang"
+            android:layout_width="@dimen/exercises_icon_point"
+            android:layout_height="@dimen/exercises_icon_point"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/exer_icon_diem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txt_lable_xephang"
+            app:layout_constraintStart_toStartOf="@+id/txt_lable_xephang" />
+
+        <TextView
+
+            android:id="@+id/txt_exer_xephang"
+            android:layout_width="@dimen/exercises_icon_point"
+            android:layout_height="@dimen/exercises_icon_point"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:src="@drawable/exer_icon_diem"
+            android:text="1080"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txt_lable_xephang"
+            app:layout_constraintStart_toStartOf="@+id/txt_lable_xephang" />
+
+        <TextView
+            android:id="@+id/txt_lable_xephang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginTop="5dp"
+            android:text="@string/txt_exer_xephang"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16sp"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="@dimen/exercises_margin_leght"
+        android:layout_marginLeft="@dimen/exercises_margin_leght"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/exer_bg_ketqua2" />
+
+        <TextView
+        android:id="@+id/txt_exer_debai"
+        android:text="Bai tap toan: nhan dang hinh"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_17sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exer_hight_debai"
+        android:padding="@dimen/dp7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_exer_namhoc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:padding="@dimen/dp3"
+            android:text="Năm học:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_17sp"
+            android:textStyle="bold"
+            app:layout_constraintRight_toLeftOf="@+id/txt_exer_khoihoc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
+        <TextView
+            android:layout_marginLeft="@dimen/dp10"
+
+            android:id="@+id/txt_exer_khoihoc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp3"
+            android:text="Khối:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_17sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/txt_exer_namhoc"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
+        <TextView
+            android:id="@+id/txt_exer_tuan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:padding="@dimen/dp3"
+            android:text="Năm học:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_17sp"
+            android:textStyle="bold"
+            app:layout_constraintRight_toLeftOf="@+id/txt_exer_khoihoc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_namhoc" />
+        <TextView
+        android:layout_marginLeft="@dimen/dp10"
+        android:id="@+id/txt_exer_monhoc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+            android:padding="@dimen/dp3"
+        android:text="Khối:"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_17sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/txt_exer_namhoc"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_exer_namhoc" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/dp10"
+            android:id="@+id/txt_exer_bancunglam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_15sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_tuan" />
+        <TextView
+            android:layout_marginLeft="@dimen/dp10"
+            android:id="@+id/txt_exer_bancungtruong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_15sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglam" />
+        <TextView
+            android:layout_marginLeft="@dimen/dp10"
+            android:id="@+id/txt_exer_bancunglop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_15sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancungtruong" />
+
+        <TextView
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp10"
+            android:id="@+id/txt_exer_diemcaonhat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp7"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_15sp"
+            app:layout_constraintRight_toLeftOf="@id/txt_exer_trungbinh"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+
+        <TextView
+            android:layout_marginTop="@dimen/dp5"
+            android:id="@+id/txt_exer_trungbinh"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp7"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_15sp"
+            app:layout_constraintRight_toLeftOf="@id/txt_exer_thapnhat"
+            app:layout_constraintLeft_toRightOf="@+id/txt_exer_diemcaonhat"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+
+        <TextView
+            android:layout_marginTop="@dimen/dp5"
+            android:id="@+id/txt_exer_thapnhat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp7"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_15sp"
+            app:layout_constraintLeft_toRightOf="@id/txt_exer_trungbinh"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+
+        <Button
+            android:id="@+id/btn_xemlaibai"
+            android:textSize="@dimen/text_16sp"
+            android:textColor="@color/white"
+            android:text="Xem lại bài đã làm"
+            android:background="@drawable/spr_click_button"
+            android:layout_width="wrap_content"
+            android:paddingLeft="@dimen/dp30"
+            android:paddingRight="@dimen/dp30"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginBottom="@dimen/dp5"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
