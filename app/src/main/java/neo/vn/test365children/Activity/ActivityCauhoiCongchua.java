@@ -17,7 +17,6 @@ import java.util.Random;
 
 import butterknife.BindView;
 import neo.vn.test365children.Adapter.AdapterCauhoiCongchua;
-import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.ItemClickListener;
@@ -66,24 +65,26 @@ public class ActivityCauhoiCongchua extends BaseActivity {
             public void onClick(View v) {
                 if (mLis != null && isLambai) {
                     for (DapAn obj : mLis) {
-                        if (obj.getsDapan_Dung() != null && obj.getsDapan_Dung().length() > 0) {
+                        if (obj.getsDapan_Traloi() != null && obj.getsDapan_Traloi().length() > 0) {
                             sDapan = obj.getsDapan_Traloi();
+                            if (obj.getsDapan_Dung().equals(obj.getsDapan_Traloi())) {
+                                isTrue = true;
+                            }
                         }
                         obj.setClick(true);
-                        if (obj.getsDapan_Dung().equals(obj.getsDapan_Traloi())) {
-                            isTrue = true;
-                        }
                     }
                     adapter.notifyDataSetChanged();
-                    if (isTrue) {
-                        SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, true);
-                        SharedPrefs.getInstance().put(Constants.KEY_SEND_CAUHOI_CONGCHUA, sDapan);
-                        finish();
-                    } else {
-                        SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, false);
-                        SharedPrefs.getInstance().put(Constants.KEY_SEND_CAUHOI_CONGCHUA, sDapan);
-                        finish();
-                    }
+                    if (sDapan.length() > 0) {
+                        if (isTrue) {
+                            SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, true);
+                            SharedPrefs.getInstance().put(Constants.KEY_SEND_CAUHOI_CONGCHUA, sDapan);
+                            finish();
+                        } else {
+                            SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, false);
+                            SharedPrefs.getInstance().put(Constants.KEY_SEND_CAUHOI_CONGCHUA, sDapan);
+                            finish();
+                        }
+                    } else showDialogNotify("Thông báo", "Bạn chưa chọn đáp án nào");
                 }
             }
         });
@@ -127,20 +128,9 @@ public class ActivityCauhoiCongchua extends BaseActivity {
             @Override
             public void onClickItem(int position, Object item) {
                 isLambai = true;
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
                 if (!mLis.get(position).isClick()) {
                     for (DapAn obj : mLis) {
-                        //obj.setClick(true);
                         if (obj.getsName().equals(mLis.get(position).getsName())) {
-                          /*  if (obj.getsDapan_Dung().equals(obj.getsName())) {
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setAnserTrue(true);
-                            }else
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setAnserTrue(false);
-                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
                             obj.setsDapan_Traloi(obj.getsName());
                         } else {
                             obj.setsDapan_Traloi("");

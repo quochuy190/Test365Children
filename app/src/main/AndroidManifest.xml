@@ -21,17 +21,17 @@
 
         </activity>
         <activity
-            android:name=".Activity.TestWebview"
+            android:name=".Activity.ReviewExercises.ActivityBaitapdalam"
             android:screenOrientation="sensorLandscape">
 
         </activity>
         <activity
-            android:name=".Activity.ActivityBaitapdalam"
+            android:name=".Activity.ReviewExercises.ActivityExercisesDetail"
             android:screenOrientation="sensorLandscape">
 
         </activity>
         <activity
-            android:name=".Activity.ActivityExercisesDetail"
+            android:name=".Activity.ReviewExercises.ActivityReviewExercises"
             android:screenOrientation="sensorLandscape">
 
         </activity>

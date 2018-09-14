@@ -212,16 +212,23 @@ public class FragmentCuuCongchua extends BaseFragment {
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsANSWER_CHILD(sDapan);
                           /*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
                                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
-                        }else {
-                         /*   App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setAnserTrue(false);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setDalam(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsRESULT_CHILD("0");
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsANSWER_CHILD("");*/
                         }
                     }
                 } else {
+                    iCauhoiStart++;
                     for (DapAn obj : mLis) {
                         obj.setClick(false);
+                    }
+                    for (int i = 0; i < App.mLisCauhoi.size(); i++) {
+                        Cauhoi obj = App.mLisCauhoi.get(i);
+                        if (obj.getsKIEU().equals("10")) {
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setAnserTrue(false);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setDalam(true);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsRESULT_CHILD("0");
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsANSWER_CHILD(sDapan);
+                          /*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
+                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
+                        }
                     }
                     adapter.notifyDataSetChanged();
                     EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));

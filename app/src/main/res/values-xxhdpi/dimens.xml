@@ -75,8 +75,10 @@
     <!--Bài tập tuần đã làm-->
     <dimen name="item_baitaptuan_dalam">100dp</dimen>
     <!--Exercises Detail-->
-    <dimen name="exercises_hight_title">80dp</dimen>
+    <dimen name="exercises_hight_title">65dp</dimen>
     <dimen name="exercises_margin_leght">30dp</dimen>
-    <dimen name="exercises_icon_point">50dp</dimen>
-    <dimen name="exer_hight_debai">50dp</dimen>
+    <dimen name="exercises_icon_point">35dp</dimen>
+    <dimen name="exer_hight_debai">40dp</dimen>
+    <dimen name="exer_margin_top">7dp</dimen>
+    <dimen name="exer_margin_left_text_lable">10dp</dimen>
 </resources>

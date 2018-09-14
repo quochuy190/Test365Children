@@ -1,6 +1,8 @@
-package neo.vn.test365children.Activity;
+package neo.vn.test365children.Activity.ReviewExercises;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import butterknife.BindView;
+import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.DesExercises;
@@ -19,6 +22,7 @@ import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityExercisesDetail extends BaseActivity implements ImlExerDetail.View {
+    private static final String TAG = "ActivityExercisesDetail";
     private ExerciseAnswer objExercises;
     String sIdDe;
     PresenterExeDetail mPresenter;
@@ -46,6 +50,13 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     TextView txt_debai;
     @BindView(R.id.btn_xemlaibai)
     Button btn_xemlaibai;
+    @BindView(R.id.txt_exer_diemcaonhat)
+    TextView txt_caonhat;
+    @BindView(R.id.txt_exer_trungbinh)
+    TextView txt_trungbinh;
+    @BindView(R.id.txt_exer_thapnhat)
+    TextView txt_thapnhat;
+
     @Override
     public int setContentViewId() {
         return R.layout.activity_exercise_detail;
@@ -63,7 +74,8 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         btn_xemlaibai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ActivityExercisesDetail.this, ActivityReviewExercises.class);
+                startActivity(intent);
             }
         });
     }
@@ -71,7 +83,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     String sUserMe, sUserCon, sMon;
 
     private void initData() {
-
+        Log.i(TAG, "initData: "+ App.mLisCauhoi);
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         sIdDe = getIntent().getStringExtra(Constants.KEY_SEND_EXERCISES_DETAIL);
@@ -118,12 +130,20 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
 
     @Override
     public void show_report_exercises(List<DesExercises> listDepExe) {
-        if (listDepExe!=null&&listDepExe.get(0).getsERROR().equals("0000")){
+        if (listDepExe != null && listDepExe.get(0).getsERROR().equals("0000")) {
             DesExercises obj = listDepExe.get(0);
-            txt_bancunglam.setText("Có "+obj.getScunglam()+" bạn cùng làm bài thi này");
-            txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia:"+obj.getScungtruong());
-            txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: "+obj.getScunglop());
-
+            txt_bancunglam.setText("Có " + obj.getScunglam() + " bạn cùng làm bài thi này");
+            txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia:" + obj.getScungtruong());
+            txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: " + obj.getScunglop());
+            txt_caonhat.setText("Điểm cao nhất: " + obj.getScaonhat());
+            txt_trungbinh.setText("Điểm trung bình: " + obj.getStrungbinh());
+            txt_thapnhat.setText("Điểm thấp nhất: " + obj.getSthapnhat());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.mLisCauhoi.clear();
     }
 }

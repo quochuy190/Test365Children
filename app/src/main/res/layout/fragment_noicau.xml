@@ -39,7 +39,7 @@
             android:padding="@dimen/dp5"
             android:text="Câu 3: Chọn đáp án đúng"
             android:textColor="@color/lable_lambai"
-            android:textSize="@dimen/text_16sp"
+            android:textSize="@dimen/text_17sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,93 +56,54 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/btn_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <TextView
-        android:id="@+id/txt_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-
-        android:fontFamily="@font/font1"
-        android:gravity="center"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        android:text="Xem điểm"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <ImageView
         android:id="@+id/btn_nopbai"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_nopbai"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/txt_debai"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp5"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_17sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_lable" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:layout_marginBottom="@dimen/dp3"
-        android:id="@+id/ll_cauhoi"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center_vertical"
+
         app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_debai">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon_bang" />
-
-            <WebView
-                android:id="@+id/txt_cauhoi"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/dp25"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_17sp" />
-        </RelativeLayout>
-
+        app:layout_constraintStart_toStartOf="@+id/img_background"
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_dapan"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:id="@+id/recycle_noicau_A"
             android:padding="@dimen/dp5"
-        />
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
 
+        </android.support.v7.widget.RecyclerView>
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+        </View>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_noicau_B"
+            android:padding="@dimen/dp5"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
+
 
 
 </android.support.constraint.ConstraintLayout>

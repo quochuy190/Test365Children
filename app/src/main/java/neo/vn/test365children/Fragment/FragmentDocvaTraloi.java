@@ -67,6 +67,7 @@ public class FragmentDocvaTraloi extends BaseFragment {
     TextView txt_debai;
     @BindView(R.id.btn_nopbai)
     ImageView btn_nopbai;
+
     public static FragmentDocvaTraloi newInstance(CauhoiDetail restaurant) {
         FragmentDocvaTraloi restaurantDetailFragment = new FragmentDocvaTraloi();
         Bundle args = new Bundle();
@@ -145,7 +146,7 @@ public class FragmentDocvaTraloi extends BaseFragment {
 
             }
         });
-        txt_debai.setText("Câu hỏi: "+mCauhoi.getsQUESTION());
+        txt_debai.setText("Câu hỏi: " + mCauhoi.getsQUESTION());
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
@@ -153,7 +154,37 @@ public class FragmentDocvaTraloi extends BaseFragment {
         txt_cauhoi.getSettings().setJavaScriptEnabled(true);
         txt_cauhoi.getSettings();
         txt_cauhoi.setBackgroundColor(Color.TRANSPARENT);
-        txt_cauhoi.loadDataWithBaseURL("", mCauhoi.getsTextDebai(), "text/html", "UTF-8", "");
+        String text = "<html><head>"
+                + "<style type=\"text/css\">body{color: #fff;}"
+                + "</style></head>"
+                + "<body>"
+                + mCauhoi.getsTextDebai()
+                + "</body></html>";
+     /*   String s = " Đọc biểu thức sau:\n" +
+                "        1<div class=\"frac\" style=\"display: inline-block;  position: relative;    vertical-align: middle;\n" +
+                "        letter-spacing: 0.001em;\n" +
+                "        text-align: center;\">\n" +
+                "                <span style=\"display: block;\n" +
+                "        padding: 0.1em;\">21hfgjf</span>\n" +
+                "                <span style=\"display: block;\n" +
+                "        padding: 0.1em;display: none;\" class=\"symbol\">/</span>\n" +
+                "                <span style=\"display: block;\n" +
+                "        padding: 0.1em;border-top: thin solid black;\" class=\"bottom\">23</span>\n" +
+                "\n" +
+                "                </div>+\n" +
+                "                1<div class=\"frac\" style=\"display: inline-block;  position: relative;    vertical-align: middle;\n" +
+                "        letter-spacing: 0.001em;\n" +
+                "        text-align: center;\">\n" +
+                "                <span style=\"display: block;\n" +
+                "        padding: 0.1em;\">21</span>\n" +
+                "                <span style=\"display: block;\n" +
+                "        padding: 0.1em;display: none;\" class=\"symbol\">/</span>\n" +
+                "                <span style=\"display: block;\n" +
+                "        padding: 0.1em;border-top: thin solid black;\" class=\"bottom\">23</span>\n" +
+                "\n" +
+                "                </div>";
+*/
+        txt_cauhoi.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
 
         mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
         mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
@@ -183,19 +214,19 @@ public class FragmentDocvaTraloi extends BaseFragment {
                         //obj.setClick(true);
                         if (obj.getsName().equals(mLis.get(position).getsName())) {
                             if (obj.getsDapan_Dung().equals(obj.getsName())) {
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setAnserTrue(true);
+                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                            }else{
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setAnserTrue(false);
+                            } else {
+                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
                             }
 
-                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsName());
+                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
                             obj.setsDapan_Traloi(obj.getsName());
                         } else {
                             obj.setsDapan_Traloi("");

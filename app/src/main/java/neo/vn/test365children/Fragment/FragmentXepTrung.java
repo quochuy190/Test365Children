@@ -180,6 +180,7 @@ public class FragmentXepTrung extends BaseFragment {
 
     }
 
+
     private boolean isClickXemdiem = false;
 
     private void initEvent() {
@@ -491,7 +492,6 @@ public class FragmentXepTrung extends BaseFragment {
                                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnswerChil);
                             break;
                         }
-
 
                     case MotionEvent.ACTION_MOVE:
                         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view

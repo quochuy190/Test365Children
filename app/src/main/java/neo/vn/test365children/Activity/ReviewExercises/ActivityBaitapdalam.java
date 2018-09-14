@@ -1,4 +1,4 @@
-package neo.vn.test365children.Activity;
+package neo.vn.test365children.Activity.ReviewExercises;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import java.util.List;
 import butterknife.BindView;
 import io.realm.Realm;
 import neo.vn.test365children.Adapter.AdapterCategoryShop;
+import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.OnListenerItemClickObjService;
@@ -63,7 +64,9 @@ public class ActivityBaitapdalam extends BaseActivity {
         adapter = new AdapterCategoryShop(this, mLisTuan, new OnListenerItemClickObjService() {
             @Override
             public void onClickListener(ExerciseAnswer objService) {
-                //ExerciseAnswer obj = (ExerciseAnswer) objService;
+                App.mLisCauhoi.clear();
+                ExerciseAnswer obj = (ExerciseAnswer) objService;
+                App.mLisCauhoi.addAll(obj.getmLisCauhoi());
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, objService.getsId_exercise());
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_POINT, objService.getsPoint());

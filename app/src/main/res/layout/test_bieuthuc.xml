@@ -5,25 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <io.github.kexanie.library.MathView
-        android:visibility="visible"
-        android:textSize="@dimen/text_18sp"
-        android:padding="@dimen/dp10"
-        android:id="@+id/txt_bieuthuc"
+    <fragment android:name="neo.vn.test365children.Fragment.FragmentNoicau"
+        android:id="@+id/headlines_fragment"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <WebView
-        android:visibility="gone"
-        android:id="@+id/webview_test"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent" />
 
 </android.support.constraint.ConstraintLayout>

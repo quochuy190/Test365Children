@@ -80,7 +80,6 @@ public class AdapterDapanBatsau extends RecyclerView.Adapter<AdapterDapanBatsau.
         if (obj.isClick()) {
             if (obj.getsName().equals(obj.getsDapan_Traloi())) {
                 holder.img_consau.setVisibility(View.GONE);
-
             }
             if (obj.getsName().equals(obj.getsDapan_Dung())) {
                 Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_image_batsau_dung);

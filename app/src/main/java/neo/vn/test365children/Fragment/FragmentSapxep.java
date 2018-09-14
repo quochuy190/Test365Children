@@ -1,11 +1,9 @@
 package neo.vn.test365children.Fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -155,23 +153,34 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         });
     }
 
-    @SuppressLint("NewApi")
+
+    List<String> mLiDapan;
+
     private void initData() {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+            txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+
         // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
-        txt_cauhoi.setText(Html.fromHtml("Đáp án: " + mCauhoi.getsQUESTION().replace("::", " ")));
+  /*      if (mCauhoi.getsQUESTION() != null)
+            txt_cauhoi.setText(Html.fromHtml("Đáp án: " + mCauhoi.getsQUESTION().replace("::", " ")));*/
         txt_cauhoi.setVisibility(View.GONE);
         mLis = new ArrayList<>();
-        String[] dapan = mCauhoi.getsQUESTION().split("::");
-        List<String> mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
-        //   mLisStart.addAll(mLiDapan);
-        for (String s : mLiDapan) {
-            mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));
+        if (mCauhoi.getsQUESTION() != null) {
+            String[] dapan = mCauhoi.getsQUESTION().split("::");
+            mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
         }
-        Collections.shuffle(mLiDapan);
-        for (String s : mLiDapan) {
-            mLis.add(new DapAn("1", s, "", "agcbd", false, ""));
+
+
+        //   mLisStart.addAll(mLiDapan)
+        if (mLiDapan != null && mLiDapan.size() > 0) {
+            for (String s : mLiDapan) {
+                mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));
+            }
+            Collections.shuffle(mLiDapan);
+            for (String s : mLiDapan) {
+                mLis.add(new DapAn("1", s, "", "agcbd", false, ""));
+            }
         }
     }
 

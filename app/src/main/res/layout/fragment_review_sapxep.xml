@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+
         android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,42 +56,6 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/btn_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <TextView
-        android:id="@+id/txt_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-
-        android:fontFamily="@font/font1"
-        android:gravity="center"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        android:text="Xem điểm"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <ImageView
-        android:id="@+id/btn_nopbai"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_nopbai"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
-        app:layout_constraintRight_toRightOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_cauhoi"
@@ -101,24 +66,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
-        <LinearLayout
+        <TextView
             android:id="@+id/txt_cauhoi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="@dimen/dp5">
-        </LinearLayout>
+            android:padding="@dimen/dp10"
+            android:text="Câu 1: Chọn đán án đúng"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_18sp"
+            android:textStyle="bold" />
+
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_dapan"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="@dimen/dp5"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/img_background"
         app:layout_constraintEnd_toEndOf="@+id/img_background"
         app:layout_constraintStart_toStartOf="@+id/img_background"
-        app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_dapan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clipChildren="true"
+            android:padding="@dimen/dp5" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
