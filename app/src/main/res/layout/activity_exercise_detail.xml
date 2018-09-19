@@ -33,7 +33,7 @@
         <TextView
             android:id="@+id/lable_nhanxet"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="18dp"
             android:fontFamily="@font/font1"
             android:gravity="center"
             android:padding="@dimen/dp5"
@@ -41,9 +41,9 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_17sp"
             android:textStyle="bold"
-            app:layout_constraintRight_toLeftOf="@id/txt_lable_xephang"
-            app:layout_constraintLeft_toRightOf="@+id/textView4"
             app:layout_constraintBottom_toTopOf="@id/lable_nhanxet_content"
+            app:layout_constraintLeft_toRightOf="@+id/textView4"
+            app:layout_constraintRight_toLeftOf="@id/txt_lable_xephang"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -144,7 +144,8 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
+
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/exer_margin_top"
@@ -163,163 +164,242 @@
             android:scaleType="fitXY"
             android:src="@drawable/exer_bg_ketqua2" />
 
-        <TextView
-            android:id="@+id/txt_exer_debai"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/exer_hight_debai"
-            android:gravity="center"
-            android:padding="@dimen/dp7"
-            android:text="Bai tap toan: nhan dang hinh"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_17sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txt_exer_namhoc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:padding="@dimen/dp3"
-            android:text="Năm học:"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_17sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/txt_exer_khoihoc"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
+            <android.support.constraint.ConstraintLayout
+                android:padding="@dimen/dp5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txt_exer_khoihoc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:padding="@dimen/dp3"
-            android:text="Khối:"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_17sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/txt_exer_namhoc"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
 
-        <TextView
-            android:id="@+id/txt_exer_tuan"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:padding="@dimen/dp3"
-            android:text="Năm học:"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_17sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/txt_exer_khoihoc"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_namhoc" />
+                <TextView
+                    android:id="@+id/txt_exer_debai"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/exer_hight_debai"
+                    android:gravity="center"
+                    android:padding="@dimen/dp7"
+                    android:text="Bai tap toan: nhan dang hinh"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txt_exer_monhoc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:padding="@dimen/dp3"
-            android:text="Khối:"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_17sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/txt_exer_namhoc"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_namhoc" />
+                <TextView
+                    android:id="@+id/txt_exer_namhoc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:padding="@dimen/dp3"
+                    android:text="Năm học:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/txt_exer_khoihoc"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
 
-        <TextView
-            android:id="@+id/txt_exer_bancunglam"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:padding="@dimen/dp5"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_15sp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_tuan" />
+                <TextView
+                    android:id="@+id/txt_exer_khoihoc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:padding="@dimen/dp3"
+                    android:text="Khối:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="@id/txt_exer_namhoc"
+                    app:layout_constraintRight_toLeftOf="@+id/img_sticker"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
 
-        <TextView
-            android:id="@+id/txt_exer_bancungtruong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:padding="@dimen/dp5"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_15sp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglam" />
+                <ImageView
+                    android:id="@+id/img_sticker"
+                    android:layout_width="@dimen/exer_width_sticker"
+                    android:layout_height="@dimen/exer_width_sticker"
+                    android:layout_marginRight="@dimen/dp3"
+                    android:src="@drawable/sticker"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
 
-        <TextView
-            android:id="@+id/txt_exer_bancunglop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:padding="@dimen/dp5"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_15sp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancungtruong" />
+                <TextView
+                    android:id="@+id/txt_exer_tuan"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:padding="@dimen/dp3"
+                    android:text="Năm học:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/txt_exer_khoihoc"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_namhoc" />
 
-        <TextView
-            android:id="@+id/txt_exer_diemcaonhat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp5"
-            android:padding="@dimen/dp7"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_15sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/txt_exer_trungbinh"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+                <TextView
+                    android:id="@+id/txt_exer_monhoc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:padding="@dimen/dp3"
+                    android:text="Khối:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="@id/txt_exer_namhoc"
+                    app:layout_constraintRight_toLeftOf="@id/img_sticker"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_namhoc" />
 
-        <TextView
-            android:id="@+id/txt_exer_trungbinh"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp5"
-            android:padding="@dimen/dp7"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_15sp"
-            app:layout_constraintLeft_toRightOf="@+id/txt_exer_diemcaonhat"
-            app:layout_constraintRight_toLeftOf="@id/txt_exer_thapnhat"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+                <TextView
+                    android:id="@+id/txt_exer_bancunglam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:padding="@dimen/dp5"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_15sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_tuan" />
 
-        <TextView
-            android:id="@+id/txt_exer_thapnhat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp5"
-            android:padding="@dimen/dp7"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_15sp"
-            app:layout_constraintLeft_toRightOf="@id/txt_exer_trungbinh"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+                <TextView
+                    android:id="@+id/txt_exer_bancungtruong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:padding="@dimen/dp5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_15sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglam" />
 
-        <Button
-            android:id="@+id/btn_xemlaibai"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/exercises_icon_point"
-            android:layout_marginBottom="@dimen/dp5"
-            android:background="@drawable/spr_click_button"
-            android:paddingLeft="@dimen/dp30"
-            android:paddingRight="@dimen/dp30"
-            android:text="Xem lại bài đã làm"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/txt_exer_bancunglop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:padding="@dimen/dp5"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_15sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancungtruong" />
 
+                <TextView
+                    android:id="@+id/txt_exer_diemcaonhat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+
+                    android:gravity="center"
+                    android:padding="@dimen/dp5"
+                    android:text="@string/txt_exer_pointmax"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/txt_exer_trungbinh"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+
+                <TextView
+                    android:id="@+id/txt_exer_pointmax"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:gravity="center"
+                    android:textColor="@color/red_test365"
+                    android:textSize="@dimen/text_20sp"
+                    android:textStyle="bold"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/txt_exer_trungbinh"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_diemcaonhat" />
+
+                <TextView
+                    android:id="@+id/txt_exer_trungbinh"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:padding="@dimen/dp5"
+                    android:text="@string/txt_exer_pointtb"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_15sp"
+                    app:layout_constraintLeft_toRightOf="@+id/txt_exer_diemcaonhat"
+                    app:layout_constraintRight_toLeftOf="@id/txt_exer_thapnhat"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+
+                <TextView
+                    android:id="@+id/txt_exer_pointtb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:gravity="center"
+                    android:textColor="@color/red_test365"
+                    android:textSize="@dimen/text_20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="@+id/txt_exer_diemcaonhat"
+                    app:layout_constraintRight_toLeftOf="@id/txt_exer_thapnhat"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_trungbinh" />
+
+                <TextView
+                    android:id="@+id/txt_exer_thapnhat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/dp5"
+                    android:text="@string/txt_exer_pointmin"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_15sp"
+                    app:layout_constraintLeft_toRightOf="@id/txt_exer_trungbinh"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglop" />
+
+                <TextView
+                    android:id="@+id/txt_exer_point_min"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:gravity="center"
+                    android:textColor="@color/red_test365"
+                    android:textSize="@dimen/text_20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="@id/txt_exer_trungbinh"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_thapnhat" />
+
+                <TextView
+                    android:id="@+id/txt_exer_comment_mother"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp7"
+                    android:text="Nhận xét của mẹ: Con làm bài rất tốt"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_pointmax" />
+
+                <Button
+                    android:id="@+id/btn_xemlaibai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/exercises_icon_point"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:background="@drawable/spr_click_button"
+                    android:paddingLeft="@dimen/dp30"
+                    android:paddingRight="@dimen/dp30"
+                    android:text="Xem lại bài đã làm"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_comment_mother" />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

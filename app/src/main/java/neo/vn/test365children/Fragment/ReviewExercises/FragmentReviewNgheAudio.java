@@ -101,7 +101,8 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
         initEvent();
         return view;
     }
-
+    @BindView(R.id.txt_result_chil_exer)
+    TextView txt_result;
     private void initEvent() {
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +181,17 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
          }
      };*/
     private void initData() {
-
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
+            txt_result.setText("S");
+            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+        } else {
+            txt_result.setText("Đ");
+            txt_result.setTextColor(getResources().getColor(R.color.blue));
+        }
+        if (!mCauhoi.isDalam()) {
+            txt_result.setText("S");
+            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+        }
         if (mCauhoi != null) {
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
             // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
@@ -221,11 +232,15 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
         } catch (IOException e) {
             Log.e(TAG, "play: ", e);
         }
-        mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        adapter.notifyDataSetChanged();
+        if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
+            mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
+            mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
+            mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
+            mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+         adapter.notifyDataSetChanged();
     }
 
     private void init() {

@@ -50,11 +50,11 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     TextView txt_debai;
     @BindView(R.id.btn_xemlaibai)
     Button btn_xemlaibai;
-    @BindView(R.id.txt_exer_diemcaonhat)
+    @BindView(R.id.txt_exer_pointmax)
     TextView txt_caonhat;
-    @BindView(R.id.txt_exer_trungbinh)
+    @BindView(R.id.txt_exer_pointtb)
     TextView txt_trungbinh;
-    @BindView(R.id.txt_exer_thapnhat)
+    @BindView(R.id.txt_exer_point_min)
     TextView txt_thapnhat;
 
     @Override
@@ -83,7 +83,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     String sUserMe, sUserCon, sMon;
 
     private void initData() {
-        Log.i(TAG, "initData: "+ App.mLisCauhoi);
+        Log.i(TAG, "initData: " + App.mLisCauhoi);
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         sIdDe = getIntent().getStringExtra(Constants.KEY_SEND_EXERCISES_DETAIL);
@@ -135,9 +135,9 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
             txt_bancunglam.setText("Có " + obj.getScunglam() + " bạn cùng làm bài thi này");
             txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia:" + obj.getScungtruong());
             txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: " + obj.getScunglop());
-            txt_caonhat.setText("Điểm cao nhất: " + obj.getScaonhat());
-            txt_trungbinh.setText("Điểm trung bình: " + obj.getStrungbinh());
-            txt_thapnhat.setText("Điểm thấp nhất: " + obj.getSthapnhat());
+            txt_caonhat.setText("" + obj.getScaonhat());
+            txt_trungbinh.setText("" + obj.getStrungbinh());
+            txt_thapnhat.setText("" + obj.getSthapnhat());
         }
     }
 

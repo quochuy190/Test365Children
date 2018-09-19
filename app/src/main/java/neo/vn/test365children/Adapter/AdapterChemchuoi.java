@@ -58,30 +58,30 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
     public void onBindViewHolder(final TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
         holder.ll_dapan_all.removeAllViews();
-        if (obj.getsContent().indexOf("//") > 0) {
-            katex.hourglass.in.mathlib.MathView mathView = new katex.hourglass.in.mathlib.MathView(context);
-            mathView.setClickable(true);
-            mathView.setTextSize(17);
-            mathView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
-            mathView.setDisplayText(StringUtil.StringFraction(obj.getsContent()));
-            mathView.setViewBackgroundColor(context.getResources().getColor(R.color.bg_item_dapan));
-            holder.ll_dapan_all.addView(mathView);
-        } else if (obj.getsContent().indexOf("image") > 0) {
-            ImageView txt_dapan = new ImageView(context);
-            int hight_image = (int) context.getResources().getDimension(R.dimen.item_dapan);
-            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    hight_image));
-            Glide.with(context).load(Config.URL_IMAGE + obj.getsContent()).into(txt_dapan);
-            holder.ll_dapan_all.addView(txt_dapan);
-        } else {
-            TextView txt_dapan = new TextView(context);
-            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            txt_dapan.setTextSize(17);
-            txt_dapan.setTextColor(context.getResources().getColor(R.color.black));
-            txt_dapan.setText(obj.getsContent());
-            holder.ll_dapan_all.addView(txt_dapan);
-        }
+        if (obj.getsContent() != null)
+            if (obj.getsContent().indexOf("image") > 0) {
+                ImageView txt_dapan = new ImageView(context);
+                int hight_image = (int) context.getResources().getDimension(R.dimen.item_dapan);
+                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, hight_image));
+                Glide.with(context).load(Config.URL_IMAGE + obj.getsContent()).into(txt_dapan);
+                holder.ll_dapan_all.addView(txt_dapan);
+            } else if (obj.getsContent().indexOf("//") > 0) {
+                katex.hourglass.in.mathlib.MathView mathView = new katex.hourglass.in.mathlib.MathView(context);
+                mathView.setClickable(true);
+                mathView.setTextSize(17);
+                mathView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
+                mathView.setDisplayText(StringUtil.StringFraction(obj.getsContent()));
+                mathView.setViewBackgroundColor(context.getResources().getColor(R.color.bg_item_dapan));
+                holder.ll_dapan_all.addView(mathView);
+            } else {
+                TextView txt_dapan = new TextView(context);
+                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                txt_dapan.setTextSize(17);
+                txt_dapan.setTextColor(context.getResources().getColor(R.color.black));
+                txt_dapan.setText(obj.getsContent());
+                holder.ll_dapan_all.addView(txt_dapan);
+            }
         //holder.txt_dapan.setText(StringUtil.StringFraction(obj.getsContent()));
         switch (obj.getsName()) {
             case "A":
@@ -99,19 +99,19 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
         }
 
         if (obj.isClick()) {
-            if (obj.getsName().equals(obj.getsDapan_Traloi())) {
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
                 Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_chemchuoi);
                 holder.img_lasau.startAnimation(animationRotale);
                 //  holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.red));
             }
-            if (obj.getsName().equals(obj.getsDapan_Dung())) {
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Dung())) {
                 Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_image_batsau_dung);
                 holder.img_lasau.startAnimation(animationRotale);
                 //  holder.checkbox.setImageResource(R.drawable.ic_checked_blue);
                 //  holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.blue));
             }
         } else {
-            if (obj.getsName().equals(obj.getsDapan_Traloi())) {
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
                 Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_chemchuoi);
                 holder.img_lasau.startAnimation(animationRotale);
             } else {

@@ -30,7 +30,6 @@
                 android:layout_width="@dimen/icon_point_lambai"
                 android:layout_height="@dimen/icon_point_lambai"
                 android:src="@drawable/exer_icon_diem" />
-
             <TextView
                 android:gravity="center"
                 android:id="@+id/txt_result_chil_exer"

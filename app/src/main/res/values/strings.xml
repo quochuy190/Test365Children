@@ -17,4 +17,7 @@
     <string name="txt_lable_nhanxet">NHẬN XÉT CỦA HỆ THỐNG</string>
     <string name="txt_exer_point">Điểm hệ thống</string>
     <string name="txt_exer_xephang">Xếp hạng</string>
+    <string name="txt_exer_pointmax">Điểm cao nhất</string>
+    <string name="txt_exer_pointtb">Điểm trung bình</string>
+    <string name="txt_exer_pointmin">Điểm thấp nhất</string>
 </resources>

@@ -72,7 +72,7 @@
     <dimen name="hight_img_chaomung">90dp</dimen>
     <!--giải cứu công chúa-->
     <dimen name="item_congchua">80dp</dimen>
-    <dimen name="item_dapan">200dp</dimen>
+    <dimen name="item_dapan">140dp</dimen>
     <!--Bài tập tuần đã làm-->
     <dimen name="item_baitaptuan_dalam">100dp</dimen>
     <!--Exercises Detail-->

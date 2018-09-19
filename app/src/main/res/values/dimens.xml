@@ -79,7 +79,7 @@
     <dimen name="hight_img_chaomung">90dp</dimen>
     <!--giải cứu công chúa-->
     <dimen name="item_congchua">80dp</dimen>
-    <dimen name="item_dapan">200dp</dimen>
+    <dimen name="item_dapan">150dp</dimen>
     <!--Bài tập tuần đã làm-->
     <dimen name="item_baitaptuan_dalam">100dp</dimen>
     <!--Exercises Detail-->
@@ -89,4 +89,5 @@
     <dimen name="exer_hight_debai">40dp</dimen>
     <dimen name="exer_margin_top">10dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
+    <dimen name="exer_width_sticker">70dp</dimen>
 </resources>

@@ -21,10 +21,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="@dimen/margin_left_lambai"
-            android:layout_height="@dimen/margin_left_lambai"
-            android:layout_margin="@dimen/dp5" />
+        <RelativeLayout
+            android:layout_width="@dimen/icon_point_lambai"
+            android:layout_height="@dimen/icon_point_lambai"
+            android:layout_margin="@dimen/dp5">
+
+            <ImageView
+                android:layout_width="@dimen/icon_point_lambai"
+                android:layout_height="@dimen/icon_point_lambai"
+                android:src="@drawable/exer_icon_diem" />
+            <TextView
+                android:gravity="center"
+                android:id="@+id/txt_result_chil_exer"
+                android:layout_width="@dimen/icon_point_lambai"
+                android:layout_height="@dimen/icon_point_lambai"
+                android:fontFamily="@font/font1"
+                android:textSize="@dimen/text_25sp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/txt_lable"

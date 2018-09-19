@@ -111,6 +111,8 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
 
     int iRandom;
 
+    @BindView(R.id.txt_result_chil_exer)
+    TextView txt_result;
     private void initData() {
         Random ran = new Random();
         iRandom = ran.nextInt(arr_image.length);
@@ -119,11 +121,26 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
             txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
         if (mCauhoi.getsSubNumberCau() != null && mCauhoi.getsQUESTION() != null)
             txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));
-        mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        adapter.notifyDataSetChanged();
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
+            txt_result.setText("S");
+            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+        } else {
+            txt_result.setText("Đ");
+            txt_result.setTextColor(getResources().getColor(R.color.blue));
+        }
+        if (!mCauhoi.isDalam()) {
+            txt_result.setText("S");
+            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+        }
+        if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
+            mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
+            mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
+            mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
+            mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+       adapter.notifyDataSetChanged();
 
         adapter.setOnIListener(new ItemClickListener() {
             @Override

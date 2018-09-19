@@ -85,7 +85,20 @@ public class FragmentReviewChemhoaqua extends BaseFragment {
         return view;
     }
 
+    @BindView(R.id.txt_result_chil_exer)
+    TextView txt_result;
     private void initData() {
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
+            txt_result.setText("S");
+            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+        } else {
+            txt_result.setText("Đ");
+            txt_result.setTextColor(getResources().getColor(R.color.blue));
+        }
+        if (!mCauhoi.isDalam()) {
+            txt_result.setText("S");
+            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+        }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
@@ -115,11 +128,15 @@ public class FragmentReviewChemhoaqua extends BaseFragment {
                 ll_cauhoi.addView(txt_dapan);
             }
         }
-        mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        adapter.notifyDataSetChanged();
+        if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
+            mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
+            mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
+            mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
+            mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+         adapter.notifyDataSetChanged();
     }
 
     private void init() {

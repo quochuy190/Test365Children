@@ -185,11 +185,15 @@ public class FragmentDocvaTraloi extends BaseFragment {
                 "                </div>";
 */
         txt_cauhoi.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
+        if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
+            mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
+            mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
+            mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
+            mLis.add(new DapAn("D", mCauhoi.getsD(), "", mCauhoi.getsANSWER(), false, ""));
 
-        mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
-        mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
-        mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));
-        mLis.add(new DapAn("D", mCauhoi.getsD(), "", mCauhoi.getsANSWER(), false, ""));
         adapter.notifyDataSetChanged();
     }
 

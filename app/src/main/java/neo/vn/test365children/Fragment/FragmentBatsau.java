@@ -156,34 +156,39 @@ public class FragmentBatsau extends BaseFragment {
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
         // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-        if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
-            MathView mathView = new MathView(getContext());
-            mathView.setClickable(true);
-            mathView.setTextSize(17);
-            mathView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-            mathView.setDisplayText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-            mathView.setViewBackgroundColor(getContext().getResources().getColor(R.color.bg_item_dapan));
-            ll_cauhoi.addView(mathView);
-        } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
-            ImageView txt_dapan = new ImageView(getContext());
-            int hight_image = (int) getContext().getResources().getDimension(R.dimen.item_dapan);
-            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    hight_image));
-            Glide.with(getContext()).load(Config.URL_IMAGE + mCauhoi.getsQUESTION()).into(txt_dapan);
-            ll_cauhoi.addView(txt_dapan);
-        } else {
-            TextView txt_dapan = new TextView(getContext());
-            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            txt_dapan.setTextSize(17);
-            txt_dapan.setTextColor(getContext().getResources().getColor(R.color.black));
-            txt_dapan.setText(Html.fromHtml(mCauhoi.getsQUESTION()));
-            ll_cauhoi.addView(txt_dapan);
-        }
-        mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
-        mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
-        mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));
-        mLis.add(new DapAn("D", mCauhoi.getsD(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsQUESTION() != null)
+            if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
+                MathView mathView = new MathView(getContext());
+                mathView.setClickable(true);
+                mathView.setTextSize(17);
+                mathView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
+                mathView.setDisplayText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
+                mathView.setViewBackgroundColor(getContext().getResources().getColor(R.color.bg_item_dapan));
+                ll_cauhoi.addView(mathView);
+            } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
+                ImageView txt_dapan = new ImageView(getContext());
+                int hight_image = (int) getContext().getResources().getDimension(R.dimen.item_dapan);
+                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        hight_image));
+                Glide.with(getContext()).load(Config.URL_IMAGE + mCauhoi.getsQUESTION()).into(txt_dapan);
+                ll_cauhoi.addView(txt_dapan);
+            } else {
+                TextView txt_dapan = new TextView(getContext());
+                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                txt_dapan.setTextSize(17);
+                txt_dapan.setTextColor(getContext().getResources().getColor(R.color.black));
+                txt_dapan.setText(Html.fromHtml(mCauhoi.getsQUESTION()));
+                ll_cauhoi.addView(txt_dapan);
+            }
+        if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
+            mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
+            mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
+            mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
+            mLis.add(new DapAn("D", mCauhoi.getsD(), "", mCauhoi.getsANSWER(), false, ""));
         adapter.notifyDataSetChanged();
     }
 
@@ -216,7 +221,7 @@ public class FragmentBatsau extends BaseFragment {
                                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
                                     App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                                } else{
+                                } else {
                                     App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
                                     App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
