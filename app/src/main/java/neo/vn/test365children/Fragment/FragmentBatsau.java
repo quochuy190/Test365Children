@@ -1,16 +1,19 @@
 package neo.vn.test365children.Fragment;
 
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,18 +28,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import katex.hourglass.in.mathlib.MathView;
 import neo.vn.test365children.Adapter.AdapterDapanBatsau;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
-import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
-import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -154,33 +154,7 @@ public class FragmentBatsau extends BaseFragment {
     private void initData() {
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
-        // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-        if (mCauhoi.getsQUESTION() != null)
-            if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
-                MathView mathView = new MathView(getContext());
-                mathView.setClickable(true);
-                mathView.setTextSize(17);
-                mathView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mathView.setDisplayText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-                mathView.setViewBackgroundColor(getContext().getResources().getColor(R.color.bg_item_dapan));
-                ll_cauhoi.addView(mathView);
-            } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
-                ImageView txt_dapan = new ImageView(getContext());
-                int hight_image = (int) getContext().getResources().getDimension(R.dimen.item_dapan);
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        hight_image));
-                Glide.with(getContext()).load(Config.URL_IMAGE + mCauhoi.getsQUESTION()).into(txt_dapan);
-                ll_cauhoi.addView(txt_dapan);
-            } else {
-                TextView txt_dapan = new TextView(getContext());
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                txt_dapan.setTextSize(17);
-                txt_dapan.setTextColor(getContext().getResources().getColor(R.color.black));
-                txt_dapan.setText(Html.fromHtml(mCauhoi.getsQUESTION()));
-                ll_cauhoi.addView(txt_dapan);
-            }
+        initWebview();
         if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
         if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
@@ -248,5 +222,36 @@ public class FragmentBatsau extends BaseFragment {
                 }
             }
         });
+    }
+
+    @BindView(R.id.webview_debai)
+    WebView webview_debai;
+
+    private void initWebview() {
+        webview_debai.setInitialScale(1);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings().setLoadWithOverviewMode(true);
+        webview_debai.getSettings().setUseWideViewPort(true);
+        webview_debai.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webview_debai.setScrollbarFadingEnabled(false);
+        webview_debai.getSettings().setUseWideViewPort(true);
+        webview_debai.getSettings().setLoadWithOverviewMode(true);
+        webview_debai.getSettings().setSupportZoom(true);
+        webview_debai.getSettings().setBuiltInZoomControls(true);
+        webview_debai.getSettings().setDisplayZoomControls(false);
+        webview_debai.setWebChromeClient(new WebChromeClient());
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        Resources res = getResources();
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.LARGER);
+        webSettings.setDefaultFontSize(18);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+
+        webview_debai.loadDataWithBaseURL("", pish + mCauhoi.getsHTML_CONTENT().replaceAll("#", "") + pas, "text/html", "UTF-8", "");
+
     }
 }

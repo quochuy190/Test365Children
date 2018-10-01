@@ -73,6 +73,17 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
     @SerializedName("EGG_4_RESULT")
     String sEGG_4_RESULT;
 
+    @SerializedName("HTML_CONTENT")
+    String sHTML_CONTENT;
+    @SerializedName("HTML_A")
+    String sHTML_A;
+    @SerializedName("HTML_B")
+    String sHTML_B;
+    @SerializedName("HTML_C")
+    String sHTML_C;
+    @SerializedName("HTML_D")
+    String sHTML_D;
+
     String sImagePath;
     String sAudioPath;
     String sCauhoi_huongdan;
@@ -122,6 +133,46 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public String getsHTML_CONTENT() {
+        return sHTML_CONTENT;
+    }
+
+    public void setsHTML_CONTENT(String sHTML_CONTENT) {
+        this.sHTML_CONTENT = sHTML_CONTENT;
+    }
+
+    public String getsHTML_A() {
+        return sHTML_A;
+    }
+
+    public void setsHTML_A(String sHTML_A) {
+        this.sHTML_A = sHTML_A;
+    }
+
+    public String getsHTML_B() {
+        return sHTML_B;
+    }
+
+    public void setsHTML_B(String sHTML_B) {
+        this.sHTML_B = sHTML_B;
+    }
+
+    public String getsHTML_C() {
+        return sHTML_C;
+    }
+
+    public void setsHTML_C(String sHTML_C) {
+        this.sHTML_C = sHTML_C;
+    }
+
+    public String getsHTML_D() {
+        return sHTML_D;
+    }
+
+    public void setsHTML_D(String sHTML_D) {
+        this.sHTML_D = sHTML_D;
     }
 
     public boolean isAnserTrue() {

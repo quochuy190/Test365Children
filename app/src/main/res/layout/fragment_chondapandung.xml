@@ -39,7 +39,7 @@
             android:padding="@dimen/dp5"
             android:text="Câu 3: Chọn đáp án đúng"
             android:textColor="@color/lable_lambai"
-            android:textSize="@dimen/text_15sp"
+            android:textSize="@dimen/text_16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,29 +55,10 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/txt_question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="@dimen/dp5"
-        android:text="Cau hoi"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
-
-
     <ImageView
         android:id="@+id/btn_xemdiem"
         android:layout_width="0dp"
         android:layout_height="@dimen/image_next"
-
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -110,31 +91,41 @@
         app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_question">
+        app:layout_constraintEnd_toEndOf="@+id/img_background"
+        app:layout_constraintStart_toStartOf="@+id/img_background"
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
-        <ImageView
-            android:id="@+id/img_question"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:padding="@dimen/dp5" />
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_dapan"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
+            <WebView
+                android:id="@+id/webview_debai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </android.support.v7.widget.RecyclerView>
+            </WebView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_dapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/webview_debai" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

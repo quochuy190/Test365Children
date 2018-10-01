@@ -29,7 +29,7 @@ import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Fragment.FragmentBatsau;
 import neo.vn.test365children.Fragment.FragmentChemchuoi;
-import neo.vn.test365children.Fragment.FragmentChondapanKieu1;
+import neo.vn.test365children.Fragment.FragmentChondapanDung;
 import neo.vn.test365children.Fragment.FragmentCuuCongchua;
 import neo.vn.test365children.Fragment.FragmentDienvaochotrong;
 import neo.vn.test365children.Fragment.FragmentDocvaTraloi;
@@ -170,7 +170,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
 
     @Override
     public void onBackPressed() {
-        // super.onBackPressed();
+         super.onBackPressed();
     }
 
     @Override
@@ -226,8 +226,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                         obj.getLisInfo().get(i).setsTextDebai(obj.getsTEXT());
                         if (obj.getsKIEU().equals("1")) {
                             if (obj.getsERROR().equals("0000"))
-                                adapterViewpager.addFragment(FragmentChondapanKieu1.newInstance(obj.getLisInfo().get(i)),
-                                        obj.getsERROR());
+                                adapterViewpager.addFragment(FragmentChondapanDung.newInstance(obj.getLisInfo().get(i)),obj.getsERROR());
                         } else if (obj.getsKIEU().equals("2")) {
                             adapterViewpager.addFragment(FragmentBatsau.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("3")) {

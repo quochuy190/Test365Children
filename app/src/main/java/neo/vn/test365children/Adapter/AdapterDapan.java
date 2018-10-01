@@ -1,28 +1,24 @@
 package neo.vn.test365children.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import katex.hourglass.in.mathlib.MathView;
-import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
-import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -54,45 +50,12 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
         return new TopicViewHoder(view);
     }
 
-    @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
-/*        if (obj.getsImage() != null && obj.getsImage().length() > 0) {
-            holder.img_dapan.setVisibility(View.VISIBLE);
-            holder.txt_dapan.setVisibility(View.GONE);
-        } else {
-            holder.img_dapan.setVisibility(View.GONE);
-            holder.txt_dapan.setVisibility(View.VISIBLE);
-
-            holder.txt_dapan.setText(StringUtil.StringFraction_Dapan(obj.getsContent()));
-        }*/
-        holder.ll_dapan_all.removeAllViews();
-        if (obj.getsContent() != null)
-            if (obj.getsContent().indexOf("image") > 0) {
-                ImageView txt_dapan = new ImageView(context);
-                int hight_image = (int) context.getResources().getDimension(R.dimen.item_dapan);
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        hight_image));
-                Glide.with(context).load(Config.URL_IMAGE + obj.getsContent()).into(txt_dapan);
-                holder.ll_dapan_all.addView(txt_dapan);
-            } else if (obj.getsContent().indexOf("//") > 0) {
-                MathView mathView = new MathView(context);
-                mathView.setClickable(true);
-                mathView.setTextSize(16);
-                mathView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
-                mathView.setDisplayText(StringUtil.StringFraction(obj.getsContent()));
-                mathView.setViewBackgroundColor(context.getResources().getColor(R.color.bg_item_dapan));
-                holder.ll_dapan_all.addView(mathView);
-            } else {
-                TextView txt_dapan = new TextView(context);
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                txt_dapan.setTextSize(16);
-                txt_dapan.setTextColor(context.getResources().getColor(R.color.black));
-                txt_dapan.setText(obj.getsContent());
-                holder.ll_dapan_all.addView(txt_dapan);
-            }
+        if (obj.getsContent() != null) {
+            initWebview(holder.webview_debai, obj.getsContent().replaceAll("#", ""));
+        }
         if (obj.isClick()) {
             if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
                 holder.checkbox.setImageResource(R.drawable.ic_checked);
@@ -124,8 +87,8 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
         LinearLayout ll_dapan_all;
         @BindView(R.id.checkbox_dapan)
         ImageView checkbox;
-        @BindView(R.id.img_dapan)
-        ImageView img_dapan;
+        @BindView(R.id.webview_debai)
+        WebView webview_debai;
 
         public TopicViewHoder(View itemView) {
             super(itemView);
@@ -147,5 +110,33 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
     public void updateList(List<DapAn> list) {
         list = list;
         notifyDataSetChanged();
+    }
+
+    private void initWebview(WebView webview_debai, String link_web) {
+        webview_debai.setInitialScale(1);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings().setLoadWithOverviewMode(true);
+        webview_debai.getSettings().setUseWideViewPort(true);
+        webview_debai.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webview_debai.setScrollbarFadingEnabled(false);
+        webview_debai.getSettings().setUseWideViewPort(true);
+        webview_debai.getSettings().setLoadWithOverviewMode(true);
+        webview_debai.getSettings().setSupportZoom(true);
+        webview_debai.getSettings().setBuiltInZoomControls(true);
+        webview_debai.getSettings().setDisplayZoomControls(false);
+        webview_debai.setWebChromeClient(new WebChromeClient());
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+        webSettings.setDefaultFontSize(40);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+
+        webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
+                "text/html", "UTF-8", "");
+
     }
 }

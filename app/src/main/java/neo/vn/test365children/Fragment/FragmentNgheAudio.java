@@ -285,14 +285,14 @@ public class FragmentNgheAudio extends BaseFragment implements MediaPlayer.OnPre
             Log.e(TAG, "play: ", e);
         }
 
-        if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsD(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
+            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
+            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
+            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
+            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
         adapter.notifyDataSetChanged();
     }
     private void init() {
