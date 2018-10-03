@@ -116,7 +116,8 @@ public class FragmentDienvaochotrong extends BaseFragment {
     public String replaceStringBuffer(int first, int last, String st) {
         String s = "";
         StringBuffer sbf = new StringBuffer(st);
-        s = String.valueOf(sbf.replace(first, last, "<input class=\"form-control\" pading=\"5\" type=\"text\" size=\"2\" style=\"text-align:center;\"></input>"));
+        s = String.valueOf(sbf.replace(first, last, "<input class=\"form-control\" pading=\"5\"" +
+                " type=\"text\" size=\"2\" style=\"text-align:center;\"></input>"));
         // s = String.valueOf(sbf.replace(first, last, "<img src=\"http://content1.test365.vn//upload//image/toan//tamgiacvuong.PNG\" style=\"height:10%; width:10%;\">"));
 
         return s;

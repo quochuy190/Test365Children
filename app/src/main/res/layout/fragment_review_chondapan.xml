@@ -30,12 +30,13 @@
                 android:layout_width="@dimen/icon_point_lambai"
                 android:layout_height="@dimen/icon_point_lambai"
                 android:src="@drawable/exer_icon_diem" />
+
             <TextView
-                android:gravity="center"
                 android:id="@+id/txt_result_chil_exer"
                 android:layout_width="@dimen/icon_point_lambai"
                 android:layout_height="@dimen/icon_point_lambai"
                 android:fontFamily="@font/font1"
+                android:gravity="center"
                 android:textSize="@dimen/text_25sp" />
         </RelativeLayout>
 
@@ -69,33 +70,57 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_cauhoi"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_lable">
-
-        <LinearLayout
-            android:id="@+id/txt_cauhoi"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="@dimen/dp5"></LinearLayout>
-
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_dapan"
+    <android.support.v4.widget.NestedScrollView
+        android:layout_marginBottom="@dimen/dp40"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/dp35"
-        android:padding="@dimen/dp5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/img_background"
         app:layout_constraintStart_toStartOf="@+id/img_background"
-        app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable">
+
+        <LinearLayout
+            android:id="@+id/ll_cauhoi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/txt_cauhoi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dp5"
+                tools:ignore="WebViewLayout">
+
+                <WebView
+                    android:id="@+id/webview_debai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </WebView>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_dapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp35"
+                android:padding="@dimen/dp5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/img_background"
+                app:layout_constraintStart_toStartOf="@+id/img_background"
+                app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi" />
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
 </android.support.constraint.ConstraintLayout>

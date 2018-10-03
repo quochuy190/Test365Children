@@ -150,40 +150,18 @@ public class FragmentDocvaTraloi extends BaseFragment {
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
+      //  webview_debai.setInitialScale(1);
         txt_cauhoi.setWebChromeClient(new WebChromeClient());
         txt_cauhoi.getSettings().setJavaScriptEnabled(true);
         txt_cauhoi.getSettings();
         txt_cauhoi.setBackgroundColor(Color.TRANSPARENT);
         String text = "<html><head>"
-                + "<style type=\"text/css\">body{color: #fff;}"
+                + "<style type=\"text/css\">body{color: #fff;} size=\"4\""
                 + "</style></head>"
                 + "<body>"
                 + mCauhoi.getsTextDebai()
                 + "</body></html>";
-     /*   String s = " Đọc biểu thức sau:\n" +
-                "        1<div class=\"frac\" style=\"display: inline-block;  position: relative;    vertical-align: middle;\n" +
-                "        letter-spacing: 0.001em;\n" +
-                "        text-align: center;\">\n" +
-                "                <span style=\"display: block;\n" +
-                "        padding: 0.1em;\">21hfgjf</span>\n" +
-                "                <span style=\"display: block;\n" +
-                "        padding: 0.1em;display: none;\" class=\"symbol\">/</span>\n" +
-                "                <span style=\"display: block;\n" +
-                "        padding: 0.1em;border-top: thin solid black;\" class=\"bottom\">23</span>\n" +
-                "\n" +
-                "                </div>+\n" +
-                "                1<div class=\"frac\" style=\"display: inline-block;  position: relative;    vertical-align: middle;\n" +
-                "        letter-spacing: 0.001em;\n" +
-                "        text-align: center;\">\n" +
-                "                <span style=\"display: block;\n" +
-                "        padding: 0.1em;\">21</span>\n" +
-                "                <span style=\"display: block;\n" +
-                "        padding: 0.1em;display: none;\" class=\"symbol\">/</span>\n" +
-                "                <span style=\"display: block;\n" +
-                "        padding: 0.1em;border-top: thin solid black;\" class=\"bottom\">23</span>\n" +
-                "\n" +
-                "                </div>";
-*/
+
         txt_cauhoi.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
         if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));

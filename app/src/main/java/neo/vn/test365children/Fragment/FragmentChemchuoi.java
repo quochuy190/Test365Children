@@ -36,6 +36,7 @@ import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -145,32 +146,7 @@ public class FragmentChemchuoi extends BaseFragment {
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
         initWebview();
-        // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
-        // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-      /*  if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
-            MathView mathView = new MathView(getContext());
-            mathView.setClickable(true);
-            mathView.setTextSize(17);
-            mathView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-            mathView.setDisplayText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-            mathView.setViewBackgroundColor(getContext().getResources().getColor(R.color.bg_item_dapan));
-            ll_cauhoi.addView(mathView);
-        } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
-            ImageView txt_dapan = new ImageView(getContext());
-            int hight_image =  (int) getContext().getResources().getDimension(R.dimen.item_dapan);
-            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    hight_image));
-            Glide.with(getContext()).load(Config.URL_IMAGE+mCauhoi.getsQUESTION()).into(txt_dapan);
-            ll_cauhoi.addView(txt_dapan);
-        } else {
-            TextView txt_dapan = new TextView(getContext());
-            txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            txt_dapan.setTextSize(17);
-            txt_dapan.setTextColor(getContext().getResources().getColor(R.color.black));
-            txt_dapan.setText(mCauhoi.getsQUESTION());
-            ll_cauhoi.addView(txt_dapan);
-        }*/
+
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
         if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
@@ -223,13 +199,15 @@ public class FragmentChemchuoi extends BaseFragment {
 
                     }
                     isTraloi = true;
-                    adapter.notifyDataSetChanged();
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }
+
     @BindView(R.id.webview_debai)
     WebView webview_debai;
+
     private void initWebview() {
         webview_debai.setInitialScale(1);
         webview_debai.getSettings().setJavaScriptEnabled(true);
@@ -254,7 +232,9 @@ public class FragmentChemchuoi extends BaseFragment {
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
 
-        webview_debai.loadDataWithBaseURL("", pish + mCauhoi.getsHTML_CONTENT().replaceAll("#", "") + pas, "text/html", "UTF-8", "");
+        webview_debai.loadDataWithBaseURL("",
+                pish + StringUtil.convert_html(mCauhoi.getsHTML_CONTENT()) + pas,
+                "text/html", "UTF-8", "");
 
     }
 }

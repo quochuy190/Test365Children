@@ -67,6 +67,22 @@ public class ActivityComplete extends BaseActivity {
                     CauhoiDetail objCauhoiDetail = App.mLisCauhoi.get(j).getLisInfo().get(i);
                     if (objCauhoiDetail.isAnserTrue()){
                         fPoint = fPoint+ Float.parseFloat(objCauhoiDetail.getsPOINT());
+                    }else {
+                        if (obj.getsKIEU().equals("11") || obj.getsKIEU().equals("5")) {
+                            float fTotalPoint = Float.parseFloat(objCauhoiDetail.getsPOINT()) / 4;
+                            if (objCauhoiDetail.getsHTML_A().equals(objCauhoiDetail.getsEGG_1_RESULT())) {
+                                fPoint = fPoint + fTotalPoint;
+                            }
+                            if (objCauhoiDetail.getsHTML_B().equals(objCauhoiDetail.getsEGG_2_RESULT())) {
+                                fPoint = fPoint + fTotalPoint;
+                            }
+                            if (objCauhoiDetail.getsHTML_C().equals(objCauhoiDetail.getsEGG_3_RESULT())) {
+                                fPoint = fPoint + fTotalPoint;
+                            }
+                            if (objCauhoiDetail.getsHTML_D().equals(objCauhoiDetail.getsEGG_4_RESULT())) {
+                                fPoint = fPoint + fTotalPoint;
+                            }
+                        }
                     }
                 }
             }

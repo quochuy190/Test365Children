@@ -45,6 +45,7 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
     public int setContentViewId() {
         return R.layout.activity_review_exercises;
     }
+
     @BindView(R.id.viewpager_lambai)
     ViewPager viewpager_lambai;
     AdapterViewpager adapterViewpager;
@@ -183,6 +184,12 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                         mCauhoiDetail.setsTYPE(obj.getLisInfo().get(i).getsTYPE());
                         mCauhoiDetail.setsQUESTION(obj.getLisInfo().get(i).getsQUESTION());
                         mCauhoiDetail.setsANSWER(obj.getLisInfo().get(i).getsANSWER());
+
+                        mCauhoiDetail.setsHTML_CONTENT(obj.getLisInfo().get(i).getsHTML_CONTENT());
+                        mCauhoiDetail.setsHTML_A(obj.getLisInfo().get(i).getsHTML_A());
+                        mCauhoiDetail.setsHTML_B(obj.getLisInfo().get(i).getsHTML_B());
+                        mCauhoiDetail.setsHTML_C(obj.getLisInfo().get(i).getsHTML_C());
+                        mCauhoiDetail.setsHTML_D(obj.getLisInfo().get(i).getsHTML_D());
                         if (obj.getsKIEU().equals("1")) {
                             if (obj.getsERROR().equals("0000"))
                                 adapterViewpager.addFragment(FragmentReviewDapandung.newInstance(mCauhoiDetail), obj.getsERROR());

@@ -28,8 +28,8 @@ public class StringUtil {
                 String[] s_phanso = s.split("//");
                 if (s_phanso.length > 1) {
                     if (s_phanso[0].indexOf("||") > 0) {
-                        String s_honso =s_phanso[0].replace("||", "<<");
-                        String[] sHonso =s_honso.split("<<");
+                        String s_honso = s_phanso[0].replace("||", "<<");
+                        String[] sHonso = s_honso.split("<<");
                         if (sHonso.length == 2)
                             s = StringUtil.ConvertFraction(sHonso[0], sHonso[1], s_phanso[1]);
                     } else {
@@ -43,8 +43,18 @@ public class StringUtil {
         }
         return sOutput;
     }
+
     public static String ConvertFraction_Dapan(String a, String b, String c) {
         return "$$" + a + "\\dfrac{" + b + "} {" + c + "} $$";
+    }
+
+    public static String convert_html(String content) {
+        String s_resutl = "";
+        if (content != null && content.length() > 0) {
+            s_resutl = content.replaceAll("&#34;", "\"");
+            s_resutl = s_resutl.replaceAll("&#92;", "\\");
+        }
+        return s_resutl;
     }
 
     public static String StringFraction_Dapan(String sInput) {
@@ -55,8 +65,8 @@ public class StringUtil {
                 String[] s_phanso = s.split("//");
                 if (s_phanso.length > 1) {
                     if (s_phanso[0].indexOf("||") > 0) {
-                        String s_honso =s_phanso[0].replace("||", "<<");
-                        String[] sHonso =s_honso.split("<<");
+                        String s_honso = s_phanso[0].replace("||", "<<");
+                        String[] sHonso = s_honso.split("<<");
                         if (sHonso.length == 2)
                             s = StringUtil.ConvertFraction_Dapan(sHonso[0], sHonso[1], s_phanso[1]);
                     } else {
@@ -70,6 +80,7 @@ public class StringUtil {
         }
         return sOutput;
     }
+
     /**
      * Upper case first letter in string
      *

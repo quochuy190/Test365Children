@@ -55,18 +55,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/txt_cauhoi"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="@dimen/dp5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_player">
 
-    </LinearLayout>
 
 
     <ImageView
@@ -189,19 +178,44 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
-    <android.support.v7.widget.RecyclerView
-
-        android:id="@+id/recycler_dapan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+    <android.support.v4.widget.NestedScrollView
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_cauhoi">
+        app:layout_constraintTop_toBottomOf="@+id/ll_player"
+        app:layout_constraintBottom_toTopOf="@id/btn_nopbai"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:id="@+id/txt_cauhoi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/dp5"
+            tools:ignore="WebViewLayout">
+            <WebView
+                android:id="@+id/webview_debai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </WebView>
 
-    </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_dapan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_cauhoi">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
 
 
 </android.support.constraint.ConstraintLayout>

@@ -37,6 +37,7 @@ import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -246,12 +247,13 @@ public class FragmentBatsau extends BaseFragment {
         Resources res = getResources();
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.LARGER);
-        webSettings.setDefaultFontSize(18);
+        webSettings.setDefaultFontSize(20);
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
 
-        webview_debai.loadDataWithBaseURL("", pish + mCauhoi.getsHTML_CONTENT().replaceAll("#", "") + pas, "text/html", "UTF-8", "");
+        webview_debai.loadDataWithBaseURL("", pish + StringUtil.convert_html(mCauhoi.getsHTML_CONTENT())
+                + pas, "text/html", "UTF-8", "");
 
     }
 }

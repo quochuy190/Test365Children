@@ -98,7 +98,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
         mRealm.beginTransaction();
         mRealm.copyToRealmOrUpdate(obj_answer);
         mRealm.commitTransaction();
-
+        App.mExercise= obj_answer;
         showDialogLoading();
         mPresenter.get_api_get_part(sUserMe, sUserCon, objBaitapTuan.getsID());
         // mPresenter.get_api_get_part("", "", "");

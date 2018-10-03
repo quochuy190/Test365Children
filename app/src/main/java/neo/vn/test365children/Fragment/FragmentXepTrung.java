@@ -440,7 +440,6 @@ public class FragmentXepTrung extends BaseFragment {
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsEGG_1_RESULT(map_answer_chil.get("egg_1"));
                                 if (map_answer_chil.get("egg_1").equals(map_answer_true.get("egg_1"))) {
-                                    Log.i(TAG, "onTouch: Trứng 1 đúng");
                                     isEgg1 = true;
                                 }
                             }
@@ -448,7 +447,6 @@ public class FragmentXepTrung extends BaseFragment {
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsEGG_2_RESULT(map_answer_chil.get("egg_2"));
                                 if (map_answer_chil.get("egg_2").equals(map_answer_true.get("egg_2"))) {
-                                    Log.i(TAG, "onTouch: Trứng 2 đúng");
                                     isEgg2 = true;
                                 }
                             }
@@ -456,13 +454,13 @@ public class FragmentXepTrung extends BaseFragment {
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsEGG_3_RESULT(map_answer_chil.get("egg_3"));
                                 if (map_answer_chil.get("egg_3").equals(map_answer_true.get("egg_3"))) {
-                                    Log.i(TAG, "onTouch: Trứng 3 đúng");
                                     isEgg3 = true;
                                 }
                             }
                             if (map_answer_chil.get("egg_4") != null) {
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsEGG_4_RESULT(map_answer_chil.get("egg_4"));
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1)
+                                        .setsEGG_4_RESULT(map_answer_chil.get("egg_4"));
                                 String s = map_answer_chil.get("egg_4");
                                 if (map_answer_chil.get("egg_4").equals(map_answer_true.get("egg_4"))) {
                                     isEgg4 = true;

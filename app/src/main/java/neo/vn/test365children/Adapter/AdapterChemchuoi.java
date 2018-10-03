@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -57,22 +58,8 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
     @Override
     public void onBindViewHolder(final TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
-        switch (obj.getsName()) {
-            case "A":
-                Glide.with(context).load(R.drawable.fruit_banana).into(holder.img_lasau);
-                break;
-            case "B":
-                Glide.with(context).load(R.drawable.fruit_berry).into(holder.img_lasau);
-                break;
-            case "C":
-                Glide.with(context).load(R.drawable.fruit_coconut).into(holder.img_lasau);
-                break;
-            case "D":
-                Glide.with(context).load(R.drawable.fruit_pineapple).into(holder.img_lasau);
-                break;
-        }
         if (obj.getsContent() != null) {
-            initWebview(holder.webview_debai, obj.getsContent().replaceAll("#", ""));
+            initWebview(holder.webview_debai, StringUtil.convert_html(obj.getsContent()));
         }
         if (obj.isClick()) {
             if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
@@ -94,7 +81,20 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
                 holder.img_lasau.setVisibility(View.VISIBLE);
             }
         }
-
+        switch (obj.getsName()) {
+            case "A":
+                Glide.with(context).load(R.drawable.fruit_banana).into(holder.img_lasau);
+                break;
+            case "B":
+                Glide.with(context).load(R.drawable.fruit_berry).into(holder.img_lasau);
+                break;
+            case "C":
+                Glide.with(context).load(R.drawable.fruit_coconut).into(holder.img_lasau);
+                break;
+            case "D":
+                Glide.with(context).load(R.drawable.fruit_pineapple).into(holder.img_lasau);
+                break;
+        }
     }
 
     @Override
@@ -151,7 +151,7 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(50);
+        webSettings.setDefaultFontSize(55);
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";

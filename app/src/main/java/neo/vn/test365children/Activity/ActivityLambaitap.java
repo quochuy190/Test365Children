@@ -34,6 +34,7 @@ import neo.vn.test365children.Fragment.FragmentCuuCongchua;
 import neo.vn.test365children.Fragment.FragmentDienvaochotrong;
 import neo.vn.test365children.Fragment.FragmentDocvaTraloi;
 import neo.vn.test365children.Fragment.FragmentNgheAudio;
+import neo.vn.test365children.Fragment.FragmentNoicau;
 import neo.vn.test365children.Fragment.FragmentSapxep;
 import neo.vn.test365children.Fragment.FragmentXemanhtraloi;
 import neo.vn.test365children.Fragment.FragmentXepTrung;
@@ -98,6 +99,12 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         mPlayer.start();
     }
 
+    public void play_mp3_click() {
+        //mp3 = new MediaPlayer();
+        mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.click1);
+        mPlayer.start();
+    }
+
     public void play_mp3_false() {
         //mp3 = new MediaPlayer();
         mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.false_te);
@@ -150,6 +157,9 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             Intent intent = new Intent(ActivityLambaitap.this, ActivityComplete.class);
             intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, objExer);
             startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
+        } else if (event.message.equals("mp3")) {
+            play_mp3_click();
+            Log.i(TAG, "onMessageEvent: " + App.mLisCauhoi);
         }
 
 
@@ -170,7 +180,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
 
     @Override
     public void onBackPressed() {
-         super.onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
@@ -226,7 +236,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                         obj.getLisInfo().get(i).setsTextDebai(obj.getsTEXT());
                         if (obj.getsKIEU().equals("1")) {
                             if (obj.getsERROR().equals("0000"))
-                                adapterViewpager.addFragment(FragmentChondapanDung.newInstance(obj.getLisInfo().get(i)),obj.getsERROR());
+                                adapterViewpager.addFragment(FragmentChondapanDung.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("2")) {
                             adapterViewpager.addFragment(FragmentBatsau.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("3")) {
@@ -243,6 +253,8 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                             adapterViewpager.addFragment(FragmentXemanhtraloi.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("9")) {
                             adapterViewpager.addFragment(FragmentNgheAudio.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                        } else if (obj.getsKIEU().equals("11")) {
+                            adapterViewpager.addFragment(FragmentNoicau.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("10")) {
                             if (!isStarCongchua) {
                                 adapterViewpager.addFragment(FragmentCuuCongchua.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
@@ -313,6 +325,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         stopService(intent_service);
         App.mLisCauhoi.clear();
     }
+
     // result chil 2 trường hợp: 0 là sai,1 là đúng
     public void put_api_nopbai(String sKieunop) {
         fPoint = 0;
@@ -329,6 +342,22 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                             objCauhoiDetail.getsRESULT_CHILD(), objCauhoiDetail.getsPOINT_CHILD()));
                     if (objCauhoiDetail.isAnserTrue()) {
                         fPoint = fPoint + Float.parseFloat(objCauhoiDetail.getsPOINT());
+                    } else {
+                        if (obj.getsKIEU().equals("11") || obj.getsKIEU().equals("5")) {
+                            float fTotalPoint = Float.parseFloat(objCauhoiDetail.getsPOINT()) / 4;
+                            if (objCauhoiDetail.getsHTML_A().equals(objCauhoiDetail.getsEGG_1_RESULT())) {
+                                fPoint = fPoint + fTotalPoint;
+                            }
+                            if (objCauhoiDetail.getsHTML_B().equals(objCauhoiDetail.getsEGG_2_RESULT())) {
+                                fPoint = fPoint + fTotalPoint;
+                            }
+                            if (objCauhoiDetail.getsHTML_C().equals(objCauhoiDetail.getsEGG_3_RESULT())) {
+                                fPoint = fPoint + fTotalPoint;
+                            }
+                            if (objCauhoiDetail.getsHTML_D().equals(objCauhoiDetail.getsEGG_4_RESULT())) {
+                                fPoint = fPoint + fTotalPoint;
+                            }
+                        }
                     }
                 }
                 mListCauhoiAnswer.add(new CauhoiAnswer(mLisCauhoiDetailAnswer, obj.getsID(), obj.getsEXCERCISE_ID()

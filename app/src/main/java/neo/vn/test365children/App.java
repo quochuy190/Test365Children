@@ -10,6 +10,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import neo.vn.test365children.Models.Cauhoi;
+import neo.vn.test365children.Models.ExerciseAnswer;
 
 public class App extends Application {
     private static App sInstance;
@@ -18,6 +19,7 @@ public class App extends Application {
         return sInstance;
     }
     public static List<Cauhoi> mLisCauhoi;
+    public static ExerciseAnswer mExercise;
     @Override
     public void onCreate() {
         super.onCreate();

@@ -2,6 +2,7 @@ package neo.vn.test365children.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -17,16 +20,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
+import neo.vn.test365children.Models.DapAnNoicau;
 import neo.vn.test365children.R;
-import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
  * Created by QQ on 7/7/2017.
  */
 
-public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHoder> {
-    private List<DapAn> list;
+public class AdapterDapanNoicau extends RecyclerView.Adapter<AdapterDapanNoicau.TopicViewHoder> {
+    private List<DapAnNoicau> list;
     private Context context;
     private ItemClickListener OnIListener;
 
@@ -38,7 +41,7 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
         OnIListener = onIListener;
     }
 
-    public AdapterDapan(List<DapAn> list, Context context) {
+    public AdapterDapanNoicau(List<DapAnNoicau> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -46,32 +49,35 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
     @Override
     public TopicViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_dapan, parent, false);
+                .inflate(R.layout.item_noicau, parent, false);
         return new TopicViewHoder(view);
     }
 
     @Override
-    public void onBindViewHolder(TopicViewHoder holder, int position) {
-        DapAn obj = list.get(position);
-        if (obj.getsContent() != null) {
-            initWebview(holder.webview_debai, StringUtil.convert_html(obj.getsContent()));
-        }
-        if (obj.isClick()) {
-            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
-                holder.checkbox.setImageResource(R.drawable.ic_checked);
-            }
-            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Dung())) {
-                holder.checkbox.setImageResource(R.drawable.ic_checked_blue);
-            }
-        } else {
-            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
-                holder.checkbox.setImageResource(R.drawable.ic_checked_blue);
+    public void onBindViewHolder(final TopicViewHoder holder, final int position) {
+        DapAnNoicau obj = list.get(position);
 
-            } else {
-                holder.checkbox.setImageResource(R.drawable.ic_checker);
-
-            }
+        if (obj.getsBackground() != 0) {
+            holder.bg_item.setBackgroundColor(ContextCompat.getColor(context, obj.getsBackground()));
+            ;
+            // holder.bg_item.setBackground(obj.getsBackground());
         }
+        //Glide.with(context).load(R.color.red).into(holder.img_bg_click);
+        holder.bg_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Glide.with(context).load(R.drawable.door_open).into(holder.img_bg_click);
+              //  OnIListener.onClickItem(position, list.get(position));
+            }
+        });
+        holder.img_bg_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Glide.with(context).load(R.drawable.icon_lock).into(holder.img_bg_click);
+              //  OnIListener.onClickItem(position, list.get(position));
+            }
+        });
+        initWebview(holder.webview_debai, obj.getsContent().replaceAll("#", "\""));
     }
 
     @Override
@@ -81,12 +87,12 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
 
     public class TopicViewHoder extends RecyclerView.ViewHolder implements
             View.OnClickListener, View.OnLongClickListener {
-        @BindView(R.id.ll_dapan_all)
-        LinearLayout ll_dapan_all;
-        @BindView(R.id.checkbox_dapan)
-        ImageView checkbox;
-        @BindView(R.id.webview_debai)
+        @BindView(R.id.webview_dapannoicau)
         WebView webview_debai;
+        @BindView(R.id.bg_item)
+        RelativeLayout bg_item;
+        @BindView(R.id.img_bg_click)
+        ImageView img_bg_click;
 
         public TopicViewHoder(View itemView) {
             super(itemView);
@@ -111,24 +117,12 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
     }
 
     private void initWebview(WebView webview_debai, String link_web) {
-        webview_debai.setInitialScale(250);
-       /* webview_debai.getSettings().setJavaScriptEnabled(true);
-        webview_debai.getSettings().setLoadWithOverviewMode(true);
-        webview_debai.getSettings().setUseWideViewPort(true);
-        webview_debai.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webview_debai.setScrollbarFadingEnabled(false);
-        webview_debai.getSettings().setUseWideViewPort(true);
-        webview_debai.getSettings().setLoadWithOverviewMode(true);
-        webview_debai.getSettings().setSupportZoom(true);
-        webview_debai.getSettings().setBuiltInZoomControls(true);
-        webview_debai.getSettings().setDisplayZoomControls(false);
-        webview_debai.setWebChromeClient(new WebChromeClient());*/
-        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.setInitialScale(200);
         webview_debai.getSettings();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(17);
+        webSettings.setDefaultFontSize(20);
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
