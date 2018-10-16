@@ -19,6 +19,7 @@ import retrofit2.Response;
  * @createdate $Date
  */
 public class ApiServiceIml {
+    ApiSevicePost apiServicePost;
     ApiSevice apiService;
     public void getApiService(final CallbackData<String> callbackData, Map<String, String> mData) {
         apiService = ApiSevice.retrofit.create(ApiSevice.class);
@@ -41,6 +42,35 @@ public class ApiServiceIml {
                 } catch (IOException e) {
                     callbackData.onGetDataErrorFault(e);
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callbackData.onGetDataErrorFault(new Exception(t));
+            }
+        });
+    }
+
+    public void getApiServicePost(final CallbackData<String> callbackData, Map<String, String> mData) {
+        apiServicePost = ApiSevicePost.retrofit.create(ApiSevicePost.class);
+        Call<ResponseBody> getApiservice = apiServicePost.getApiService( mData);
+        getApiservice.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String jsonString = null;
+                JSONObject jobj;
+                JSONArray jArray;
+                try {
+                    if (response.body()!=null){
+                        jsonString = response.body().string();
+                      /*  jobj = new JSONObject(jsonString);
+                        String c = jobj.getString("return");*/
+                        callbackData.onGetDataSuccess(jsonString);
+                    }
+                } catch (IOException e) {
+                    callbackData.onGetDataErrorFault(e);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

@@ -51,7 +51,8 @@ public class AdapterItemMenuLambaitap extends RecyclerView.Adapter<AdapterItemMe
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         Baitap_Tuan obj = listChildren.get(position);
-        holder.txt_name.setText(obj.getsSUBJECT_NAME());
+      //  holder.txt_name.setText(obj.getsSUBJECT_NAME());
+        holder.txt_name.setText(obj.getsSUBJECT_NAME()+" - Tuần "+obj.getsWEEK_ID());
         switch (obj.getsSUBJECT_ID()) {
             case "1":
                 Glide.with(context).load(R.drawable.img_menu_toan).into(holder.img_item_menu_lambai);

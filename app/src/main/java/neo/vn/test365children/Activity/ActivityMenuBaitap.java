@@ -188,7 +188,6 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
         lisBaitap_quanhan.clear();
         if (mLis!=null&&mLis.get(0).getsERROR().equals("0000")){
             lisBaitap_quanhan.addAll(mLis);
-
             adapter.notifyDataSetChanged();
             recycleBaitap.scrollToPosition(0);
 

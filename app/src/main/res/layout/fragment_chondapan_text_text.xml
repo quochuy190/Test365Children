@@ -69,7 +69,6 @@
         android:id="@+id/txt_xemdiem"
         android:layout_width="0dp"
         android:layout_height="@dimen/image_next"
-
         android:fontFamily="@font/font1"
         android:gravity="center"
         android:padding="@dimen/dp5"
@@ -85,7 +84,7 @@
         android:id="@+id/btn_nopbai"
         android:layout_width="0dp"
         android:layout_height="@dimen/image_next"
-
+        android:visibility="gone"
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_nopbai"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -117,7 +116,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="@dimen/dp5"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
+        app:layout_constraintBottom_toTopOf="@+id/txt_xemdiem"
         app:layout_constraintEnd_toEndOf="@+id/img_background"
         app:layout_constraintStart_toStartOf="@+id/img_background"
         app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi" />

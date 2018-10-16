@@ -494,7 +494,6 @@ public class FragmentNoicau extends BaseFragment {
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
-
         webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
                 "text/html", "UTF-8", "");
     }

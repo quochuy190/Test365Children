@@ -82,15 +82,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:layout_width="@dimen/margin_left_lambai"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp5">
+            android:layout_margin="@dimen/dp1">
             <ImageView
                 android:padding="@dimen/dp3"
                 android:src="@drawable/icon_time"
-                android:layout_width="@dimen/dp35"
-                android:layout_height="@dimen/dp35"/>
+                android:layout_width="@dimen/dp30"
+                android:layout_height="@dimen/dp30"/>
             <TextView
                 android:id="@+id/txt_time"
                 android:gravity="center"

@@ -30,6 +30,7 @@ import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Fragment.FragmentBatsau;
 import neo.vn.test365children.Fragment.FragmentChemchuoi;
 import neo.vn.test365children.Fragment.FragmentChondapanDung;
+import neo.vn.test365children.Fragment.FragmentCompleteBaitap;
 import neo.vn.test365children.Fragment.FragmentCuuCongchua;
 import neo.vn.test365children.Fragment.FragmentDienvaochotrong;
 import neo.vn.test365children.Fragment.FragmentDocvaTraloi;
@@ -52,6 +53,7 @@ import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Service.ServiceDownTime;
 import neo.vn.test365children.Untils.SharedPrefs;
+import neo.vn.test365children.Untils.StringUtil;
 import neo.vn.test365children.Untils.TimeUtils;
 
 public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
@@ -149,7 +151,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             Log.i(TAG, "onMessageEvent: " + App.mLisCauhoi);
             play_mp3_true();
             fPoint = fPoint + event.point;
-            txt_point.setText("" + fPoint);
+            txt_point.setText("" + StringUtil.format_point(fPoint));
         } else if (event.message.equals("Point_false")) {
             play_mp3_false();
         } else if (event.message.equals("nop_bai")) {
@@ -260,12 +262,12 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                                 adapterViewpager.addFragment(FragmentCuuCongchua.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                                 isStarCongchua = true;
                             }
-                            //
                         }
                     }
-                }
 
+                }
             }
+            adapterViewpager.addFragment(FragmentCompleteBaitap.newInstance(new CauhoiDetail()), "");
             viewpager_lambai.setOffscreenPageLimit(maxPage);
             viewpager_lambai.setAdapter(adapterViewpager);
 

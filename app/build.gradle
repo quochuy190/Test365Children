@@ -55,6 +55,7 @@ dependencies {
     implementation 'io.github.kexanie.library:MathView:0.0.6'
     implementation 'in.hourglass.mathrender:katexmathview:1.0'
     // realm in android
-
+    //Biểu đồ
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
 apply plugin: 'com.google.gms.google-services'

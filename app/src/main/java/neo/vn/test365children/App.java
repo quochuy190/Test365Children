@@ -11,6 +11,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.ExerciseAnswer;
+import neo.vn.test365children.Models.GameTrieuPhuTriThuc;
 
 public class App extends Application {
     private static App sInstance;
@@ -19,6 +20,7 @@ public class App extends Application {
         return sInstance;
     }
     public static List<Cauhoi> mLisCauhoi;
+    public static List<GameTrieuPhuTriThuc> mLisGameTPTT;
     public static ExerciseAnswer mExercise;
     @Override
     public void onCreate() {
@@ -26,6 +28,7 @@ public class App extends Application {
         sInstance = this;
         mGSon = new Gson();
         mLisCauhoi = new ArrayList<>();
+        mLisGameTPTT = new ArrayList<>();
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("test365.realm")

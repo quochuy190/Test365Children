@@ -6,13 +6,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import neo.vn.test365children.R;
 
 /**
  * Created by LinhNguyen on 10/3/2015.
  */
 public class KeyboardUtil {
+    public static void animation_click_button(final Context activity, View view) {
+        Animation animationRotale = AnimationUtils.loadAnimation(activity, R.anim.animation_click_buttongame);
+        view.startAnimation(animationRotale);
+    }
     public static void requestKeyboard(final Activity activity, int editViewId) {
         requestKeyboard(activity.findViewById(editViewId));
     }

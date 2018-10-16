@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -64,7 +66,7 @@ public class FragmentDocvaTraloi extends BaseFragment {
     @BindView(R.id.img_background)
     ImageView img_background;
     @BindView(R.id.txt_debai)
-    TextView txt_debai;
+    WebView txt_debai;
     @BindView(R.id.btn_nopbai)
     ImageView btn_nopbai;
 
@@ -146,11 +148,12 @@ public class FragmentDocvaTraloi extends BaseFragment {
 
             }
         });
-        txt_debai.setText("Câu hỏi: " + mCauhoi.getsQUESTION());
+        // txt_debai.setText("Câu hỏi: " + mCauhoi.getsQUESTION());
+        initWebview();
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-      //  webview_debai.setInitialScale(1);
+        //  webview_debai.setInitialScale(1);
         txt_cauhoi.setWebChromeClient(new WebChromeClient());
         txt_cauhoi.getSettings().setJavaScriptEnabled(true);
         txt_cauhoi.getSettings();
@@ -222,4 +225,20 @@ public class FragmentDocvaTraloi extends BaseFragment {
         });
     }
 
+    private void initWebview() {
+        txt_debai.setInitialScale(250);
+        txt_debai.getSettings().setJavaScriptEnabled(true);
+        txt_debai.getSettings();
+        txt_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = txt_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+        webSettings.setDefaultFontSize(16);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+
+        txt_debai.loadDataWithBaseURL("", pish + StringUtil.convert_html(mCauhoi.getsHTML_CONTENT()) + pas,
+                "text/html", "UTF-8", "");
+
+    }
 }

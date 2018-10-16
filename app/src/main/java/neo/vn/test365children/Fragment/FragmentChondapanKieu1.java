@@ -61,8 +61,8 @@ public class FragmentChondapanKieu1 extends BaseFragment {
     @BindView(R.id.recycle_dapan)
     RecyclerView recycle_dapan;
     RecyclerView.LayoutManager mLayoutManager;
-    @BindView(R.id.btn_xemdiem)
-    ImageView btn_xemdiem;
+    @BindView(R.id.txt_xemdiem)
+    TextView btn_xemdiem;
     private boolean isTraloi = false;
     @BindView(R.id.img_background)
     ImageView img_background;

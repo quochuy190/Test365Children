@@ -201,13 +201,10 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
     }
 
     @Override
-    public void     get_api_submit_execercise(String sUserMe, String sUserCon, String sId_baitap, String time_giaobai,
+    public void get_api_submit_execercise(String sUserMe, String sUserCon, String sId_baitap, String time_giaobai,
                                           String time_bdlambai, String time_ktlambai, String tong_time_lambai, String sKieunop,
                                           String sDiem, String sDanhsachcau) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "submit_execercise");
-        mMap.put("Provider", "default");
-        mMap.put("ParamSize", "10");
         mMap.put("P1", sUserMe);
         mMap.put("P2", sUserCon);
         mMap.put("P3", sId_baitap);
@@ -218,7 +215,7 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
         mMap.put("P8", sKieunop);
         mMap.put("P9", sDiem);
         mMap.put("P10", sDanhsachcau);
-        mApiService.getApiService(new CallbackData<String>() {
+        mApiService.getApiServicePost(new CallbackData<String>() {
 
             @Override
             public void onGetDataErrorFault(Exception e) {

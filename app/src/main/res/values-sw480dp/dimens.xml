@@ -82,4 +82,10 @@
     <dimen name="exer_hight_debai">65dp</dimen>
     <dimen name="exer_margin_top">25dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
+    <!--Game-->
+    <dimen name="pading_button_menu">35dp</dimen>
+    <dimen name="text_menu_game">19sp</dimen>
+    <dimen name="icon_center_tptt">280dp</dimen>
+    <dimen name="icon_btn_play">150dp</dimen>
+    <dimen name="margin_btn_play">50dp</dimen>
 </resources>

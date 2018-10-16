@@ -18,6 +18,7 @@ import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
+import neo.vn.test365children.Untils.StringUtil;
 
 public class ActivityComplete extends BaseActivity {
     private static final String TAG = "ActivityComplete";
@@ -92,7 +93,7 @@ public class ActivityComplete extends BaseActivity {
         objExer.setsPoint(""+fPoint);
         mRealmList.addAll(App.mLisCauhoi);
         objExer.setmLisCauhoi(mRealmList);
-        txt_pointlambai.setText("Điểm con đạt được: "+fPoint + "điểm");
+        txt_pointlambai.setText("Điểm con đạt được: "+ StringUtil.format_point(fPoint) + " điểm");
         mRealm.beginTransaction();
         mRealm.copyToRealmOrUpdate(objExer);
         mRealm.commitTransaction();

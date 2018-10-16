@@ -38,4 +38,6 @@ public class Constants {
     public static final String KEY_SEND_EXERCISE_ANSWER = "KEY_SEND_EXERCISE_ANSWER";
     public static final String KEY_SEND_EXERCISES_DETAIL = "KEY_SEND_EXERCISES_DETAIL";
     public static final String KEY_SEND_EXERCISES_DETAIL_POINT = "KEY_SEND_EXERCISES_DETAIL_POINT";
+    public static final String KEY_SEND_TIME_SERVICE = "KEY_SEND_TIME_SERVICE";
+    public static final String KEY_SEND_LEVER_GAME_TPTT = "KEY_SEND_LEVER_GAME_TPTT";
 }

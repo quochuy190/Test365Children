@@ -90,4 +90,25 @@
     <dimen name="exer_margin_top">10dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
     <dimen name="exer_width_sticker">70dp</dimen>
+
+    <!--Game-->
+    <dimen name="pading_button_menu">25dp</dimen>
+    <dimen name="text_menu_game">16sp</dimen>
+    <dimen name="icon_center_tptt">250dp</dimen>
+    <dimen name="icon_btn_play">80dp</dimen>
+    <dimen name="margin_btn_play">25dp</dimen>
+  <!--  Game : Triệu phú tri thức-->
+    <dimen name="width_right_menu_game">150dp</dimen>
+    <dimen name="icon_support">40dp</dimen>
+    <dimen name="text_sp_tptt">12sp</dimen>
+    <dimen name="icon_time">50dp</dimen>
+    <dimen name="margin_question">50dp</dimen>
+    <dimen name="margin_anwser_game">25dp</dimen>
+  <!--  Biểu đồ-->
+    <dimen name="margin_bottom_bieudo">70dp</dimen>
+    <dimen name="margin_right_bieudo">100dp</dimen>
+
+    <dimen name="width_bxh">120dp</dimen>
+    <dimen name="hight_item_bottom">70dp</dimen>
+
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -56,7 +57,7 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
     }
 
     @Override
-    public void onBindViewHolder(final TopicViewHoder holder, int position) {
+    public void onBindViewHolder(final TopicViewHoder holder, final int position) {
         DapAn obj = list.get(position);
         if (obj.getsContent() != null) {
             initWebview(holder.webview_debai, StringUtil.convert_html(obj.getsContent()));
@@ -95,6 +96,21 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
                 Glide.with(context).load(R.drawable.fruit_pineapple).into(holder.img_lasau);
                 break;
         }
+        holder.webview_debai.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction()==MotionEvent.ACTION_UP){
+                    OnIListener.onClickItem(position, list.get(position));
+                }
+                return false;
+            }
+        });
+        holder.img_lasau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnIListener.onClickItem(position, list.get(position));
+            }
+        });
     }
 
     @Override

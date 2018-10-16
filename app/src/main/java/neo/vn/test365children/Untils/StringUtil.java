@@ -1,11 +1,15 @@
 package neo.vn.test365children.Untils;
 
+import android.graphics.Color;
 import android.text.TextUtils;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -19,7 +23,18 @@ public class StringUtil {
     public static String ConvertFraction(String a, String b, String c) {
         return "\\(" + a + "\\dfrac{" + b + "} {" + c + "} \\)";
     }
+    public static String format_point(float fPoint) {
+        String sPoint = "" + fPoint;
+        String[] sTest = sPoint.split("\\.");
+        if (sTest[1].equals("0")) {
+            int iPoint = (int) Math.round(fPoint);
+            return "" + iPoint;
+        } else {
+            double f = ((double) Math.round(fPoint * 100) / 100);
 
+            return "" + f;
+        }
+    }
     public static String StringFraction(String sInput) {
         String sOutput = "";
         List<String> lisInput = Arrays.asList(sInput.split(" "));
@@ -48,11 +63,82 @@ public class StringUtil {
         return "$$" + a + "\\dfrac{" + b + "} {" + c + "} $$";
     }
 
+    public static String get_current_time() {
+        Calendar cal;
+        SimpleDateFormat dft = null;
+        String date = "";
+        //Set ngày giờ hiện tại khi mới chạy lần đầu
+        cal = Calendar.getInstance();
+        //Định dạng kiểu ngày / tháng /năm
+        dft = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        date = dft.format(cal.getTime());
+        //hiển thị lên giao diện
+        return date;
+    }
+
+    public static void initWebview(WebView webview_debai, String link_web) {
+        webview_debai.setInitialScale(230);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+        webSettings.setDefaultFontSize(16);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+
+        webview_debai.loadDataWithBaseURL("", pish + convert_html(link_web) + pas,
+                "text/html", "UTF-8", "");
+    }
+
+    public static void initWebview_Whitetext(WebView webview_debai, String link_web) {
+        webview_debai.setInitialScale(230);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+        webSettings.setDefaultFontSize(16);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+        String text = "<html><head>"
+                + "<style type=\"text/css\">body{color: #fff;} size=\"4\""
+                + "</style></head>"
+                + "<body>"
+                + convert_html(link_web)
+                + "</body></html>";
+        webview_debai.loadDataWithBaseURL("", pish + text + pas,
+                "text/html", "UTF-8", "");
+    }
+
+    public static void initWebview_Whitetext_game(WebView webview_debai, String link_web) {
+        webview_debai.setInitialScale(250);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+        webSettings.setDefaultFontSize(16);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+        String text = "<html><head>"
+                + "<style type=\"text/css\">body{color: #fff;} size=\"4\""
+                + "</style></head>"
+                + "<body>"
+                + link_web.replaceAll("#", "\"")
+                + "</body></html>";
+        webview_debai.loadDataWithBaseURL("", pish + text + pas,
+                "text/html", "UTF-8", "");
+    }
+
     public static String convert_html(String content) {
         String s_resutl = "";
         if (content != null && content.length() > 0) {
             s_resutl = content.replaceAll("&#34;", "\"");
-            s_resutl = s_resutl.replaceAll("&#92;", "\\");
+            s_resutl = s_resutl.replaceAll("&#92;", "\\\\");
         }
         return s_resutl;
     }

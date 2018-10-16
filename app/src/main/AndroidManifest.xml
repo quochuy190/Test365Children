@@ -35,9 +35,40 @@
             android:screenOrientation="sensorLandscape">
 
         </activity>
+       <activity
+            android:name=".Activity.game.ActivityMenuGame"
+            android:screenOrientation="sensorLandscape">
 
+        </activity>
+
+        <activity
+            android:name=".Activity.game.Activity_startgame_tptt"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
+            android:name=".Activity.game.ActivityGameTrieuphutrithuc"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
+            android:name=".Activity.game.ActivityGameOverTPTT"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+
+        <activity
+            android:name=".Activity.bangxephang.ActivityBieuDo"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
+            android:name=".Activity.bangxephang.ActivityBXH"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
         <service android:name=".Service.ServiceDownTime" />
-
+        <service android:name=".Service.ServiceDownTimeGame" />
         <activity
             android:name=".Activity.SplashScreen"
             android:screenOrientation="sensorLandscape">

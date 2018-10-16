@@ -21,6 +21,7 @@ public class ServiceDownTime extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
          Timer = new CountDownTimer(TOTAL_TIME, 1000) {
             public void onTick(long millisUntilFinished) {
                 EventBus.getDefault().post(new MessageEvent("Service", 0, millisUntilFinished));

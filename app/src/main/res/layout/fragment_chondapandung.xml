@@ -82,6 +82,7 @@
         app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/btn_nopbai"
         android:layout_width="0dp"
         android:layout_height="@dimen/image_next"
@@ -94,7 +95,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
+        app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
         app:layout_constraintEnd_toEndOf="@+id/img_background"
         app:layout_constraintStart_toStartOf="@+id/img_background"
         app:layout_constraintTop_toBottomOf="@+id/ll_lable">

@@ -4,12 +4,15 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
+    <color name="bg_bxh">#ecf4f0f0</color>
     <color name="red">#ff0000</color>
     <color name="blue">#0000FF</color>
     <color name="black">#060606</color>
     <color name="green">#90d437</color>
+    <color name="anwser_true">#ef68a913</color>
     <color name="black_mo">#6c6767</color>
     <color name="orange">#f4a609</color>
+    <color name="txt_point">#c28b1b</color>
     <color name="background_login">#f2f6f9</color>
     <color name="red_test365">#c21b37</color>
     <color name="gray">#bcbdbf</color>
@@ -33,4 +36,8 @@
     <color name="mau_tim">#7c007c</color>
     <color name="bg_item_dapan">#00f2f2f2</color>
     <color name="bg_cauhoi_congchua">#8f251162</color>
+    <color name="bg_menu_point_gamee">#b3171f58</color>
+    <color name="bg_boder">#eaeced</color>
+    <color name="bg_clear">#00eaeced</color>
+    <color name="bg_click_true">#f1a5a1a1</color>
 </resources>

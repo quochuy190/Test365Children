@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_chao_mung" />
+
+    <ImageView
+        android:id="@+id/img_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_bxh_1" />
+
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/dp10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_title">
+
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_bxh_2" />
+
+        <LinearLayout
+
+            android:id="@+id/linearLayout"
+            android:layout_width="@dimen/width_bxh"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/dp5"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_tuan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp15"
+                android:text="BXH Tuần"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_thang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp15"
+                android:text="BXH Tháng"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_nam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp15"
+                android:text="BXH Năm"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout8"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/hight_item_bottom"
+            android:layout_marginBottom="@dimen/dp5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/red_test365"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/dp25" />
+
+            <LinearLayout
+                android:id="@+id/ll_stt"
+                android:layout_width="@dimen/dp80"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/dp2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_stt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font1"
+                    android:gravity="center"
+                    android:padding="@dimen/dp5"
+                    android:text="10"
+                    android:textColor="@color/red_test365"
+                    android:textSize="@dimen/text_20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Hạng cá nhân"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_11sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_avata"
+                android:layout_width="@dimen/hight_item_bottom"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/ll_stt"
+                android:padding="@dimen/dp5"
+                android:src="@drawable/avatar_default" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_toRightOf="@id/img_avata">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp1"
+                        android:text="Họ tên"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_class"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp1"
+                        android:text="Họ tên"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_school"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp1"
+                        android:text="Họ tên"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_speed_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp5"
+                        android:text="Họ tên"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_point"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp5"
+                        android:text="Họ tên"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_bxh"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="@dimen/dp10"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout8"
+            app:layout_constraintEnd_toEndOf="@+id/imageView17"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="@+id/imageView17"></android.support.v7.widget.RecyclerView>
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -2,27 +2,23 @@ package neo.vn.test365children.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import katex.hourglass.in.mathlib.MathView;
-import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
-import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -58,8 +54,9 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
-        holder.ll_dapan_all.removeAllViews();
-        if (obj.getsContent() != null)
+      //  holder.ll_dapan_all.removeAllViews();
+        initWebview(holder.webview_debai, obj.getsContent());
+       /* if (obj.getsContent() != null)
             if (obj.getsContent().indexOf("image") > 0) {
                 ImageView txt_dapan = new ImageView(context);
                 int hight_image = (int) context.getResources().getDimension(R.dimen.item_dapan);
@@ -83,7 +80,7 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
                 txt_dapan.setTextColor(context.getResources().getColor(R.color.white));
                 txt_dapan.setText(obj.getsContent());
                 holder.ll_dapan_all.addView(txt_dapan);
-            }
+            }*/
 
 
         if (obj.isClick()) {
@@ -119,6 +116,8 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
         ImageView checkbox;
         @BindView(R.id.img_dapan)
         ImageView img_dapan;
+        @BindView(R.id.webview_debai)
+        WebView webview_debai;
 
         public TopicViewHoder(View itemView) {
             super(itemView);
@@ -140,5 +139,21 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
     public void updateList(List<DapAn> list) {
         list = list;
         notifyDataSetChanged();
+    }
+    private void initWebview(WebView webview_debai, String link_web) {
+        webview_debai.setInitialScale(250);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+        webSettings.setDefaultFontSize(16);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+
+        webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
+                "text/html", "UTF-8", "");
+
     }
 }

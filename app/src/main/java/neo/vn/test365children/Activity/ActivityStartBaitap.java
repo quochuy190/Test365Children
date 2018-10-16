@@ -29,6 +29,7 @@ import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View {
@@ -47,6 +48,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
     @BindView(R.id.txt_soluongcauhoi)
     TextView txt_soluongcauhoi;
     private List<Cauhoi> mLisCauhoi;
+    boolean isClickStart = false;
     Realm mRealm;
 
     @Override
@@ -57,6 +59,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isClickStart = false;
         mRealm = RealmController.with(this).getRealm();
         mPresenter = new PresenterBaitap(this);
         initData();
@@ -98,7 +101,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
         mRealm.beginTransaction();
         mRealm.copyToRealmOrUpdate(obj_answer);
         mRealm.commitTransaction();
-        App.mExercise= obj_answer;
+        App.mExercise = obj_answer;
         showDialogLoading();
         mPresenter.get_api_get_part(sUserMe, sUserCon, objBaitapTuan.getsID());
         // mPresenter.get_api_get_part("", "", "");
@@ -115,14 +118,19 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
         btn_start_lambai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(), get_current_time(), "30");
-                obj_answer.setsTimebatdaulambai(get_current_time());
-                // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã nộp bài
-                obj_answer.setIsTrangthailambai("1");
-                Intent intent = new Intent(ActivityStartBaitap.this, ActivityLambaitap.class);
-                App.mLisCauhoi.addAll(mLisCauhoi);
-                intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, obj_answer);
-                startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
+                if (!isClickStart){
+                    KeyboardUtil.animation_click_button(ActivityStartBaitap.this, btn_start_lambai);
+                    mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(), get_current_time(), "30");
+                    obj_answer.setsTimebatdaulambai(get_current_time());
+                    // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã nộp bài
+                    obj_answer.setIsTrangthailambai("1");
+                    Intent intent = new Intent(ActivityStartBaitap.this, ActivityLambaitap.class);
+                    App.mLisCauhoi.addAll(mLisCauhoi);
+                    intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, obj_answer);
+                    startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
+                    isClickStart = true;
+                }
+
                 //   startActivity(intent);
                 // startActivity(new Intent(ActivityStartBaitap.this, ActivityLambaitap.class));
             }
@@ -172,9 +180,11 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
     public void show_list_get_part(List<Cauhoi> mLis) {
         hideDialogLoading();
         if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+            btn_start_lambai.setVisibility(View.VISIBLE);
             txt_soluongcauhoi.setText("Số lượng câu hỏi: " + mLis.size());
             mLisCauhoi.addAll(mLis);
-        }
+        } else
+            btn_start_lambai.setVisibility(View.GONE);
     }
 
     @Override

@@ -6,6 +6,7 @@ package neo.vn.test365children.Config;
 
 public class Config {
     public  static String BASE_URL = "http://api1.test365.vn/365/";
+    public  static String BASE_URL_POST = "http://content1.test365.vn/";
     public  static String URL_IMAGE = "http://content1.test365.vn";
     public  static String URL_VIDEO = "http://content1.test365.vn";
 

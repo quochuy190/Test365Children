@@ -112,23 +112,12 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
 
     private void initWebview(WebView webview_debai, String link_web) {
         webview_debai.setInitialScale(250);
-       /* webview_debai.getSettings().setJavaScriptEnabled(true);
-        webview_debai.getSettings().setLoadWithOverviewMode(true);
-        webview_debai.getSettings().setUseWideViewPort(true);
-        webview_debai.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webview_debai.setScrollbarFadingEnabled(false);
-        webview_debai.getSettings().setUseWideViewPort(true);
-        webview_debai.getSettings().setLoadWithOverviewMode(true);
-        webview_debai.getSettings().setSupportZoom(true);
-        webview_debai.getSettings().setBuiltInZoomControls(true);
-        webview_debai.getSettings().setDisplayZoomControls(false);
-        webview_debai.setWebChromeClient(new WebChromeClient());*/
         webview_debai.getSettings().setJavaScriptEnabled(true);
         webview_debai.getSettings();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(17);
+        webSettings.setDefaultFontSize(16);
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
