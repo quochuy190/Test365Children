@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -162,8 +163,8 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
 
         // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
-  /*      if (mCauhoi.getsQUESTION() != null)
-            txt_cauhoi.setText(Html.fromHtml("Đáp án: " + mCauhoi.getsQUESTION().replace("::", " ")));*/
+        if (mCauhoi.getsQUESTION() != null)
+            txt_cauhoi.setText(Html.fromHtml("Đáp án: " + mCauhoi.getsQUESTION().replace("::", " ")));
         txt_cauhoi.setVisibility(View.GONE);
         mLis = new ArrayList<>();
         if (mCauhoi.getsQUESTION() != null) {

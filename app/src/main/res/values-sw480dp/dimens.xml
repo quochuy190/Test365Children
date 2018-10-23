@@ -40,6 +40,12 @@
     <dimen name="margin_mute_lambai">80dp</dimen>
     <dimen name="width_item_menu">150dp</dimen>
     <dimen name="margin_item">15dp</dimen>
+    <!--activity làm bài tập-->
+    <dimen name="text_content_cauhoi">18sp</dimen>
+    <dimen name="image_next">35dp</dimen>
+    <dimen name="margin_top_lambai">10dp</dimen>
+    <dimen name="margin_left_lambai">40dp</dimen>
+    <dimen name="icon_point_lambai">45dp</dimen>
     <!--text size-->
     <dimen name="text_10sp">10sp</dimen>
     <dimen name="text_11sp">11sp</dimen>

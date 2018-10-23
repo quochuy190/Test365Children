@@ -19,14 +19,15 @@ import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Fragment.FragmentDienvaochotrong;
 import neo.vn.test365children.Fragment.FragmentXemanhtraloi;
-import neo.vn.test365children.Fragment.FragmentXepTrung;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewBatsau;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewCauhoiCongchua;
-import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewChemhoaqua;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewChemchuoi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewDapandung;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewDocvaTraloi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewNgheAudio;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewNoicau;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewSapxep;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewTrungRo;
 import neo.vn.test365children.Models.Baitap_Tuan;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.CauhoiDetail;
@@ -174,8 +175,8 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                         mCauhoiDetail.setsEGG_2(obj.getLisInfo().get(i).getsEGG_2());
                         mCauhoiDetail.setsEGG_3_RESULT(obj.getLisInfo().get(i).getsEGG_3_RESULT());
                         mCauhoiDetail.setsEGG_3(obj.getLisInfo().get(i).getsEGG_3());
-                        mCauhoiDetail.setsEGG_4_RESULT(obj.getLisInfo().get(i).getsEGG_3_RESULT());
-                        mCauhoiDetail.setsEGG_4(obj.getLisInfo().get(i).getsEGG_3());
+                        mCauhoiDetail.setsEGG_4_RESULT(obj.getLisInfo().get(i).getsEGG_4_RESULT());
+                        mCauhoiDetail.setsEGG_4(obj.getLisInfo().get(i).getsEGG_4());
                         mCauhoiDetail.setsCauhoi_huongdan(obj.getLisInfo().get(i).getsCauhoi_huongdan());
                         mCauhoiDetail.setsPOINT(obj.getLisInfo().get(i).getsPOINT());
                         mCauhoiDetail.setsPOINT_CHILD(obj.getLisInfo().get(i).getsPOINT_CHILD());
@@ -184,7 +185,6 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                         mCauhoiDetail.setsTYPE(obj.getLisInfo().get(i).getsTYPE());
                         mCauhoiDetail.setsQUESTION(obj.getLisInfo().get(i).getsQUESTION());
                         mCauhoiDetail.setsANSWER(obj.getLisInfo().get(i).getsANSWER());
-
                         mCauhoiDetail.setsHTML_CONTENT(obj.getLisInfo().get(i).getsHTML_CONTENT());
                         mCauhoiDetail.setsHTML_A(obj.getLisInfo().get(i).getsHTML_A());
                         mCauhoiDetail.setsHTML_B(obj.getLisInfo().get(i).getsHTML_B());
@@ -196,11 +196,11 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                         } else if (obj.getsKIEU().equals("2")) {
                             adapterViewpager.addFragment(FragmentReviewBatsau.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("3")) {
-                            adapterViewpager.addFragment(FragmentReviewChemhoaqua.newInstance(mCauhoiDetail), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentReviewChemchuoi.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("4")) {
                             adapterViewpager.addFragment(FragmentReviewSapxep.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("5")) {
-                            adapterViewpager.addFragment(FragmentXepTrung.newInstance(mCauhoiDetail), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentReviewTrungRo.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("6")) {
                             adapterViewpager.addFragment(FragmentDienvaochotrong.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("7")) {
@@ -211,6 +211,8 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                             adapterViewpager.addFragment(FragmentReviewNgheAudio.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("10")) {
                             adapterViewpager.addFragment(FragmentReviewCauhoiCongchua.newInstance(mCauhoiDetail), obj.getsERROR());
+                        } else if (obj.getsKIEU().equals("11")) {
+                            adapterViewpager.addFragment(FragmentReviewNoicau.newInstance(mCauhoiDetail), obj.getsERROR());
                         }
                     }
                 }

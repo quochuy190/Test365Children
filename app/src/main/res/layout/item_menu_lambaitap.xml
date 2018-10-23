@@ -5,6 +5,7 @@
     android:layout_height="@dimen/width_item_menu"
     android:layout_margin="@dimen/margin_item">
     <ImageView
+
         android:id="@+id/img_item_menu_lambai"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

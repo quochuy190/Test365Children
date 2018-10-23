@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,12 +29,11 @@ import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 public class FragmentReviewCauhoiCongchua extends BaseFragment {
     private static final String TAG = "ActivityCauhoiCongchua";
     CauhoiDetail mCauhoi;
-    @BindView(R.id.txt_cauhoi)
-    TextView txt_cauhoi;
     @BindView(R.id.imageView3)
     ImageView img_background;
     int[] arr_image = {R.drawable.bg_congchua1, R.drawable.bg_congchua2, R.drawable.bg_congchua3,
@@ -110,27 +109,28 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
     }
 
     int iRandom;
-
-    @BindView(R.id.txt_result_chil_exer)
-    TextView txt_result;
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
+    @BindView(R.id.webview_debai)
+    WebView webview_debai;
     private void initData() {
         Random ran = new Random();
         iRandom = ran.nextInt(arr_image.length);
         Glide.with(this).load(arr_image[iRandom]).into(img_background);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
-        if (mCauhoi.getsSubNumberCau() != null && mCauhoi.getsQUESTION() != null)
-            txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));
+       /* if (mCauhoi.getsSubNumberCau() != null && mCauhoi.getsQUESTION() != null)
+            txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));*/
+        if (mCauhoi.getsHTML_CONTENT() != null && mCauhoi.getsHTML_CONTENT().length() > 0) {
+            StringUtil.initWebview_Whitetext(webview_debai,mCauhoi.getsHTML_CONTENT());
+        }
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
-            txt_result.setText("S");
-            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+            Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
         } else {
-            txt_result.setText("Đ");
-            txt_result.setTextColor(getResources().getColor(R.color.blue));
+            Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
         }
         if (!mCauhoi.isDalam()) {
-            txt_result.setText("S");
-            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
         if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
@@ -140,7 +140,7 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
             mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
         if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
             mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-       adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
 
         adapter.setOnIListener(new ItemClickListener() {
             @Override

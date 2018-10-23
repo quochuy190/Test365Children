@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:maxLines="2"
-            android:padding="@dimen/dp5"
+            android:padding="@dimen/dp2"
             android:textColor="@color/white"
             android:textSize="@dimen/text_17sp" />
         <TextView
@@ -42,9 +42,9 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:maxLines="1"
-            android:padding="@dimen/dp5"
+            android:padding="@dimen/dp2"
             android:textColor="@color/red"
-            android:textSize="@dimen/text_17sp" />
+            android:textSize="@dimen/text_18sp" />
     </RelativeLayout>
 
 

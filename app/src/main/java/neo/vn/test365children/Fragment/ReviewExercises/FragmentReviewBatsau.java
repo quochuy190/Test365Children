@@ -31,6 +31,7 @@ import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -60,6 +61,8 @@ public class FragmentReviewBatsau extends BaseFragment {
     private boolean isTraloi = false;
     @BindView(R.id.img_background)
     ImageView img_background;
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
 
     public static FragmentReviewBatsau newInstance(CauhoiDetail restaurant) {
         FragmentReviewBatsau restaurantDetailFragment = new FragmentReviewBatsau();
@@ -92,26 +95,24 @@ public class FragmentReviewBatsau extends BaseFragment {
     private void initEvent() {
     }
 
-    @BindView(R.id.txt_result_chil_exer)
-    TextView txt_result;
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
 
-        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
-            txt_result.setText("S");
-            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
-        } else {
-            txt_result.setText("Đ");
-            txt_result.setTextColor(getResources().getColor(R.color.blue));
-        }
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
+            if (mCauhoi.getsRESULT_CHILD().equals("0")) {
+                Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+            } else {
+                Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            }
+        } else
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         if (!mCauhoi.isDalam()) {
-            txt_result.setText("S");
-            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        initWebview();
+        StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
         if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
@@ -142,8 +143,10 @@ public class FragmentReviewBatsau extends BaseFragment {
             }
         });
     }
+
     @BindView(R.id.webview_debai)
     WebView webview_debai;
+
     private void initWebview() {
         webview_debai.setInitialScale(1);
         webview_debai.getSettings().setJavaScriptEnabled(true);

@@ -1,8 +1,10 @@
 package neo.vn.test365children.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -90,6 +92,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         mPlayer = new MediaPlayer();
         intent_service = new Intent(ActivityLambaitap.this, ServiceDownTime.class);
         startService(intent_service);
+        showDialogLoadingLambai();
         initData();
         initEvent();
         // initViewPager(mCauhoi);
@@ -387,5 +390,28 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         date = dft.format(cal.getTime());
         //hiển thị lên giao diện
         return date;
+    }
+    protected ProgressDialog dialog;
+    private Handler StopDialogLoadingHandler = new Handler();
+    public void showDialogLoadingLambai() {
+        StopDialogLoadingHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        }, 10000);
+        if (!isFinishing()) {
+            dialog = new ProgressDialog(this);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage(getString(R.string.txt_loading_dialog));
+            dialog.setIndeterminate(true);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+        }
+        if (dialog != null && !dialog.isShowing()) {
+            dialog.show();
+        }
     }
 }

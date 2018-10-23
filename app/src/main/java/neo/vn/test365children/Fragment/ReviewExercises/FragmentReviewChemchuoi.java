@@ -1,7 +1,6 @@
-package neo.vn.test365children.Fragment;
+package neo.vn.test365children.Fragment.ReviewExercises;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +22,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
@@ -42,7 +41,7 @@ import neo.vn.test365children.Untils.StringUtil;
  * @updated on 8/6/2018
  * @since 1.0
  */
-public class FragmentChemchuoi extends BaseFragment implements View.OnClickListener {
+public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClickListener {
     private static final String TAG = "FragmentCauhoi";
     private CauhoiDetail mCauhoi;
     @BindView(R.id.txt_lable)
@@ -88,8 +87,8 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     ImageView img_hoaqua_A;
     private String sAnwser = "";
 
-    public static FragmentChemchuoi newInstance(CauhoiDetail restaurant) {
-        FragmentChemchuoi restaurantDetailFragment = new FragmentChemchuoi();
+    public static FragmentReviewChemchuoi newInstance(CauhoiDetail restaurant) {
+        FragmentReviewChemchuoi restaurantDetailFragment = new FragmentReviewChemchuoi();
         Bundle args = new Bundle();
         //args.putSerializable("cauhoi",restaurant);
         args.putParcelable("cauhoi", Parcels.wrap(restaurant));
@@ -105,9 +104,10 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chemchuoi, container, false);
+        View view = inflater.inflate(R.layout.fragment_review_chemchuoi, container, false);
         ButterKnife.bind(this, view);
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
+        btn_xemdiem.setVisibility(View.INVISIBLE);
         initData();
         initEvent();
         return view;
@@ -170,7 +170,21 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
         });
     }
 
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
+
+    @BindView(R.id.rr)
+    RelativeLayout rr;
     private void initData() {
+        rr.setVisibility(View.VISIBLE);
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
+            Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+        } else {
+            Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+        }
+        if (!mCauhoi.isDalam()) {
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
+        }
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
         StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
@@ -179,44 +193,41 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
         StringUtil.initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
         StringUtil.initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
         StringUtil.initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+
+        switch (mCauhoi.getsANSWER_CHILD()) {
+            case "A":
+                animation_click(img_hoaqua_A);
+                break;
+            case "B":
+                animation_click(img_hoaqua_B);
+                break;
+            case "C":
+                animation_click(img_hoaqua_C);
+                break;
+            case "D":
+                animation_click(img_hoaqua_D);
+                break;
+        }
+
+        switch (mCauhoi.getsANSWER()) {
+            case "A":
+                animation_anwsertrue(img_hoaqua_A);
+                break;
+            case "B":
+                animation_anwsertrue(img_hoaqua_B);
+                break;
+            case "C":
+                animation_anwsertrue(img_hoaqua_C);
+                break;
+            case "D":
+                animation_anwsertrue(img_hoaqua_D);
+                break;
+        }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_anwser_A:
-                animation_click(img_hoaqua_A);
-                img_hoaqua_B.clearAnimation();
-                img_hoaqua_C.clearAnimation();
-                img_hoaqua_D.clearAnimation();
-                sAnwser = "A";
-                anwser();
-                break;
-            case R.id.ll_anwser_B:
-                animation_click(img_hoaqua_B);
-                img_hoaqua_A.clearAnimation();
-                img_hoaqua_C.clearAnimation();
-                img_hoaqua_D.clearAnimation();
-                sAnwser = "B";
-                anwser();
-                break;
-            case R.id.ll_anwser_C:
-                animation_click(img_hoaqua_C);
-                img_hoaqua_B.clearAnimation();
-                img_hoaqua_A.clearAnimation();
-                img_hoaqua_D.clearAnimation();
-                sAnwser = "C";
-                anwser();
-                break;
-            case R.id.ll_anwser_D:
-                animation_click(img_hoaqua_D);
-                img_hoaqua_B.clearAnimation();
-                img_hoaqua_C.clearAnimation();
-                img_hoaqua_A.clearAnimation();
-                sAnwser = "D";
-                anwser();
-                break;
-        }
+
     }
 
     private void animation_click(ImageView img) {
@@ -231,66 +242,5 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
 
     }
 
-    boolean isdouble_click = false;
 
-    private void anwser() {
-        if (!isdouble_click) {
-            isdouble_click = true;
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-            if (sAnwser.length() > 0) {
-                switch (sAnwser) {
-                    case "A":
-                        if (mCauhoi.getsANSWER().equals("A"))
-                            set_anwser("A", true);
-                        else
-                            set_anwser("A", false);
-                        break;
-                    case "B":
-                        if (mCauhoi.getsANSWER().equals("B"))
-                            set_anwser("B", true);
-                        else
-                            set_anwser("B", false);
-                        break;
-                    case "C":
-                        if (mCauhoi.getsANSWER().equals("C"))
-                            set_anwser("C", true);
-                        else
-                            set_anwser("C", false);
-                        break;
-                    case "D":
-                        if (mCauhoi.getsANSWER().equals("D"))
-                            set_anwser("D", true);
-                        else
-                            set_anwser("D", false);
-                        break;
-                }
-            }
-            isTraloi = true;
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    isdouble_click = false;
-                }
-            }, 1000);
-
-        }
-    }
-
-    private void set_anwser(String sAnwser, boolean isAnwser) {
-        if (isAnwser) {
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-        } else {
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-        }
-        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
-    }
 }

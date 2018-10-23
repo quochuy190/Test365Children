@@ -101,8 +101,7 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
         initEvent();
         return view;
     }
-    @BindView(R.id.txt_result_chil_exer)
-    TextView txt_result;
+
     private void initEvent() {
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -180,17 +179,20 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
              mHandler.postDelayed(this, UPDATE_PROGRESS_INTERVAL);
          }
      };*/
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
+
     private void initData() {
-        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
-            txt_result.setText("S");
-            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
-        } else {
-            txt_result.setText("Đ");
-            txt_result.setTextColor(getResources().getColor(R.color.blue));
-        }
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
+            if (mCauhoi.getsRESULT_CHILD().equals("0")) {
+                Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+            } else {
+                Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            }
+        } else
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         if (!mCauhoi.isDalam()) {
-            txt_result.setText("S");
-            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
         if (mCauhoi != null) {
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());

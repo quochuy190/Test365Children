@@ -29,6 +29,7 @@ import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -58,7 +59,7 @@ public class FragmentReviewDocvaTraloi extends BaseFragment {
     @BindView(R.id.img_background)
     ImageView img_background;
     @BindView(R.id.txt_debai)
-    TextView txt_debai;
+    WebView txt_debai;
 
     public static FragmentReviewDocvaTraloi newInstance(CauhoiDetail restaurant) {
         FragmentReviewDocvaTraloi restaurantDetailFragment = new FragmentReviewDocvaTraloi();
@@ -91,22 +92,22 @@ public class FragmentReviewDocvaTraloi extends BaseFragment {
 
     }
 
-    @BindView(R.id.txt_result_chil_exer)
-    TextView txt_result;
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
 
     private void initData() {
-        if (mCauhoi.getsQUESTION() != null)
-            txt_debai.setText("Câu hỏi: " + mCauhoi.getsQUESTION());
-        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
-            txt_result.setText("S");
-            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
-        } else {
-            txt_result.setText("Đ");
-            txt_result.setTextColor(getResources().getColor(R.color.blue));
-        }
+        if (mCauhoi.getsHTML_CONTENT() != null)
+            StringUtil.initWebview(txt_debai, mCauhoi.getsHTML_CONTENT());
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
+            if (mCauhoi.getsRESULT_CHILD().equals("0")) {
+                Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+            } else {
+                Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            }
+        } else
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         if (!mCauhoi.isDalam()) {
-            txt_result.setText("S");
-            txt_result.setTextColor(getResources().getColor(R.color.red_test365));
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());

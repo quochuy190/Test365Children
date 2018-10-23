@@ -2,6 +2,7 @@ package neo.vn.test365children.Activity.ReviewExercises;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import neo.vn.test365children.Presenter.ImlExerDetail;
 import neo.vn.test365children.Presenter.PresenterExeDetail;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
+import neo.vn.test365children.Untils.StringUtil;
 
 public class ActivityExercisesDetail extends BaseActivity implements ImlExerDetail.View {
     private static final String TAG = "ActivityExercisesDetail";
@@ -56,7 +58,8 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     TextView txt_trungbinh;
     @BindView(R.id.txt_exer_point_min)
     TextView txt_thapnhat;
-
+    @BindView(R.id.txt_exer_comment_mother)
+    TextView txt_exer_comment_mother;
     @Override
     public int setContentViewId() {
         return R.layout.activity_exercise_detail;
@@ -102,7 +105,8 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         hideDialogLoading();
         if (listDepExe != null) {
             DesExercises obj = listDepExe.get(0);
-            txt_debai.setText(obj.getsNAME());
+            txt_debai.setText(Html.fromHtml(obj.getsNAME()));
+          //  txt_debai.setText(obj.getsNAME());
             txt_namhoc.setText("Năm học: " + obj.getsYEAR_NAME());
             txt_khoihoc.setText("Khối: " + obj.getsLEVEL_ID());
             txt_tuan.setText("Tuần: " + obj.getsWEEK_ID());
@@ -124,7 +128,8 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
                 txt_nhanxet.setText(obj.getsRECOMMENT_7_8());
             } else
                 txt_nhanxet.setText(obj.getsRECOMMENT_9_10());
-            txt_point.setText(obj.getsPOINT());
+            txt_point.setText(StringUtil.format_point(fPoint));
+
         }
     }
 
@@ -135,9 +140,9 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
             txt_bancunglam.setText("Có " + obj.getScunglam() + " bạn cùng làm bài thi này");
             txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia:" + obj.getScungtruong());
             txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: " + obj.getScunglop());
-            txt_caonhat.setText("" + obj.getScaonhat());
-            txt_trungbinh.setText("" + obj.getStrungbinh());
-            txt_thapnhat.setText("" + obj.getSthapnhat());
+            txt_caonhat.setText(StringUtil.format_point(Float.parseFloat(obj.getScaonhat())));
+            txt_trungbinh.setText(StringUtil.format_point(Float.parseFloat(obj.getStrungbinh())));
+            txt_thapnhat.setText(StringUtil.format_point(Float.parseFloat(obj.getSthapnhat())));
         }
     }
 

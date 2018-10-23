@@ -11,6 +11,8 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
 
+
+
     <LinearLayout
         android:id="@+id/ll_lable"
         android:layout_width="match_parent"
@@ -22,22 +24,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
-            android:layout_width="@dimen/icon_point_lambai"
-            android:layout_height="@dimen/icon_point_lambai"
+            android:visibility="visible"
+            android:layout_width="@dimen/icon_anwser_review"
+            android:layout_height="@dimen/icon_anwser_review"
             android:layout_margin="@dimen/dp5">
 
             <ImageView
-                android:layout_width="@dimen/icon_point_lambai"
-                android:layout_height="@dimen/icon_point_lambai"
-                android:src="@drawable/exer_icon_diem" />
+                android:id="@+id/img_anwser_chil"
+                android:layout_width="@dimen/icon_anwser_review"
+                android:layout_height="@dimen/icon_anwser_review"
+                android:src="@drawable/icon_anwser_true" />
 
-            <TextView
-                android:id="@+id/txt_result_chil_exer"
-                android:layout_width="@dimen/icon_point_lambai"
-                android:layout_height="@dimen/icon_point_lambai"
-                android:fontFamily="@font/font1"
-                android:gravity="center"
-                android:textSize="@dimen/text_25sp" />
         </RelativeLayout>
 
         <TextView
@@ -59,13 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="@dimen/margin_left_lambai"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp5"
-            android:orientation="vertical">
 
-        </LinearLayout>
     </LinearLayout>
 
     <android.support.v4.widget.NestedScrollView

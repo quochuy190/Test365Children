@@ -38,7 +38,7 @@ public class AdapterCategoryShop extends RecyclerView.Adapter<AdapterCategorySho
 
     @Override
     public void onBindViewHolder(@NonNull CategoryServiceViewHolder holder, int position) {
-        holder.title.setText("Tuần "+mLisCateService.get(position).getsName());
+        holder.title.setText(mLisCateService.get(position).getsName());
         holder.horizontalAdapter.setData(mLisCateService.get(position).getLisBaitapTuan()); // List of Strings
         // holder.horizontalAdapter.setRowIndex(position);
     }

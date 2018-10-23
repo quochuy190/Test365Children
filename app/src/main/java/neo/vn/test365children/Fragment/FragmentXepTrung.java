@@ -102,7 +102,8 @@ public class FragmentXepTrung extends BaseFragment {
     ImageView img_background;
     @BindView(R.id.btn_nopbai)
     ImageView btn_nopbai;
-
+    @BindView(R.id.txt_cauhoi)
+    TextView txt_cauhoi;
     public static FragmentXepTrung newInstance(CauhoiDetail restaurant) {
         FragmentXepTrung restaurantDetailFragment = new FragmentXepTrung();
         Bundle args = new Bundle();
@@ -144,7 +145,10 @@ public class FragmentXepTrung extends BaseFragment {
     }
 
     private void initData() {
+        txt_cauhoi.setVisibility(View.GONE);
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+        txt_cauhoi.setText("Đáp án: "+ mCauhoi.getsEGG_1()+" , "+ mCauhoi.getsEGG_2()+" , "+ mCauhoi.getsEGG_3()+" , "
+                + mCauhoi.getsEGG_4());
         Glide.with(this).load(R.drawable.bg_xep_trung).into(img_background);
         String[] egg1 = mCauhoi.getsEGG_1().split("::");
         String[] egg2 = mCauhoi.getsEGG_2().split("::");
@@ -217,10 +221,12 @@ public class FragmentXepTrung extends BaseFragment {
                         EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                         // EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                     } else {
+                        txt_cauhoi.setVisibility(View.VISIBLE);
                         EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                     }
                     isClickXemdiem = true;
                 }
+                is_not_click();
             }
         });
     }
@@ -299,7 +305,6 @@ public class FragmentXepTrung extends BaseFragment {
 
                                 switch (view.getId()) {
                                     case R.id.rl_trung1:
-
                                         map_answer_chil.put("egg_1", mLisTrung.get(0) + "::" + mLisRoTrung.get(0));
                                         break;
                                     case R.id.rl_trung2:
@@ -517,5 +522,19 @@ public class FragmentXepTrung extends BaseFragment {
         view.getLocationOnScreen(location);
         outRect.offset(location[0], location[1]);
         return outRect.contains(x, y);
+    }
+    private void is_not_click(){
+        rl_trung1.setOnTouchListener(isNotClick());
+        rl_trung2.setOnTouchListener(isNotClick());
+        rl_trung3.setOnTouchListener(isNotClick());
+        rl_trung4.setOnTouchListener(isNotClick());
+    }
+    private View.OnTouchListener isNotClick(){
+        return new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        };
     }
 }

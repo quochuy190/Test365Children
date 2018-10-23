@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -58,10 +59,18 @@ public class FragmentNoicau extends BaseFragment {
     RecyclerView.LayoutManager mLayoutManager, mLayoutManager2;
     @BindView(R.id.webview_dapannoicau_A_1)
     WebView webview_dapannoicau_A_1;
+    @BindView(R.id.webview_dapannoicau_A_traloi_1)
+    WebView webview_dapannoicau_A_traloi_1;
     @BindView(R.id.webview_dapannoicau_A_2)
     WebView webview_dapannoicau_A_2;
+    @BindView(R.id.webview_dapannoicau_A_traloi_2)
+    WebView webview_dapannoicau_A_traloi_2;
     @BindView(R.id.webview_dapannoicau_A_3)
     WebView webview_dapannoicau_A_3;
+    @BindView(R.id.webview_dapannoicau_A_traloi_3)
+    WebView webview_dapannoicau_A_traloi_3;
+    @BindView(R.id.webview_dapannoicau_A_traloi_4)
+    WebView webview_dapannoicau_A_traloi_4;
     @BindView(R.id.webview_dapannoicau_A_4)
     WebView webview_dapannoicau_A_4;
     @BindView(R.id.rl_dapanA_1)
@@ -72,6 +81,16 @@ public class FragmentNoicau extends BaseFragment {
     RelativeLayout rl_dapanA_3;
     @BindView(R.id.rl_dapanA_4)
     RelativeLayout rl_dapanA_4;
+
+    @BindView(R.id.rl_dapanA_traloi_1)
+    RelativeLayout rl_dapanA_traloi_1;
+    @BindView(R.id.rl_dapanA_traloi_2)
+    RelativeLayout rl_dapanA_traloi_2;
+    @BindView(R.id.rl_dapanA_traloi_3)
+    RelativeLayout rl_dapanA_traloi_3;
+    @BindView(R.id.rl_dapanA_traloi_4)
+    RelativeLayout rl_dapanA_traloi_4;
+
     @BindView(R.id.img_dapan_A_1)
     ImageView img_dapan_A_1;
     @BindView(R.id.img_dapan_A_2)
@@ -89,6 +108,16 @@ public class FragmentNoicau extends BaseFragment {
     WebView webview_dapannoicau_B_3;
     @BindView(R.id.webview_dapannoicau_B_4)
     WebView webview_dapannoicau_B_4;
+
+    @BindView(R.id.webview_dapannoicau_B_traloi_1)
+    WebView webview_dapannoicau_B_traloi_1;
+    @BindView(R.id.webview_dapannoicau_B_traloi_2)
+    WebView webview_dapannoicau_B_traloi_2;
+    @BindView(R.id.webview_dapannoicau_B_traloi_3)
+    WebView webview_dapannoicau_B_traloi_3;
+    @BindView(R.id.webview_dapannoicau_B_traloi_4)
+    WebView webview_dapannoicau_B_traloi_4;
+
     @BindView(R.id.rl_dapanB_1)
     RelativeLayout rl_dapanB_1;
     @BindView(R.id.rl_dapanB_2)
@@ -97,6 +126,16 @@ public class FragmentNoicau extends BaseFragment {
     RelativeLayout rl_dapanB_3;
     @BindView(R.id.rl_dapanB_4)
     RelativeLayout rl_dapanB_4;
+
+    @BindView(R.id.rl_dapanB_traloi_1)
+    RelativeLayout rl_dapanB_traloi_1;
+    @BindView(R.id.rl_dapanB_traloi_2)
+    RelativeLayout rl_dapanB_traloi_2;
+    @BindView(R.id.rl_dapanB_traloi_3)
+    RelativeLayout rl_dapanB_traloi_3;
+    @BindView(R.id.rl_dapanB_traloi_4)
+    RelativeLayout rl_dapanB_traloi_4;
+
     @BindView(R.id.img_dapan_B_1)
     ImageView img_dapan_B_1;
     @BindView(R.id.img_dapan_B_2)
@@ -115,6 +154,11 @@ public class FragmentNoicau extends BaseFragment {
     ImageView btn_xemdiem;
     @BindView(R.id.btn_nopbai)
     ImageView btn_nopbai;
+    @BindView(R.id.text_lable_dapan)
+    TextView text_lable_dapan;
+    @BindView(R.id.ll_dapan_traloi)
+    LinearLayout ll_dapan_traloi;
+
     public static FragmentNoicau newInstance(CauhoiDetail restaurant) {
         FragmentNoicau restaurantDetailFragment = new FragmentNoicau();
         Bundle args = new Bundle();
@@ -166,13 +210,14 @@ public class FragmentNoicau extends BaseFragment {
             @Override
             public void onClick(View v) {
                 float sPoint = 0;
-
                 if (!isClickXemdiem) {
                     if (App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).isAnserTrue()) {
                         EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                         // EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                     } else {
+                        text_lable_dapan.setVisibility(View.VISIBLE);
+                        ll_dapan_traloi.setVisibility(View.VISIBLE);
                         CauhoiDetail obj = App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1);
                         float sTotalPoint = Float.parseFloat(obj.getsPOINT());
@@ -215,7 +260,7 @@ public class FragmentNoicau extends BaseFragment {
         img_dapan_A_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isDangchon&&!isClickXemdiem) {
+                if (!isDangchon && !isClickXemdiem) {
                     if (!isDapanA_2) {
                         EventBus.getDefault().post(new MessageEvent("mp3",
                                 Float.parseFloat(mCauhoi.getsPOINT()), 0));
@@ -231,7 +276,7 @@ public class FragmentNoicau extends BaseFragment {
         img_dapan_A_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isDangchon&&!isClickXemdiem) {
+                if (!isDangchon && !isClickXemdiem) {
                     if (!isDapanA_3) {
                         EventBus.getDefault().post(new MessageEvent("mp3",
                                 Float.parseFloat(mCauhoi.getsPOINT()), 0));
@@ -246,7 +291,7 @@ public class FragmentNoicau extends BaseFragment {
         img_dapan_A_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isDangchon&&!isClickXemdiem) {
+                if (!isDangchon && !isClickXemdiem) {
                     if (!isDapanA_4) {
                         EventBus.getDefault().post(new MessageEvent("mp3",
                                 Float.parseFloat(mCauhoi.getsPOINT()), 0));
@@ -263,7 +308,7 @@ public class FragmentNoicau extends BaseFragment {
         img_dapan_B_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isDangchon&&!isClickXemdiem) {
+                if (isDangchon && !isClickXemdiem) {
                     if (!isDapanB_1) {
                         EventBus.getDefault().post(new MessageEvent("mp3",
                                 Float.parseFloat(mCauhoi.getsPOINT()), 0));
@@ -296,7 +341,7 @@ public class FragmentNoicau extends BaseFragment {
         img_dapan_B_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isDangchon&&!isClickXemdiem) {
+                if (isDangchon && !isClickXemdiem) {
                     if (!isDapanB_2) {
                         EventBus.getDefault().post(new MessageEvent("mp3",
                                 Float.parseFloat(mCauhoi.getsPOINT()), 0));
@@ -329,10 +374,9 @@ public class FragmentNoicau extends BaseFragment {
         img_dapan_B_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isDangchon&&!isClickXemdiem) {
+                if (isDangchon && !isClickXemdiem) {
                     if (!isDapanB_3) {
-                        EventBus.getDefault().post(new MessageEvent("mp3",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
+                        EventBus.getDefault().post(new MessageEvent("mp3", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                         switch (sDangchon) {
                             case "1":
                                 map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(2));
@@ -362,7 +406,7 @@ public class FragmentNoicau extends BaseFragment {
         img_dapan_B_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isDangchon&&!isClickXemdiem) {
+                if (isDangchon && !isClickXemdiem) {
                     if (!isDapanB_4) {
                         EventBus.getDefault().post(new MessageEvent("mp3",
                                 Float.parseFloat(mCauhoi.getsPOINT()), 0));
@@ -396,6 +440,8 @@ public class FragmentNoicau extends BaseFragment {
 
     public void check_anwser() {
         boolean isEgg1 = false, isEgg2 = false, isEgg3 = false, isEgg4 = false;
+        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
         if (map_answer_chil.get("egg_1") != null) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsEGG_1_RESULT(map_answer_chil.get("egg_1"));
@@ -444,6 +490,8 @@ public class FragmentNoicau extends BaseFragment {
     List<String> mLisAnwser_B;
 
     private void initData() {
+        text_lable_dapan.setVisibility(View.GONE);
+        ll_dapan_traloi.setVisibility(View.GONE);
         mLisDapanB = new ArrayList<>();
         mLisDapanA = new ArrayList<>();
         mLisAnwser_A = new ArrayList<>();
@@ -466,7 +514,7 @@ public class FragmentNoicau extends BaseFragment {
         mLisAnwser_B.add(egg2[1]);
         mLisAnwser_B.add(egg3[1]);
         mLisAnwser_B.add(egg4[1]);
-
+        initTraloi();
         Collections.shuffle(mLisAnwser_B);
         Log.i(TAG, "initData: " + mLisAnwser_B);
 
@@ -496,5 +544,29 @@ public class FragmentNoicau extends BaseFragment {
         String pas = "</body></html>";
         webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
                 "text/html", "UTF-8", "");
+    }
+
+    private void initTraloi() {
+        initWebview(webview_dapannoicau_A_traloi_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+        initWebview(webview_dapannoicau_A_traloi_2, StringUtil.convert_html(mLisAnwser_A.get(1)));
+        initWebview(webview_dapannoicau_A_traloi_3, StringUtil.convert_html(mLisAnwser_A.get(2)));
+        initWebview(webview_dapannoicau_A_traloi_4, StringUtil.convert_html(mLisAnwser_A.get(3)));
+
+        initWebview(webview_dapannoicau_B_traloi_1, StringUtil.convert_html(mLisAnwser_B.get(0)));
+        initWebview(webview_dapannoicau_B_traloi_2, StringUtil.convert_html(mLisAnwser_B.get(1)));
+        initWebview(webview_dapannoicau_B_traloi_3, StringUtil.convert_html(mLisAnwser_B.get(2)));
+        initWebview(webview_dapannoicau_B_traloi_4, StringUtil.convert_html(mLisAnwser_B.get(3)));
+
+        rl_dapanA_traloi_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+        rl_dapanB_traloi_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+
+        rl_dapanA_traloi_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+        rl_dapanB_traloi_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+
+        rl_dapanA_traloi_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+        rl_dapanB_traloi_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+
+        rl_dapanA_traloi_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+        rl_dapanB_traloi_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
     }
 }

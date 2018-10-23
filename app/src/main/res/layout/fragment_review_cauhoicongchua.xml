@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,36 +12,27 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/background_lambai" />
-
+    <ImageView
+        android:layout_marginLeft="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp5"
+        android:id="@+id/img_anwser_chil"
+        android:layout_width="@dimen/icon_anwser_review"
+        android:layout_height="@dimen/icon_anwser_review"
+        android:src="@drawable/icon_anwser_true" />
     <LinearLayout
+        app:layout_constraintLeft_toRightOf="@+id/img_anwser_chil"
         android:id="@+id/ll_lable"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:layout_width="@dimen/icon_point_lambai"
-            android:layout_height="@dimen/icon_point_lambai"
-            android:layout_margin="@dimen/dp5">
 
-            <ImageView
-                android:layout_width="@dimen/icon_point_lambai"
-                android:layout_height="@dimen/icon_point_lambai"
-                android:src="@drawable/exer_icon_diem" />
-            <TextView
-                android:gravity="center"
-                android:id="@+id/txt_result_chil_exer"
-                android:layout_width="@dimen/icon_point_lambai"
-                android:layout_height="@dimen/icon_point_lambai"
-                android:fontFamily="@font/font1"
-                android:textSize="@dimen/text_25sp" />
-        </RelativeLayout>
 
         <TextView
+            android:layout_margin="@dimen/dp5"
             android:id="@+id/txt_lable"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -59,40 +51,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="@dimen/margin_left_lambai"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp5"
-            android:orientation="vertical">
 
-        </LinearLayout>
     </LinearLayout>
 
 
-
     <LinearLayout
+        android:padding="@dimen/dp5"
         android:id="@+id/ll_cauhoi"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_lable">
+        app:layout_constraintTop_toBottomOf="@id/ll_lable"
+        tools:ignore="WebViewLayout">
 
-        <TextView
-            android:id="@+id/txt_cauhoi"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="@dimen/dp5"
-            android:text="Câu 1: Chọn đán án đúng"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_content_cauhoi" />
+        <WebView
+            android:id="@+id/webview_debai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </WebView>
     </LinearLayout>
 
     <LinearLayout
-
         android:layout_marginBottom="@dimen/dp5"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -106,9 +88,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp5"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:background="@drawable/spr_bg_cauhoi_congchua"
-            android:padding="@dimen/dp5" />
+            android:padding="@dimen/dp2" />
 
         <ImageView
             android:layout_width="0dp"

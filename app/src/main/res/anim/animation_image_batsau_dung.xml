@@ -11,9 +11,9 @@
         android:repeatCount="infinite"/>-->
     <scale
         android:interpolator="@android:anim/bounce_interpolator"
-        android:fromXScale="0.8"
+        android:fromXScale="0.6"
         android:toXScale="1.2"
-        android:fromYScale="0.8"
+        android:fromYScale="0.6"
         android:toYScale="1.2"
         android:pivotX="50%"
         android:pivotY="50%"

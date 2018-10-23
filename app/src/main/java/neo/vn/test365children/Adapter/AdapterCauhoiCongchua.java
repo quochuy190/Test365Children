@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -55,7 +56,8 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
       //  holder.ll_dapan_all.removeAllViews();
-        initWebview(holder.webview_debai, obj.getsContent());
+       // initWebview(holder.webview_debai, obj.getsContent());
+        StringUtil.initWebview_Whitetext(holder.webview_debai, obj.getsContent());
        /* if (obj.getsContent() != null)
             if (obj.getsContent().indexOf("image") > 0) {
                 ImageView txt_dapan = new ImageView(context);

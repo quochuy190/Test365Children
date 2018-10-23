@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <ImageView
 
         android:id="@+id/img_background"
@@ -58,9 +60,8 @@
 
     <ImageView
         android:id="@+id/btn_xemdiem"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="@dimen/image_next"
-
         android:padding="@dimen/dp5"
         android:src="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,7 +70,7 @@
 
     <TextView
         android:id="@+id/txt_xemdiem"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="@dimen/image_next"
         android:fontFamily="@font/font1"
         android:gravity="center"
@@ -83,6 +84,7 @@
         app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/btn_nopbai"
         android:layout_width="0dp"
         android:layout_height="@dimen/image_next"
@@ -128,7 +130,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
+        app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
         app:layout_constraintEnd_toEndOf="@+id/img_background"
         app:layout_constraintStart_toStartOf="@+id/img_background"
         app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi">
@@ -142,5 +144,14 @@
             android:clipChildren="true"
             android:padding="@dimen/dp5" />
     </LinearLayout>
-
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_anwser_chil"
+        android:layout_width="@dimen/icon_anwser_review"
+        android:layout_height="@dimen/icon_anwser_review"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginLeft="@dimen/dp5"
+        android:src="@drawable/icon_anwser_true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.Baitap_Tuan;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.KeyboardUtil;
 
 
 /**
@@ -49,10 +50,10 @@ public class AdapterItemMenuLambaitap extends RecyclerView.Adapter<AdapterItemMe
     }
 
     @Override
-    public void onBindViewHolder(TopicViewHoder holder, int position) {
+    public void onBindViewHolder(final TopicViewHoder holder, int position) {
         Baitap_Tuan obj = listChildren.get(position);
-      //  holder.txt_name.setText(obj.getsSUBJECT_NAME());
-        holder.txt_name.setText(obj.getsSUBJECT_NAME()+" - Tuần "+obj.getsWEEK_ID());
+        //  holder.txt_name.setText(obj.getsSUBJECT_NAME());
+        holder.txt_name.setText(obj.getsSUBJECT_NAME() + " - Tuần " + obj.getsWEEK_ID());
         switch (obj.getsSUBJECT_ID()) {
             case "1":
                 Glide.with(context).load(R.drawable.img_menu_toan).into(holder.img_item_menu_lambai);
@@ -86,6 +87,7 @@ public class AdapterItemMenuLambaitap extends RecyclerView.Adapter<AdapterItemMe
 
         @Override
         public void onClick(View v) {
+            KeyboardUtil.animation_click_button(context, img_item_menu_lambai);
             OnIListener.onClickItem(getLayoutPosition(), listChildren.get(getLayoutPosition()));
         }
 

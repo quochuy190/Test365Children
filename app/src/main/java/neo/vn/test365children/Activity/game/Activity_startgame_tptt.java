@@ -27,7 +27,7 @@ import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 
 public class Activity_startgame_tptt extends BaseActivity implements View.OnClickListener, ImlGetGameTptt.View {
-@BindView(R.id.relativeLayout5)
+    @BindView(R.id.relativeLayout5)
     RelativeLayout rl_startgame;
     @BindView(R.id.relativeLayout4)
     RelativeLayout rl_exit;
@@ -44,6 +44,8 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
     @BindView(R.id.imageView14)
     ImageView img_stargame;
     MediaPlayer mPlayer;
+    String sPartId = "";
+
     @Override
     public int setContentViewId() {
         return R.layout.activity_star_game;
@@ -93,9 +95,9 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
             case R.id.btn_play_game:
                 mPlayer.release();
                 KeyboardUtil.animation_click_button(Activity_startgame_tptt.this, img_btn_play);
-                Intent intent = new Intent(Activity_startgame_tptt.this, ActivityGameTrieuphutrithuc.class);
-                startActivity(intent);
-                finish();
+                if (sPartId.length() > 0)
+                    mPresenter.api_start_tptt(sUserMe, sUserCon, sPartId);
+
                 break;
         }
     }
@@ -106,23 +108,34 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
         if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
             App.mLisGameTPTT.clear();
             App.mLisGameTPTT.addAll(mLis);
+            sPartId = mLis.get(0).getsPART_ID();
         }
     }
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
-
+        hideDialogLoading();
     }
 
     @Override
     public void show_start_tptt(List<ErrorApi> mLis) {
+        hideDialogLoading();
+        if (mLis!=null&&mLis.get(0).getsERROR().equals("0000")){
+            Intent intent = new Intent(Activity_startgame_tptt.this, ActivityGameTrieuphutrithuc.class);
+            startActivity(intent);
+            finish();
+        }else {
+            //showDialogNotify("Thông báo", mLis.get(0).getsRESULT());
+            showAlertDialog("Thông báo", mLis.get(0).getsRESULT());
+        }
 
     }
 
     @Override
     public void show_submit_tptt(List<ErrorApi> mLis) {
-
+        hideDialogLoading();
     }
+
     public void play_start_game() {
         //mp3 = new MediaPlayer();
         mPlayer.release();

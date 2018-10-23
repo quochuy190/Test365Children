@@ -28,10 +28,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <ImageView
-            android:layout_width="@dimen/margin_left_lambai"
-            android:layout_height="@dimen/margin_left_lambai"
-            android:layout_margin="@dimen/dp5" />
+            android:id="@+id/img_anwser_chil"
+            android:layout_width="@dimen/icon_anwser_review"
+            android:layout_height="@dimen/icon_anwser_review"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginTop="@dimen/dp2"
+            android:src="@drawable/icon_anwser_true" />
+
 
         <TextView
             android:id="@+id/txt_lable"
@@ -52,13 +57,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="@dimen/margin_left_lambai"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp5"
-            android:orientation="vertical">
-
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -73,36 +71,12 @@
         app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <ImageView
-        android:id="@+id/btn_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <TextView
-        android:id="@+id/txt_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-        android:fontFamily="@font/font1"
-        android:gravity="center"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        android:text="Xem điểm"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
 
     <android.support.v4.widget.NestedScrollView
-
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
+        android:layout_marginBottom="@dimen/dp5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/img_background"
         app:layout_constraintTop_toBottomOf="@+id/ll_lable">
@@ -113,6 +87,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp10">

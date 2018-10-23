@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
 
 public class ActivityBaitapdalam extends BaseActivity {
+    private static final String TAG = "ActivityBaitapdalam";
     Realm mRealm;
     AdapterCategoryShop adapter;
     RecyclerView.LayoutManager mLayoutManager;
@@ -48,16 +50,25 @@ public class ActivityBaitapdalam extends BaseActivity {
     private void initData() {
         mLisTuan = new ArrayList<>();
         lisExercise = RealmController.getInstance().getExercises();
-        for (int i = 0; i < 40; i++) {
-            List<ExerciseAnswer> lisEx = new ArrayList<>();
-            lisEx = mRealm.where(ExerciseAnswer.class).equalTo("sIdTuan", "" + i)
-                    .equalTo("isTrangthailambai", "2").findAll();
-            if (lisEx.size() > 0) {
-                mLisTuan.add(new ListTuan("" + i, lisEx));
-            }
+        List<ExerciseAnswer> lisEx = new ArrayList<>();
+        lisEx = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "1")
+                .equalTo("isTrangthailambai", "2").findAll();
+        List<ExerciseAnswer> lisExTV = new ArrayList<>();
+        lisExTV = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "2")
+                .equalTo("isTrangthailambai", "2").findAll();
+        List<ExerciseAnswer> lisExTA = new ArrayList<>();
+        lisExTA = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "3")
+                .equalTo("isTrangthailambai", "2").findAll();
+        if (lisEx.size() > 0) {
+            mLisTuan.add(new ListTuan("Toán", lisEx));
         }
-
-
+        if (lisExTV.size() > 0) {
+            mLisTuan.add(new ListTuan("Tiếng Việt", lisExTV));
+        }
+        if (lisExTA.size() > 0) {
+            mLisTuan.add(new ListTuan("Tiếng Anh", lisExTA));
+        }
+        Log.i(TAG, "initData: "+mLisTuan);
     }
 
     private void init() {
@@ -70,7 +81,7 @@ public class ActivityBaitapdalam extends BaseActivity {
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, objService.getsId_exercise());
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_POINT, objService.getsPoint());
-               // SharedPrefs.getInstance().put(Constants.KEY_SEND_EXERCISES_DETAIL, objService);
+                // SharedPrefs.getInstance().put(Constants.KEY_SEND_EXERCISES_DETAIL, objService);
                 startActivity(intent);
             }
         });

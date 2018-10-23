@@ -20,6 +20,7 @@ import neo.vn.test365children.Listener.OnListenerItemClickObjService;
 import neo.vn.test365children.Listener.setOnItemClickListener;
 import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapTuan.FlightInfoViewHoder> {
@@ -56,19 +57,20 @@ public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapT
         //  Glide.with(context).load(objService.getmImage()).into(holder.img_Background);
         switch (objService.getsMonhoc()) {
             case "1":
-                holder.txt_monhoc.setText("Môn Toán");
+              //  holder.txt_monhoc.setText("Môn Toán");
                 Glide.with(context).load(R.drawable.mark_2).into(holder.img_bg);
                 break;
             case "2":
-                holder.txt_monhoc.setText("Tiếng Việt");
+               // holder.txt_monhoc.setText("Tiếng Việt");
                 Glide.with(context).load(R.drawable.mark_0).into(holder.img_bg);
                 break;
             case "3":
-                holder.txt_monhoc.setText("Tiếng Anh");
+               // holder.txt_monhoc.setText("Tiếng Anh");
                 Glide.with(context).load(R.drawable.mark_4).into(holder.img_bg);
                 break;
         }
-        holder.txt_diem.setText(objService.getsPoint()+" Điểm");
+        holder.txt_monhoc.setText("Tuần "+objService.getsIdTuan());
+        holder.txt_diem.setText(StringUtil.format_point(Float.parseFloat(objService.getsPoint()))+" Điểm");
 
         holder.holder.setOnClickListener(new View.OnClickListener() {
             @Override

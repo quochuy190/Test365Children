@@ -47,7 +47,7 @@
     <dimen name="image_next">35dp</dimen>
     <dimen name="margin_top_lambai">10dp</dimen>
     <dimen name="margin_left_lambai">40dp</dimen>
-    <dimen name="icon_point_lambai">40dp</dimen>
+    <dimen name="icon_point_lambai">45dp</dimen>
     <!--text size-->
     <dimen name="text_10sp">10sp</dimen>
     <dimen name="text_11sp">11sp</dimen>
@@ -86,6 +86,7 @@
     <dimen name="exercises_hight_title">70dp</dimen>
     <dimen name="exercises_margin_leght">30dp</dimen>
     <dimen name="exercises_icon_point">50dp</dimen>
+    <dimen name="exercises_icon_point_width">70dp</dimen>
     <dimen name="exer_hight_debai">40dp</dimen>
     <dimen name="exer_margin_top">10dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
@@ -111,4 +112,7 @@
     <dimen name="width_bxh">120dp</dimen>
     <dimen name="hight_item_bottom">70dp</dimen>
 
+    <!--Chém chuối-->
+    <dimen name="img_chemchuoi">200dp</dimen>
+    <dimen name="icon_anwser_review">70dp</dimen>
 </resources>

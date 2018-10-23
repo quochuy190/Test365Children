@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -57,31 +56,8 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
     }
 
     @Override
-    public void onBindViewHolder(final TopicViewHoder holder, final int position) {
+    public void onBindViewHolder( TopicViewHoder holder,  int position) {
         DapAn obj = list.get(position);
-        if (obj.getsContent() != null) {
-            initWebview(holder.webview_debai, StringUtil.convert_html(obj.getsContent()));
-        }
-        if (obj.isClick()) {
-            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
-                Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_chemchuoi);
-                holder.img_lasau.startAnimation(animationRotale);
-                //  holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.red));
-            }
-            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Dung())) {
-                Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_image_batsau_dung);
-                holder.img_lasau.startAnimation(animationRotale);
-                //  holder.checkbox.setImageResource(R.drawable.ic_checked_blue);
-                //  holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.blue));
-            }
-        } else {
-            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
-                Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_chemchuoi);
-                holder.img_lasau.startAnimation(animationRotale);
-            } else {
-                holder.img_lasau.setVisibility(View.VISIBLE);
-            }
-        }
         switch (obj.getsName()) {
             case "A":
                 Glide.with(context).load(R.drawable.fruit_banana).into(holder.img_lasau);
@@ -96,21 +72,59 @@ public class AdapterChemchuoi extends RecyclerView.Adapter<AdapterChemchuoi.Topi
                 Glide.with(context).load(R.drawable.fruit_pineapple).into(holder.img_lasau);
                 break;
         }
-        holder.webview_debai.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction()==MotionEvent.ACTION_UP){
-                    OnIListener.onClickItem(position, list.get(position));
-                }
-                return false;
+        // holder.ll_dapan_all.removeAllViews();
+   /*     if (obj.getsContent() != null) {
+            initWebview(holder.webview_debai, StringUtil.convert_html(obj.getsContent()));
+        }
+
+        if (obj.isClick()) {
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
+                holder.img_lasau.setVisibility(View.INVISIBLE);
             }
-        });
-        holder.img_lasau.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnIListener.onClickItem(position, list.get(position));
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Dung())) {
+                Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_image_batsau_dung);
+                holder.img_lasau.startAnimation(animationRotale);
             }
-        });
+        } else {
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
+                Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_image_batsau);
+                holder.img_lasau.startAnimation(animationRotale);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.img_lasau.clearAnimation();
+                        holder.img_lasau.setVisibility(View.INVISIBLE);
+                    }
+                }, 2000);
+
+            } else {
+                holder.img_lasau.setVisibility(View.VISIBLE);
+            }
+        }*/
+      //  DapAn obj = list.get(position);
+        if (obj.getsContent() != null) {
+            initWebview(holder.webview_debai, StringUtil.convert_html(obj.getsContent()));
+        }
+        if (obj.isClick()) {
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
+                Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_chemchuoi);
+                holder.img_lasau.startAnimation(animationRotale);
+                //  holder.txt_dapan.setTextColor(context.getResources().getColor(R.color.red));
+            }
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Dung())) {
+                Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_image_batsau_dung);
+                holder.img_lasau.startAnimation(animationRotale);
+            }
+        } else {
+            if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
+                Animation animationRotale = AnimationUtils.loadAnimation(context, R.anim.animation_chemchuoi);
+                holder.img_lasau.startAnimation(animationRotale);
+            } else {
+                holder.img_lasau.setVisibility(View.VISIBLE);
+            }
+        }
+
+
     }
 
     @Override

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:id="@+id/ll_lable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:layout_width="@dimen/margin_left_lambai"
+            android:layout_height="@dimen/margin_left_lambai"
+            android:layout_margin="@dimen/dp5" />
+
+        <TextView
+            android:id="@+id/txt_lable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginRight="@dimen/dp5"
+            android:layout_weight="1"
+            android:background="@drawable/spr_lable_lambai"
+            android:fontFamily="@font/font1"
+            android:gravity="center"
+            android:padding="@dimen/dp7"
+            android:text="Câu 3: Bắt sâu"
+            android:textColor="@color/lable_lambai"
+            android:textSize="@dimen/text_16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="@dimen/margin_left_lambai"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/btn_xemdiem"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/image_next"
+        android:padding="@dimen/dp5"
+        android:src="@drawable/btn_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
+
+    <TextView
+        android:id="@+id/txt_xemdiem"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/image_next"
+        android:fontFamily="@font/font1"
+        android:gravity="center"
+        android:padding="@dimen/dp5"
+        android:src="@drawable/btn_1"
+        android:text="Xem điểm"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
+
+    <ImageView
+        android:id="@+id/btn_nopbai"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/image_next"
+        android:padding="@dimen/dp5"
+        android:src="@drawable/btn_nopbai"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable">
+
+        <LinearLayout
+            android:id="@+id/ll_cauhoi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dp5"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/dp5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_lable">
+
+            <WebView
+                android:id="@+id/webview_debai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </WebView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/ll_anwser_A"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp1"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp1">
+
+                    <LinearLayout
+
+                        android:id="@+id/txt_dapan_A"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp5"
+                        tools:ignore="WebViewLayout">
+
+                        <WebView
+                            android:id="@+id/webview_anwser_A"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                        </WebView>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:padding="@dimen/dp10"
+                        android:id="@+id/img_hoaqua_A"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/img_chemchuoi"
+                        android:layout_below="@id/txt_dapan"
+                        android:src="@drawable/fruit_banana" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_anwser_B"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp1"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp1">
+
+                    <LinearLayout
+
+                        android:id="@+id/txt_dapan_B"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp5"
+                        tools:ignore="WebViewLayout">
+
+                        <WebView
+                            android:id="@+id/webview_anwser_B"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                        </WebView>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:padding="@dimen/dp10"
+                        android:id="@+id/img_hoaqua_B"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/img_chemchuoi"
+                        android:layout_below="@id/txt_dapan"
+
+                        android:src="@drawable/fruit_berry" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_anwser_C"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp1"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp1">
+
+                    <LinearLayout
+                        android:id="@+id/txt_dapan_C"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp5"
+                        tools:ignore="WebViewLayout">
+
+                        <WebView
+                            android:id="@+id/webview_anwser_C"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                        </WebView>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:padding="@dimen/dp10"
+                        android:id="@+id/img_hoaqua_C"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/img_chemchuoi"
+                        android:layout_below="@id/txt_dapan"
+
+                        android:src="@drawable/fruit_coconut" />
+
+
+                </LinearLayout>
+                <!--Đáp án D-->
+                <LinearLayout
+                    android:id="@+id/ll_anwser_D"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp1"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp1">
+
+                    <LinearLayout
+                        android:id="@+id/txt_dapan_D"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp5"
+                        tools:ignore="WebViewLayout">
+
+                        <WebView
+                            android:id="@+id/webview_anwser_D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                        </WebView>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:padding="@dimen/dp10"
+                        android:id="@+id/img_hoaqua_D"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/img_chemchuoi"
+                        android:layout_below="@id/txt_dapan"
+
+                        android:src="@drawable/fruit_pineapple" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.constraint.ConstraintLayout>

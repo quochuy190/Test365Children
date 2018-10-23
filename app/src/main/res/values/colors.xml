@@ -40,4 +40,5 @@
     <color name="bg_boder">#eaeced</color>
     <color name="bg_clear">#00eaeced</color>
     <color name="bg_click_true">#f1a5a1a1</color>
+    <color name="bg_noicau">#79aeaaaa</color>
 </resources>

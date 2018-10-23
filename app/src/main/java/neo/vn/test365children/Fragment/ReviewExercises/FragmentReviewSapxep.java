@@ -48,17 +48,22 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
     private CauhoiDetail mCauhoi;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
-    @BindView(R.id.txt_cauhoi)
-    TextView txt_cauhoi;
     @BindView(R.id.recycle_dapan)
     RecyclerView recycle_dapan;
     RecyclerView.LayoutManager mLayoutManager;
     List<DapAn> mLis;
+    @BindView(R.id.btn_xemdiem)
+    ImageView btn_xemdiem;
+    @BindView(R.id.txt_xemdiem)
+    TextView txt_xemdiem;
     List<DapAn> mLisStart;
     private ItemTouchHelper mItemTouchHelper;
     @BindView(R.id.img_background)
     ImageView img_background;
-
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
+    @BindView(R.id.txt_cauhoi)
+    TextView txt_cauhoi;
     public static FragmentReviewSapxep newInstance(CauhoiDetail restaurant) {
         FragmentReviewSapxep restaurantDetailFragment = new FragmentReviewSapxep();
         Bundle args = new Bundle();
@@ -85,18 +90,39 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         initViews(true);
         return view;
     }
+
     private boolean isClickXemdiem = false;
     List<String> mLiDapan;
 
     private void initData() {
+        btn_xemdiem.setVisibility(View.INVISIBLE);
+        txt_xemdiem.setVisibility(View.INVISIBLE);
+        img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
+            if (mCauhoi.getsRESULT_CHILD().equals("0")) {
+                txt_cauhoi.setVisibility(View.VISIBLE);
+                Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+            } else {
+                txt_cauhoi.setVisibility(View.INVISIBLE);
+                Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            }
+        } else {
+            txt_cauhoi.setVisibility(View.INVISIBLE);
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
+        }
+
+        if (!mCauhoi.isDalam()) {
+            txt_cauhoi.setVisibility(View.INVISIBLE);
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
+        }
         // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
         if (mCauhoi.getsQUESTION() != null)
             txt_cauhoi.setText(Html.fromHtml("Đáp án: " + mCauhoi.getsQUESTION().replace("::", " ")));
 
-        txt_cauhoi.setVisibility(View.VISIBLE);
+
         mLis = new ArrayList<>();
         if (mCauhoi.getsANSWER_CHILD() != null) {
             String[] dapan = mCauhoi.getsANSWER_CHILD().split("::");
@@ -136,6 +162,8 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
 
 
     }
+
+
 
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {

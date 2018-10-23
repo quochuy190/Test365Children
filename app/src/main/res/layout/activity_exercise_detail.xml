@@ -65,25 +65,25 @@
 
         <ImageView
             android:id="@+id/img_point"
-            android:layout_width="@dimen/exercises_icon_point"
+            android:layout_width="@dimen/exercises_icon_point_width"
             android:layout_height="@dimen/exercises_icon_point"
             android:layout_marginBottom="2dp"
-            android:src="@drawable/exer_icon_diem"
+            android:src="@drawable/mark_4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/textView4"
             app:layout_constraintStart_toStartOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/txt_exer_point"
-            android:layout_width="@dimen/exercises_icon_point"
+            android:layout_width="@dimen/exercises_icon_point_width"
             android:layout_height="@dimen/exercises_icon_point"
             android:layout_marginBottom="2dp"
             android:fontFamily="@font/font1"
             android:gravity="center"
             android:src="@drawable/exer_icon_diem"
             android:text="9"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/text_20sp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/textView4"
@@ -375,7 +375,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp7"
-                    android:text="Nhận xét của mẹ: Con làm bài rất tốt"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_16sp"
                     app:layout_constraintLeft_toLeftOf="parent"

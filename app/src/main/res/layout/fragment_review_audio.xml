@@ -22,21 +22,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
-            android:layout_width="@dimen/icon_point_lambai"
-            android:layout_height="@dimen/icon_point_lambai"
+            android:visibility="visible"
+            android:layout_width="@dimen/icon_anwser_review"
+            android:layout_height="@dimen/icon_anwser_review"
             android:layout_margin="@dimen/dp5">
 
             <ImageView
-                android:layout_width="@dimen/icon_point_lambai"
-                android:layout_height="@dimen/icon_point_lambai"
-                android:src="@drawable/exer_icon_diem" />
-            <TextView
-                android:gravity="center"
-                android:id="@+id/txt_result_chil_exer"
-                android:layout_width="@dimen/icon_point_lambai"
-                android:layout_height="@dimen/icon_point_lambai"
-                android:fontFamily="@font/font1"
-                android:textSize="@dimen/text_25sp" />
+                android:id="@+id/img_anwser_chil"
+                android:layout_width="@dimen/icon_anwser_review"
+                android:layout_height="@dimen/icon_anwser_review"
+                android:src="@drawable/icon_anwser_true" />
+
         </RelativeLayout>
 
         <TextView
@@ -58,17 +54,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="@dimen/margin_left_lambai"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp5"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
+        android:gravity="center"
         android:id="@+id/txt_cauhoi"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -77,7 +66,15 @@
         android:padding="@dimen/dp5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_player">
+        app:layout_constraintTop_toBottomOf="@+id/ll_player"
+        tools:ignore="WebViewLayout">
+
+        <WebView
+            android:id="@+id/webview_debai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </WebView>
 
     </LinearLayout>
 

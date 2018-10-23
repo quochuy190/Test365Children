@@ -153,7 +153,7 @@ public class FragmentBatsau extends BaseFragment {
     }
 
     private void initData() {
-        txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+        txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         initWebview();
         if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)

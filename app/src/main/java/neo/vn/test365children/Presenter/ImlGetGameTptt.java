@@ -11,7 +11,7 @@ public interface ImlGetGameTptt {
 
         void api_start_tptt(String sUserMe, String sUserCon, String id_part);
 
-        void api_submit_tptt(String sUserMe, String sUserCon, String sDate, String sTime, String sAward, String sMonney);
+        void api_submit_tptt(String sUserMe, String sUserCon, String sId_part, String sTime, String sAward, String sMonney);
     }
 
     interface View {
