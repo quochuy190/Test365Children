@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -17,14 +18,15 @@ import neo.vn.test365children.Adapter.AdapterViewpager;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
-import neo.vn.test365children.Fragment.FragmentDienvaochotrong;
 import neo.vn.test365children.Fragment.FragmentXemanhtraloi;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentCompleteBaitapReview;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentDienvaochotrongReview;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentNgheAudioReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewBatsau;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewCauhoiCongchua;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewChemchuoi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewDapandung;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewDocvaTraloi;
-import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewNgheAudio;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewNoicau;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewSapxep;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewTrungRo;
@@ -58,6 +60,8 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
     ImageView img_next;
     @BindView(R.id.img_back)
     ImageView img_back;
+    @BindView(R.id.btn_exit)
+    Button btn_exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +108,12 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
     }
 
     private void initEvent() {
+        btn_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,15 +210,18 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                         } else if (obj.getsKIEU().equals("4")) {
                             adapterViewpager.addFragment(FragmentReviewSapxep.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("5")) {
+                            if (obj.getLisInfo().get(i).getsEGG_1() == null && obj.getLisInfo().get(i).getsEGG_2() == null
+                                    && obj.getLisInfo().get(i).getsEGG_3() == null && obj.getLisInfo().get(i).getsEGG_4() == null)
+                                return;
                             adapterViewpager.addFragment(FragmentReviewTrungRo.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("6")) {
-                            adapterViewpager.addFragment(FragmentDienvaochotrong.newInstance(mCauhoiDetail), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentDienvaochotrongReview.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("7")) {
                             adapterViewpager.addFragment(FragmentReviewDocvaTraloi.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("8")) {
                             adapterViewpager.addFragment(FragmentXemanhtraloi.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("9")) {
-                            adapterViewpager.addFragment(FragmentReviewNgheAudio.newInstance(mCauhoiDetail), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentNgheAudioReview.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("10")) {
                             adapterViewpager.addFragment(FragmentReviewCauhoiCongchua.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("11")) {
@@ -217,6 +230,7 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                     }
                 }
             }
+            adapterViewpager.addFragment(FragmentCompleteBaitapReview.newInstance(new CauhoiDetail()), "");
             viewpager_lambai.setOffscreenPageLimit(maxPage);
             viewpager_lambai.setAdapter(adapterViewpager);
 
@@ -272,6 +286,6 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        App.mLisCauhoi.clear();
+        //  App.mLisCauhoi.clear();
     }
 }

@@ -13,10 +13,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -112,6 +115,8 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     private boolean isAnwserIng = false;
     @BindView(R.id.img_stop_game)
     ImageView img_stop_game;
+    @BindView(R.id.imageView16)
+    ImageView imageView16;
 
     @Override
     public int setContentViewId() {
@@ -121,7 +126,16 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+
+        Glide.with(this).load(R.drawable.bg_start_game).into(imageView16);
+        Glide.with(this).load(R.drawable.ic_5050).into(img_sp_5050);
+        Glide.with(this).load(R.drawable.ic_add_60).into(img_sp_khangia);
+        Glide.with(this).load(R.drawable.ic_minus_1000).into(img_sp_minus_monney);
+        Glide.with(this).load(R.drawable.ic_2_in_4).into(img_sp_call);
+        Glide.with(this).load(R.drawable.ic_delete).into(img_delete_sp_minus_monney);
+        Glide.with(this).load(R.drawable.ic_delete).into(img_delete_sp_add_time);
+        Glide.with(this).load(R.drawable.ic_delete).into(img_delete_sp_5050);
+        Glide.with(this).load(R.drawable.ic_delete).into(img_delete_sp_call);
         mLisGameTptt = new ArrayList<>();
         mPlayer = new MediaPlayer();
         play_start_game();
@@ -131,9 +145,12 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     }
 
     public void resetTime() {
+        if (intent_service != null)
+            stopService(intent_service);
         intent_service = new Intent(ActivityGameTrieuphutrithuc.this, ServiceDownTimeGame.class);
-        intent_service.putExtra(Constants.KEY_SEND_TIME_SERVICE, 60000);
+        intent_service.putExtra(Constants.KEY_SEND_TIME_SERVICE, 120000);
         startService(intent_service);
+        isShow_Notify_Support = false;
     }
 
     public void resetTime60(int time) {
@@ -150,8 +167,29 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         StringUtil.initWebview_Whitetext(webview_game, sHtml);*/
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        stopService(intent_service);
+        mPlayer.release();
+    }
+
     int iCount = 0;
-    private boolean isSupport5050 = false, isAddTime = false, isAddTwoAnwser = false, isTwoAnwser_ing = false, isSp_minus_monney = false;
+    private boolean isSupport5050 = false, isAddTime = false, isAddTwoAnwser = false,
+            isTwoAnwser_ing = false, isSp_minus_monney = false;
     private String sOld_Anwser = "";
 
     private void initEvent() {
@@ -203,7 +241,43 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         rl_sp_minus_monney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_khangia);
+
+                KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_minus_monney);
+                if (!isSp_minus_monney) {
+                    play_mp3_click();
+                    showDialogComfirm("Thông báo", "Sử dụng quyền trợ giúp này giúp bạn vượt qua câu hỏi này và bị trừ 1.000đ bạn có đồng ý không", false, new ClickDialog() {
+                        @Override
+                        public void onClickYesDialog() {
+                            //play_mp3_click();
+                            isSp_minus_monney = true;
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    /*iCurrentQuestion++;
+                                    set_point_lever((iCurrentQuestion));
+                                    show_lever_point();
+                                    hideDialogLoading();
+                                    getData(mLisGameTptt.get(iCurrentQuestion));*/
+                                    //  click_anwser("" + mLisGameTptt.get(iCurrentQuestion).getsANSWER());
+                                    sAnwserChil = mLisGameTptt.get(iCurrentQuestion).getsANSWER();
+                                    initChamdiem();
+                                  /*  new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            initChamdiem();
+                                        }
+                                    }, 500);*/
+                                }
+                            }, 0);
+
+                        }
+
+                        @Override
+                        public void onClickNoDialog() {
+                        }
+                    });
+
+                }
 
             }
         });
@@ -354,13 +428,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (intent_service != null) {
-            stopService(intent_service);
-        }
-    }
 
     private void initChamdiem() {
         isAnwserIng = true;
@@ -374,7 +441,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                 set_anwser_true_background_cam(obj.getsANSWER());
                 if (isTwoAnwser_ing) {
                     if (sAnwserChil.equals(obj.getsANSWER()) || sAnwserChil_Two.equals(obj.getsANSWER())) {
-                        set_point_lever((iCurrentQuestion+1));
+                        set_point_lever((iCurrentQuestion + 1));
                         show_lever_point();
                         play_mp3_true();
                     } else {
@@ -385,7 +452,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-
                             if (sAnwserChil.equals(obj.getsANSWER()) || sAnwserChil_Two.equals(obj.getsANSWER())) {
                                 iCurrentQuestion++;
                                 if (iCurrentQuestion < 15) {
@@ -403,7 +469,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                     }, 4000);
                 } else {
                     if (sAnwserChil.equals(obj.getsANSWER())) {
-                        set_point_lever((iCurrentQuestion+1));
+                        set_point_lever((iCurrentQuestion + 1));
                         show_lever_point();
                         play_mp3_true();
                     } else {
@@ -431,7 +497,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                 }
             }
         }, 5000);
-
 
     }
 
@@ -490,12 +555,18 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        if (event.message.equals("Service")) {
+        if (event.message.equals("Service_Game")) {
             if (event.point == 0) {
                 time = (int) event.time;
                 Log.i(TAG, "onMessageEvent: " + time);
+                if (time < (59 * 1000)) {
+                    if (!isShow_Notify_Support)
+                        show_notify_support();
+                }
                 txt_time_game.setText(TimeUtils.formatDuration((int) event.time));
             } else {
+                time = (int) event.time;
+                Log.i(TAG, "onMessageEvent: hết time" + time);
                 stopService(intent_service);
                 if (sAnwserChil.length() > 0) {
                     initChamdiem();
@@ -506,8 +577,16 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
 
             }
         }
+    }
 
+    boolean isShow_Notify_Support = false;
 
+    public void show_notify_support() {
+        if (!isSp_minus_monney || isAddTime || isAddTwoAnwser || isSupport5050) {
+            showDialogNotify("Thông báo", "Thời gian suy nghĩ sắp hết," +
+                    " bạn có muốn sử dụng quyền trợ giúp của chương trình");
+            isShow_Notify_Support = true;
+        }
     }
 
     public void getData(GameTrieuPhuTriThuc obj) {
@@ -528,6 +607,10 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             img_delete_sp_5050.setVisibility(View.VISIBLE);
         } else
             img_delete_sp_5050.setVisibility(View.INVISIBLE);
+        if (isSp_minus_monney) {
+            img_delete_sp_minus_monney.setVisibility(View.VISIBLE);
+        } else
+            img_delete_sp_minus_monney.setVisibility(View.INVISIBLE);
         rl_anwser_A.setVisibility(View.VISIBLE);
         rl_anwser_B.setVisibility(View.VISIBLE);
         rl_anwser_C.setVisibility(View.VISIBLE);
@@ -542,17 +625,114 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             StringUtil.initWebview_Whitetext(webview_anwser_C, obj.getsHTML_C());
         if (obj.getsHTML_D().length() > 0)
             StringUtil.initWebview_Whitetext(webview_anwser_D, obj.getsHTML_D());
+        set_height();
         resetTime();
         isAnwserIng = false;
+    }
+
+    int iHeight_A, iHeight_B, iHeight_C, iHeight_D, iHeight_Max;
+
+    private void set_height() {
+        webview_anwser_C.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                iHeight_C = rl_anwser_C.getHeight();
+                Log.i(TAG, "onPageFinished C -: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
+               /* iHeight_A = rl_anwser_A.getHeight();
+                Log.i(TAG, "onPageFinished c heightA: " + rl_anwser_A.getHeight());
+                Log.i(TAG, "onPageFinished c heightC: " + rl_anwser_C.getHeight());
+                int iHeight_B1 = rl_anwser_C.getHeight();
+                int iHeight_A1 = rl_anwser_A.getHeight();
+                if (iHeight_B1 > iHeight_A1) {
+                    ViewGroup.LayoutParams params = rl_anwser_A.getLayoutParams();
+                    params.height = iHeight_B1;
+                    rl_anwser_A.setLayoutParams(params);
+                } else {
+                    ViewGroup.LayoutParams params = rl_anwser_C.getLayoutParams();
+                    params.height = iHeight_A1;
+                    rl_anwser_C.setLayoutParams(params);
+                }*/
+            }
+        });
+        webview_anwser_D.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                iHeight_D = rl_anwser_D.getHeight();
+                Log.i(TAG, "onPageFinished D -: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
+               /* int iHeight_B1 = rl_anwser_D.getHeight();
+                int iHeight_A1 = rl_anwser_B.getHeight();
+                if (iHeight_B1 > iHeight_A1) {
+                    ViewGroup.LayoutParams params = rl_anwser_B.getLayoutParams();
+                    params.height = iHeight_B1;
+                    rl_anwser_B.setLayoutParams(params);
+                } else {
+                    ViewGroup.LayoutParams params = rl_anwser_D.getLayoutParams();
+                    params.height = iHeight_A1;
+                    rl_anwser_D.setLayoutParams(params);
+                }*/
+               /* Log.i(TAG, "onPageFinished: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
+                if (iHeight_A > iHeight_C) {
+                    ViewGroup.LayoutParams params = rl_anwser_C.getLayoutParams();
+                    params.height = iHeight_A;
+                    rl_anwser_C.setLayoutParams(params);
+                } else {
+                    ViewGroup.LayoutParams params = rl_anwser_A.getLayoutParams();
+                    params.height = iHeight_C;
+                    rl_anwser_A.setLayoutParams(params);
+                }*/
+            }
+        });
+        webview_anwser_B.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                iHeight_B = rl_anwser_B.getHeight();
+                //Log.i(TAG, "onPageFinished B -: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
+               /* int iHeight_B1 = rl_anwser_D.getHeight();
+                int iHeight_A1 = rl_anwser_B.getHeight();
+                if (iHeight_B1 > iHeight_A1) {
+                    ViewGroup.LayoutParams params = rl_anwser_B.getLayoutParams();
+                    params.height = iHeight_B1;
+                    rl_anwser_B.setLayoutParams(params);
+                } else {
+                    ViewGroup.LayoutParams params = rl_anwser_D.getLayoutParams();
+                    params.height = iHeight_A1;
+                    rl_anwser_D.setLayoutParams(params);
+                }*/
+            }
+        });
+        webview_anwser_A.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                iHeight_A = rl_anwser_A.getHeight();
+                Log.i(TAG, "onPageFinished A -: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
+               /* int iHeight_B1 = rl_anwser_D.getHeight();
+                int iHeight_A1 = rl_anwser_B.getHeight();
+                if (iHeight_B1 > iHeight_A1) {
+                    ViewGroup.LayoutParams params = rl_anwser_B.getLayoutParams();
+                    params.height = iHeight_B1;
+                    rl_anwser_B.setLayoutParams(params);
+                } else {
+                    ViewGroup.LayoutParams params = rl_anwser_D.getLayoutParams();
+                    params.height = iHeight_A1;
+                    rl_anwser_D.setLayoutParams(params);
+                }*/
+            }
+        });
+
+
     }
 
     public void click_anwser(String sClick) {
         if (sClick.equals("refesh")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                 sAnwserChil = "";
             }
         } else {
@@ -561,35 +741,35 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                 case "A":
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                        rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                        rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                        rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                        rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                        rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                        rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                         sAnwserChil = "A";
                     }
                     break;
                 case "B":
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                        rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                         rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                        rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                        rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                        rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                        rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                         sAnwserChil = "B";
                     }
                     break;
                 case "C":
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                        rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                        rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                        rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                         rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                        rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                        rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                         sAnwserChil = "C";
                     }
                     break;
                 case "D":
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                        rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                        rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                        rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                        rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                        rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                         rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                         sAnwserChil = "D";
                     }
@@ -608,31 +788,31 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                         switch (sOld_Anwser) {
                             case "A":
                                 rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "A";
                                 break;
                             case "B":
                                 rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "B";
                                 sAnwserChil_Two = "A";
                                 break;
                             case "C":
                                 rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "C";
                                 sAnwserChil_Two = "A";
                                 break;
                             case "D":
                                 rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 sAnwserChil = "D";
                                 sAnwserChil_Two = "A";
@@ -650,31 +830,31 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                             case "A":
                                 rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "A";
                                 sAnwserChil_Two = "B";
                                 break;
                             case "B":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "B";
 
                                 break;
                             case "C":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "C";
                                 sAnwserChil_Two = "B";
                                 break;
                             case "D":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 sAnwserChil = "D";
                                 sAnwserChil_Two = "B";
@@ -691,30 +871,30 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                         switch (sOld_Anwser) {
                             case "A":
                                 rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "A";
                                 sAnwserChil_Two = "C";
                                 break;
                             case "B":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "B";
                                 sAnwserChil_Two = "C";
                                 break;
                             case "C":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 sAnwserChil = "C";
                                 break;
                             case "D":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 sAnwserChil = "D";
@@ -732,32 +912,32 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                         switch (sOld_Anwser) {
                             case "A":
                                 rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 sAnwserChil = "A";
                                 sAnwserChil_Two = "D";
                                 break;
                             case "B":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 sAnwserChil = "B";
                                 sAnwserChil_Two = "D";
                                 break;
                             case "C":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 sAnwserChil = "D";
                                 sAnwserChil_Two = "C";
                                 break;
                             case "D":
-                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
-                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_question_game_tptt));
+                                rl_anwser_A.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_B.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
+                                rl_anwser_C.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_tptt));
                                 rl_anwser_D.setBackground(getResources().getDrawable(R.drawable.spr_bg_anwser_game_click));
                                 sAnwserChil = "D";
                                 break;
@@ -808,6 +988,12 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     }
 
     public void set_point_lever(int iCurrent) {
+      /*  new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 1000);*/
         for (int i = (mLisPoint.size() - 1); i > -1; i--) {
             if (i == (mLisPoint.size() - iCurrent - 1)) {
                 mLisPoint.get(i).setPlaying(true);
@@ -852,13 +1038,15 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
 
     private void initAnwserFalse(int iLever, boolean isDungcuochoi) {
         Intent intent = new Intent(ActivityGameTrieuphutrithuc.this, ActivityGameOverTPTT.class);
+        Log.i(TAG, "initAnwserFalse: start complete game");
+
         if (isDungcuochoi) {
             if (iLever > 0)
                 intent.putExtra(Constants.KEY_SEND_LEVER_GAME_TPTT, iLever);
             else
                 intent.putExtra(Constants.KEY_SEND_LEVER_GAME_TPTT, 0);
         } else {
-            if (iLever < 5) {
+            if (iLever < 4) {
                 intent.putExtra(Constants.KEY_SEND_LEVER_GAME_TPTT, 0);
             } else if (iLever >= 5 && iLever < 10) {
                 intent.putExtra(Constants.KEY_SEND_LEVER_GAME_TPTT, 5);
@@ -867,6 +1055,11 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             } else if (iLever == 15) {
                 intent.putExtra(Constants.KEY_SEND_LEVER_GAME_TPTT, 15);
             }
+        }
+        if (isSp_minus_monney) {
+            intent.putExtra(Constants.KEY_SEND_SP_MINUS_MONNEY, true);
+        } else {
+            intent.putExtra(Constants.KEY_SEND_SP_MINUS_MONNEY, false);
         }
         finish();
         startActivity(intent);
@@ -904,5 +1097,10 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             }
         }, 300);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
     }
 }

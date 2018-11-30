@@ -1,15 +1,12 @@
 package neo.vn.test365children.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -54,7 +51,7 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
         if (obj.getsContent() != null) {
-            initWebview(holder.webview_debai, StringUtil.convert_html(obj.getsContent()));
+            StringUtil.initWebview_Batsau(holder.webview_debai, obj.getsContent());
         }
         if (obj.isClick()) {
             if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
@@ -81,8 +78,6 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
 
     public class TopicViewHoder extends RecyclerView.ViewHolder implements
             View.OnClickListener, View.OnLongClickListener {
-        @BindView(R.id.ll_dapan_all)
-        LinearLayout ll_dapan_all;
         @BindView(R.id.checkbox_dapan)
         ImageView checkbox;
         @BindView(R.id.webview_debai)
@@ -110,20 +105,4 @@ public class AdapterDapan extends RecyclerView.Adapter<AdapterDapan.TopicViewHod
         notifyDataSetChanged();
     }
 
-    private void initWebview(WebView webview_debai, String link_web) {
-        webview_debai.setInitialScale(250);
-        webview_debai.getSettings().setJavaScriptEnabled(true);
-        webview_debai.getSettings();
-        webview_debai.setBackgroundColor(Color.TRANSPARENT);
-        WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(16);
-        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
-        String pish = "<html><body  align='center'>";
-        String pas = "</body></html>";
-
-        webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
-                "text/html", "UTF-8", "");
-
-    }
 }

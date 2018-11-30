@@ -1,7 +1,5 @@
 package neo.vn.test365children.Service;
 
-import android.util.Log;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -21,7 +19,6 @@ public class MyFirebaseIDService extends FirebaseInstanceIdService {
         super.onTokenRefresh();
         mToken = FirebaseInstanceId.getInstance().getToken();
         if (mToken != null) {
-            Log.i(TAG, "onTokenRefresh: "+mToken);
            // SharedPrefs.getInstance().put(Constants.KEY_TOKEN, mToken);
             SharedPrefs.getInstance().put(Constants.KEY_TOKEN, mToken);
             SharedPrefs.getInstance().put(Constants.KEY_ISTOKEN, true);

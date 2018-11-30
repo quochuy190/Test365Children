@@ -7,10 +7,10 @@
     tools:context=".Activity.ActivityHome">
 
     <ImageView
+        android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/img_background_home" />
+        android:scaleType="fitXY" />
 
     <View
         android:id="@+id/view_center"
@@ -61,8 +61,8 @@
         android:layout_width="@dimen/dp40"
         android:layout_height="@dimen/dp40"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:src="@drawable/img_mute" />
 
     <ImageView
@@ -72,4 +72,22 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/img_back_menu" />
+
+    <TextView
+        android:gravity="center"
+        android:background="@drawable/spr_title_home"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_toLeftOf="@id/img_mute"
+        android:id="@+id/txt_name_home"
+        android:layout_toRightOf="@id/img_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp5"
+        android:fontFamily="@font/font1"
+        android:padding="@dimen/dp5"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/text_20sp" />
+
 </RelativeLayout>

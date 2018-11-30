@@ -1,17 +1,16 @@
 package neo.vn.test365children.Fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +27,6 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
-import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
@@ -61,14 +59,16 @@ public class FragmentDocvaTraloi extends BaseFragment {
     RecyclerView recycle_dapan;
     RecyclerView.LayoutManager mLayoutManager;
     @BindView(R.id.btn_xemdiem)
-    ImageView btn_xemdiem;
+    Button btn_xemdiem;
     private boolean isTraloi = false;
     @BindView(R.id.img_background)
     ImageView img_background;
     @BindView(R.id.txt_debai)
     WebView txt_debai;
-    @BindView(R.id.btn_nopbai)
-    ImageView btn_nopbai;
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
+    @BindView(R.id.img_bang)
+    ImageView img_bang;
 
     public static FragmentDocvaTraloi newInstance(CauhoiDetail restaurant) {
         FragmentDocvaTraloi restaurantDetailFragment = new FragmentDocvaTraloi();
@@ -88,7 +88,12 @@ public class FragmentDocvaTraloi extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_docvatraloi, container, false);
         ButterKnife.bind(this, view);
+        Glide.with(getActivity()).load(R.drawable.icon_bang).into(img_bang);
         init();
+        btn_xemdiem.setEnabled(false);
+        btn_xemdiem.getBackground().setAlpha(50);
+
+
         initData();
         initEvent();
         return view;
@@ -97,17 +102,11 @@ public class FragmentDocvaTraloi extends BaseFragment {
     private boolean isClickXemdiem = false;
 
     private void initEvent() {
- /*       img_zoom.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-            @Override
-            public void onClick(View v) {
-                showDialogDebai("Đọc đoạn văn", mCauhoi.getsTextDebai());
-            }
-        });*/
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isClickXemdiem) {
+                    img_anwser_chil.setVisibility(View.VISIBLE);
                     boolean isTrue = false;
                     if (mLis != null && isTraloi) {
                         for (DapAn obj : mLis) {
@@ -118,10 +117,17 @@ public class FragmentDocvaTraloi extends BaseFragment {
                         }
                         adapter.notifyDataSetChanged();
                         Log.i(TAG, "onClick: " + App.mLisCauhoi);
-                        if (isTrue)
+                        if (isTrue) {
+                            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
+                        } else {
+                            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                            EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
+                        }
+                    /*    if (isTrue)
                             EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                         else
-                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));*/
                     }
                     isClickXemdiem = true;
                 }
@@ -130,51 +136,27 @@ public class FragmentDocvaTraloi extends BaseFragment {
     }
 
     private void initData() {
-        btn_nopbai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
-                        false, new ClickDialog() {
-                            @Override
-                            public void onClickYesDialog() {
-                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
-                            }
-
-                            @Override
-                            public void onClickNoDialog() {
-
-                            }
-                        });
-
-            }
-        });
         // txt_debai.setText("Câu hỏi: " + mCauhoi.getsQUESTION());
-        initWebview();
-        txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+        if (mCauhoi.getsHTML_CONTENT() != null)
+            StringUtil.initWebview(txt_debai, mCauhoi.getsHTML_CONTENT());
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan()));
+     //   txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-        //  webview_debai.setInitialScale(1);
-        txt_cauhoi.setWebChromeClient(new WebChromeClient());
-        txt_cauhoi.getSettings().setJavaScriptEnabled(true);
-        txt_cauhoi.getSettings();
-        txt_cauhoi.setBackgroundColor(Color.TRANSPARENT);
-        String text = "<html><head>"
-                + "<style type=\"text/css\">body{color: #fff;} size=\"4\""
-                + "</style></head>"
-                + "<body>"
-                + mCauhoi.getsTextDebai()
-                + "</body></html>";
-
-        txt_cauhoi.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
-        if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsA(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsB(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsC(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsD(), "", mCauhoi.getsANSWER(), false, ""));
-
+        StringUtil.initWebview_Whitetext_notcenter(txt_cauhoi, mCauhoi.getsTextDebai());
+        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
+            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(),
+                    false, ""));
+        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
+            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(),
+                    false, ""));
+        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
+            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(),
+                    false, ""));
+        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
+            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(),
+                    false, ""));
         adapter.notifyDataSetChanged();
     }
 
@@ -192,6 +174,8 @@ public class FragmentDocvaTraloi extends BaseFragment {
         adapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
+                btn_xemdiem.setEnabled(true);
+                btn_xemdiem.getBackground().setAlpha(255);
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
                 if (!mLis.get(position).isClick()) {
@@ -216,29 +200,11 @@ public class FragmentDocvaTraloi extends BaseFragment {
                         } else {
                             obj.setsDapan_Traloi("");
                         }
-
                     }
                     isTraloi = true;
                     adapter.notifyDataSetChanged();
                 }
             }
         });
-    }
-
-    private void initWebview() {
-        txt_debai.setInitialScale(250);
-        txt_debai.getSettings().setJavaScriptEnabled(true);
-        txt_debai.getSettings();
-        txt_debai.setBackgroundColor(Color.TRANSPARENT);
-        WebSettings webSettings = txt_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(16);
-        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
-        String pish = "<html><body  align='center'>";
-        String pas = "</body></html>";
-
-        txt_debai.loadDataWithBaseURL("", pish + StringUtil.convert_html(mCauhoi.getsHTML_CONTENT()) + pas,
-                "text/html", "UTF-8", "");
-
     }
 }

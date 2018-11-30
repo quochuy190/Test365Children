@@ -3,6 +3,7 @@ package neo.vn.test365children.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,10 +46,8 @@ public class AdapterSapxep extends RecyclerView.Adapter<AdapterSapxep.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-
         final DapAn dataModel = lisDapan.get(position);
-        holder.txt_dapan.setText(dataModel.getsContent());
-
+        holder.txt_dapan.setText(Html.fromHtml(dataModel.getsContent()));
         holder.rl_item_sapxep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

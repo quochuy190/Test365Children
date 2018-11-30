@@ -55,6 +55,8 @@ public class DesExercises {
     String strungbinh;
     @SerializedName("thapnhat")
     String sthapnhat;
+    @SerializedName("ADMIN_COMMENT")
+    String sADMIN_COMMENT;
 
     public DesExercises() {
     }
@@ -93,6 +95,14 @@ public class DesExercises {
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public String getsADMIN_COMMENT() {
+        return sADMIN_COMMENT;
+    }
+
+    public void setsADMIN_COMMENT(String sADMIN_COMMENT) {
+        this.sADMIN_COMMENT = sADMIN_COMMENT;
     }
 
     public String getsID() {

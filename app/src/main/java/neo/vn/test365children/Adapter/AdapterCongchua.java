@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,7 +44,7 @@ public class AdapterCongchua extends RecyclerView.Adapter<AdapterCongchua.TopicV
     @Override
     public TopicViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_congchua, parent, false);
+                .inflate(R.layout.item_congchua_image, parent, false);
         return new TopicViewHoder(view);
     }
 
@@ -52,10 +54,14 @@ public class AdapterCongchua extends RecyclerView.Adapter<AdapterCongchua.TopicV
         DapAn obj = list.get(position);
 
         if (obj.isClick()) {
-            holder.img_box.setImageResource(R.drawable.icon_lock_open);
+            Glide.with(context).load(R.drawable.icon_lock_open).into(holder.img_box);
+            // holder.img_box.setImageResource(R.drawable.icon_lock_open);
         } else if (obj.getsDapan_Dung().equals("1")) {
-            holder.img_box.setImageResource(R.drawable.door_open);
-        } else holder.img_box.setImageResource(R.drawable.icon_lock);
+            Glide.with(context).load(R.drawable.door_open).into(holder.img_box);
+            // holder.img_box.setImageResource(R.drawable.door_open);
+        } else
+            Glide.with(context).load(R.drawable.icon_lock).into(holder.img_box);
+        //  holder.img_box.setImageResource(R.drawable.icon_lock);
     }
 
     @Override

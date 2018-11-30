@@ -4,12 +4,18 @@ import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,10 +32,11 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import neo.vn.test365children.Adapter.AdapterTrungRo;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
-import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.CauhoiDetail;
+import neo.vn.test365children.Models.Item_Xeptrung;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
 
@@ -74,6 +81,14 @@ public class FragmentXepTrung extends BaseFragment {
     TextView txt_rotrung_3;
     @BindView(R.id.txt_rotrung_4)
     TextView txt_rotrung_4;
+    @BindView(R.id.img_trung1)
+    ImageView img_trung1;
+    @BindView(R.id.img_trung2)
+    ImageView img_trung2;
+    @BindView(R.id.img_trung3)
+    ImageView img_trung3;
+    @BindView(R.id.img_trung4)
+    ImageView img_trung4;
 
     private ViewGroup mainLayout;
     @BindView(R.id.img_rotrung_1)
@@ -94,16 +109,17 @@ public class FragmentXepTrung extends BaseFragment {
     int x_start_trung1, x_start_trung2, x_start_trung3, x_start_trung4;
     int y_start_trung1, y_start_trung2, y_start_trung3, y_start_trung4;
     @BindView(R.id.btn_xemdiem)
-    ImageView btn_xemdiem;
+    Button btn_xemdiem;
     private boolean isTraloi = false;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
     @BindView(R.id.img_background)
     ImageView img_background;
-    @BindView(R.id.btn_nopbai)
-    ImageView btn_nopbai;
     @BindView(R.id.txt_cauhoi)
     TextView txt_cauhoi;
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
+
     public static FragmentXepTrung newInstance(CauhoiDetail restaurant) {
         FragmentXepTrung restaurantDetailFragment = new FragmentXepTrung();
         Bundle args = new Bundle();
@@ -121,10 +137,31 @@ public class FragmentXepTrung extends BaseFragment {
         map_answer_true = new LinkedHashMap<>();
     }
 
+    RecyclerView.LayoutManager mLayoutManager;
+    AdapterTrungRo adapterDapan;
+    @BindView(R.id.recycle_dapan_xeptrung)
+    RecyclerView recycle_egg_anwser;
+    List<Item_Xeptrung> mLisDapan;
+
+    private void init() {
+        mLisDapan = new ArrayList<>();
+        adapterDapan = new AdapterTrungRo(mLisDapan, getContext());
+        mLayoutManager = new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false);
+        recycle_egg_anwser.setNestedScrollingEnabled(false);
+        recycle_egg_anwser.setHasFixedSize(true);
+        recycle_egg_anwser.setLayoutManager(mLayoutManager);
+        recycle_egg_anwser.setItemAnimator(new DefaultItemAnimator());
+        recycle_egg_anwser.setAdapter(adapterDapan);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trung_ro, container, false);
         ButterKnife.bind(this, view);
+        btn_xemdiem.setEnabled(true);
+        btn_xemdiem.getBackground().setAlpha(255);
+        insertImage();
+
         mLisTrung = new ArrayList<>();
         mLisRoTrung = new ArrayList<>();
         mainLayout = (ConstraintLayout) view.findViewById(R.id.main);
@@ -139,72 +176,106 @@ public class FragmentXepTrung extends BaseFragment {
 
         x_start_trung4 = rl_trung4.getLeft();
         y_start_trung4 = rl_trung4.getTop();
+        init();
         initData();
         initEvent();
         return view;
     }
 
+    private void insertImage() {
+        Glide.with(this).load(R.drawable.egg_yellow).into(img_trung1);
+        Glide.with(this).load(R.drawable.egg_pink).into(img_trung2);
+        Glide.with(this).load(R.drawable.egg_blue).into(img_trung3);
+        Glide.with(this).load(R.drawable.egg_red).into(img_trung4);
+
+        Glide.with(this).load(R.drawable.icon_ro_trung).into(img_rotrung1);
+        Glide.with(this).load(R.drawable.icon_ro_trung).into(img_rotrung2);
+        Glide.with(this).load(R.drawable.icon_ro_trung).into(img_rotrung3);
+        Glide.with(this).load(R.drawable.icon_ro_trung).into(img_rotrung4);
+    }
+
     private void initData() {
         txt_cauhoi.setVisibility(View.GONE);
-        txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
-        txt_cauhoi.setText("Đáp án: "+ mCauhoi.getsEGG_1()+" , "+ mCauhoi.getsEGG_2()+" , "+ mCauhoi.getsEGG_3()+" , "
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan()));
+       // txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
+        txt_cauhoi.setText("Đáp án: " + mCauhoi.getsEGG_1() + " , " + mCauhoi.getsEGG_2() + " , " + mCauhoi.getsEGG_3() + " , "
                 + mCauhoi.getsEGG_4());
         Glide.with(this).load(R.drawable.bg_xep_trung).into(img_background);
-        String[] egg1 = mCauhoi.getsEGG_1().split("::");
-        String[] egg2 = mCauhoi.getsEGG_2().split("::");
-        String[] egg3 = mCauhoi.getsEGG_3().split("::");
-        String[] egg4 = mCauhoi.getsEGG_4().split("::");
-        map_answer_true.put("egg_1", mCauhoi.getsEGG_1());
-        map_answer_true.put("egg_2", mCauhoi.getsEGG_2());
-        map_answer_true.put("egg_3", mCauhoi.getsEGG_3());
-        map_answer_true.put("egg_4", mCauhoi.getsEGG_4());
+        String[] egg1 = mCauhoi.getsHTML_A().split("::");
+        String[] egg2 = mCauhoi.getsHTML_B().split("::");
+        String[] egg3 = mCauhoi.getsHTML_C().split("::");
+        String[] egg4 = mCauhoi.getsHTML_D().split("::");
+        map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
+        map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
+        map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
+        map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
+        if (egg1[0] != null) {
+            mLisTrung.add(egg1[0]);
+            mLisDapan.add(new Item_Xeptrung(egg1[1], R.drawable.egg_blue, egg1[0]));
+        }
+        if (egg2[0] != null) {
+            mLisTrung.add(egg2[0]);
+            mLisDapan.add(new Item_Xeptrung(egg2[1], R.drawable.egg_red, egg2[0]));
+        }
+        if (egg3[0] != null) {
+            mLisTrung.add(egg3[0]);
+            mLisDapan.add(new Item_Xeptrung(egg3[1], R.drawable.egg_yellow, egg3[0]));
+        }
+        if (egg4[0] != null) {
+            mLisTrung.add(egg4[0]);
+            mLisDapan.add(new Item_Xeptrung(egg4[1], R.drawable.egg_pink, egg4[0]));
+        }
+        if (egg1.length > 1) {
+            mLisRoTrung.add(egg1[1]);
+        } else
+            mLisRoTrung.add("");
+        if (egg2.length > 1) {
+            mLisRoTrung.add(egg2[1]);
+        } else
+            mLisRoTrung.add("");
+        if (egg3.length > 1) {
+            mLisRoTrung.add(egg3[1]);
+        } else {
+            mLisRoTrung.add("");
+        }
+        if (egg4.length > 1) {
+            mLisRoTrung.add(egg4[1]);
+        } else
+            mLisRoTrung.add("");
 
-        mLisTrung.add(egg1[0]);
-        mLisTrung.add(egg2[0]);
-        mLisTrung.add(egg3[0]);
-        mLisTrung.add(egg4[0]);
-
-        mLisRoTrung.add(egg1[1]);
-        mLisRoTrung.add(egg2[1]);
-        mLisRoTrung.add(egg3[1]);
-        mLisRoTrung.add(egg4[1]);
 
         // Collections.shuffle(mLisTrung);
         Collections.shuffle(mLisRoTrung);
+        if (mLisTrung.get(0) != null)
+            txt_trung1.setText(mLisTrung.get(0));
+        if (mLisTrung.get(1) != null)
+            txt_trung2.setText(mLisTrung.get(1));
+        if (mLisTrung.get(2) != null)
+            txt_trung3.setText(mLisTrung.get(2));
+        if (mLisTrung.get(3) != null)
+            txt_trung4.setText(mLisTrung.get(3));
+        if (mLisRoTrung.get(0) != null)
+            txt_rotrung_1.setText(mLisRoTrung.get(0));
+        if (mLisRoTrung.get(1) != null)
+            txt_rotrung_2.setText(mLisRoTrung.get(1));
+        if (mLisRoTrung.get(2) != null)
+            txt_rotrung_3.setText(mLisRoTrung.get(2));
+        if (mLisRoTrung.get(3) != null)
+            txt_rotrung_4.setText(mLisRoTrung.get(3));
 
-        txt_trung1.setText(mLisTrung.get(0));
-        txt_trung2.setText(mLisTrung.get(1));
-        txt_trung3.setText(mLisTrung.get(2));
-        txt_trung4.setText(mLisTrung.get(3));
-
-        txt_rotrung_1.setText(mLisRoTrung.get(0));
-        txt_rotrung_2.setText(mLisRoTrung.get(1));
-        txt_rotrung_3.setText(mLisRoTrung.get(2));
-        txt_rotrung_4.setText(mLisRoTrung.get(3));
+        adapterDapan.notifyDataSetChanged();
 
     }
 
 
     private boolean isClickXemdiem = false;
+    @BindView(R.id.ll_dapan_xeptrung)
+    LinearLayout ll_dapan_xeptrung;
 
     private void initEvent() {
-        btn_nopbai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
-                        false, new ClickDialog() {
-                            @Override
-                            public void onClickYesDialog() {
-                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
-                            }
 
-                            @Override
-                            public void onClickNoDialog() {
-
-                            }
-                        });
-            }
-        });
         rl_trung1.setOnTouchListener(onTouchListener());
         rl_trung2.setOnTouchListener(onTouchListener());
         rl_trung3.setOnTouchListener(onTouchListener());
@@ -216,13 +287,39 @@ public class FragmentXepTrung extends BaseFragment {
                 Log.i(TAG, "đáp án: " + map_answer_true);
                 Log.i(TAG, "trả lời: " + map_answer_chil);
                 if (!isClickXemdiem) {
+                    img_anwser_chil.setVisibility(View.VISIBLE);
+
                     if (App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).isAnserTrue()) {
+                        Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
                         EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                         // EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                     } else {
-                        txt_cauhoi.setVisibility(View.VISIBLE);
-                        EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                        float sPoint = 0;
+                        ll_dapan_xeptrung.setVisibility(View.VISIBLE);
+                        txt_cauhoi.setVisibility(View.GONE);
+                        CauhoiDetail obj = App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1)
+                                .getLisInfo().get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1);
+                        float sTotalPoint = Float.parseFloat(obj.getsPOINT());
+                        if (obj.getsHTML_A().equals(obj.getsEGG_1_RESULT())) {
+                            sPoint = sPoint + (sTotalPoint / 4);
+                        }
+                        if (obj.getsHTML_B().equals(obj.getsEGG_2_RESULT())) {
+                            sPoint = sPoint + (sTotalPoint / 4);
+                        }
+                        if (obj.getsHTML_C().equals(obj.getsEGG_3_RESULT())) {
+                            sPoint = sPoint + (sTotalPoint / 4);
+                        }
+                        if (obj.getsHTML_D().equals(obj.getsEGG_4_RESULT())) {
+                            sPoint = sPoint + (sTotalPoint / 4);
+                        }
+                        Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                        if (sPoint > 0) {
+                            EventBus.getDefault().post(new MessageEvent("Point_false", sPoint, 0));
+                        } else
+                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                        Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                        //  EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                     }
                     isClickXemdiem = true;
                 }
@@ -242,7 +339,6 @@ public class FragmentXepTrung extends BaseFragment {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-
                 final int x = (int) event.getRawX();
                 final int y = (int) event.getRawY();
                 x_rotrung1 = img_rotrung1.getLeft();
@@ -294,6 +390,8 @@ public class FragmentXepTrung extends BaseFragment {
                         break;
                     case MotionEvent.ACTION_UP:
                         if (event.getAction() == MotionEvent.ACTION_UP) {
+                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
                             if (inViewInBounds(img_rotrung1, (int) event.getRawX(), (int) event.getRawY())) {
                                 // User moved outside bounds
                                 ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
@@ -523,13 +621,15 @@ public class FragmentXepTrung extends BaseFragment {
         outRect.offset(location[0], location[1]);
         return outRect.contains(x, y);
     }
-    private void is_not_click(){
+
+    private void is_not_click() {
         rl_trung1.setOnTouchListener(isNotClick());
         rl_trung2.setOnTouchListener(isNotClick());
         rl_trung3.setOnTouchListener(isNotClick());
         rl_trung4.setOnTouchListener(isNotClick());
     }
-    private View.OnTouchListener isNotClick(){
+
+    private View.OnTouchListener isNotClick() {
         return new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

@@ -6,11 +6,10 @@
     android:layout_height="match_parent">
 
     <ImageView
-
-        android:scaleType="fitXY"
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,12 +26,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <ImageView
 
+    <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,8 +41,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_edt_login"
-        android:layout_marginRight="@dimen/margin_edt_login"
         android:layout_marginTop="@dimen/margin_top_edt"
+        android:layout_marginRight="@dimen/margin_edt_login"
         android:background="@drawable/spr_login_edt"
         android:padding="@dimen/pading_edt_login"
         app:layout_constraintLeft_toLeftOf="@+id/imageView4"
@@ -61,16 +59,16 @@
             android:src="@drawable/icon_username" />
 
         <EditText
-            android:layout_marginRight="@dimen/dp5"
-            android:layout_centerVertical="true"
             android:id="@+id/edt_user_me"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp5"
             android:layout_toRightOf="@id/img_username"
             android:background="@color/white"
             android:backgroundTint="@color/white"
-            android:ems="10"
             android:hint="*Tài khoản mẹ"
+            android:imeOptions="flagNoExtractUi"
             android:inputType="text"
             android:padding="@dimen/dp7"
             android:textColor="@color/black"
@@ -84,8 +82,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_edt_login"
+        android:layout_marginTop="@dimen/margin_edt_top_login"
         android:layout_marginRight="@dimen/margin_edt_login"
-        android:layout_marginTop="8dp"
         android:background="@drawable/spr_login_edt"
         android:padding="@dimen/pading_edt_login"
         app:layout_constraintHorizontal_bias="0.0"
@@ -103,16 +101,16 @@
             android:src="@drawable/icon_username" />
 
         <EditText
-            android:layout_marginRight="@dimen/dp5"
-            android:layout_centerVertical="true"
             android:id="@+id/edt_user_con"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp5"
             android:layout_toRightOf="@id/img_user_con"
             android:background="@color/white"
             android:backgroundTint="@color/white"
-            android:ems="10"
             android:hint="*Tài khoản con"
+            android:imeOptions="flagNoExtractUi"
             android:inputType="text"
             android:padding="@dimen/dp7"
             android:textColor="@color/black"
@@ -125,8 +123,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_edt_login"
+        android:layout_marginTop="@dimen/margin_edt_top_login"
         android:layout_marginRight="@dimen/margin_edt_login"
-        android:layout_marginTop="8dp"
         android:background="@drawable/spr_login_edt"
         android:padding="@dimen/pading_edt_login"
         app:layout_constraintHorizontal_bias="1.0"
@@ -144,39 +142,39 @@
             android:src="@drawable/icon_password" />
 
         <EditText
-            android:inputType="textPassword"
-            android:layout_toLeftOf="@id/img_showpass"
-            android:layout_centerVertical="true"
             android:id="@+id/edt_pass_con"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/img_pass"
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:hint="*Mật khẩu"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="textPassword"
             android:padding="@dimen/dp7"
             android:textColor="@color/black"
             android:textColorHint="@color/gray" />
 
         <ImageView
-            android:layout_marginRight="@dimen/dp5"
-            android:background="@color/white"
-            android:tint="@color/gray"
-            android:layout_alignParentRight="true"
             android:id="@+id/img_showpass"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp5"
+            android:background="@color/white"
             android:padding="@dimen/dp5"
-            android:src="@drawable/ic_eye_show" />
+            android:src="@drawable/ic_eye_show"
+            android:tint="@color/gray" />
     </RelativeLayout>
 
     <ImageView
 
-        android:layout_width="@dimen/dp250"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="@dimen/dp10"
         android:id="@+id/img_dangnhap"
+        android:layout_width="@dimen/dp250"
+        android:layout_height="@dimen/hight_btn_login"
+        android:layout_marginBottom="@dimen/margin_btn_bottom_login"
         android:src="@drawable/btn_dangnhap"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"

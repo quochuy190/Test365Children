@@ -2,6 +2,7 @@ package neo.vn.test365children.Presenter;
 
 import java.util.List;
 
+import neo.vn.test365children.Models.Chart_To_Subject;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.Item_BXH;
 
@@ -13,6 +14,8 @@ public interface ImlThongke {
 
         void api_get_year_chart(String sUserMe, String sUserCon, String sDate);
 
+        void api_get_chart_to_subject(String sUserMe, String sUserCon);
+
     }
 
     interface View {
@@ -23,5 +26,7 @@ public interface ImlThongke {
         void show_month_chart(List<Item_BXH> mLis);
 
         void show_year_chart(List<Item_BXH> mLis);
+
+        void show_chart_to_subject(List<Chart_To_Subject> mLis);
     }
 }

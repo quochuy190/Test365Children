@@ -4,40 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <ImageView
         android:id="@+id/imageView12"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_menu_game" />
+        android:scaleType="centerCrop" />
 
     <View
         android:id="@+id/view_center"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/img_title_menugame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:padding="@dimen/dp30"
-        android:src="@drawable/title_game"
         app:layout_constraintBottom_toTopOf="@+id/view_center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <ImageView
                     android:id="@+id/img_tptt"
                     android:layout_width="match_parent"
@@ -70,40 +68,44 @@
                     android:layout_weight="1"
                     android:padding="@dimen/pading_button_menu"
                     android:src="@drawable/btn_1" />
+
                 <TextView
-                    android:textSize="@dimen/text_menu_game"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/font1"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="@string/btn_trieuphutrithuc"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_menu_game"
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_kingofword"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="@dimen/pading_button_menu"
                     android:src="@drawable/btn_4" />
+
                 <TextView
-                    android:textSize="@dimen/text_menu_game"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/font1"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="@string/btn_kingofword"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_menu_game"
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>
@@ -120,22 +122,24 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="@dimen/pading_button_menu"
                     android:src="@drawable/btn_2" />
+
                 <TextView
-                    android:textSize="@dimen/text_menu_game"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/font1"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="@string/btn_sodoku"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_menu_game"
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>
@@ -145,22 +149,25 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <ImageView
+                    android:id="@+id/img_tnnl"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="@dimen/pading_button_menu"
                     android:src="@drawable/btn_3" />
+
                 <TextView
-                    android:textSize="@dimen/text_menu_game"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/font1"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="@string/btn_tinhnhanhnholau"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_menu_game"
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>
@@ -171,8 +178,8 @@
         android:id="@+id/img_back"
         android:layout_width="@dimen/dp40"
         android:layout_height="@dimen/dp40"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/img_back_menu"
         app:layout_constraintStart_toStartOf="parent"

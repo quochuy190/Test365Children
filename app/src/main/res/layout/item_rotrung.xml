@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/hight_egg">
 
@@ -8,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/hight_egg"
         android:padding="@dimen/dp7"
-        android:src="@drawable/icon_ro_trung" />
+         />
 
     <TextView
         android:id="@+id/txt_rotrung_dapan_1"
@@ -26,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/hight_egg"
         android:padding="@dimen/dp20"
-        android:src="@drawable/egg_yellow" />
+       />
 
     <TextView
         android:id="@+id/txt_trung_dapan_1"

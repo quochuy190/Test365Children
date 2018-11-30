@@ -34,7 +34,7 @@
             android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
             android:background="@drawable/spr_lable_lambai"
-            android:fontFamily="@font/font1"
+            android:fontFamily="@font/roboto_bold"
             android:gravity="center"
             android:padding="@dimen/dp5"
             android:text="Câu 3: Chọn đáp án đúng"
@@ -55,41 +55,19 @@
 
     </LinearLayout>
 
-    <ImageView
+    <Button
         android:id="@+id/btn_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
+        android:layout_width="@dimen/btn_showpoint_width"
+        android:layout_height="@dimen/btn_showpoint_hight"
+        android:layout_marginBottom="@dimen/dp3"
+        android:background="@drawable/btn_1"
+        android:fontFamily="@font/roboto_bold"
         android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <TextView
-        android:id="@+id/txt_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-
-        android:fontFamily="@font/font1"
-        android:gravity="center"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        android:text="Xem điểm"
+        android:text="@string/txt_showpoint"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_13sp"
+        android:textSize="@dimen/txt_showpoint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/btn_nopbai"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_nopbai"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
         app:layout_constraintRight_toRightOf="parent" />
 
     <android.support.v4.widget.NestedScrollView
@@ -101,14 +79,14 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
         <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <WebView
                 android:id="@+id/webview_debai"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,17 +94,24 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             </WebView>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle_dapan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp5"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/webview_debai" />
+                android:padding="@dimen/dp5" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
+    <ImageView
+        android:id="@+id/img_anwser_chil"
+        android:layout_width="@dimen/icon_anwser_review"
+        android:layout_height="@dimen/icon_anwser_review"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/dp5"
+        android:src="@drawable/icon_anwser_true"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
 
 </android.support.constraint.ConstraintLayout>

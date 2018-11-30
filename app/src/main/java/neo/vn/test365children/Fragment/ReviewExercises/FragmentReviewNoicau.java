@@ -3,7 +3,6 @@ package neo.vn.test365children.Fragment.ReviewExercises;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import neo.vn.test365children.Adapter.AdapterDapanNoicau;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAnNoicau;
@@ -49,10 +47,7 @@ public class FragmentReviewNoicau extends BaseFragment {
     private CauhoiDetail mCauhoi;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
-    AdapterDapanNoicau adapter_A;
-    AdapterDapanNoicau adapter_B;
     List<DapAnNoicau> mLisDapanA, mLisDapanB;
-    RecyclerView.LayoutManager mLayoutManager, mLayoutManager2;
     @BindView(R.id.webview_dapannoicau_A_1)
     WebView webview_dapannoicau_A_1;
     @BindView(R.id.webview_dapannoicau_A_traloi_1)
@@ -151,6 +146,9 @@ public class FragmentReviewNoicau extends BaseFragment {
     LinearLayout ll_dapan_traloi;
     @BindView(R.id.ll_question)
     LinearLayout ll_questioln;
+    @BindView(R.id.img_background)
+    ImageView img_background;
+
     public static FragmentReviewNoicau newInstance(CauhoiDetail restaurant) {
         FragmentReviewNoicau restaurantDetailFragment = new FragmentReviewNoicau();
         Bundle args = new Bundle();
@@ -186,6 +184,7 @@ public class FragmentReviewNoicau extends BaseFragment {
     ImageView img_anwser_chil;
 
     private void initData() {
+        Glide.with(getContext()).load(R.drawable.bg_chem_hoa_qua).into(img_background);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
             if (mCauhoi.getsRESULT_CHILD().equals("0")) {
                 Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
@@ -227,43 +226,61 @@ public class FragmentReviewNoicau extends BaseFragment {
         mLisAnwser_B.add(egg4[1]);
         if (mCauhoi.getsEGG_1_RESULT() != null && mCauhoi.getsEGG_1_RESULT().length() > 0) {
             String[] egg_result1 = mCauhoi.getsEGG_1_RESULT().split("::");
-            if (egg_result1[0] != null) {
+            if (egg_result1.length > 0 && egg_result1[0] != null) {
                 mLisQuestion_A.add(egg_result1[0]);
-            }
-            if (egg_result1[1] != null) {
+            } else mLisQuestion_A.add("");
+            if (egg_result1.length > 1 && egg_result1[1] != null) {
                 mLisQuestionr_B.add(egg_result1[1]);
-            }
+            } else mLisQuestionr_B.add("");
+        } else {
+            mLisQuestion_A.add("");
+            mLisQuestionr_B.add("");
         }
         if (mCauhoi.getsEGG_2_RESULT() != null && mCauhoi.getsEGG_2_RESULT().length() > 0) {
             String[] egg_result2 = mCauhoi.getsEGG_2_RESULT().split("::");
-            if (egg_result2[0] != null) {
+            if (egg_result2.length > 0 && egg_result2[0] != null) {
                 mLisQuestion_A.add(egg_result2[0]);
-            }
-            if (egg_result2[1] != null) {
+            } else
+                mLisQuestion_A.add("");
+            if (egg_result2.length > 1 && egg_result2[1] != null) {
                 mLisQuestionr_B.add(egg_result2[1]);
-            }
+            } else
+                mLisQuestionr_B.add("");
+        } else {
+            mLisQuestionr_B.add("");
+            mLisQuestion_A.add("");
         }
         if (mCauhoi.getsEGG_3_RESULT() != null && mCauhoi.getsEGG_3_RESULT().length() > 0) {
             String[] egg_result3 = mCauhoi.getsEGG_3_RESULT().split("::");
-            if (egg_result3[0] != null) {
+            if (egg_result3.length > 0 && egg_result3[0] != null) {
                 mLisQuestion_A.add(egg_result3[0]);
-            }
-            if (egg_result3[1] != null) {
+            } else
+                mLisQuestion_A.add("");
+            if (egg_result3.length > 1 && egg_result3[1] != null) {
                 mLisQuestionr_B.add(egg_result3[1]);
-            }
+            } else
+                mLisQuestionr_B.add("");
+        } else {
+            mLisQuestion_A.add("");
+            mLisQuestionr_B.add("");
         }
         if (mCauhoi.getsEGG_3_RESULT() != null && mCauhoi.getsEGG_3_RESULT().length() > 0) {
             String[] egg_result4 = mCauhoi.getsEGG_4_RESULT().split("::");
-            if (egg_result4[0] != null) {
+            if (egg_result4.length > 0 && egg_result4[0] != null) {
                 mLisQuestion_A.add(egg_result4[0]);
-            }
-            if (egg_result4[1] != null) {
+            } else
+                mLisQuestion_A.add("");
+            if (egg_result4.length > 1 && egg_result4[1] != null) {
                 mLisQuestionr_B.add(egg_result4[1]);
-            }
+            } else
+                mLisQuestionr_B.add("");
+        } else {
+            mLisQuestionr_B.add("");
+            mLisQuestion_A.add("");
         }
 
         initTraloi();
-        if (mLisQuestion_A.size()>0){
+        if (mLisQuestion_A.size() > 0) {
             if (mLisQuestion_A.get(0) != null)
                 initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisQuestion_A.get(0)));
             else
@@ -296,7 +313,7 @@ public class FragmentReviewNoicau extends BaseFragment {
                 initWebview(webview_dapannoicau_B_4, StringUtil.convert_html(mLisQuestionr_B.get(3)));
             else
                 rl_dapanB_4.setVisibility(View.GONE);
-        }else {
+        } else {
             ll_questioln.setVisibility(View.GONE);
         }
 

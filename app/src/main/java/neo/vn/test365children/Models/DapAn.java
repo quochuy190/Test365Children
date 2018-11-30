@@ -7,6 +7,7 @@ public class DapAn  {
     private String sDapan_Dung;
     private boolean isClick;
     private String sImage;
+    private int res_Image;
 
     public DapAn(String sName, String sContent, String sDapan_Traloi, String sDapan_Dung, boolean isClick, String sImage) {
         this.sName = sName;
@@ -15,6 +16,23 @@ public class DapAn  {
         this.sDapan_Dung = sDapan_Dung;
         this.isClick = isClick;
         this.sImage = sImage;
+    }
+
+    public DapAn(String sName, String sContent, String sDapan_Traloi, String sDapan_Dung, boolean isClick, int res_Image) {
+        this.sName = sName;
+        this.sContent = sContent;
+        this.sDapan_Traloi = sDapan_Traloi;
+        this.sDapan_Dung = sDapan_Dung;
+        this.isClick = isClick;
+        this.res_Image = res_Image;
+    }
+
+    public int getRes_Image() {
+        return res_Image;
+    }
+
+    public void setRes_Image(int res_Image) {
+        this.res_Image = res_Image;
     }
 
     public String getsName() {

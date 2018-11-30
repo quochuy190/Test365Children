@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
@@ -31,8 +34,9 @@ import neo.vn.test365children.R;
  */
 public class FragmentCompleteBaitap extends BaseFragment {
     @BindView(R.id.img_nopbai)
-    ImageView img_nopbai;
-
+    Button img_nopbai;
+    @BindView(R.id.imageView18)
+    ImageView img_background;
     public static FragmentCompleteBaitap newInstance(CauhoiDetail restaurant) {
         FragmentCompleteBaitap restaurantDetailFragment = new FragmentCompleteBaitap();
         Bundle args = new Bundle();
@@ -54,7 +58,7 @@ public class FragmentCompleteBaitap extends BaseFragment {
         ButterKnife.bind(this, view);
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         initEvent();
-
+        Glide.with(this).load(R.drawable.bg_chao_mung).into(img_background);
         return view;
     }
 

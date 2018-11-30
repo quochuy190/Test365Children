@@ -76,8 +76,6 @@ public class AdapterDapanXemanh extends RecyclerView.Adapter<AdapterDapanXemanh.
         TextView txt_dapan;
         @BindView(R.id.checkbox_dapan)
         ImageView checkbox;
-        @BindView(R.id.img_dapan)
-        ImageView img_dapan;
 
         public TopicViewHoder(View itemView) {
             super(itemView);

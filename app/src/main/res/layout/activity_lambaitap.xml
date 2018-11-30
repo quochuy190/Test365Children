@@ -88,15 +88,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp1">
             <ImageView
+                android:id="@+id/img_time"
                 android:padding="@dimen/dp3"
-                android:src="@drawable/icon_time"
+                android:src="@drawable/icon_game_time"
                 android:layout_width="@dimen/dp30"
                 android:layout_height="@dimen/dp30"/>
             <TextView
                 android:id="@+id/txt_time"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_13sp"
+                android:textSize="@dimen/text_15sp"
                 android:text="30:00"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,105 +10,103 @@
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/background_lambai" />
+        android:scaleType="fitXY" />
+    <RelativeLayout
+        android:background="@color/bg_question_congchua"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/btn_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <TextView
-        android:id="@+id/txt_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/font1"
-        android:gravity="center"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        android:text="Ok"
+    <Button
+        android:textSize="@dimen/txt_showpoint"
+        android:text="@string/btn_chamdiem"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_13sp"
+        android:id="@+id/btn_xemdiem"
+        android:layout_width="@dimen/btn_showpoint_width"
+        android:layout_height="@dimen/btn_showpoint_hight"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="@dimen/dp5"
+        android:background="@drawable/btn_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <ImageView
-        android:id="@+id/btn_nopbai"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_nopbai"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/ll_cauhoi"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/txt_cauhoi"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="@dimen/dp5"
-            android:text="Câu 1: Chọn đán án đúng"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_content_cauhoi" />
-    </LinearLayout>
+    <android.support.v4.widget.NestedScrollView
 
-    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi">
+        android:clipToPadding="true"
+        app:layout_constraintBottom_toTopOf="@id/btn_xemdiem"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:background="@drawable/spr_bg_cauhoi_congchua"
-            android:layout_marginLeft="@dimen/dp5"
-            android:id="@+id/recycle_dapan"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:padding="@dimen/dp5" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <LinearLayout
+                android:id="@+id/ll_cauhoi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="WebViewLayout">
 
-    </LinearLayout>
+                <WebView
+                    android:id="@+id/txt_cauhoi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dp5"
+                    android:text="Câu 1: Chọn đán án đúng"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_content_cauhoi" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
+                app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                app:layout_constraintStart_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/ll_cauhoi">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_dapan"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_weight="4"
+                    android:background="@drawable/spr_bg_cauhoi_congchua"
+                    android:padding="@dimen/dp5" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+    <ImageView
+        android:id="@+id/img_reload"
+        android:src="@drawable/icon_reload"
+        android:layout_marginTop="@dimen/dp50"
+        android:layout_marginRight="@dimen/dp50"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="@dimen/image_next"
+        android:layout_height="@dimen/image_next" />
 
 </android.support.constraint.ConstraintLayout>

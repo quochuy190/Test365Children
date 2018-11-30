@@ -10,6 +10,7 @@
         android:repeatMode="reverse"
         android:repeatCount="infinite"/>-->
     <rotate
+
         android:duration="1000"
         android:fromDegrees="0"
         android:pivotX="50%"

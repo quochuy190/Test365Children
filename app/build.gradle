@@ -4,16 +4,39 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "neo.vn.test365children"
-        minSdkVersion 15
+        minSdkVersion 18
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 7
+        versionName "1.1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release
+        //builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    android {
+        signingConfigs {
+            release {
+                storeFile file('G:/2018/Neo/Project/Test365Home/Build/HOME365KID/home365kid.jks')
+                storePassword "quochuy101"
+                keyAlias "home365kid"
+                keyPassword "quochuy101"
+            }
+        }
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
         }
     }
     realm {
@@ -57,5 +80,7 @@ dependencies {
     // realm in android
     //Biểu đồ
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    //EasyFlipView
+    implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:2.1.1'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Test365Children</string>
+    <string name="app_name">Home365Kid</string>
+    <string name="btn_chamdiem">Chấm điểm</string>
     <string name="txt_loading_dialog">Đang tải. Vui lòng đợi...</string>
     <!--error-->
     <string name="error_network">Lỗi kết nối</string>
@@ -7,13 +8,13 @@
     <string name="error_network_message">Lỗi kết nối, vui lòng kiểm tra mạng và thử lại</string>
 
 
-    <string name="txt_dieukhoan">Tôi hoàn toàn đồng ý với các <b><u>Điều khoản dịch vụ</u></b> của Test365.Home</string>
+    <string name="txt_dieukhoan">Tôi hoàn toàn đồng ý với các <b><u>Điều khoản dịch vụ</u></b> của Home365Kid</string>
     <string name="notify">Thông báo</string>
     <string name="btn_no">Không</string>
     <string name="btn_yes">Đồng ý</string>
     <string name="masseger_edt_null">Vui lòng nhập vào đầy đủ thông tin và tiếp tục!</string>
     <string name="notify_city_null">Bạn vui lòng chọn tỉnh/thành phố</string>
-    <string name="txt_web"> <i><u>https://home.test365.vn</u></i></string>
+    <string name="txt_web"> <i><u>https://home365.online</u></i></string>
     <string name="txt_lable_nhanxet">NHẬN XÉT CỦA HỆ THỐNG</string>
     <string name="txt_exer_point">Điểm hệ thống</string>
     <string name="txt_exer_xephang">Xếp hạng</string>
@@ -25,4 +26,19 @@
     <string name="btn_sodoku">SODOKU</string>
     <string name="btn_kingofword">KING OF WORD</string>
     <string name="btn_tinhnhanhnholau">TÍNH NHANH NHỚ LÂU</string>
+    <string name="txt_guide_game_tptt">Cách chơi giống như gameshow Ai là Triệu phú trên Truyền hình.
+Mỗi câu hỏi chỉ được suy nghĩ và trả lời trong 2 phút. Con trả lời sai hoặc hết giờ sẽ phải dừng cuộc chơi và quay lại mốc tiền thưởng.
+Mỗi tuần chỉ chơi một lần vào bất kỳ ngày nào.
+        \nSau khi chọn đáp án, con phải bấm vào <b>“Trả lời”</b> để xác nhận.
+        \nLưu ý sử dụng quyền trợ giúp đúng lúc:
+        \n• <b>50:50</b>: Bỏ đi 2 đáp án sai
+        \n• <b>+60s</b>: Thêm 1 phút suy nghĩ cho câu hỏi
+        \n• <b>Thêm đáp án</b>: Con được chọn 2 đáp án
+        \n• <b>-1000đ</b>: mua đáp án đúng, tiền thưởng sẽ bị trừ đi 1000 đồng.
+        \nBấm nút <b>“Dừng cuộc chơi”</b> để bảo toàn giải thưởng.
+\nToàn bộ giải thưởng đạt được sẽ được cộng vào tài khoản của mẹ. Chúc con may mắn!
+
+</string>
+    <string name="txt_showpoint">Chấm điểm</string>
+    <string name="channel_name">Home365</string>
 </resources>

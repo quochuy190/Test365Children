@@ -21,6 +21,7 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     private String sThoiluonglambai;
     private String sKieunopbai;
     private String sIdTuan;
+    private String sTrangthainopbai;
 
     public ExerciseAnswer(String sId_exercise, String sId_userMe, String sId_userCon, String sPoint, String sMonhoc,
                           String isTrangthailambai, RealmList<Cauhoi> mLisCauhoi) {

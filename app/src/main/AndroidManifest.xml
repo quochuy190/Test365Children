@@ -7,112 +7,108 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-
         android:name=".App"
         android:allowBackup="true"
+        android:configChanges="orientation|screenSize"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize">
         <activity
             android:name=".Activity.ActivityHome"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.ReviewExercises.ActivityBaitapdalam"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.ReviewExercises.ActivityExercisesDetail"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.ReviewExercises.ActivityReviewExercises"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
-       <activity
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityMenuGame"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
-
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
+            android:name=".Activity.game.ActivityGuideGameTPTT"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.Activity_startgame_tptt"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityGameTrieuphutrithuc"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
+            android:name=".Activity.game.ActivityGameTNNL"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name=".Activity.game.ActivityGameTinhnhanhNholau"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name=".Activity.game.ActivityStartGameTNNL"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityGameOverTPTT"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
-
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.bangxephang.ActivityBieuDo"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.bangxephang.ActivityBXH"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
-        <service android:name=".Service.ServiceDownTime" />
-        <service android:name=".Service.ServiceDownTimeGame" />
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.SplashScreen"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.ActivityLogin"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.ActivityComplete"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.ActivityCauhoiCongchua"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:configChanges="orientation|screenSize"
             android:name=".Activity.Activity_Welcome"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.ActivityMenuBaitap"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.ActivityStartBaitap"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.ActivityLambaitap"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
 
         <service android:name=".Service.MyFirebaseIDService">
             <intent-filter>
@@ -124,6 +120,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".Service.ServiceDownTime"></service>
+        <service android:name=".Service.ServiceDownTimeGame"></service>
     </application>
 
 </manifest>

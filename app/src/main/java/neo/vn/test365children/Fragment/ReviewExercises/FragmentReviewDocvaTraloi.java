@@ -1,6 +1,5 @@
 package neo.vn.test365children.Fragment.ReviewExercises;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,9 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterDapan;
-import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
-import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
@@ -58,6 +54,8 @@ public class FragmentReviewDocvaTraloi extends BaseFragment {
     private boolean isTraloi = false;
     @BindView(R.id.img_background)
     ImageView img_background;
+    @BindView(R.id.img_bang)
+    ImageView img_bang;
     @BindView(R.id.txt_debai)
     WebView txt_debai;
 
@@ -79,6 +77,7 @@ public class FragmentReviewDocvaTraloi extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_docvatraloi, container, false);
         ButterKnife.bind(this, view);
+        Glide.with(getActivity()).load(R.drawable.icon_bang).into(img_bang);
         init();
         initData();
         initEvent();
@@ -113,27 +112,19 @@ public class FragmentReviewDocvaTraloi extends BaseFragment {
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-        txt_cauhoi.setWebChromeClient(new WebChromeClient());
-        txt_cauhoi.getSettings().setJavaScriptEnabled(true);
-        txt_cauhoi.getSettings();
-        txt_cauhoi.setBackgroundColor(Color.TRANSPARENT);
-        String text = "<html><head>"
-                + "<style type=\"text/css\">body{color: #fff;}"
-                + "</style></head>"
-                + "<body>"
-                + mCauhoi.getsTextDebai()
-                + "</body></html>";
-
-        txt_cauhoi.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
-        if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-        if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-
+        StringUtil.initWebview_Whitetext_notcenter(txt_cauhoi, mCauhoi.getsTextDebai());
+        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsA().length() > 0)
+            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), mCauhoi.getsANSWER_CHILD(),
+                    mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
+            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), mCauhoi.getsANSWER_CHILD(),
+                    mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
+            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), mCauhoi.getsANSWER_CHILD(),
+                    mCauhoi.getsANSWER(), true, ""));
+        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
+            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), mCauhoi.getsANSWER_CHILD(),
+                    mCauhoi.getsANSWER(), true, ""));
         adapter.notifyDataSetChanged();
     }
 
@@ -148,10 +139,10 @@ public class FragmentReviewDocvaTraloi extends BaseFragment {
         recycle_dapan.setLayoutManager(mLayoutManager);
         recycle_dapan.setItemAnimator(new DefaultItemAnimator());
         recycle_dapan.setAdapter(adapter);
-        adapter.setOnIListener(new ItemClickListener() {
+        /*adapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+              *//*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
                 if (!mLis.get(position).isClick()) {
                     for (DapAn obj : mLis) {
@@ -179,9 +170,9 @@ public class FragmentReviewDocvaTraloi extends BaseFragment {
                     }
                     isTraloi = true;
                     adapter.notifyDataSetChanged();
-                }
+                }*//*
             }
-        });
+        });*/
     }
 
 }

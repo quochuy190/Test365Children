@@ -3,7 +3,10 @@ package neo.vn.test365children.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import neo.vn.test365children.Base.BaseActivity;
@@ -17,6 +20,10 @@ public class Activity_Welcome extends BaseActivity {
     TextView txt_name;
     @BindView(R.id.txt_content_chaomung)
     TextView txt_content;
+    @BindView(R.id.imageView7)
+    ImageView imageView7;
+    @BindView(R.id.imageView6)
+    ImageView imageView6;
     private final int SPLASH_DISPLAY_LENGTH = 3000;
     Intent mainIntent;
 
@@ -28,6 +35,8 @@ public class Activity_Welcome extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Glide.with(this).load(R.drawable.bg_chao_mung).into(imageView7);
+        Glide.with(this).load(R.drawable.image_chao_mung).into(imageView6);
         initData();
         mainIntent = new Intent(Activity_Welcome.this, ActivityHome.class);
         new Handler().postDelayed(new Runnable() {
@@ -47,7 +56,7 @@ public class Activity_Welcome extends BaseActivity {
         txt_content.setText("Học sinh lớp " + objLogin.getsLEVEL_ID() + ", " + objLogin.getsSCHOOL_NAME()
                 + ", " + objLogin.getsDISTRICT_NAME()
                 + ", " + objLogin.getsPROVINCE_NAME()
-                + " gia nhập vào ngôi nhà chung Test365.Home\n" +
+                + " gia nhập vào ngôi nhà chung Home365\n" +
                 "Chúng ta sẽ cùng làm bài tập thật là vui và chơi các trò chơi bổ ích mỗi ngày nhé"
         );
     }

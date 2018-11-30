@@ -94,6 +94,16 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
     boolean mRight;
     boolean isAnserTrue;
     boolean isDalam;
+    String sAnwserChil_Dientu_1;
+    String sAnwserChil_Dientu_2;
+    String sAnwserChil_Dientu_3;
+    String sAnwserChil_Dientu_5;
+    String sAnwserChil_Dientu_4;
+    String sAnwserChil_Dientu_6;
+    String sAnwserChil_Dientu_7;
+    String sAnwserChil_Dientu_8;
+    String sAnwserChil_Dientu_9;
+    String sAnwserChil_Dientu_10;
 
     public CauhoiDetail(String sERROR, String sMESSAGE, String sRESULT) {
         this.sERROR = sERROR;
@@ -133,6 +143,86 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public String getsAnwserChil_Dientu_1() {
+        return sAnwserChil_Dientu_1;
+    }
+
+    public void setsAnwserChil_Dientu_1(String sAnwserChil_Dientu_1) {
+        this.sAnwserChil_Dientu_1 = sAnwserChil_Dientu_1;
+    }
+
+    public String getsAnwserChil_Dientu_2() {
+        return sAnwserChil_Dientu_2;
+    }
+
+    public void setsAnwserChil_Dientu_2(String sAnwserChil_Dientu_2) {
+        this.sAnwserChil_Dientu_2 = sAnwserChil_Dientu_2;
+    }
+
+    public String getsAnwserChil_Dientu_3() {
+        return sAnwserChil_Dientu_3;
+    }
+
+    public void setsAnwserChil_Dientu_3(String sAnwserChil_Dientu_3) {
+        this.sAnwserChil_Dientu_3 = sAnwserChil_Dientu_3;
+    }
+
+    public String getsAnwserChil_Dientu_5() {
+        return sAnwserChil_Dientu_5;
+    }
+
+    public void setsAnwserChil_Dientu_5(String sAnwserChil_Dientu_5) {
+        this.sAnwserChil_Dientu_5 = sAnwserChil_Dientu_5;
+    }
+
+    public String getsAnwserChil_Dientu_4() {
+        return sAnwserChil_Dientu_4;
+    }
+
+    public void setsAnwserChil_Dientu_4(String sAnwserChil_Dientu_4) {
+        this.sAnwserChil_Dientu_4 = sAnwserChil_Dientu_4;
+    }
+
+    public String getsAnwserChil_Dientu_6() {
+        return sAnwserChil_Dientu_6;
+    }
+
+    public void setsAnwserChil_Dientu_6(String sAnwserChil_Dientu_6) {
+        this.sAnwserChil_Dientu_6 = sAnwserChil_Dientu_6;
+    }
+
+    public String getsAnwserChil_Dientu_7() {
+        return sAnwserChil_Dientu_7;
+    }
+
+    public void setsAnwserChil_Dientu_7(String sAnwserChil_Dientu_7) {
+        this.sAnwserChil_Dientu_7 = sAnwserChil_Dientu_7;
+    }
+
+    public String getsAnwserChil_Dientu_8() {
+        return sAnwserChil_Dientu_8;
+    }
+
+    public void setsAnwserChil_Dientu_8(String sAnwserChil_Dientu_8) {
+        this.sAnwserChil_Dientu_8 = sAnwserChil_Dientu_8;
+    }
+
+    public String getsAnwserChil_Dientu_9() {
+        return sAnwserChil_Dientu_9;
+    }
+
+    public void setsAnwserChil_Dientu_9(String sAnwserChil_Dientu_9) {
+        this.sAnwserChil_Dientu_9 = sAnwserChil_Dientu_9;
+    }
+
+    public String getsAnwserChil_Dientu_10() {
+        return sAnwserChil_Dientu_10;
+    }
+
+    public void setsAnwserChil_Dientu_10(String sAnwserChil_Dientu_10) {
+        this.sAnwserChil_Dientu_10 = sAnwserChil_Dientu_10;
     }
 
     public String getsHTML_CONTENT() {

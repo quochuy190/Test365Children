@@ -31,6 +31,9 @@
     <dimen name="dp250">250dp</dimen>
     <dimen name="dp350">350dp</dimen>
     <!--  margin login-->
+    <dimen name="hight_btn_login">40dp</dimen>
+    <dimen name="margin_btn_bottom_login">10dp</dimen>
+    <dimen name="margin_edt_top_login">5dp</dimen>
     <dimen name="pading_edt_login">0dp</dimen>
     <dimen name="margin_top_edt">30dp</dimen>
     <dimen name="margin_edt_login">65dp</dimen>
@@ -39,7 +42,8 @@
     <!--<layout menu làm bài tập-->
     <dimen name="margin_mute_lambai">45dp</dimen>
     <dimen name="width_item_menu">90dp</dimen>
-    <dimen name="margin_item">10dp</dimen>
+    <dimen name="margin_item">5dp</dimen>
+    <dimen name="txt_menu_baitap">13sp</dimen>
     <!--activity làm bài tập-->
     <dimen name="text_content_cauhoi">17sp</dimen>
     <dimen name="image_next">35dp</dimen>
@@ -73,15 +77,18 @@
     <dimen name="margin_egg_2">150dp</dimen>
     <dimen name="margin_egg_3">300dp</dimen>
     <dimen name="margin_egg_4">460dp</dimen>
+    <dimen name="txt_xeptrung">16sp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
+    <dimen name="margin_top_chaomung">10dp</dimen>
+    <dimen name="text_content_chaomung">18sp</dimen>
     <!--giải cứu công chúa-->
     <dimen name="item_congchua">80dp</dimen>
     <dimen name="item_dapan">140dp</dimen>
     <!--Bài tập tuần đã làm-->
     <dimen name="item_baitaptuan_dalam">100dp</dimen>
     <!--Exercises Detail-->
-    <dimen name="exercises_hight_title">50dp</dimen>
+    <dimen name="exercises_hight_title">70dp</dimen>
     <dimen name="exercises_margin_leght">20dp</dimen>
     <dimen name="exercises_icon_point">35dp</dimen>
     <dimen name="exer_hight_debai">50dp</dimen>
@@ -94,4 +101,50 @@
     <dimen name="icon_center_tptt">200dp</dimen>
     <dimen name="icon_btn_play">70dp</dimen>
     <dimen name="margin_btn_play">20dp</dimen>
+    <dimen name="icon_left_game_teacher">150dp</dimen>
+    <dimen name="btn_start_game">40dp</dimen>
+    <!--  Game : Triệu phú tri thức-->
+    <dimen name="width_right_menu_game">150dp</dimen>
+    <dimen name="icon_support">40dp</dimen>
+    <dimen name="text_sp_tptt">12sp</dimen>
+    <dimen name="icon_time">50dp</dimen>
+    <dimen name="margin_question">50dp</dimen>
+    <dimen name="margin_anwser_game">25dp</dimen>
+    <dimen name="text_time_game_tptt">15sp</dimen>
+    <!--  Biểu đồ-->
+    <dimen name="margin_bottom_bieudo">70dp</dimen>
+    <dimen name="margin_right_bieudo">60dp</dimen>
+    <dimen name="width_bxh">120dp</dimen>
+    <dimen name="hight_item_bottom">70dp</dimen>
+    <!--Chém chuối-->
+    <dimen name="img_chemchuoi">200dp</dimen>
+    <dimen name="icon_anwser_review">60dp</dimen>
+    <!--Đọc và trả lời-->
+    <dimen name="margin_top_baidoc">20dp</dimen>
+    <dimen name="margin_left_baidoc">20dp</dimen>
+    <!--Bảng xếp hạng-->
+    <dimen name="icon_stt_bxh">45dp</dimen>
+    <!--Chỉnh sửa bắt sâu-->
+    <dimen name="btn_showpoint_width">145dp</dimen>
+    <dimen name="btn_showpoint_hight">30dp</dimen>
+    <dimen name="txt_showpoint">14sp</dimen>
+    <!--Game tính nhanh nhớ lâu-->
+    <dimen name="hight_point_time_tnnl">60dp</dimen>
+    <dimen name="icon_time_game_tnnl">50dp</dimen>
+    <dimen name="txt_player_tnnl">15sp</dimen>
+    <dimen name="icon_point_tnnl">25dp</dimen>
+    <dimen name="margin_right_start_tnnl">40dp</dimen>
+    <dimen name="margin_top_start_tnnl">40dp</dimen>
+    <dimen name="pading_show_question">15dp</dimen>
+    <dimen name="margin_show_question_bang">5dp</dimen>
+    <dimen name="margin_content_broad">15dp</dimen>
+    <dimen name="width_txt_tnnl">300dp</dimen>
+    <dimen name="height_txt_tnnl">90dp</dimen>
+
+    <dimen name="btn_level_game_width">100dp</dimen>
+    <dimen name="btn_level_game_height">40dp</dimen>
+    <dimen name="btn_level_game_margin_top">35dp</dimen>
+    <dimen name="height_view_level_game_tnnl">180dp</dimen>
+    <dimen name="btn_level_font">14sp</dimen>
+    <dimen name="text_welcom">16sp</dimen>
 </resources>

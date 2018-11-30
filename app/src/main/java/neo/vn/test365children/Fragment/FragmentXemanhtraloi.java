@@ -7,6 +7,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +26,6 @@ import neo.vn.test365children.Adapter.AdapterDapanXemanh;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Config.Config;
-import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
@@ -59,12 +59,12 @@ public class FragmentXemanhtraloi extends BaseFragment {
     AdapterDapanXemanh adapter_xemanh;
     List<DapAn> mLis;
     @BindView(R.id.btn_xemdiem)
-    ImageView btn_xemdiem;
+    Button btn_xemdiem;
     private boolean isTraloi = false;
     @BindView(R.id.img_background)
     ImageView img_background;
-    @BindView(R.id.btn_nopbai)
-    ImageView btn_nopbai;
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
     public static FragmentXemanhtraloi newInstance(CauhoiDetail restaurant) {
         FragmentXemanhtraloi restaurantDetailFragment = new FragmentXemanhtraloi();
         Bundle args = new Bundle();
@@ -86,33 +86,20 @@ public class FragmentXemanhtraloi extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_xemanhtraloi, container, false);
         ButterKnife.bind(this, view);
         init();
+        btn_xemdiem.setEnabled(false);
+        btn_xemdiem.getBackground().setAlpha(50);
         initData();
         initEvent();
         return view;
     }
     private boolean isClickXemdiem = false;
     private void initEvent() {
-        btn_nopbai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
-                        false, new ClickDialog() {
-                            @Override
-                            public void onClickYesDialog() {
-                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
-                            }
 
-                            @Override
-                            public void onClickNoDialog() {
-
-                            }
-                        });
-            }
-        });
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isClickXemdiem){
+                    img_anwser_chil.setVisibility(View.VISIBLE);
                     boolean isTrue = false;
                     if (mLis != null && isTraloi) {
                         for (DapAn obj : mLis) {
@@ -122,10 +109,18 @@ public class FragmentXemanhtraloi extends BaseFragment {
                             }
                         }
                         adapter.notifyDataSetChanged();
-                        if (isTrue)
+                        if (isTrue){
+                            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
+                        }
+                        else{
+                            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                            EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
+                        }
+                        /*if (isTrue)
                             EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()),0));
                         else
-                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));*/
                     }
                     isClickXemdiem = true;
                 }
@@ -145,6 +140,8 @@ public class FragmentXemanhtraloi extends BaseFragment {
         adapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
+                btn_xemdiem.setEnabled(true);
+                btn_xemdiem.getBackground().setAlpha(255);
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setDalam(true);
                 if (!mLis.get(position).isClick()) {
@@ -184,7 +181,8 @@ public class FragmentXemanhtraloi extends BaseFragment {
             txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
             txt_question.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));
         }
-        Glide.with(getContext()).load(Config.URL_IMAGE + mCauhoi.getsImagePath()).into(img_question);
+        String s = Config.URL_IMAGE+mCauhoi.getsImagePath();
+        Glide.with(getContext()).load(s).into(img_question);
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
         if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)

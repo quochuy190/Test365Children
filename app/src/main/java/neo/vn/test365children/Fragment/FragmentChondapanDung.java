@@ -1,18 +1,16 @@
 package neo.vn.test365children.Fragment;
 
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +27,6 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
-import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
@@ -62,14 +59,14 @@ public class FragmentChondapanDung extends BaseFragment {
     RecyclerView recycle_dapan;
     RecyclerView.LayoutManager mLayoutManager;
     @BindView(R.id.btn_xemdiem)
-    ImageView btn_xemdiem;
+    Button btn_xemdiem;
     private boolean isTraloi = false;
     @BindView(R.id.img_background)
     ImageView img_background;
-    @BindView(R.id.btn_nopbai)
-    ImageView btn_nopbai;
     @BindView(R.id.webview_debai)
     WebView webview_debai;
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
 
     public static FragmentChondapanDung newInstance(CauhoiDetail restaurant) {
         FragmentChondapanDung restaurantDetailFragment = new FragmentChondapanDung();
@@ -91,6 +88,8 @@ public class FragmentChondapanDung extends BaseFragment {
         ButterKnife.bind(this, view);
         init();
         initData();
+        btn_xemdiem.setEnabled(false);
+        btn_xemdiem.getBackground().setAlpha(50);
         initEvent();
         return view;
     }
@@ -98,28 +97,12 @@ public class FragmentChondapanDung extends BaseFragment {
     private boolean isClickXemdiem = false;
 
     private void initEvent() {
-        btn_nopbai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
-                        false, new ClickDialog() {
-                            @Override
-                            public void onClickYesDialog() {
-                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
-                            }
-
-                            @Override
-                            public void onClickNoDialog() {
-
-                            }
-                        });
-            }
-        });
 
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isClickXemdiem) {
+                    img_anwser_chil.setVisibility(View.VISIBLE);
                     boolean isTrue = false;
                     if (mLis != null && isTraloi) {
                         for (DapAn obj : mLis) {
@@ -130,10 +113,17 @@ public class FragmentChondapanDung extends BaseFragment {
                         }
                         adapter.notifyDataSetChanged();
                         Log.i(TAG, "onClick: " + App.mLisCauhoi);
-                        if (isTrue)
+                        if (isTrue) {
+                            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
+                        } else {
+                            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                            EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
+                        }
+                     /*   if (isTrue)
                             EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                         else
-                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));*/
                     }
                     isClickXemdiem = true;
                 }
@@ -143,12 +133,14 @@ public class FragmentChondapanDung extends BaseFragment {
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan()));
+        /*if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+            txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());*/
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        initWebview();
+        StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+        // initWebview();
 
-        //webview_debai.loadData(mCauhoi.getsHTML_CONTENT(), "text/html", null);
-        /*webview_debai.loadUrl("http://www.resource.com.br/");*/
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
         if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
@@ -175,6 +167,8 @@ public class FragmentChondapanDung extends BaseFragment {
         adapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
+                btn_xemdiem.setEnabled(true);
+                btn_xemdiem.getBackground().setAlpha(255);
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
                 if (!mLis.get(position).isClick()) {
@@ -207,32 +201,4 @@ public class FragmentChondapanDung extends BaseFragment {
             }
         });
     }
-
-    private void initWebview() {
-        webview_debai.setInitialScale(1);
-        webview_debai.getSettings().setJavaScriptEnabled(true);
-        webview_debai.getSettings().setLoadWithOverviewMode(true);
-        webview_debai.getSettings().setUseWideViewPort(true);
-        webview_debai.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webview_debai.setScrollbarFadingEnabled(false);
-        webview_debai.getSettings().setUseWideViewPort(true);
-        webview_debai.getSettings().setLoadWithOverviewMode(true);
-        webview_debai.getSettings().setSupportZoom(true);
-        webview_debai.getSettings().setBuiltInZoomControls(true);
-        webview_debai.getSettings().setDisplayZoomControls(false);
-        webview_debai.setWebChromeClient(new WebChromeClient());
-        webview_debai.getSettings().setJavaScriptEnabled(true);
-        webview_debai.getSettings();
-        webview_debai.setBackgroundColor(Color.TRANSPARENT);
-        Resources res = getResources();
-        WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGER);
-        webSettings.setDefaultFontSize(18);
-        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
-        String pish = "<html><body  align='center'>";
-        String pas = "</body></html>";
-        webview_debai.loadDataWithBaseURL("", pish +
-                StringUtil.convert_html(mCauhoi.getsHTML_CONTENT()) + pas, "text/html", "UTF-8", "");
-    }
-
 }

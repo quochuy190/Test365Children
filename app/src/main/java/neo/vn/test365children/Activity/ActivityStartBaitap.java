@@ -5,8 +5,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,20 +25,24 @@ import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.Baitap_Tuan;
 import neo.vn.test365children.Models.Cauhoi;
+import neo.vn.test365children.Models.ConfigChildren;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.Models.TuanDamua;
+import neo.vn.test365children.Presenter.ImlConfigChil;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
+import neo.vn.test365children.Presenter.PresenterConfigChil;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
 import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
-public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View {
+public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View, ImlConfigChil.View {
+
     private static final String TAG = "ActivityStartBaitap";
     @BindView(R.id.btn_start_lambai)
-    ImageView btn_start_lambai;
+    Button btn_start_lambai;
     @BindView(R.id.img_mute)
     ImageView img_mute;
     Baitap_Tuan objBaitapTuan;
@@ -44,12 +51,17 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
     @BindView(R.id.txt_tuan)
     TextView txt_tuan;
     PresenterBaitap mPresenter;
+    PresenterConfigChil mPresenterConfig;
     String sUserMe, sUserCon, sMon;
     @BindView(R.id.txt_soluongcauhoi)
     TextView txt_soluongcauhoi;
+    @BindView(R.id.txt_thoigianlambai)
+    TextView txt_thoigianlambai;
     private List<Cauhoi> mLisCauhoi;
     boolean isClickStart = false;
     Realm mRealm;
+    @BindView(R.id.img_background)
+    ImageView img_background;
 
     @Override
     public int setContentViewId() {
@@ -62,6 +74,10 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
         isClickStart = false;
         mRealm = RealmController.with(this).getRealm();
         mPresenter = new PresenterBaitap(this);
+        mPresenterConfig = new PresenterConfigChil(this);
+        btn_start_lambai.getBackground().setAlpha(50);
+        btn_start_lambai.setEnabled(false);
+        // KeyboardUtil.button_disable(btn_start_lambai);
         initData();
         initEvent();
         //  play_mp3();
@@ -70,6 +86,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
     ExerciseAnswer obj_answer;
 
     private void initData() {
+        Glide.with(this).load(R.drawable.background_start_lambai).into(img_background);
         mLisCauhoi = new ArrayList<>();
         objBaitapTuan = getIntent().getParcelableExtra(Constants.KEY_SEND_BAITAPTUAN);
         ExerciseAnswer obj = mRealm.where(ExerciseAnswer.class).equalTo("sId_exercise", objBaitapTuan.getsID()).findFirst();
@@ -87,8 +104,6 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
                 txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
                 break;
         }
-        sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
-        sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
 
         obj_answer = new ExerciseAnswer();
         obj_answer.setsIdTuan(objBaitapTuan.getsWEEK_ID());
@@ -102,9 +117,13 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
         mRealm.copyToRealmOrUpdate(obj_answer);
         mRealm.commitTransaction();
         App.mExercise = obj_answer;
-        showDialogLoading();
-        mPresenter.get_api_get_part(sUserMe, sUserCon, objBaitapTuan.getsID());
-        // mPresenter.get_api_get_part("", "", "");
+        if (isNetwork()) {
+            showDialogLoading();
+            sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+            sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+            mPresenterConfig.api_get_config_children(sUserMe, sUserCon);
+            mPresenter.get_api_get_part(sUserMe, sUserCon, objBaitapTuan.getsID());
+        }
     }
 
     @Override
@@ -118,11 +137,11 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
         btn_start_lambai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isClickStart){
+                if (!isClickStart) {
                     KeyboardUtil.animation_click_button(ActivityStartBaitap.this, btn_start_lambai);
                     mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(), get_current_time(), "30");
                     obj_answer.setsTimebatdaulambai(get_current_time());
-                    // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã nộp bài
+                    // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
                     obj_answer.setIsTrangthailambai("1");
                     Intent intent = new Intent(ActivityStartBaitap.this, ActivityLambaitap.class);
                     App.mLisCauhoi.addAll(mLisCauhoi);
@@ -138,15 +157,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mp3 != null) {
-                    if (mp3.isPlaying()) {
-                        img_mute.setImageResource(R.drawable.icon_tat_loa);
-                        mp3.pause();
-                    } else {
-                        img_mute.setImageResource(R.drawable.img_mute);
-                        mp3.start();
-                    }
-                }
+                finish();
             }
         });
     }
@@ -180,16 +191,51 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View 
     public void show_list_get_part(List<Cauhoi> mLis) {
         hideDialogLoading();
         if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
-            btn_start_lambai.setVisibility(View.VISIBLE);
+            btn_start_lambai.getBackground().setAlpha(255);
+            btn_start_lambai.setEnabled(true);
+            //   KeyboardUtil.button_enable(btn_start_lambai);
             txt_soluongcauhoi.setText("Số lượng câu hỏi: " + mLis.size());
             mLisCauhoi.addAll(mLis);
-        } else
-            btn_start_lambai.setVisibility(View.GONE);
+        } else {
+            showDialogNotify("Lỗi", mLis.get(0).getsRESULT());
+            btn_start_lambai.getBackground().setAlpha(50);
+            btn_start_lambai.setEnabled(false);
+        }
+
     }
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
+        hideDialogLoading();
+        btn_start_lambai.getBackground().setAlpha(50);
+        btn_start_lambai.setEnabled(false);
+        //KeyboardUtil.button_disable(btn_start_lambai);
+    }
 
+    @Override
+    public void show_config_children(List<ConfigChildren> mLis) {
+        hideDialogLoading();
+        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+            ConfigChildren obj = mLis.get(0);
+            switch (objBaitapTuan.getsSUBJECT_ID()) {
+
+                case "1":
+                    txt_thoigianlambai.setText("Thời gian làm bài: "
+                            + (Integer.parseInt(obj.getsMATH_TAKEN_DURATION()) / 60) + " phút");
+                    App.sTime = obj.getsMATH_TAKEN_DURATION();
+                    break;
+                case "2":
+                    txt_thoigianlambai.setText("Thời gian làm bài: "
+                            + (Integer.parseInt(obj.getsVIETNAMESE_TAKEN_DURATION()) / 60) + " phút");
+                    App.sTime = obj.getsVIETNAMESE_TAKEN_DURATION();
+                    break;
+                case "3":
+                    txt_thoigianlambai.setText("Thời gian làm bài: "
+                            + (Integer.parseInt(obj.getsENGLISH_TAKEN_DURATION()) / 60) + " phút");
+                    App.sTime = obj.getsENGLISH_TAKEN_DURATION();
+                    break;
+            }
+        }
     }
 
     @Override

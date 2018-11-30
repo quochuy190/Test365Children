@@ -69,15 +69,12 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
         mMap.put("P1", sUserMe);
         mMap.put("P2", sUserCon);
         mMap.put("P3", sIdDebai);
-
         mApiService.getApiService(new CallbackData<String>() {
-
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
                 Log.i(TAG, "onGetDataErrorFault: " + e);
             }
-
             @Override
             public void onGetDataSuccess(String objT) {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
@@ -92,7 +89,6 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
                 }
             }
         }, mMap);
-
     }
 
     @Override

@@ -105,8 +105,6 @@ public class AdapterReviewChondapandung extends RecyclerView.Adapter<AdapterRevi
         LinearLayout ll_dapan_all;
         @BindView(R.id.checkbox_dapan)
         ImageView checkbox;
-        @BindView(R.id.img_dapan)
-        ImageView img_dapan;
 
         public TopicViewHoder(View itemView) {
             super(itemView);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,6 @@
             android:layout_margin="@dimen/dp5" />
 
         <TextView
-            android:gravity="center"
             android:id="@+id/txt_lable"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,11 +40,12 @@
             android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
             android:background="@drawable/spr_lable_lambai"
-            android:fontFamily="@font/font1"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
             android:padding="@dimen/dp5"
             android:text=""
             android:textColor="@color/lable_lambai"
-            android:textSize="@dimen/text_15sp"
+            android:textSize="@dimen/text_14sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -56,9 +56,6 @@
 
         </LinearLayout>
     </LinearLayout>
-
-
-
 
 
     <android.support.constraint.ConstraintLayout
@@ -72,99 +69,96 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
 
-
-
         <ImageView
             android:id="@+id/img_rotrung_1"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
-            android:padding="@dimen/dp7"
-            android:src="@drawable/icon_ro_trung"
+            android:padding="@dimen/dp3"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/img_rotrung_2" />
-        <TextView
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_15sp"
-            android:text="Rổ trứng 1"
-            android:id="@+id/txt_rotrung_1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
+        <TextView
+            android:id="@+id/txt_rotrung_1"
+            android:layout_width="@dimen/width_egg"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:src="@drawable/icon_ro_trung"
+
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_xeptrung"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/img_rotrung_2" />
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <ImageView
             android:id="@+id/img_rotrung_2"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/dp7"
-            android:src="@drawable/icon_ro_trung"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/img_rotrung_1"
-            app:layout_constraintRight_toLeftOf="@id/img_rotrung_3" />
-        <TextView
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_15sp"
-            android:text="Rổ trứng 2"
-            android:id="@+id/txt_rotrung_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_egg_2"
+            android:padding="@dimen/dp3"
 
-            android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/img_rotrung_1"
-            app:layout_constraintRight_toLeftOf="@id/img_rotrung_3" />
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_rotrung_2"
+            android:layout_width="@dimen/width_egg"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_egg_2"
+            android:gravity="center"
+            android:src="@drawable/icon_ro_trung"
+
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_xeptrung"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
         <ImageView
             android:id="@+id/img_rotrung_3"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
-            android:padding="@dimen/dp7"
-            android:src="@drawable/icon_ro_trung"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/img_rotrung_2"
-            app:layout_constraintRight_toLeftOf="@id/img_rotrung_4" />
-        <TextView
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_15sp"
-            android:text="Rổ trứng 3"
-            android:id="@+id/txt_rotrung_3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_egg_3"
+            android:padding="@dimen/dp3"
 
-            android:src="@drawable/icon_ro_trung"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/img_rotrung_2"
-            app:layout_constraintRight_toLeftOf="@id/img_rotrung_4" />
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_rotrung_3"
+            android:layout_width="@dimen/width_egg"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_egg_3"
+            android:gravity="center"
+            android:src="@drawable/icon_ro_trung"
+
+            android:textColor="@color/white"
+
+            android:textSize="@dimen/txt_xeptrung"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <ImageView
             android:id="@+id/img_rotrung_4"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/dp7"
-            android:src="@drawable/icon_ro_trung"
+            android:layout_marginLeft="@dimen/margin_egg_4"
+            android:padding="@dimen/dp3"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/img_rotrung_3"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent" />
+
         <TextView
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_15sp"
-            android:text="Rổ trứng 4"
             android:id="@+id/txt_rotrung_4"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/width_egg"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_egg_4"
+            android:gravity="center"
             android:src="@drawable/icon_ro_trung"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_xeptrung"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/img_rotrung_3"
-            app:layout_constraintRight_toRightOf="parent"  />
+            app:layout_constraintLeft_toLeftOf="parent" />
+
         <RelativeLayout
             android:id="@+id/rl_trung1"
             android:layout_width="@dimen/width_egg"
@@ -176,17 +170,16 @@
                 android:id="@+id/img_trung1"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp20"
-                android:src="@drawable/egg_yellow" />
+                android:padding="@dimen/dp10" />
 
             <TextView
                 android:id="@+id/txt_trung1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="trứng 1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_15sp" />
+
+                android:textColor="@color/app_bar"
+                android:textSize="@dimen/txt_xeptrung" />
 
         </RelativeLayout>
 
@@ -202,17 +195,16 @@
                 android:id="@+id/img_trung2"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp20"
-                android:src="@drawable/egg_pink" />
+                android:padding="@dimen/dp10" />
 
             <TextView
                 android:id="@+id/txt_trung2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="trứng 1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_15sp" />
+
+                android:textColor="@color/app_bar"
+                android:textSize="@dimen/txt_xeptrung" />
 
         </RelativeLayout>
 
@@ -228,17 +220,15 @@
                 android:id="@+id/img_trung3"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp20"
-                android:src="@drawable/egg_blue" />
+                android:padding="@dimen/dp10" />
 
             <TextView
                 android:id="@+id/txt_trung3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="trứng 1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_15sp" />
+                android:textColor="@color/app_bar"
+                android:textSize="@dimen/txt_xeptrung" />
 
         </RelativeLayout>
 
@@ -254,25 +244,22 @@
                 android:id="@+id/img_trung4"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp20"
-                android:src="@drawable/egg_red" />
+                android:padding="@dimen/dp10" />
 
             <TextView
                 android:id="@+id/txt_trung4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="trứng 1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_15sp" />
+                android:textColor="@color/app_bar"
+                android:textSize="@dimen/txt_xeptrung" />
 
         </RelativeLayout>
 
 
     </android.support.constraint.ConstraintLayout>
+
     <TextView
-        android:visibility="visible"
-        android:textStyle="bold"
         android:id="@+id/txt_cauhoi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -280,43 +267,63 @@
         android:padding="@dimen/dp5"
         android:textColor="@color/white"
         android:textSize="@dimen/text_content_cauhoi"
+        android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
 
-    <ImageView
+    <Button
+        android:layout_marginBottom="@dimen/dp3"
         android:id="@+id/btn_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
+        android:layout_width="@dimen/btn_showpoint_width"
+        android:layout_height="@dimen/btn_showpoint_hight"
+        android:background="@drawable/btn_1"
+        android:fontFamily="@font/roboto_bold"
         android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai"
-        app:layout_constraintLeft_toLeftOf="parent" />
-    <TextView
-        android:fontFamily="@font/font1"
-        android:gravity="center"
-        android:textSize="@dimen/text_13sp"
+        android:text="@string/txt_showpoint"
         android:textColor="@color/white"
-        android:text="Xem điểm"
-        android:id="@+id/txt_xemdiem"
-        android:layout_width="250dp"
-        android:layout_height="@dimen/image_next"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
+        android:textSize="@dimen/txt_showpoint"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai"
-        app:layout_constraintLeft_toLeftOf="parent" />
-    <ImageView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <LinearLayout
         android:visibility="gone"
-        android:id="@+id/btn_nopbai"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_nopbai"
-        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/ll_dapan_xeptrung"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/ll_lable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/blue"
+            android:layout_marginLeft="@dimen/dp10"
+            android:text="Đáp án:"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_17sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_dapan_xeptrung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_anwser_chil"
+        android:layout_width="@dimen/icon_anwser_review"
+        android:layout_height="@dimen/icon_anwser_review"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/dp5"
+        android:src="@drawable/icon_anwser_true"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
 
 </android.support.constraint.ConstraintLayout>

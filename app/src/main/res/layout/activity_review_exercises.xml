@@ -34,5 +34,17 @@
         android:src="@drawable/img_back_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
+    <Button
+        android:id="@+id/btn_exit"
+        android:textSize="@dimen/text_17sp"
+        android:textColor="@color/white"
+        android:text="Đóng"
+        android:fontFamily="@font/roboto_bold"
+        android:background="@drawable/btn_2"
+        android:layout_margin="@dimen/dp5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="@dimen/dp150"
+        android:layout_height="@dimen/btn_showpoint_hight" />
 </android.support.constraint.ConstraintLayout>

@@ -41,6 +41,7 @@ public class AdapterTrungRo extends RecyclerView.Adapter<AdapterTrungRo.TopicVie
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         Item_Xeptrung obj = list.get(position);
+        Glide.with(context).load(R.drawable.icon_ro_trung).into(holder.img_rotrung_1);
         if (obj.getsRotrung().length() > 0) {
             holder.txt_rotrung.setText(obj.getsRotrung());
         }
@@ -63,6 +64,8 @@ public class AdapterTrungRo extends RecyclerView.Adapter<AdapterTrungRo.TopicVie
         TextView txt_rotrung;
         @BindView(R.id.img_trung_dapan_1)
         ImageView img_trung;
+        @BindView(R.id.img_rotrung_1)
+        ImageView img_rotrung_1;
         @BindView(R.id.txt_trung_dapan_1)
         TextView txt_trung;
 

@@ -10,10 +10,12 @@ import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
@@ -23,6 +25,81 @@ public class StringUtil {
     public static String ConvertFraction(String a, String b, String c) {
         return "\\(" + a + "\\dfrac{" + b + "} {" + c + "} \\)";
     }
+
+    public static List<Integer> check_random(List<Integer> mLisInput) {
+        List<Integer> mLisOutput = new ArrayList<>();
+        boolean iCheck = false;
+        int iOne, iTwo;
+        if (mLisInput.size() > 0) {
+            do {
+                iCheck = false;
+                iOne = new Random().nextInt(24);
+                for (int i = 0; i < mLisInput.size(); i++) {
+                    if (iOne == mLisInput.get(i)) {
+                        iCheck = true;
+                    }
+                }
+            } while (iCheck);
+        } else {
+            iOne = new Random().nextInt(24);
+        }
+        mLisInput.add(iOne);
+        mLisOutput.add(iOne);
+        if (mLisInput.size() > 0) {
+            do {
+                iCheck = false;
+                iTwo = new Random().nextInt(24);
+                for (int i = 0; i < mLisInput.size(); i++) {
+                    if (iTwo == mLisInput.get(i)) {
+                        iCheck = true;
+                    }
+                }
+            } while (iCheck);
+        } else {
+            iTwo = new Random().nextInt(24);
+        }
+        mLisOutput.add(iTwo);
+        return mLisOutput;
+    }
+
+    public static int check_random_one(List<Integer> mLisInput) {
+        int iOne;
+        boolean iCheck = false;
+        if (mLisInput.size() > 0) {
+            do {
+                iCheck = false;
+                iOne = new Random().nextInt(24);
+                for (int i = 0; i < mLisInput.size(); i++) {
+                    if (iOne == mLisInput.get(i)) {
+                        iCheck = true;
+                    }
+                }
+            } while (iCheck);
+        } else {
+            iOne = new Random().nextInt(24);
+        }
+        mLisInput.add(iOne);
+        return iOne;
+    }
+
+    public static boolean check_list_true(int iValue, List<Integer> mList) {
+        boolean iCheck = false;
+        for (int i : mList) {
+            if (i == iValue) {
+                return true;
+            }
+        }
+        return iCheck;
+
+    }
+
+    public static List<Integer> remove_two_list(List<Integer> listChuan, List<Integer> lisCanxoa) {
+        List<Integer> mLisResult = new ArrayList<>();
+        lisCanxoa.removeAll(listChuan);
+
+        return lisCanxoa;
+    }
+
     public static String format_point(float fPoint) {
         String sPoint = "" + fPoint;
         String[] sTest = sPoint.split("\\.");
@@ -30,11 +107,20 @@ public class StringUtil {
             int iPoint = (int) Math.round(fPoint);
             return "" + iPoint;
         } else {
-            double f = ((double) Math.round(fPoint * 100) / 100);
-
-            return "" + f;
+            double f = Double.parseDouble("0." + sTest[1]);
+            if (f > 0 && f < 0.25) {
+                return sTest[0];
+            } else if (f >= 0.25 && f < 0.5) {
+                return sTest[0] + ".25";
+            } else if (f >= 0.5 && f < 0.75) {
+                return sTest[0] + ".5";
+            } else if (f >= 0.75 && f < 1) {
+                return sTest[0] + ".75";
+            }
+            return "";
         }
     }
+
     public static String StringFraction(String sInput) {
         String sOutput = "";
         List<String> lisInput = Arrays.asList(sInput.split(" "));
@@ -77,13 +163,14 @@ public class StringUtil {
     }
 
     public static void initWebview(WebView webview_debai, String link_web) {
-        webview_debai.setInitialScale(230);
+
+        //   webview_debai.setInitialScale(220);
         webview_debai.getSettings().setJavaScriptEnabled(true);
         webview_debai.getSettings();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(16);
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
@@ -92,19 +179,35 @@ public class StringUtil {
                 "text/html", "UTF-8", "");
     }
 
-    public static void initWebview_Whitetext(WebView webview_debai, String link_web) {
-        webview_debai.setInitialScale(230);
+    public static void initWebview_Batsau(WebView webview_debai, String link_web) {
+
         webview_debai.getSettings().setJavaScriptEnabled(true);
         webview_debai.getSettings();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(16);
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body>";
+        String pas = "</body></html>";
+
+        webview_debai.loadDataWithBaseURL("", pish + convert_html(link_web.trim()) + pas,
+                "text/html", "UTF-8", "");
+    }
+
+    public static void initWebview_Whitetext(WebView webview_debai, String link_web) {
+        // webview_debai.setInitialScale(220);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
         String text = "<html><head>"
-                + "<style type=\"text/css\">body{color: #fff;} size=\"4\""
+                + "<style type=\"text/css\">body{color: #fff;}"
                 + "</style></head>"
                 + "<body>"
                 + convert_html(link_web)
@@ -113,19 +216,39 @@ public class StringUtil {
                 "text/html", "UTF-8", "");
     }
 
-    public static void initWebview_Whitetext_game(WebView webview_debai, String link_web) {
-        webview_debai.setInitialScale(250);
+    public static void initWebview_Whitetext_notcenter(WebView webview_debai, String link_web) {
+        //webview_debai.setInitialScale(220);
         webview_debai.getSettings().setJavaScriptEnabled(true);
         webview_debai.getSettings();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(16);
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
         String text = "<html><head>"
-                + "<style type=\"text/css\">body{color: #fff;} size=\"4\""
+                + "<style type=\"text/css\">body{color: #fff;}"
+                + "</style></head>"
+                + "<body>"
+                + convert_html(link_web)
+                + "</body></html>";
+        webview_debai.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
+    }
+
+    public static void initWebview_Whitetext_game(WebView webview_debai, String link_web) {
+        //  webview_debai.setInitialScale(250);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+        String text = "<html><head>"
+                + "<style type=\"text/css\">body{color: #fff;}"
                 + "</style></head>"
                 + "<body>"
                 + link_web.replaceAll("#", "\"")

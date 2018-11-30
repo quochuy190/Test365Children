@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,6 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterSapxep;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
-import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.OnStartDragListener;
 import neo.vn.test365children.Listener.RecyclerViewItemClickInterface;
 import neo.vn.test365children.Listener.RecyclerViewItemTouchHelperCallback;
@@ -60,14 +60,14 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
     RecyclerView recycle_dapan;
     RecyclerView.LayoutManager mLayoutManager;
     List<DapAn> mLis;
-    @BindView(R.id.btn_nopbai)
-    ImageView btn_nopbai;
     List<DapAn> mLisStart;
     @BindView(R.id.btn_xemdiem)
-    ImageView btn_xemdiem;
+    Button btn_xemdiem;
     private ItemTouchHelper mItemTouchHelper;
     @BindView(R.id.img_background)
     ImageView img_background;
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
 
     public static FragmentSapxep newInstance(CauhoiDetail restaurant) {
         FragmentSapxep restaurantDetailFragment = new FragmentSapxep();
@@ -89,8 +89,8 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         View view = inflater.inflate(R.layout.fragment_sapxep, container, false);
         ButterKnife.bind(this, view);
         mLisStart = new ArrayList<>();
-        //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
-        //init();
+        btn_xemdiem.setEnabled(true);
+        btn_xemdiem.getBackground().setAlpha(255);
         initData();
         initViews(true);
         initEvent();
@@ -100,23 +100,6 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
     private boolean isClickXemdiem = false;
 
     private void initEvent() {
-        btn_nopbai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
-                        false, new ClickDialog() {
-                            @Override
-                            public void onClickYesDialog() {
-                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
-                            }
-
-                            @Override
-                            public void onClickNoDialog() {
-
-                            }
-                        });
-            }
-        });
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,12 +114,15 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
 
                 boolean isa = Arrays.equals(string_start, string_sapxep);
                 if (!isClickXemdiem) {
+                    img_anwser_chil.setVisibility(View.VISIBLE);
                     if (isa) {
+                        Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
                         EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        txt_cauhoi.setVisibility(View.GONE);
+                        txt_cauhoi.setVisibility(View.INVISIBLE);
                     }
                     //  EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                     else {
+                        Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
                         txt_cauhoi.setVisibility(View.VISIBLE);
                         EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                     }
@@ -159,16 +145,17 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu " + mCauhoi.getsSubNumberCau()
+                    + ": " + mCauhoi.getsCauhoi_huongdan()));
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
 
         // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
-        if (mCauhoi.getsQUESTION() != null)
-            txt_cauhoi.setText(Html.fromHtml("Đáp án: " + mCauhoi.getsQUESTION().replace("::", " ")));
-        txt_cauhoi.setVisibility(View.GONE);
+        if (mCauhoi.getsHTML_CONTENT() != null)
+            txt_cauhoi.setText("Đáp án: " + mCauhoi.getsHTML_CONTENT().replace("::", " "));
+        txt_cauhoi.setVisibility(View.INVISIBLE);
         mLis = new ArrayList<>();
-        if (mCauhoi.getsQUESTION() != null) {
-            String[] dapan = mCauhoi.getsQUESTION().split("::");
+        if (mCauhoi.getsHTML_CONTENT() != null) {
+            String[] dapan = mCauhoi.getsHTML_CONTENT().split("::");
             mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
         }
 
@@ -190,8 +177,8 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
     private void initViews(boolean ischange) {
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-      /*  mLayoutManager = new GridLayoutManager(getContext(),
-                5, GridLayoutManager.VERTICAL, false);*/
+  /*      mLayoutManager = new GridLayoutManager(getContext(),
+                6, GridLayoutManager.VERTICAL, false);*/
         recycle_dapan.setLayoutManager(linearLayoutManager);
         // setData();
         adapterSapxep = new AdapterSapxep(getContext(), mLis, this);
@@ -220,13 +207,13 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         String answer_chil = "";
         for (int i = 0; i < mLis.size(); i++) {
             if (i < mLis.size() - 1)
-                answer_chil = answer_chil + mLis.get(i).getsContent() + " :: ";
+                answer_chil = answer_chil + mLis.get(i).getsContent() + "::";
             else answer_chil = answer_chil + mLis.get(i).getsContent();
         }
         String dapan = "";
         for (int i = 0; i < mLisStart.size(); i++) {
             if (i < mLisStart.size() - 1)
-                dapan = dapan + mLisStart.get(i).getsContent() + " :: ";
+                dapan = dapan + mLisStart.get(i).getsContent() + "::";
             else dapan = dapan + mLisStart.get(i).getsContent();
         }
         dapan.trim();

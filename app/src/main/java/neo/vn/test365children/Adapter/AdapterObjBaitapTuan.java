@@ -2,12 +2,12 @@ package neo.vn.test365children.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +55,9 @@ public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapT
     public void onBindViewHolder(@NonNull FlightInfoViewHoder holder, final int position) {
         ExerciseAnswer objService = mLisObjService.get(position);
         //  Glide.with(context).load(objService.getmImage()).into(holder.img_Background);
+        ExerciseAnswer obj = new ExerciseAnswer();
+        obj.setsMonhoc(objService.getsMonhoc());
+        obj.setsPoint(objService.getsPoint());
         switch (objService.getsMonhoc()) {
             case "1":
               //  holder.txt_monhoc.setText("Môn Toán");
@@ -92,7 +95,7 @@ public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapT
         @BindView(R.id.txt_diem)
         TextView txt_diem;
         @BindView(R.id.holder)
-        CardView holder;
+        RelativeLayout holder;
         @BindView(R.id.img_bg)
         ImageView img_bg;
 

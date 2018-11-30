@@ -5,7 +5,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +18,7 @@ import butterknife.BindView;
 import neo.vn.test365children.Adapter.AdapterBangxephang;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
+import neo.vn.test365children.Models.Chart_To_Subject;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.Item_BXH;
 import neo.vn.test365children.Presenter.ImlThongke;
@@ -48,7 +53,19 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
     TextView txt_thang;
     @BindView(R.id.txt_nam)
     TextView txt_nam;
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.img_title)
+    ImageView img_title;
+    @BindView(R.id.imageView17)
+    ImageView imageView17;
     String sType = "tuan";
+    boolean is_finish_baitap = false;
+    @BindView(R.id.txt_notify)
+    TextView txt_notify;
+    @BindView(R.id.relative_bxh_me)
+    RelativeLayout relative_bxh_me;
+
 
     @Override
     public int setContentViewId() {
@@ -59,6 +76,9 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterThongke(this);
+        Glide.with(this).load(R.drawable.bg_chao_mung).into(img_background);
+        Glide.with(this).load(R.drawable.bg_bxh_1).into(img_title);
+        Glide.with(this).load(R.drawable.bg_bxh_2).into(imageView17);
         init();
         initData("tuan");
         initEvent();
@@ -69,11 +89,13 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
             @Override
             public void onClick(View v) {
                 if (!sType.equals("tuan")) {
+                    is_finish_baitap = false;
                     sType = "tuan";
-                    txt_tuan.setBackgroundColor(getResources().getColor(R.color.orange));
+                    txt_tuan.setTextColor(getResources().getColor(R.color.orange));
+                    txt_thang.setTextColor(getResources().getColor(R.color.white));
+                    txt_nam.setTextColor(getResources().getColor(R.color.white));
                     initData("tuan");
-                    txt_thang.setBackgroundColor(getResources().getColor(R.color.bg_clear));
-                    txt_nam.setBackgroundColor(getResources().getColor(R.color.bg_clear));
+
                 }
             }
         });
@@ -81,11 +103,13 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
             @Override
             public void onClick(View v) {
                 if (!sType.equals("thang")) {
+                    is_finish_baitap = false;
                     sType = "thang";
-                    txt_thang.setBackgroundColor(getResources().getColor(R.color.orange));
+                    txt_tuan.setTextColor(getResources().getColor(R.color.white));
+                    txt_thang.setTextColor(getResources().getColor(R.color.orange));
+                    txt_nam.setTextColor(getResources().getColor(R.color.white));
                     initData("thang");
-                    txt_tuan.setBackgroundColor(getResources().getColor(R.color.bg_clear));
-                    txt_nam.setBackgroundColor(getResources().getColor(R.color.bg_clear));
+
                 }
             }
         });
@@ -93,11 +117,13 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
             @Override
             public void onClick(View v) {
                 if (!sType.equals("nam")) {
+                    is_finish_baitap = false;
                     sType = "nam";
-                    txt_nam.setBackgroundColor(getResources().getColor(R.color.orange));
+                    txt_tuan.setTextColor(getResources().getColor(R.color.white));
+                    txt_thang.setTextColor(getResources().getColor(R.color.white));
+                    txt_nam.setTextColor(getResources().getColor(R.color.orange));
                     initData("nam");
-                    txt_thang.setBackgroundColor(getResources().getColor(R.color.bg_clear));
-                    txt_tuan.setBackgroundColor(getResources().getColor(R.color.bg_clear));
+
                 }
             }
         });
@@ -111,15 +137,12 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
         sDate = StringUtil.get_current_time();
         switch (sType) {
             case "tuan":
-                txt_tuan.setBackgroundColor(getResources().getColor(R.color.orange));
                 mPresenter.api_get_week_chart(sUserMe, sUserCon, sDate);
                 break;
             case "thang":
-                txt_thang.setBackgroundColor(getResources().getColor(R.color.orange));
                 mPresenter.api_get_month_chart(sUserMe, sUserCon, sDate);
                 break;
             case "nam":
-                txt_nam.setBackgroundColor(getResources().getColor(R.color.orange));
                 mPresenter.api_get_year_chart(sUserMe, sUserCon, sDate);
                 break;
         }
@@ -151,6 +174,7 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
         for (int i = 0; i < mLiss.size(); i++) {
             Item_BXH obj = mLiss.get(i);
             if (obj.getsUSERNAME().equals(sUserCon)) {
+                is_finish_baitap = true;
                 txt_stt.setText("" + (i + 1));
                 if (obj.getsFULLNAME() != null)
                     txt_name.setText(obj.getsFULLNAME());
@@ -163,6 +187,13 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
                 if (obj.getsDTB() != null)
                     txt_point.setText("Điểm: " + obj.getsDTB());
             }
+        }
+        if (!is_finish_baitap) {
+            txt_notify.setVisibility(View.VISIBLE);
+            relative_bxh_me.setVisibility(View.GONE);
+        } else {
+            txt_notify.setVisibility(View.GONE);
+            relative_bxh_me.setVisibility(View.VISIBLE);
         }
     }
 
@@ -182,6 +213,7 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
         for (int i = 0; i < mLiss.size(); i++) {
             Item_BXH obj = mLiss.get(i);
             if (obj.getsUSERNAME().equals(sUserCon)) {
+                is_finish_baitap = true;
                 txt_stt.setText("" + (i + 1));
                 if (obj.getsFULLNAME() != null)
                     txt_name.setText(obj.getsFULLNAME());
@@ -194,6 +226,13 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
                 if (obj.getsDTB() != null)
                     txt_point.setText("Điểm: " + obj.getsDTB());
             }
+        }
+        if (!is_finish_baitap) {
+            txt_notify.setVisibility(View.VISIBLE);
+            relative_bxh_me.setVisibility(View.GONE);
+        } else {
+            txt_notify.setVisibility(View.GONE);
+            relative_bxh_me.setVisibility(View.VISIBLE);
         }
     }
 
@@ -208,6 +247,7 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
         for (int i = 0; i < mLiss.size(); i++) {
             Item_BXH obj = mLiss.get(i);
             if (obj.getsUSERNAME().equals(sUserCon)) {
+                is_finish_baitap = true;
                 txt_stt.setText("" + (i + 1));
                 if (obj.getsFULLNAME() != null)
                     txt_name.setText(obj.getsFULLNAME());
@@ -220,6 +260,18 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
                 if (obj.getsDTB() != null)
                     txt_point.setText("Điểm: " + obj.getsDTB());
             }
+            if (!is_finish_baitap) {
+                txt_notify.setVisibility(View.VISIBLE);
+                relative_bxh_me.setVisibility(View.GONE);
+            } else {
+                txt_notify.setVisibility(View.GONE);
+                relative_bxh_me.setVisibility(View.VISIBLE);
+            }
         }
+    }
+
+    @Override
+    public void show_chart_to_subject(List<Chart_To_Subject> mLis) {
+
     }
 }

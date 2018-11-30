@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -12,6 +13,7 @@ import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.MessageEvent;
 
 public class ServiceDownTimeGame extends Service {
+    private static final String TAG = "ServiceDownTimeGame";
     public int TOTAL_TIME = 60 * 1000;
     CountDownTimer Timer;
 
@@ -29,11 +31,13 @@ public class ServiceDownTimeGame extends Service {
         }
         Timer = new CountDownTimer(TOTAL_TIME, 1000) {
             public void onTick(long millisUntilFinished) {
-                EventBus.getDefault().post(new MessageEvent("Service", 0, millisUntilFinished));
+                EventBus.getDefault().post(new MessageEvent("Service_Game", 0, millisUntilFinished));
+                Log.i(TAG, "onTick: " + millisUntilFinished);
             }
 
             public void onFinish() {
-                EventBus.getDefault().post(new MessageEvent("Service", 1, 0));
+                Log.i(TAG, "onFinish: end time");
+                EventBus.getDefault().post(new MessageEvent("Service_Game", 1, 0));
             }
         }.start();
         return Service.START_NOT_STICKY;
@@ -41,7 +45,8 @@ public class ServiceDownTimeGame extends Service {
 
     @Override
     public void onDestroy() {
-        Timer.cancel();
         super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
+        Timer.cancel();
     }
 }

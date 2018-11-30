@@ -1,7 +1,6 @@
 package neo.vn.test365children.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,11 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -57,11 +53,9 @@ public class AdapterDapanBatsau extends RecyclerView.Adapter<AdapterDapanBatsau.
     @Override
     public void onBindViewHolder(final TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
-        // holder.ll_dapan_all.removeAllViews();
         if (obj.getsContent() != null) {
-            initWebview(holder.webview_debai, StringUtil.convert_html(obj.getsContent()));
+            StringUtil.initWebview(holder.webview_debai, obj.getsContent().trim());
         }
-
         if (obj.isClick()) {
             if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
                 holder.img_consau.setVisibility(View.GONE);
@@ -86,8 +80,6 @@ public class AdapterDapanBatsau extends RecyclerView.Adapter<AdapterDapanBatsau.
                 holder.img_consau.setVisibility(View.VISIBLE);
             }
         }
-
-
     }
 
     @Override
@@ -97,8 +89,6 @@ public class AdapterDapanBatsau extends RecyclerView.Adapter<AdapterDapanBatsau.
 
     public class TopicViewHoder extends RecyclerView.ViewHolder implements
             View.OnClickListener, View.OnLongClickListener {
-        @BindView(R.id.ll_dapan_all)
-        LinearLayout ll_dapan_all;
         @BindView(R.id.img_lasau)
         ImageView img_lasau;
         @BindView(R.id.img_consau)
@@ -128,31 +118,4 @@ public class AdapterDapanBatsau extends RecyclerView.Adapter<AdapterDapanBatsau.
         notifyDataSetChanged();
     }
 
-    private void initWebview(WebView webview_debai, String link_web) {
-        webview_debai.setInitialScale(1);
-        webview_debai.getSettings().setJavaScriptEnabled(true);
-        webview_debai.getSettings().setLoadWithOverviewMode(true);
-        webview_debai.getSettings().setUseWideViewPort(true);
-        webview_debai.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webview_debai.setScrollbarFadingEnabled(false);
-        webview_debai.getSettings().setUseWideViewPort(true);
-        webview_debai.getSettings().setLoadWithOverviewMode(true);
-        webview_debai.getSettings().setSupportZoom(true);
-        webview_debai.getSettings().setBuiltInZoomControls(true);
-        webview_debai.getSettings().setDisplayZoomControls(false);
-        webview_debai.setWebChromeClient(new WebChromeClient());
-        webview_debai.getSettings().setJavaScriptEnabled(true);
-        webview_debai.getSettings();
-        webview_debai.setBackgroundColor(Color.TRANSPARENT);
-        WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(60);
-        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
-        String pish = "<html><body  align='center'>";
-        String pas = "</body></html>";
-
-        webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
-                "text/html", "UTF-8", "");
-
-    }
 }

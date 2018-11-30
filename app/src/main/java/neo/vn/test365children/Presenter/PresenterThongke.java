@@ -2,12 +2,15 @@ package neo.vn.test365children.Presenter;
 
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import neo.vn.test365children.ApiService.ApiServiceIml;
 import neo.vn.test365children.Listener.CallbackData;
+import neo.vn.test365children.Models.Chart_To_Subject;
 import neo.vn.test365children.Models.Item_BXH;
 
 public class PresenterThongke implements ImlThongke.Presenter {
@@ -109,6 +112,36 @@ public class PresenterThongke implements ImlThongke.Presenter {
                     List<Item_BXH> mLis = Item_BXH.getList(objT);
                     mView.show_year_chart(mLis);
                 } catch (Exception e) {
+                    e.printStackTrace();
+                    mView.show_error_api(null);
+                    Log.i(TAG, "Log_error_api_filght: " + e);
+                }
+            }
+        }, mMap);
+    }
+
+    @Override
+    public void api_get_chart_to_subject(String sUserMe, String sUserCon) {
+        Map<String, String> mMap = new LinkedHashMap<>();
+        mMap.put("Service", "chart_to_subject");
+        mMap.put("Provider", "default");
+        mMap.put("ParamSize", "2");
+        mMap.put("P1", sUserMe);
+        mMap.put("P2", sUserCon);
+        mApiService.getApiService(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                mView.show_error_api(null);
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
+                try {
+                    List<Chart_To_Subject> mLis = Chart_To_Subject.getList(objT);
+                    mView.show_chart_to_subject(mLis);
+                } catch (JSONException e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
                     Log.i(TAG, "Log_error_api_filght: " + e);

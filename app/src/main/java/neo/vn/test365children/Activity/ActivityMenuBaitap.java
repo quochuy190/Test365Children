@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
 
-public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
+public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
     @BindView(R.id.recycle_menu_baitap)
     RecyclerView recycleBaitap;
     @BindView(R.id.recycle_baitap_tuan)
@@ -41,9 +44,16 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
     List<Baitap_Tuan> lisBaitap_quanhan;
     AdapterBaitapQuahan adapter;
     AdapterItemMenuLambaitap adapter_baitaptuan;
-
     @BindView(R.id.img_mute)
     ImageView img_mute;
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.txt_notify_need)
+    TextView txt_notify_need;
+    @BindView(R.id.txt_notify_quahan)
+    TextView txt_notify_quahan;
+    @BindView(R.id.img_back)
+    ImageView img_back;
 
     @Override
     public int setContentViewId() {
@@ -56,9 +66,14 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
         mPresenter = new PresenterBaitap(this);
         initbaitaptuan();
         init_baitap_quahan();
-        initData();
         initEvent();
-      //  play_mp3();
+        //  play_mp3();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
     }
 
     @Override
@@ -69,6 +84,12 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
     }
 
     private void initEvent() {
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,21 +105,27 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
             }
         });
     }
+
     PresenterBaitap mPresenter;
     String sUserMe, sUserCon, sMon;
+
     private void initData() {
-        sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
-        sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-        showDialogLoading();
-        mPresenter.get_api_get_excercise_needed(sUserMe, sUserCon, get_current_time());
-        mPresenter.get_api_get_excercise_expired(sUserMe, sUserCon);
+        Glide.with(this).load(R.drawable.background_baitaptuan).into(img_background);
+        if (isNetwork()) {
+            sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+            sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+            showDialogLoading();
+            mPresenter.get_api_get_excercise_needed(sUserMe, sUserCon, get_current_time());
+            mPresenter.get_api_get_excercise_expired(sUserMe, sUserCon);
+        } else
+            showDialogNotify(getString(R.string.error_network), getString(R.string.error_network_message));
     }
 
     private void init_baitap_quahan() {
         lisBaitap_quanhan = new ArrayList<>();
         adapter = new AdapterBaitapQuahan(lisBaitap_quanhan, this);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
-    //    recycleBaitap.setNestedScrollingEnabled(false);
+        //    recycleBaitap.setNestedScrollingEnabled(false);
         recycleBaitap.setHasFixedSize(true);
         recycleBaitap.setLayoutManager(mLayoutManager);
         recycleBaitap.setItemAnimator(new DefaultItemAnimator());
@@ -108,17 +135,18 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
             @Override
             public void onClickItem(int position, Object item) {
                 Baitap_Tuan obj = (Baitap_Tuan) item;
-                Intent intent = new  Intent(ActivityMenuBaitap.this, ActivityStartBaitap.class);
+                Intent intent = new Intent(ActivityMenuBaitap.this, ActivityStartBaitap.class);
                 intent.putExtra(Constants.KEY_SEND_BAITAPTUAN, obj);
                 startActivity(intent);
             }
         });
     }
+
     private void initbaitaptuan() {
         lisBaitap = new ArrayList<>();
         adapter_baitaptuan = new AdapterItemMenuLambaitap(lisBaitap, this);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
-    //    recycleBaitap.setNestedScrollingEnabled(false);
+        //    recycleBaitap.setNestedScrollingEnabled(false);
         recycle_baitap_tuan.setHasFixedSize(true);
         recycle_baitap_tuan.setLayoutManager(mLayoutManager);
         recycle_baitap_tuan.setItemAnimator(new DefaultItemAnimator());
@@ -127,12 +155,13 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
             @Override
             public void onClickItem(int position, Object item) {
                 Baitap_Tuan obj = (Baitap_Tuan) item;
-                Intent intent = new  Intent(ActivityMenuBaitap.this, ActivityStartBaitap.class);
+                Intent intent = new Intent(ActivityMenuBaitap.this, ActivityStartBaitap.class);
                 intent.putExtra(Constants.KEY_SEND_BAITAPTUAN, obj);
                 startActivity(intent);
             }
         });
     }
+
     MediaPlayer mp3;
 
     public void play_mp3() {
@@ -175,10 +204,34 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
     public void show_get_excercise_needed(List<Baitap_Tuan> mLis) {
         hideDialogLoading();
         lisBaitap.clear();
-        if (mLis!=null&&mLis.get(0).getsERROR().equals("0000")){
-            lisBaitap.addAll(mLis);
+        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+            if (sUserMe.equals("quochuy190") || sUserMe.equals("maitham123")) {
+                lisBaitap.addAll(mLis);
+            } else {
+                boolean isMuabai = false;
+                for (Baitap_Tuan obj : mLis) {
+                    if (obj.getsSTATE_BUY().equals("1") && obj.getsSTATUS_TAKEN().equals("0")) {
+                        lisBaitap.add(obj);
+                    }
+                    if (obj.getsSTATUS_TAKEN().equals("0") && obj.getsSTATE_BUY().equals("0")) {
+                        isMuabai = true;
+                    }
+                }
+                if (lisBaitap.size() > 0) {
+                    recycle_baitap_tuan.setVisibility(View.VISIBLE);
+                    txt_notify_need.setVisibility(View.GONE);
+                } else {
+                    txt_notify_need.setVisibility(View.VISIBLE);
+                    recycle_baitap_tuan.setVisibility(View.INVISIBLE);
+                    if (!isMuabai) {
+                        txt_notify_need.setText("Con đã làm hết bài tập tuần này rồi");
+                    } else {
+                        txt_notify_need.setText("Mẹ chưa tải bài tập tuần này, con nhắc mẹ tải nhé.");
+                    }
+                }
+            }
             adapter_baitaptuan.notifyDataSetChanged();
-            recycleBaitap.scrollToPosition(mLis.size()-1);
+            recycleBaitap.scrollToPosition(0);
         }
     }
 
@@ -186,10 +239,27 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View{
     public void show_get_excercise_expired(List<Baitap_Tuan> mLis) {
         hideDialogLoading();
         lisBaitap_quanhan.clear();
-        if (mLis!=null&&mLis.get(0).getsERROR().equals("0000")){
-            lisBaitap_quanhan.addAll(mLis);
+        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+            if (sUserMe.equals("quochuy190") || sUserMe.equals("maitham123")) {
+                lisBaitap_quanhan.addAll(mLis);
+            } else {
+                for (Baitap_Tuan obj : mLis) {
+                    if (obj.getsSTATE_BUY().equals("1") && obj.getsSTATUS_TAKEN().equals("0")) {
+                        lisBaitap_quanhan.add(obj);
+                    }
+                    // lisBaitap_quanhan.add(obj);
+                }
+                if (lisBaitap_quanhan.size() > 0) {
+                    recycleBaitap.setVisibility(View.VISIBLE);
+                    txt_notify_quahan.setVisibility(View.GONE);
+                } else {
+                    recycleBaitap.setVisibility(View.INVISIBLE);
+                    txt_notify_quahan.setVisibility(View.VISIBLE);
+                    txt_notify_quahan.setText("Con đã hoàn thành hết bài tập các tuần trước");
+                }
+            }
             adapter.notifyDataSetChanged();
-            recycleBaitap.scrollToPosition(0);
+            recycleBaitap.scrollToPosition((lisBaitap_quanhan.size() - 2));
 
         }
     }

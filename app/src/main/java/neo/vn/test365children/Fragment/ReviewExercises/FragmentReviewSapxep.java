@@ -8,6 +8,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,10 +53,7 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
     RecyclerView recycle_dapan;
     RecyclerView.LayoutManager mLayoutManager;
     List<DapAn> mLis;
-    @BindView(R.id.btn_xemdiem)
-    ImageView btn_xemdiem;
-    @BindView(R.id.txt_xemdiem)
-    TextView txt_xemdiem;
+
     List<DapAn> mLisStart;
     private ItemTouchHelper mItemTouchHelper;
     @BindView(R.id.img_background)
@@ -64,6 +62,8 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
     ImageView img_anwser_chil;
     @BindView(R.id.txt_cauhoi)
     TextView txt_cauhoi;
+    @BindView(R.id.btn_xemdiem)
+    Button btn_xemdiem;
     public static FragmentReviewSapxep newInstance(CauhoiDetail restaurant) {
         FragmentReviewSapxep restaurantDetailFragment = new FragmentReviewSapxep();
         Bundle args = new Bundle();
@@ -86,6 +86,7 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         mLisStart = new ArrayList<>();
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         //init();
+        btn_xemdiem.setVisibility(View.GONE);
         initData();
         initViews(true);
         return view;
@@ -95,8 +96,6 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
     List<String> mLiDapan;
 
     private void initData() {
-        btn_xemdiem.setVisibility(View.INVISIBLE);
-        txt_xemdiem.setVisibility(View.INVISIBLE);
         img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
@@ -110,24 +109,21 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
                 Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
             }
         } else {
-            txt_cauhoi.setVisibility(View.INVISIBLE);
+            txt_cauhoi.setVisibility(View.VISIBLE);
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
 
         if (!mCauhoi.isDalam()) {
-            txt_cauhoi.setVisibility(View.INVISIBLE);
+            txt_cauhoi.setVisibility(View.VISIBLE);
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
         // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
         if (mCauhoi.getsQUESTION() != null)
             txt_cauhoi.setText(Html.fromHtml("Đáp án: " + mCauhoi.getsQUESTION().replace("::", " ")));
-
-
         mLis = new ArrayList<>();
-        if (mCauhoi.getsANSWER_CHILD() != null) {
+        if (mCauhoi.getsANSWER_CHILD() != null && mCauhoi.getsANSWER_CHILD().length() > 0) {
             String[] dapan = mCauhoi.getsANSWER_CHILD().split("::");
             mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
-
             if (mLiDapan != null && mLiDapan.size() > 0) {
                 for (String s : mLiDapan) {
                     mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));
@@ -137,8 +133,21 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
                     mLis.add(new DapAn("1", s, "", "agcbd", false, ""));
                 }
             }
+        } else {
+            txt_cauhoi.setText(Html.fromHtml("Đáp án"));
+            String[] dapan = mCauhoi.getsHTML_CONTENT().split("::");
+            mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
+            if (mLiDapan != null && mLiDapan.size() > 0) {
+                for (String s : mLiDapan) {
+                    mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));
+                }
+
+                for (String s : mLiDapan) {
+                    mLis.add(new DapAn("1", s, "", "agcbd", false, ""));
+                }
+            }
+            //recycle_dapan.setVisibility(View.INVISIBLE);
         }
-        //   mLisStart.addAll(mLiDapan)
 
     }
 
@@ -160,9 +169,7 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         adapterSapxep.delegate = this;
         recycle_dapan.setAdapter(adapterSapxep);
 
-
     }
-
 
 
     @Override

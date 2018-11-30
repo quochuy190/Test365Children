@@ -3,10 +3,12 @@ package neo.vn.test365children.Activity.ReviewExercises;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -60,6 +62,13 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     TextView txt_thapnhat;
     @BindView(R.id.txt_exer_comment_mother)
     TextView txt_exer_comment_mother;
+    @BindView(R.id.imageView10)
+    ImageView imageView10;
+    @BindView(R.id.img_title_exe_detail)
+    ImageView img_title_exe_detail;
+    @BindView(R.id.imageView11)
+    ImageView imageView11;
+
     @Override
     public int setContentViewId() {
         return R.layout.activity_exercise_detail;
@@ -77,16 +86,31 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         btn_xemlaibai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityExercisesDetail.this, ActivityReviewExercises.class);
+                Intent intent = new Intent(ActivityExercisesDetail.this,
+                        ActivityReviewExercises.class);
                 startActivity(intent);
+                btn_xemlaibai.setEnabled(false);
+                btn_xemlaibai.getBackground().setAlpha(50);
+              //  KeyboardUtil.button_disable(btn_xemlaibai);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        btn_xemlaibai.getBackground().setAlpha(255);
+        btn_xemlaibai.setEnabled(true);
+        //KeyboardUtil.button_enable(btn_xemlaibai);
     }
 
     String sUserMe, sUserCon, sMon;
 
     private void initData() {
-        Log.i(TAG, "initData: " + App.mLisCauhoi);
+        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(imageView10);
+        Glide.with(this).load(R.drawable.bg_exer_nhatxet).into(img_title_exe_detail);
+        Glide.with(this).load(R.drawable.exer_bg_ketqua2).into(imageView11);
+
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         sIdDe = getIntent().getStringExtra(Constants.KEY_SEND_EXERCISES_DETAIL);
@@ -106,40 +130,64 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         if (listDepExe != null) {
             DesExercises obj = listDepExe.get(0);
             txt_debai.setText(Html.fromHtml(obj.getsNAME()));
-          //  txt_debai.setText(obj.getsNAME());
+            //  txt_debai.setText(obj.getsNAME());
             txt_namhoc.setText("Năm học: " + obj.getsYEAR_NAME());
             txt_khoihoc.setText("Khối: " + obj.getsLEVEL_ID());
             txt_tuan.setText("Tuần: " + obj.getsWEEK_ID());
             switch (obj.getsSUBJECT_ID()) {
                 case "1":
-                    txt_monhoc.setText("Môn hoc: Toán");
+                    txt_monhoc.setText("Môn học: Toán");
                     break;
                 case "2":
-                    txt_monhoc.setText("Môn hoc: Tiếng Việt");
+                    txt_monhoc.setText("Môn học: Tiếng Việt");
                     break;
                 case "3":
-                    txt_monhoc.setText("Môn hoc: Tiếng Anh");
+                    txt_monhoc.setText("Môn học: Tiếng Anh");
                     break;
             }
-            float fPoint = Float.parseFloat(obj.getsPOINT());
-            if (fPoint < 7)
-                txt_nhanxet.setText(obj.getsUNDER_6_RECOMMENT());
-            else if (fPoint >= 7 && fPoint <= 8) {
-                txt_nhanxet.setText(obj.getsRECOMMENT_7_8());
-            } else
-                txt_nhanxet.setText(obj.getsRECOMMENT_9_10());
-            txt_point.setText(StringUtil.format_point(fPoint));
+            if (obj.getsPOINT() != null && obj.getsPOINT().length() > 0) {
+                float fPoint = Float.parseFloat(obj.getsPOINT());
+                if (fPoint < 7)
+                    txt_nhanxet.setText(obj.getsUNDER_6_RECOMMENT());
+                else if (fPoint >= 7 && fPoint <= 8) {
+                    txt_nhanxet.setText(obj.getsRECOMMENT_7_8());
+                } else
+                    txt_nhanxet.setText(obj.getsRECOMMENT_9_10());
+
+                txt_point.setText(StringUtil.format_point(fPoint));
+            }
+         /*   if (obj.getsADMIN_COMMENT() != null)
+                txt_nhanxet.setText(Html.fromHtml(StringUtil.convert_html(obj.getsADMIN_COMMENT())));*/
 
         }
     }
 
     @Override
     public void show_report_exercises(List<DesExercises> listDepExe) {
+        hideDialogLoading();
         if (listDepExe != null && listDepExe.get(0).getsERROR().equals("0000")) {
             DesExercises obj = listDepExe.get(0);
-            txt_bancunglam.setText("Có " + obj.getScunglam() + " bạn cùng làm bài thi này");
-            txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia:" + obj.getScungtruong());
-            txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: " + obj.getScunglop());
+            if (obj.getScunglam() != null && obj.getScunglam().length() > 0) {
+                int cuglam = Integer.parseInt(obj.getScunglam());
+                if (cuglam > 0)
+                    txt_bancunglam.setText("Có " + obj.getScunglam() + " bạn cùng làm bài thi này");
+                else
+                    txt_bancunglam.setText("Có 0 bạn cùng làm bài thi này");
+            }
+            if (obj.getScungtruong() != null && obj.getScungtruong().length() > 0) {
+                int cugtruong = Integer.parseInt(obj.getScungtruong());
+                if (cugtruong > 0)
+                    txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia: " + obj.getScungtruong());
+                else
+                    txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia: 0");
+            }
+            if (obj.getScunglop() != null && obj.getScunglop().length() > 0) {
+                int cugtruong = Integer.parseInt(obj.getScunglop());
+                if (cugtruong > 0)
+                    txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: " + obj.getScunglop());
+                else
+                    txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: 0");
+            }
             txt_caonhat.setText(StringUtil.format_point(Float.parseFloat(obj.getScaonhat())));
             txt_trungbinh.setText(StringUtil.format_point(Float.parseFloat(obj.getStrungbinh())));
             txt_thapnhat.setText(StringUtil.format_point(Float.parseFloat(obj.getSthapnhat())));

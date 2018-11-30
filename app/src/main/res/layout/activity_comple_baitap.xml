@@ -9,117 +9,105 @@
         android:id="@+id/imageView9"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/background_lambai" />
+        android:scaleType="fitXY" />
 
-    <ImageView
-        android:id="@+id/imageView8"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/dp30"
         android:layout_marginLeft="@dimen/dp60"
+        android:layout_marginTop="@dimen/dp30"
         android:layout_marginRight="@dimen/dp60"
-        android:scaleType="fitXY"
-        android:src="@drawable/background_chao_mung"
+        android:layout_marginBottom="@dimen/dp30"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView9"
-        app:layout_constraintStart_toStartOf="@+id/imageView9"
-        app:layout_constraintTop_toTopOf="@+id/imageView9"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="120dp"
-        android:gravity="center"
-        android:text="CHÚC MỪNG CON ĐÃ HOÀN THÀNH BÀI TẬP HÔM NAY"
-        android:textColor="@color/red_test365"
-        android:textSize="@dimen/text_20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/imageView8" />
-
-    <TextView
-        android:id="@+id/txt_timelambai"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="Thời gian làm bài: "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/txt_pointlambai"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="Điểm số đạt được: "
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_timelambai" />
-
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/txt_nhatxet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="Điểm số đạt được: "
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_pointlambai" />
-
-    <Button
-        android:id="@+id/btn_guidiem"
-        android:textAllCaps="false"
-        android:textSize="@dimen/text_17sp"
-        android:textColor="@color/white"
-        android:padding="@dimen/dp5"
-        android:text="Gửi điểm cho mẹ"
-        android:background="@drawable/spr_click_button"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp35"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_pointlambai" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5">
+
+            <ImageView
+                android:id="@+id/img_bg_complete1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5">
+
+            <ImageView
+                android:id="@+id/img_bg_complete2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:maxLines="2"
+                android:paddingRight="@dimen/dp10"
+                android:paddingLeft="@dimen/dp10"
+                android:text="CHÚC MỪNG CON ĐÃ HOÀN THÀNH BÀI TẬP HÔM NAY"
+                android:textColor="@color/red_test365"
+                android:textSize="@dimen/text_20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3">
+
+            <ImageView
+                android:id="@+id/img_bg_complete3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/txt_timelambai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp20"
+                android:gravity="center"
+
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_pointlambai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_timelambai"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_guidiem"
+                android:layout_width="@dimen/dp150"
+                android:layout_height="@dimen/dp40"
+                android:layout_below="@id/txt_pointlambai"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@drawable/btn_2"
+                android:padding="@dimen/dp5"
+                android:text="Đóng"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_17sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>

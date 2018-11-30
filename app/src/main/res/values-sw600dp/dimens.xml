@@ -31,6 +31,9 @@
     <dimen name="dp250">250dp</dimen>
     <dimen name="dp350">350dp</dimen>
     <!--  margin login-->
+    <dimen name="hight_btn_login">50dp</dimen>
+    <dimen name="margin_btn_bottom_login">35dp</dimen>
+    <dimen name="margin_edt_top_login">15dp</dimen>
     <dimen name="pading_edt_login">5dp</dimen>
     <dimen name="margin_top_edt">65dp</dimen>
     <dimen name="margin_edt_login">115dp</dimen>
@@ -38,13 +41,14 @@
     <dimen name="login_width">650dp</dimen>
     <!--<layout menu làm bài tập-->
     <dimen name="margin_mute_lambai">70dp</dimen>
-    <dimen name="width_item_menu">170dp</dimen>
-    <dimen name="margin_item">17dp</dimen>
+    <dimen name="width_item_menu">130dp</dimen>
+    <dimen name="margin_item">8dp</dimen>
+    <dimen name="txt_menu_baitap">18sp</dimen>
     <!--activity làm bài tập-->
     <dimen name="text_content_cauhoi">18sp</dimen>
-    <dimen name="image_next">35dp</dimen>
+    <dimen name="image_next">50dp</dimen>
     <dimen name="margin_top_lambai">10dp</dimen>
-    <dimen name="margin_left_lambai">40dp</dimen>
+    <dimen name="margin_left_lambai">50dp</dimen>
     <dimen name="icon_point_lambai">45dp</dimen>
     <!--text size-->
     <dimen name="text_10sp">10sp</dimen>
@@ -69,15 +73,18 @@
     <dimen name="margin_flight">5dp</dimen>
 
     <!--xếp trứng margin-->
-    <dimen name="width_egg">160dp</dimen>
-    <dimen name="hight_egg">120dp</dimen>
-    <dimen name="margin_egg_2">170dp</dimen>
-    <dimen name="margin_egg_3">340dp</dimen>
-    <dimen name="margin_egg_4">510dp</dimen>
+    <dimen name="width_egg">220dp</dimen>
+    <dimen name="hight_egg">170dp</dimen>
+    <dimen name="margin_egg_2">235dp</dimen>
+    <dimen name="margin_egg_3">470dp</dimen>
+    <dimen name="margin_egg_4">705dp</dimen>
+    <dimen name="txt_xeptrung">23sp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
+    <dimen name="margin_top_chaomung">20dp</dimen>
+    <dimen name="text_content_chaomung">19sp</dimen>
     <!--giải cứu công chúa-->
-    <dimen name="item_congchua">80dp</dimen>
+    <dimen name="item_congchua">120dp</dimen>
     <dimen name="item_dapan">160dp</dimen>
     <!--Bài tập tuần đã làm-->
     <dimen name="item_baitaptuan_dalam">100dp</dimen>
@@ -88,10 +95,56 @@
     <dimen name="exer_hight_debai">80dp</dimen>
     <dimen name="exer_margin_top">20dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
+    <dimen name="icon_left_game_teacher">210dp</dimen>
+    <dimen name="btn_start_game">55dp</dimen>
     <!--Game-->
     <dimen name="pading_button_menu">40dp</dimen>
     <dimen name="text_menu_game">20sp</dimen>
     <dimen name="icon_center_tptt">300dp</dimen>
     <dimen name="icon_btn_play">160dp</dimen>
     <dimen name="margin_btn_play">60dp</dimen>
+    <!--  Game : Triệu phú tri thức-->
+    <dimen name="width_right_menu_game">150dp</dimen>
+    <dimen name="icon_support">40dp</dimen>
+    <dimen name="text_sp_tptt">12sp</dimen>
+    <dimen name="icon_time">50dp</dimen>
+    <dimen name="margin_question">50dp</dimen>
+    <dimen name="margin_anwser_game">25dp</dimen>
+    <dimen name="text_time_game_tptt">15sp</dimen>
+    <!--  Biểu đồ-->
+    <dimen name="margin_bottom_bieudo">70dp</dimen>
+    <dimen name="margin_right_bieudo">100dp</dimen>
+    <dimen name="width_bxh">120dp</dimen>
+    <dimen name="hight_item_bottom">70dp</dimen>
+    <!--Chém chuối-->
+    <dimen name="img_chemchuoi">200dp</dimen>
+    <dimen name="icon_anwser_review">60dp</dimen>
+    <!--Đọc và trả lời-->
+    <dimen name="margin_top_baidoc">35dp</dimen>
+    <dimen name="margin_left_baidoc">20dp</dimen>
+    <!--Bảng xếp hạng-->
+    <dimen name="icon_stt_bxh">45dp</dimen>
+    <!--Chỉnh sửa bắt sâu-->
+    <dimen name="btn_showpoint_width">170dp</dimen>
+    <dimen name="btn_showpoint_hight">40dp</dimen>
+    <dimen name="txt_showpoint">15sp</dimen>
+    <!--Game tính nhanh nhớ lâu-->
+    <dimen name="hight_point_time_tnnl">80dp</dimen>
+    <dimen name="icon_time_game_tnnl">70dp</dimen>
+    <dimen name="txt_player_tnnl">19sp</dimen>
+    <dimen name="icon_point_tnnl">40dp</dimen>
+    <dimen name="margin_right_start_tnnl">60dp</dimen>
+    <dimen name="margin_top_start_tnnl">60dp</dimen>
+    <dimen name="pading_show_question">15dp</dimen>
+    <dimen name="margin_show_question_bang">15dp</dimen>
+    <dimen name="margin_content_broad">35dp</dimen>
+    <dimen name="width_txt_tnnl">700dp</dimen>
+    <dimen name="height_txt_tnnl">200dp</dimen>
+
+    <dimen name="btn_level_game_width">170dp</dimen>
+    <dimen name="btn_level_game_height">55dp</dimen>
+    <dimen name="btn_level_game_margin_top">65dp</dimen>
+    <dimen name="height_view_level_game_tnnl">300dp</dimen>
+    <dimen name="btn_level_font">17sp</dimen>
+    <dimen name="text_welcom">20sp</dimen>
 </resources>

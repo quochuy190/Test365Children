@@ -7,7 +7,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
         android:src="@drawable/background_baitaptuan" />
@@ -31,7 +30,6 @@
         android:id="@+id/recycle_baitap_tuan"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_above="@id/img_header2"
         android:layout_below="@id/img_header_1"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/margin_recycle"

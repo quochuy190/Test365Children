@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -55,52 +54,19 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
-      //  holder.ll_dapan_all.removeAllViews();
-       // initWebview(holder.webview_debai, obj.getsContent());
         StringUtil.initWebview_Whitetext(holder.webview_debai, obj.getsContent());
-       /* if (obj.getsContent() != null)
-            if (obj.getsContent().indexOf("image") > 0) {
-                ImageView txt_dapan = new ImageView(context);
-                int hight_image = (int) context.getResources().getDimension(R.dimen.item_dapan);
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        hight_image));
-                Glide.with(context).load(Config.URL_IMAGE + obj.getsContent()).into(txt_dapan);
-                holder.ll_dapan_all.addView(txt_dapan);
-            } else if (obj.getsContent().indexOf("//") > 0) {
-                MathView mathView = new MathView(context);
-                mathView.setClickable(true);
-                mathView.setTextSize(16);
-                mathView.setTextColor(ContextCompat.getColor(context, android.R.color.white));
-                mathView.setDisplayText(StringUtil.StringFraction(obj.getsContent()));
-                mathView.setViewBackgroundColor(context.getResources().getColor(R.color.bg_item_dapan));
-                holder.ll_dapan_all.addView(mathView);
-            } else {
-                TextView txt_dapan = new TextView(context);
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                txt_dapan.setTextSize(16);
-                txt_dapan.setTextColor(context.getResources().getColor(R.color.white));
-                txt_dapan.setText(obj.getsContent());
-                holder.ll_dapan_all.addView(txt_dapan);
-            }*/
-
-
         if (obj.isClick()) {
             if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
                 holder.checkbox.setImageResource(R.drawable.ic_checked);
-
             }
             if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Dung())) {
-                holder.checkbox.setImageResource(R.drawable.ic_checked_blue);
-
+                holder.checkbox.setImageResource(R.drawable.ic_checked_white);
             }
         } else {
             if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
-                holder.checkbox.setImageResource(R.drawable.ic_checked_blue);
-
+                holder.checkbox.setImageResource(R.drawable.ic_checked_white);
             } else {
                 holder.checkbox.setImageResource(R.drawable.ic_checker);
-
             }
         }
     }
@@ -112,12 +78,8 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
 
     public class TopicViewHoder extends RecyclerView.ViewHolder implements
             View.OnClickListener, View.OnLongClickListener {
-        @BindView(R.id.ll_dapan_all)
-        LinearLayout ll_dapan_all;
         @BindView(R.id.checkbox_dapan)
         ImageView checkbox;
-        @BindView(R.id.img_dapan)
-        ImageView img_dapan;
         @BindView(R.id.webview_debai)
         WebView webview_debai;
 

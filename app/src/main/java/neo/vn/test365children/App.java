@@ -11,32 +11,36 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.ExerciseAnswer;
+import neo.vn.test365children.Models.GameTNNL;
 import neo.vn.test365children.Models.GameTrieuPhuTriThuc;
 
 public class App extends Application {
     private static App sInstance;
     private Gson mGSon;
+
     public static App self() {
         return sInstance;
     }
+
     public static List<Cauhoi> mLisCauhoi;
     public static List<GameTrieuPhuTriThuc> mLisGameTPTT;
     public static ExerciseAnswer mExercise;
+    public static List<GameTNNL> mLisGameTNNL;
+    public static String sTime = "";
+
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
         mGSon = new Gson();
+        mLisGameTNNL = new ArrayList<>();
         mLisCauhoi = new ArrayList<>();
         mLisGameTPTT = new ArrayList<>();
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("test365.realm")
-               // .encryptionKey(getKey())
                 .schemaVersion(42)
                 .deleteRealmIfMigrationNeeded()
-                //.modules(new MySchemaModule())
-               // .migration(new MyMigration())
                 .build();
 
       /*  RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)

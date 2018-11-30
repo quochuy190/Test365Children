@@ -52,15 +52,17 @@ public class AdapterBaitapQuahan extends RecyclerView.Adapter<AdapterBaitapQuaha
     @Override
     public void onBindViewHolder(final TopicViewHoder holder, int position) {
         Baitap_Tuan obj = listChildren.get(position);
-        holder.txt_name.setText(obj.getsSUBJECT_NAME()+" - Tuần "+obj.getsWEEK_ID());
         switch (obj.getsSUBJECT_ID()) {
             case "1":
+                holder.txt_name.setText("Toán" + " - Tuần " + obj.getsWEEK_ID());
                 Glide.with(context).load(R.drawable.img_menu_toan).into(holder.img_item_menu_lambai);
                 break;
             case "2":
+                holder.txt_name.setText("Tiếng Việt" + " - Tuần " + obj.getsWEEK_ID());
                 Glide.with(context).load(R.drawable.img_menu_blue).into(holder.img_item_menu_lambai);
                 break;
             case "3":
+                holder.txt_name.setText("Tiếng Anh" + " - Tuần " + obj.getsWEEK_ID());
                 Glide.with(context).load(R.drawable.img_menu_tim).into(holder.img_item_menu_lambai);
                 break;
         }

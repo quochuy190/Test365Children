@@ -118,7 +118,7 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
         iRandom = ran.nextInt(arr_image.length);
         Glide.with(this).load(arr_image[iRandom]).into(img_background);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText("trả lời các câu hỏi để giải cứu công chúa");
        /* if (mCauhoi.getsSubNumberCau() != null && mCauhoi.getsQUESTION() != null)
             txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));*/
         if (mCauhoi.getsHTML_CONTENT() != null && mCauhoi.getsHTML_CONTENT().length() > 0) {

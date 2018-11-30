@@ -9,18 +9,17 @@
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_lambai" />
+        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_height="@dimen/dp35"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -38,16 +37,24 @@
             android:text="BÀI TẬP ĐÃ LÀM"
             android:textColor="@color/white"
             android:textSize="@dimen/text_18sp" />
+        <ImageView
+            android:id="@+id/btn_back"
+            android:src="@drawable/img_back_menu"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:padding="@dimen/dp5"
         android:id="@+id/recycle_baitapdalam"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3"></android.support.v7.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 </android.support.constraint.ConstraintLayout>

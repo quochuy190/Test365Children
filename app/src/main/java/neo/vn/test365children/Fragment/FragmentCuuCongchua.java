@@ -55,13 +55,18 @@ public class FragmentCuuCongchua extends BaseFragment {
     int iCauhoiStart = 0;
     @BindView(R.id.img_done)
     ImageView img_done;
+    @BindView(R.id.img_done_gif)
+    ImageView img_done_gif;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
     @BindView(R.id.img_background)
     ImageView img_background;
     @BindView(R.id.btn_nopbai)
     ImageView btn_nopbai;
-    public static FragmentCuuCongchua newInstance(CauhoiDetail restaurant) {
+    @BindView(R.id.img_anwser_chil)
+    ImageView img_anwser_chil;
+
+    public static FragmentCuuCongchua newInstance(Cauhoi restaurant) {
         FragmentCuuCongchua restaurantDetailFragment = new FragmentCuuCongchua();
         Bundle args = new Bundle();
         //args.putSerializable("cauhoi",restaurant);
@@ -74,12 +79,13 @@ public class FragmentCuuCongchua extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iStart = new ArrayList<>();
-        for (int i = 0; i < App.mLisCauhoi.size(); i++) {
+        mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
+      /*  for (int i = 0; i < App.mLisCauhoi.size(); i++) {
             Cauhoi obj = App.mLisCauhoi.get(i);
             if (obj.getsKIEU().equals("10")) {
                 mCauhoi = obj;
             }
-        }
+        }*/
 
         // mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
     }
@@ -88,6 +94,8 @@ public class FragmentCuuCongchua extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_congchua, container, false);
         ButterKnife.bind(this, view);
+        Glide.with(getContext()).load(R.drawable.done).into(img_done);
+        Glide.with(getContext()).load(R.drawable.icon_heart).into(img_done_gif);
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         //     initData();
         init();
@@ -179,10 +187,12 @@ public class FragmentCuuCongchua extends BaseFragment {
                 boolean isTraloi = SharedPrefs.getInstance().get(Constants.KEY_SEND_TRALOI, Boolean.class);
                 sDapan = SharedPrefs.getInstance().get(Constants.KEY_SEND_CAUHOI_CONGCHUA, String.class);
                 if (isTraloi) {
-                    EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));
+                    EventBus.getDefault().post(new MessageEvent("Point_true",
+                            Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));
                     iCauhoiStart++;
                     if (iCauhoiStart < mCauhoi.getLisInfo().size()) {
                         img_done.setVisibility(View.GONE);
+                        img_done_gif.setVisibility(View.GONE);
                         int value = getRandom(iStart);
                         iStart.add(value);
                         for (DapAn obj : mLis) {
@@ -196,7 +206,9 @@ public class FragmentCuuCongchua extends BaseFragment {
                         }
                         adapter.notifyDataSetChanged();
                     } else {
+                        txt_lable.setText("Chúc mừng bé đã giải cứu được công chúa");
                         img_done.setVisibility(View.VISIBLE);
+                        img_done_gif.setVisibility(View.VISIBLE);
                         recycle_dapan.setVisibility(View.GONE);
                         for (DapAn obj : mLis) {
                             obj.setClick(false);
@@ -205,11 +217,11 @@ public class FragmentCuuCongchua extends BaseFragment {
                     }
                     for (int i = 0; i < App.mLisCauhoi.size(); i++) {
                         Cauhoi obj = App.mLisCauhoi.get(i);
-                        if (obj.getsKIEU().equals("10")) {
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setAnserTrue(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setDalam(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsRESULT_CHILD("1");
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsANSWER_CHILD(sDapan);
+                        if (obj.getsID().equals(mCauhoi.getsID())) {
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(true);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
                           /*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
                                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
                         }
@@ -222,10 +234,10 @@ public class FragmentCuuCongchua extends BaseFragment {
                     for (int i = 0; i < App.mLisCauhoi.size(); i++) {
                         Cauhoi obj = App.mLisCauhoi.get(i);
                         if (obj.getsKIEU().equals("10")) {
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setAnserTrue(false);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setDalam(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsRESULT_CHILD("0");
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart-1).setsANSWER_CHILD(sDapan);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(false);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("0");
+                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
                           /*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
                                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
                         }

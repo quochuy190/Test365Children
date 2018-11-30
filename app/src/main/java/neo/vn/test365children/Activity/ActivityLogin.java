@@ -8,7 +8,6 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -34,7 +33,6 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
     EditText edtUserCon;
     @BindView(R.id.edt_pass_con)
     EditText edtPassCon;
-
     PresenterLogin mPresenter;
     boolean isShowpass = true;
     @BindView(R.id.img_showpass)
@@ -72,16 +70,19 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
 
     public void initData() {
         boolean isLogin = getIntent().getBooleanExtra(Constants.KEY_ISLOGIN, false);
+        sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+        sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+        sPassWord = SharedPrefs.getInstance().get(Constants.KEY_PASSWORD, String.class);
         if (isLogin) {
-            sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
-            sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-            sPassWord = SharedPrefs.getInstance().get(Constants.KEY_PASSWORD, String.class);
             edtUserMe.setText(sUserMe);
             edtUserCon.setText(sUserCon);
             edtPassCon.setText(sPassWord);
             //login_api();
         } else {
-
+            if (sUserMe != null)
+                edtUserMe.setText(sUserMe);
+            if (sUserCon != null)
+                edtUserCon.setText(sUserCon);
         }
 
     }
@@ -164,6 +165,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
         mPresenter.api_login(sUserMe, sUserCon, sPassWord, BuildConfig.VERSION_NAME,
                 android.os.Build.BRAND + " " + android.os.Build.MODEL,
                 "2", android.os.Build.VERSION.RELEASE, sTokenKey);
+
     }
 
     @Override
@@ -175,10 +177,10 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
                 SharedPrefs.getInstance().put(Constants.KEY_USER_ME, sUserMe);
                 SharedPrefs.getInstance().put(Constants.KEY_USER_CON, sUserCon);
                 SharedPrefs.getInstance().put(Constants.KEY_PASSWORD, sPassWord);
-                Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ActivityLogin.this, ActivityHome.class);
                 Intent intent_welcom = new Intent(ActivityLogin.this, Activity_Welcome.class);
                 intent_welcom.putExtra(Constants.KEY_SEND_OBJLOGIN, mLis.get(0));
+                SharedPrefs.getInstance().put(Constants.KEY_SAVE_CHIL, mLis.get(0));
                 boolean isChaomung = SharedPrefs.getInstance().get(Constants.KEY_IS_WELCOME, Boolean.class);
                 if (!isChaomung) {
                     startActivity(intent_welcom);

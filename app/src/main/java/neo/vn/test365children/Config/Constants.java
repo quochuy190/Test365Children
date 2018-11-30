@@ -19,6 +19,7 @@ public class Constants {
         public static final int GET_KHO_BAITAP = 1004;
         public static final int GET_IMAGE = 1005;
         public static final int GET_START_LAMBAI = 1006;
+        public static final int START_GAME_TNNL = 1007;
     }
 
     public static final String KEY_TOKEN = "KEY_TOKEN";
@@ -40,4 +41,9 @@ public class Constants {
     public static final String KEY_SEND_EXERCISES_DETAIL_POINT = "KEY_SEND_EXERCISES_DETAIL_POINT";
     public static final String KEY_SEND_TIME_SERVICE = "KEY_SEND_TIME_SERVICE";
     public static final String KEY_SEND_LEVER_GAME_TPTT = "KEY_SEND_LEVER_GAME_TPTT";
+    public static final String KEY_SEND_KIEU_NOP= "KEY_SEND_KIEU_NOP";
+    public static final String KEY_SAVE_CHIL= "KEY_SAVE_CHIL";
+    public static final String KEY_SEND_SP_MINUS_MONNEY= "KEY_SEND_SP_MINUS_MONNEY";
+
+    public static final String KEY_SEND_LEVEL= "KEY_SEND_LEVEL";
 }

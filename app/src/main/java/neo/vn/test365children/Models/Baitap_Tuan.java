@@ -69,6 +69,8 @@ public class Baitap_Tuan implements Parcelable {
     String sVIETNAMESE_TAKEN_DURATION;
     @SerializedName("ENGLISH_TAKEN_DURATION")
     String sENGLISH_TAKEN_DURATION;
+    @SerializedName("STATUS_TAKEN")
+    String sSTATUS_TAKEN;
 
     public Baitap_Tuan() {
     }
@@ -212,9 +214,6 @@ public class Baitap_Tuan implements Parcelable {
     }
 
 
-
-
-
     private static Baitap_Tuan getObject(JSONObject jsonObject) {
         return new Gson().fromJson(jsonObject.toString(), Baitap_Tuan.class);
     }
@@ -229,8 +228,13 @@ public class Baitap_Tuan implements Parcelable {
         return arrayList;
     }
 
+    public String getsSTATUS_TAKEN() {
+        return sSTATUS_TAKEN;
+    }
 
-
+    public void setsSTATUS_TAKEN(String sSTATUS_TAKEN) {
+        this.sSTATUS_TAKEN = sSTATUS_TAKEN;
+    }
 
     public String getsERROR() {
         return sERROR;

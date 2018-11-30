@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.greenrobot.eventbus.EventBus;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -25,7 +24,6 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
-import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.StringUtil;
 
@@ -50,13 +48,9 @@ public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClic
     LinearLayout ll_cauhoi;
     RecyclerView.LayoutManager mLayoutManager;
     List<DapAn> mLis;
-    @BindView(R.id.btn_xemdiem)
-    ImageView btn_xemdiem;
     private boolean isTraloi = false;
     @BindView(R.id.img_background)
     ImageView img_background;
-    @BindView(R.id.btn_nopbai)
-    ImageView btn_nopbai;
     @BindView(R.id.webview_debai)
     WebView webview_debai;
     @BindView(R.id.webview_anwser_A)
@@ -107,7 +101,7 @@ public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClic
         View view = inflater.inflate(R.layout.fragment_review_chemchuoi, container, false);
         ButterKnife.bind(this, view);
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
-        btn_xemdiem.setVisibility(View.INVISIBLE);
+
         initData();
         initEvent();
         return view;
@@ -120,59 +114,11 @@ public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClic
         ll_anwser_B.setOnClickListener(this);
         ll_anwser_C.setOnClickListener(this);
         ll_anwser_D.setOnClickListener(this);
-        btn_xemdiem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isClickXemdiem) {
-                    boolean isTrue = false;
-                    if (isTraloi) {
-                        if (sAnwser.equals(mCauhoi.getsANSWER())) {
-                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                            switch (mCauhoi.getsANSWER()) {
-                                case "A":
-                                    animation_anwsertrue(img_hoaqua_A);
-                                    break;
-                                case "B":
-                                    animation_anwsertrue(img_hoaqua_B);
-                                    break;
-                                case "C":
-                                    animation_anwsertrue(img_hoaqua_C);
-                                    break;
-                                case "D":
-                                    animation_anwsertrue(img_hoaqua_D);
-                                    break;
-                            }
 
-                        } else {
-                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
-                            switch (mCauhoi.getsANSWER()) {
-                                case "A":
-                                    animation_anwsertrue(img_hoaqua_A);
-                                    break;
-                                case "B":
-                                    animation_anwsertrue(img_hoaqua_B);
-                                    break;
-                                case "C":
-                                    animation_anwsertrue(img_hoaqua_C);
-                                    break;
-                                case "D":
-                                    animation_anwsertrue(img_hoaqua_D);
-                                    break;
-                            }
-
-                        }
-
-
-                    }
-                    isClickXemdiem = true;
-                }
-            }
-        });
     }
 
     @BindView(R.id.img_anwser_chil)
     ImageView img_anwser_chil;
-
     @BindView(R.id.rr)
     RelativeLayout rr;
     private void initData() {
@@ -188,7 +134,6 @@ public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClic
         txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
         Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
         StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-
         StringUtil.initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
         StringUtil.initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
         StringUtil.initWebview(webview_anwser_C, mCauhoi.getsHTML_C());

@@ -5,12 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.Item_BXH;
@@ -53,10 +57,37 @@ public class AdapterBangxephang extends RecyclerView.Adapter<AdapterBangxephang.
         holder.txt_stt.setText("" + (position + 1));
         holder.txt_name.setText("Bé: " + obj.getsFULLNAME());
         holder.txt_class.setText("Lớp: " + obj.getsCLASS());
-        holder.txt_school.setText("Trường: " + obj.getsSCHOOL_NAME());
+        holder.txt_school.setText(obj.getsSCHOOL_NAME());
         holder.txt_speed_time.setText("Thời gian: " + obj.getsSPEED());
         holder.txt_point.setText("Điểm: " + StringUtil.format_point(Float.parseFloat(obj.getsDTB())));
-
+        if (obj.getsAVATAR() != null && obj.getsAVATAR().length() > 0) {
+            Glide.with(context).load(Config.URL_IMAGE + obj.getsAVATAR()).into(holder.img_avata);
+        } else
+            Glide.with(context).load(R.drawable.avatar_default).into(holder.img_avata);
+        if (position < 6) {
+            switch (position) {
+                case 0:
+                    Glide.with(context).load(R.drawable.icon_bxh_1).into(holder.img_sst_bxh);
+                    break;
+                case 1:
+                    Glide.with(context).load(R.drawable.icon_bxh_2).into(holder.img_sst_bxh);
+                    break;
+                case 2:
+                    Glide.with(context).load(R.drawable.icon_bxh_3).into(holder.img_sst_bxh);
+                    break;
+                case 3:
+                    Glide.with(context).load(R.drawable.icon_bxh_4).into(holder.img_sst_bxh);
+                    break;
+                case 4:
+                    Glide.with(context).load(R.drawable.icon_bxh_5).into(holder.img_sst_bxh);
+                    break;
+                case 5:
+                    Glide.with(context).load(R.drawable.icon_bxh_6).into(holder.img_sst_bxh);
+                    break;
+            }
+        } else {
+            Glide.with(context).load(R.drawable.icon_bxh_7).into(holder.img_sst_bxh);
+        }
 
     }
 
@@ -79,6 +110,10 @@ public class AdapterBangxephang extends RecyclerView.Adapter<AdapterBangxephang.
         TextView txt_speed_time;
         @BindView(R.id.txt_point)
         TextView txt_point;
+        @BindView(R.id.img_sst_bxh)
+        ImageView img_sst_bxh;
+        @BindView(R.id.img_avata)
+        ImageView img_avata;
 
 
         public TopicViewHoder(View itemView) {

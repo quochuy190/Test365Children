@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import neo.vn.test365children.R;
@@ -21,8 +22,19 @@ public class KeyboardUtil {
         Animation animationRotale = AnimationUtils.loadAnimation(activity, R.anim.animation_click_buttongame);
         view.startAnimation(animationRotale);
     }
+
     public static void requestKeyboard(final Activity activity, int editViewId) {
         requestKeyboard(activity.findViewById(editViewId));
+    }
+
+    public static void button_disable(Button btn) {
+        btn.getBackground().setAlpha(50);
+        btn.setEnabled(false);
+    }
+
+    public static void button_enable(Button btn) {
+        btn.getBackground().setAlpha(255);
+        btn.setEnabled(true);
     }
 
     public static void requestKeyboard(final View view) {
@@ -59,7 +71,8 @@ public class KeyboardUtil {
 
         }
     }
-    public static void hideKeyboard(Activity activity){
+
+    public static void hideKeyboard(Activity activity) {
         InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }

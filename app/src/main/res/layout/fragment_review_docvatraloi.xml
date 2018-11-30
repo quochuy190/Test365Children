@@ -21,19 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:layout_width="@dimen/icon_anwser_review"
-            android:layout_height="@dimen/icon_anwser_review"
-            android:layout_margin="@dimen/dp5"
-            android:visibility="visible">
-
-            <ImageView
-                android:id="@+id/img_anwser_chil"
-                android:layout_width="@dimen/icon_anwser_review"
-                android:layout_height="@dimen/icon_anwser_review"
-                android:src="@drawable/icon_anwser_true" />
-
-        </RelativeLayout>
 
         <TextView
             android:id="@+id/txt_lable"
@@ -56,55 +43,77 @@
 
     </LinearLayout>
 
-    <WebView
-        android:id="@+id/txt_debai"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_lable" />
 
     <LinearLayout
         android:id="@+id/ll_cauhoi"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/dp40"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="@+id/img_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_debai">
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3">
+            android:layout_weight="2">
 
             <ImageView
+                android:id="@+id/img_bang"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon_bang" />
+                android:scaleType="fitXY" />
 
             <WebView
                 android:id="@+id/txt_cauhoi"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/dp25"
+                android:layout_margin="@dimen/margin_top_baidoc"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_17sp" />
         </RelativeLayout>
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_dapan"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:padding="@dimen/dp5" />
+            android:orientation="vertical">
+
+            <WebView
+                android:id="@+id/txt_debai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_lable" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_dapan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:padding="@dimen/dp5" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="@dimen/icon_anwser_review"
+        android:layout_height="@dimen/icon_anwser_review"
+        android:layout_margin="@dimen/dp5"
+        android:visibility="visible"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_lable">
 
+        <ImageView
+            android:id="@+id/img_anwser_chil"
+            android:layout_width="@dimen/icon_anwser_review"
+            android:layout_height="@dimen/icon_anwser_review"
+            android:src="@drawable/icon_anwser_true" />
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

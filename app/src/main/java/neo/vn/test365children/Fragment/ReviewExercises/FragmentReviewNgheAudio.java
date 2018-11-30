@@ -124,18 +124,22 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                mPlayer.seekTo(getDuration(seekBar.getProgress()));
+                if (mPlayer.isPlaying()) {
+                    mHandler.removeCallbacks(mProgressCallback);
+                    mHandler.post(mProgressCallback);
+                }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                mHandler.removeCallbacks(mProgressCallback);
             }
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (mPlayer != null && fromUser) {
-                    mPlayer.seekTo(progress * 1000);
+                if (fromUser) {
+                    updateProgressTextWithDuration(progress);
                 }
             }
         });
@@ -244,7 +248,10 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
             mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
          adapter.notifyDataSetChanged();
     }
-
+    private int getDuration(int progress) {
+        int duration = (int) (mPlayer.getDuration() * ((float) progress / seekBar.getMax()));
+        return duration;
+    }
     private void init() {
         mLis = new ArrayList<>();
         adapter = new AdapterDapan(mLis, getContext());

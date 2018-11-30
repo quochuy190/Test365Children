@@ -44,7 +44,7 @@ public class AdapterPointGame extends RecyclerView.Adapter<AdapterPointGame.Topi
     @Override
     public TopicViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_point_game, parent, false);
+                .inflate(R.layout.item_point_game_tptt, parent, false);
         return new TopicViewHoder(view);
     }
 
@@ -61,7 +61,7 @@ public class AdapterPointGame extends RecyclerView.Adapter<AdapterPointGame.Topi
             } else {
                 holder.txt_point_game.setTextColor(context.getResources().getColor(R.color.txt_point));
             }
-            holder.txt_point_game.setBackgroundColor(context.getResources().getColor(R.color.bg_menu_point_gamee));
+            holder.txt_point_game.setBackgroundColor(context.getResources().getColor(R.color.bg_clear));
         }
 
     }
