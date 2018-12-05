@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,7 +110,9 @@ public class FragmentReviewDocvaTraloi extends BaseFragment {
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
+                    +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
         StringUtil.initWebview_Whitetext_notcenter(txt_cauhoi, mCauhoi.getsTextDebai());

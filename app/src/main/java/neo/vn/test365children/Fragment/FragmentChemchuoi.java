@@ -1,19 +1,24 @@
 package neo.vn.test365children.Fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,7 +50,7 @@ import neo.vn.test365children.Untils.StringUtil;
  * @updated on 8/6/2018
  * @since 1.0
  */
-public class FragmentChemchuoi extends BaseFragment implements View.OnClickListener {
+public class FragmentChemchuoi extends BaseFragment implements View.OnClickListener, View.OnTouchListener {
     private static final String TAG = "FragmentCauhoi";
     private CauhoiDetail mCauhoi;
     @BindView(R.id.txt_lable)
@@ -79,6 +84,15 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     @BindView(R.id.ll_anwser_D)
     LinearLayout ll_anwser_D;
 
+    @BindView(R.id.txt_dapan_D)
+    RelativeLayout rl_dapan_D;
+    @BindView(R.id.txt_dapan_B)
+    RelativeLayout rl_dapan_B;
+    @BindView(R.id.txt_dapan_C)
+    RelativeLayout rl_dapan_C;
+    @BindView(R.id.txt_dapan_A)
+    RelativeLayout rl_dapan_A;
+
     @BindView(R.id.img_hoaqua_D)
     ImageView img_hoaqua_D;
     @BindView(R.id.img_hoaqua_C)
@@ -111,11 +125,24 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_chemchuoi, container, false);
         ButterKnife.bind(this, view);
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
+        initImage();
         initData();
         btn_xemdiem.setEnabled(false);
         btn_xemdiem.getBackground().setAlpha(50);
         initEvent();
         return view;
+    }
+
+    private void initImage() {
+        Glide.with(getContext()).load(R.drawable.fruit_banana)
+                .placeholder(R.drawable.fruit_banana).into(img_hoaqua_A);
+        Glide.with(getContext()).load(R.drawable.fruit_berry)
+                .placeholder(R.drawable.fruit_banana).into(img_hoaqua_B);
+        Glide.with(getContext()).load(R.drawable.fruit_coconut)
+                .placeholder(R.drawable.fruit_banana).into(img_hoaqua_C);
+        Glide.with(getContext()).load(R.drawable.fruit_pineapple)
+                .placeholder(R.drawable.fruit_banana).into(img_hoaqua_D);
+
     }
 
     private boolean isClickXemdiem = false;
@@ -125,6 +152,11 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
         ll_anwser_B.setOnClickListener(this);
         ll_anwser_C.setOnClickListener(this);
         ll_anwser_D.setOnClickListener(this);
+
+        webview_anwser_A.setOnTouchListener(this);
+        webview_anwser_B.setOnTouchListener(this);
+        webview_anwser_C.setOnTouchListener(this);
+        webview_anwser_D.setOnTouchListener(this);
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,54 +210,17 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
         });
     }
 
-    int iHeight_A, iHeight_B, iHeight_C, iHeight_D, iHeight_Max;
-
-    private void set_height_view() {
-        webview_anwser_A.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-
-            }
-        });
-        webview_anwser_A.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                iHeight_A = webview_anwser_A.getHeight();
-
-            }
-        });
-        webview_anwser_A.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-
-            }
-        });
-        webview_anwser_A.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-
-            }
-        });
-    }
-
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan()));
-       // txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
         StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-        StringUtil.initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-        StringUtil.initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-        StringUtil.initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-        StringUtil.initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
+        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
+        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_anwser_A.setVisibility(View.VISIBLE);
         } else {
@@ -373,5 +368,150 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
         }
         App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
+    }
+
+    public void initWebview(final WebView webview, String link_web) {
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings();
+        webview.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
+        //  settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.1));
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+        webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
+                "text/html", "UTF-8", "");
+        webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(final WebView view, String url) {
+                super.onPageFinished(view, url);
+                new CountDownTimer(1000, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        int i = 0;
+                        switch (view.getId()) {
+                            case R.id.webview_anwser_A:
+                                i = rl_dapan_A.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeightAll(iHeightmax, webview_anwser_A);
+                                    setHeightAll(iHeightmax, webview_anwser_B);
+                                    setHeightAll(iHeightmax, webview_anwser_C);
+                                    setHeightAll(iHeightmax, webview_anwser_D);
+                                }
+                                break;
+                            case R.id.webview_anwser_B:
+                                i = rl_dapan_B.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeightAll(iHeightmax, webview_anwser_A);
+                                    setHeightAll(iHeightmax, webview_anwser_B);
+                                    setHeightAll(iHeightmax, webview_anwser_C);
+                                    setHeightAll(iHeightmax, webview_anwser_D);
+                                }
+                                break;
+                            case R.id.webview_anwser_C:
+                                i = rl_dapan_C.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeightAll(iHeightmax, webview_anwser_A);
+                                    setHeightAll(iHeightmax, webview_anwser_B);
+                                    setHeightAll(iHeightmax, webview_anwser_C);
+                                    setHeightAll(iHeightmax, webview_anwser_D);
+                                }
+                                break;
+                            case R.id.webview_anwser_D:
+                                i = rl_dapan_D.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeightAll(iHeightmax, webview_anwser_A);
+                                    setHeightAll(iHeightmax, webview_anwser_B);
+                                    setHeightAll(iHeightmax, webview_anwser_C);
+                                    setHeightAll(iHeightmax, webview_anwser_D);
+                                }
+                                break;
+                        }
+                    }
+                }.start();
+            }
+        });
+    }
+
+    int iHeightmax = 0;
+
+    private void setHeightAll(final int iHeight, final View view) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                ViewGroup.LayoutParams params = view.getLayoutParams();
+                params.height = iHeight;
+                view.setLayoutParams(params);
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_UP:
+                switch (v.getId()) {
+                    case R.id.webview_anwser_A:
+                        if (!isClickXemdiem) {
+                            animation_click(img_hoaqua_A);
+                            img_hoaqua_B.clearAnimation();
+                            img_hoaqua_C.clearAnimation();
+                            img_hoaqua_D.clearAnimation();
+                            sAnwser = "A";
+                            anwser();
+                        }
+
+                        break;
+                    case R.id.webview_anwser_B:
+                        if (!isClickXemdiem) {
+                            animation_click(img_hoaqua_B);
+                            img_hoaqua_A.clearAnimation();
+                            img_hoaqua_C.clearAnimation();
+                            img_hoaqua_D.clearAnimation();
+                            sAnwser = "B";
+                            anwser();
+                        }
+
+                        break;
+                    case R.id.webview_anwser_C:
+                        if (!isClickXemdiem) {
+                            animation_click(img_hoaqua_C);
+                            img_hoaqua_B.clearAnimation();
+                            img_hoaqua_A.clearAnimation();
+                            img_hoaqua_D.clearAnimation();
+                            sAnwser = "C";
+                            anwser();
+                        }
+
+                        break;
+                    case R.id.webview_anwser_D:
+                        if (!isClickXemdiem) {
+                            animation_click(img_hoaqua_D);
+                            img_hoaqua_B.clearAnimation();
+                            img_hoaqua_C.clearAnimation();
+                            img_hoaqua_A.clearAnimation();
+                            sAnwser = "D";
+                            anwser();
+                        }
+                        break;
+
+                }
+                break;
+        }
+        return false;
     }
 }

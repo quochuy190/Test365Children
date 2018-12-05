@@ -44,6 +44,10 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
     List<String> mListTiengAnh;
     @BindView(R.id.img_bxh)
     ImageView img_bxh;
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.img_bg_bieudo)
+    ImageView img_bg_bieudo;
     PresenterThongke mPresenter;
     String sUserMe, sUserCon;
 
@@ -55,7 +59,9 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Glide.with(this).load(R.drawable.img_bxh).into(img_bxh);
+        Glide.with(this).load(R.drawable.icon_bxh).into(img_bxh);
+        Glide.with(this).load(R.drawable.exer_bg_ketqua2).into(img_bg_bieudo);
+        Glide.with(this).load(R.drawable.bg_chon_dap_an_dung).into(img_background);
         mPresenter = new PresenterThongke(this);
         initData();
         initEvent();
@@ -78,7 +84,7 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
 
     private void initChart(List<String> mLisPointToan, List<String> mListPointTV, List<String> mListPointTA) {
         mChart.getDescription().setEnabled(false);
-        mChart.setBackgroundColor(Color.WHITE);
+        mChart.setBackgroundColor(Color.TRANSPARENT);
         mChart.setDrawGridBackground(false);
         mChart.setDrawBarShadow(false);
         mChart.setHighlightFullBarEnabled(false);
@@ -90,7 +96,6 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
         leftAxis.setDrawGridLines(false);
         leftAxis.setAxisMinimum(0f);
         final List<String> xLabel = new ArrayList<>();
-        xLabel.add("Tuần");
         xLabel.add("Tuần 1");
         xLabel.add("Tuần 2");
         xLabel.add("Tuần 3");
@@ -327,24 +332,32 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
                 }
             }
             if (iWeekTAMax > 0) {
-                for (int k = 0; k < iWeekTVMax; k++) {
+                for (int k = 0; k < iWeekTAMax; k++) {
                     mListTiengAnh.add(null);
                 }
                 if (mTiengAnh.size() > 0) {
-
                     for (int i = 0; i < mListTiengAnh.size(); i++) {
                         for (int j = 0; j < mTiengAnh.size(); j++) {
                             int week = Integer.parseInt(mTiengAnh.get(j).getsWEEK_ID());
-                            if (i == week) {
+                            if ((i + 1) == week) {
                                 mListTiengAnh.set(i, mTiengAnh.get(j).getsPOINT());
                             }
                         }
                     }
                 }
             }
-            mListToan.add(0, "0");
+            /*mListToan.add(0, "0");
             mListTiengViet.add(0, "0");
-            mListTiengAnh.add(0, "0");
+            mListTiengAnh.add(0, "0");*/
+            if (mListToan.size() == 0) {
+                mListToan = null;
+            }
+            if (mListTiengAnh.size() == 0) {
+                mListTiengAnh = null;
+            }
+            if (mListTiengViet.size() == 0) {
+                mListTiengViet = null;
+            }
             initChart(mListToan, mListTiengViet, mListTiengAnh);
         }
     }

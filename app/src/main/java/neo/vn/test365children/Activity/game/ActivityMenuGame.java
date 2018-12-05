@@ -1,6 +1,8 @@
 package neo.vn.test365children.Activity.game;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -85,22 +87,19 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
     }
 
     private void test_linkedlist() {
-        List<Integer> mLisA = new ArrayList<>();
-        List<Integer> mLisB = new ArrayList<>();
-        mLisA.add(1);
-        mLisA.add(2);
-        mLisA.add(3);
-        mLisA.add(4);
-        mLisA.add(7);
-        mLisA.add(8);
-        mLisB.add(2);
-        mLisB.add(5);
-        mLisB.add(4);
-        mLisB.add(6);
-
-        mLisA.removeAll(mLisB);
-        Log.i(TAG, "test_linkedlist: " + mLisA);
-        Log.i(TAG, "test_linkedlist: " + mLisB);
+        Uri uri = Uri.parse("market://details?id=" + getApplication().getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getApplication().getPackageName())));
+        }
     }
 
 

@@ -105,6 +105,8 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
     String sAnwserChil_Dientu_9;
     String sAnwserChil_Dientu_10;
 
+    float fTempPoint;
+
     public CauhoiDetail(String sERROR, String sMESSAGE, String sRESULT) {
         this.sERROR = sERROR;
         this.sMESSAGE = sMESSAGE;
@@ -143,6 +145,14 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public float getfTempPoint() {
+        return fTempPoint;
+    }
+
+    public void setfTempPoint(float fTempPoint) {
+        this.fTempPoint = fTempPoint;
     }
 
     public String getsAnwserChil_Dientu_1() {

@@ -2,7 +2,8 @@ package neo.vn.test365children.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -30,7 +31,7 @@ import neo.vn.test365children.Adapter.AdapterViewpager;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
-import neo.vn.test365children.Fragment.FragmentBatsau;
+import neo.vn.test365children.Fragment.FragmentBatSauNew;
 import neo.vn.test365children.Fragment.FragmentChemchuoi;
 import neo.vn.test365children.Fragment.FragmentChondapanDung;
 import neo.vn.test365children.Fragment.FragmentCompleteBaitap;
@@ -61,7 +62,6 @@ import static neo.vn.test365children.App.sTime;
 
 public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     private static final String TAG = "ActivityLambaitap";
-    private MediaPlayer mPlayer;
 
     @Override
     public int setContentViewId() {
@@ -88,14 +88,15 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     Intent intent_service;
     private long iCurrenTime = 0;
     int iTotalTime;
-
+    private SoundPool mSoundPool;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        initSound();
         Log.i(TAG, "onCreate: ");
         EventBus.getDefault().register(this);
         mPresenter = new PresenterBaitap(this);
-        mPlayer = new MediaPlayer();
         if (sTime.length() > 0) {
             iTotalTime = Integer.parseInt(sTime) * 1000;
         } else {
@@ -105,11 +106,21 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             intent_service = new Intent(ActivityLambaitap.this, ServiceDownTime.class);
             intent_service.putExtra(Constants.KEY_SEND_TIME_SERVICE, iTotalTime);
             startService(intent_service);
+       /*     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // startService(intent_service);
+                ContextCompat.startForegroundService(this, intent_service);
+            } else
+                startService(intent_service);*/
         } else {
             stopService(intent_service);
             intent_service = new Intent(ActivityLambaitap.this, ServiceDownTime.class);
             intent_service.putExtra(Constants.KEY_SEND_TIME_SERVICE, iTotalTime);
             startService(intent_service);
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                //startService(intent_service);
+                ContextCompat.startForegroundService(this, intent_service);
+            } else
+                startService(intent_service);*/
         }
         showDialogLoadingLambai();
         initData();
@@ -118,33 +129,53 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         img_time.startAnimation(animationRotale);
         // initViewPager(mCauhoi);
     }
+    private int cPlayTrue;
+    private int cPlayClick;
+    private int cPlayFalse;
+    private int cPlayFalse_Sau;
+    private float LEFT_VOL = 1.0f;
+    private float RIGHT_VOL = 1.0f;
+    private int PRIORITY = 1;
+    private int LOOP = 0;
+    private float RATE = 1.0f;
+    private void initSound() {
+        cPlayTrue = mSoundPool.load(getApplicationContext(), R.raw.true_mp3, 1);
+        cPlayClick = mSoundPool.load(getApplicationContext(), R.raw.click, 1);
+        cPlayFalse = mSoundPool.load(getApplicationContext(), R.raw.false_te, 1);
+        cPlayFalse_Sau = mSoundPool.load(getApplicationContext(), R.raw.sau_laughing_cut, 1);
+
+    }
 
     public void play_mp3_true() {
-        //mp3 = new MediaPlayer();
+        /*//mp3 = new MediaPlayer();
         mPlayer.release();
         mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.true_mp3);
-        mPlayer.start();
+        mPlayer.start();*/
+        mSoundPool.play(cPlayTrue, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_click() {
-        //mp3 = new MediaPlayer();
+      /*  //mp3 = new MediaPlayer();
         mPlayer.release();
         mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.click);
-        mPlayer.start();
+        mPlayer.start();*/
+        mSoundPool.play(cPlayClick, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_false() {
-        //mp3 = new MediaPlayer();
+        /*//mp3 = new MediaPlayer();
         mPlayer.release();
         mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.false_te);
-        mPlayer.start();
+        mPlayer.start();*/
+        mSoundPool.play(cPlayFalse, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_false_sau() {
-        //mp3 = new MediaPlayer();
+    /*    //mp3 = new MediaPlayer();
         mPlayer.release();
         mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.sau_laughing_cut);
-        mPlayer.start();
+        mPlayer.start();*/
+        mSoundPool.play(cPlayFalse_Sau, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     @Override
@@ -165,7 +196,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         if (event.message.equals("Service")) {
-            iCurrenTime = (30 * 60 * 1000) - event.time;
+            iCurrenTime = iTotalTime - event.time;
             if (event.point == 0) {
                 if (event.time < (10 * 60 * 1000)) {
                     txt_time.setTextColor(getResources().getColor(R.color.orange));
@@ -178,12 +209,9 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                 final Intent intent = new Intent(ActivityLambaitap.this, ActivityComplete.class);
                 intent.putExtra(Constants.KEY_SEND_KIEU_NOP, "1");
                 objExer.setsKieunopbai("1");
-                objExer.setsThoiluonglambai("" + iCurrenTime);
+                objExer.setsThoiluonglambai("" + iTotalTime);
                 objExer.setsTimeketthuclambai(get_current_time());
                 intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, objExer);
-             /*   Toast.makeText(this, "Thời gian làm bài kết thúc", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "onMessageEvent: " + App.mLisCauhoi);*/
-
                 showDialogLoading();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -229,8 +257,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             play_mp3_click();
             Log.i(TAG, "onMessageEvent: " + App.mLisCauhoi);
         }
-
-
     }
 
     @Override
@@ -278,8 +304,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                         EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
                         viewpager_lambai.setCurrentItem((current + 1));
                     }
-
-
             }
         });
         img_back.setOnClickListener(new View.OnClickListener() {
@@ -291,7 +315,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                     viewpager_lambai.setCurrentItem((current - 1));
                     EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
                 }
-
             }
         });
         viewpager_lambai.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -302,12 +325,12 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
 
             @Override
             public void onPageSelected(int i) {
+
                 EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
             }
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
             }
         });
     }
@@ -321,6 +344,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         objExer.setsId_userCon(sUserCon);
+        objExer.setsId_userMe(sUserMe);
         if (mLisCauhoi != null) {
             //  viewpager_lambai = new CustomViewPager(this);
             adapterViewpager = new AdapterViewpager(getSupportFragmentManager());
@@ -330,6 +354,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                 Cauhoi obj = mLisCauhoi.get(j);
                 if (obj.getLisInfo() != null) {
                     if (obj.getsKIEU().equals("10")) {
+                        obj.setmNumber("" + (j + 1));
                         adapterViewpager.addFragment(FragmentCuuCongchua.
                                 newInstance(obj), obj.getsERROR());
                     }
@@ -348,7 +373,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                             if (obj.getsERROR().equals("0000"))
                                 adapterViewpager.addFragment(FragmentChondapanDung.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("2")) {
-                            adapterViewpager.addFragment(FragmentBatsau.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentBatSauNew.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("3")) {
                             adapterViewpager.addFragment(FragmentChemchuoi.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("4")) {

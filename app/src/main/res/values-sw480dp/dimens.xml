@@ -79,6 +79,7 @@
     <dimen name="margin_egg_3">340dp</dimen>
     <dimen name="margin_egg_4">510dp</dimen>
     <dimen name="txt_xeptrung">18sp</dimen>
+    <dimen name="hight_egg_dapan">150dp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
     <dimen name="margin_top_chaomung">10dp</dimen>
@@ -89,13 +90,15 @@
     <!--Bài tập tuần đã làm-->
     <dimen name="item_baitaptuan_dalam">100dp</dimen>
     <!--Exercises Detail-->
-    <dimen name="exercises_hight_title">90dp</dimen>
-    <dimen name="exercises_margin_leght">45dp</dimen>
+    <dimen name="exercises_hight_title">70dp</dimen>
+    <dimen name="exercises_margin_leght">25dp</dimen>
     <dimen name="exercises_icon_point">55dp</dimen>
     <dimen name="exer_hight_debai">65dp</dimen>
     <dimen name="exer_margin_top">25dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
     <dimen name="text_time_game_tptt">15sp</dimen>
+    <dimen name="exer_width_sticker">80dp</dimen>
+    <dimen name="icon_back_exercises">50dp</dimen>
     <!--Game-->
     <dimen name="pading_button_menu">35dp</dimen>
     <dimen name="text_menu_game">19sp</dimen>
@@ -117,10 +120,10 @@
     <dimen name="width_bxh">120dp</dimen>
     <dimen name="hight_item_bottom">70dp</dimen>
     <!--Chém chuối-->
-    <dimen name="img_chemchuoi">200dp</dimen>
+    <dimen name="img_chemchuoi">150dp</dimen>
     <dimen name="icon_anwser_review">60dp</dimen>
     <!--Đọc và trả lời-->
-    <dimen name="margin_top_baidoc">30dp</dimen>
+    <dimen name="margin_top_baidoc">20dp</dimen>
     <dimen name="margin_left_baidoc">20dp</dimen>
     <!--Bảng xếp hạng-->
     <dimen name="icon_stt_bxh">45dp</dimen>
@@ -147,4 +150,12 @@
     <dimen name="height_view_level_game_tnnl">200dp</dimen>
     <dimen name="btn_level_font">16sp</dimen>
     <dimen name="text_welcom">19sp</dimen>
+    <!--Menu_login-->
+    <dimen name="width_logo">270dp</dimen>
+    <dimen name="height_logo">100dp</dimen>
+    <dimen name="margin_list_user">140dp</dimen>
+    <!--Xem lại bài tập-->
+    <dimen name="txt_lable_exer">23sp</dimen>
+    <dimen name="img_avata_home">70dp</dimen>
+    <dimen name="margin_webview_baidoc">45dp</dimen>
 </resources>

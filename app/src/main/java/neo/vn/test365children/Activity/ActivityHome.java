@@ -11,20 +11,29 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 import butterknife.BindView;
 import io.realm.Realm;
 import neo.vn.test365children.Activity.ReviewExercises.ActivityBaitapdalam;
 import neo.vn.test365children.Activity.bangxephang.ActivityBieuDo;
 import neo.vn.test365children.Activity.game.ActivityMenuGame;
+import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
+import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
+import neo.vn.test365children.Listener.ClickDialog;
+import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.ObjLogin;
+import neo.vn.test365children.Models.Sticker;
+import neo.vn.test365children.Presenter.ImlListSticker;
+import neo.vn.test365children.Presenter.PresenterSticker;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
 import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
-public class ActivityHome extends BaseActivity implements View.OnClickListener {
+public class ActivityHome extends BaseActivity implements View.OnClickListener, ImlListSticker.View {
     @BindView(R.id.btn_lambaitap)
     ImageView btn_lambaitap;
     @BindView(R.id.btn_ketquahoctap)
@@ -41,11 +50,16 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener {
     TextView txt_name_home;
     @BindView(R.id.img_logout)
     ImageView img_logout;
+    @BindView(R.id.img_avata)
+    ImageView img_avata;
     Realm mRealm;
+    PresenterSticker mPresenter;
+    String sUserMe, sUserCon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new PresenterSticker(this);
         initData();
         initEvent();
         mRealm = RealmController.with(this).getRealm();
@@ -55,6 +69,10 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener {
     private void initData() {
         Glide.with(this).load(R.drawable.img_background_home).into(img_background);
         ObjLogin chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
+        sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+        sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+        mPresenter.api_get_info_chil(sUserMe, sUserCon);
+        mPresenter.api_get_list_sticker(sUserMe, chil.getsLEVEL_ID());
         if (chil != null) {
             if (chil.getsFULLNAME() != null)
                 txt_name_home.setText("Bé: " + chil.getsFULLNAME() + ", Lớp" + chil.getsLEVEL_ID());
@@ -88,11 +106,24 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener {
         img_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPrefs.getInstance().put(Constants.KEY_ISLOGIN, false);
-                SharedPrefs.getInstance().put(Constants.KEY_IS_WELCOME, false);
-                Intent intent = new Intent(ActivityHome.this, ActivityLogin.class);
-                startActivity(intent);
-                finish();
+                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn đăng xuất không?",
+                        false, new ClickDialog() {
+                    @Override
+                    public void onClickYesDialog() {
+                        SharedPrefs.getInstance().put(Constants.KEY_ISLOGIN, false);
+                        SharedPrefs.getInstance().put(Constants.KEY_IS_WELCOME, false);
+                        SharedPrefs.getInstance().put(Constants.KEY_USER_CON, "");
+                        Intent intent = new Intent(ActivityHome.this, Activity_List_UserLogin.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onClickNoDialog() {
+
+                    }
+                });
+
             }
         });
     }
@@ -121,11 +152,6 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener {
 
     MediaPlayer mp3;
 
-    public void play_mp3() {
-        //mp3 = new MediaPlayer();
-        mp3 = MediaPlayer.create(ActivityHome.this, R.raw.cheerful);
-        mp3.start();
-    }
 
     @Override
     protected void onPause() {
@@ -150,5 +176,32 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener {
                 isDoubleClick = false;
             }
         }, 2000);
+    }
+
+    @Override
+    public void show_error_api(List<ErrorApi> mLis) {
+        hideDialogLoading();
+    }
+
+    @Override
+    public void show_list_sticker(List<Sticker> mList) {
+        if (mList != null && mList.get(0).getsERROR().equals("0000")) {
+            App.mListSticker.clear();
+            App.mListSticker.addAll(mList);
+        }
+    }
+
+    @Override
+    public void show_info_chil(List<ObjLogin> mLis) {
+        hideDialogLoading();
+        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+            SharedPrefs.getInstance().put(Constants.KEY_SAVE_CHIL, mLis.get(0));
+            ObjLogin chil = mLis.get(0);
+            txt_name_home.setText("Bé: " + chil.getsFULLNAME() + ", Lớp" + chil.getsLEVEL_ID());
+            if (chil.getsAVATAR() != null && chil.getsAVATAR().length() > 0) {
+                Glide.with(this).load(Config.URL_IMAGE + chil.getsAVATAR())
+                        .placeholder(R.drawable.icon_avata).into(img_avata);
+            }
+        }
     }
 }

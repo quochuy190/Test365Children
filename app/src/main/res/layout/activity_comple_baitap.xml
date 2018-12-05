@@ -96,14 +96,14 @@
 
             <Button
                 android:id="@+id/btn_guidiem"
-                android:layout_width="@dimen/dp150"
+                android:layout_width="@dimen/dp200"
                 android:layout_height="@dimen/dp40"
                 android:layout_below="@id/txt_pointlambai"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp20"
                 android:background="@drawable/btn_2"
                 android:padding="@dimen/dp5"
-                android:text="Đóng"
+                android:text="GỬI CHO MẸ"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_17sp" />
         </RelativeLayout>

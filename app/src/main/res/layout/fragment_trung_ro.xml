@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -45,7 +44,7 @@
             android:padding="@dimen/dp5"
             android:text=""
             android:textColor="@color/lable_lambai"
-            android:textSize="@dimen/text_14sp"
+            android:textSize="@dimen/text_lable_lambai"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -70,11 +69,12 @@
 
 
         <ImageView
+            android:layout_marginBottom="@dimen/dp5"
             android:id="@+id/img_rotrung_1"
             android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
             android:padding="@dimen/dp3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_rotrung_1"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
@@ -83,7 +83,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:src="@drawable/icon_ro_trung"
-
             android:textColor="@color/white"
             android:textSize="@dimen/txt_xeptrung"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -96,8 +95,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/margin_egg_2"
             android:padding="@dimen/dp3"
-
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/dp5"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_rotrung_2"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
@@ -119,8 +118,8 @@
             android:layout_height="@dimen/hight_egg"
             android:layout_marginLeft="@dimen/margin_egg_3"
             android:padding="@dimen/dp3"
-
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/dp5"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_rotrung_3"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
@@ -138,13 +137,14 @@
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <ImageView
+            android:layout_marginBottom="@dimen/dp5"
             android:id="@+id/img_rotrung_4"
             android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/margin_egg_4"
             android:padding="@dimen/dp3"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_rotrung_4"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
@@ -170,7 +170,7 @@
                 android:id="@+id/img_trung1"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp10" />
+                android:padding="@dimen/dp15" />
 
             <TextView
                 android:id="@+id/txt_trung1"
@@ -195,7 +195,7 @@
                 android:id="@+id/img_trung2"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp10" />
+                android:padding="@dimen/dp15" />
 
             <TextView
                 android:id="@+id/txt_trung2"
@@ -220,7 +220,7 @@
                 android:id="@+id/img_trung3"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp10" />
+                android:padding="@dimen/dp15" />
 
             <TextView
                 android:id="@+id/txt_trung3"
@@ -244,7 +244,7 @@
                 android:id="@+id/img_trung4"
                 android:layout_width="@dimen/width_egg"
                 android:layout_height="@dimen/hight_egg"
-                android:padding="@dimen/dp10" />
+                android:padding="@dimen/dp15" />
 
             <TextView
                 android:id="@+id/txt_trung4"
@@ -274,10 +274,10 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
 
     <Button
-        android:layout_marginBottom="@dimen/dp3"
         android:id="@+id/btn_xemdiem"
         android:layout_width="@dimen/btn_showpoint_width"
         android:layout_height="@dimen/btn_showpoint_hight"
+        android:layout_marginBottom="@dimen/dp3"
         android:background="@drawable/btn_1"
         android:fontFamily="@font/roboto_bold"
         android:padding="@dimen/dp5"
@@ -288,32 +288,42 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <LinearLayout
-        android:visibility="gone"
+    <RelativeLayout
         android:id="@+id/ll_dapan_xeptrung"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hight_egg_dapan"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_lable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintTop_toBottomOf="@id/ll_lable">
+
+        <ImageView
+            android:id="@+id/bg_dapan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_xep_trung" />
+
         <TextView
-            android:textColor="@color/blue"
+            android:id="@+id/txt_title_dapan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp10"
             android:text="Đáp án:"
-            android:textStyle="bold"
+            android:textColor="@color/blue"
             android:textSize="@dimen/text_17sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_dapan_xeptrung"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_title_dapan">
 
         </android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/img_anwser_chil"

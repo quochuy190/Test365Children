@@ -63,11 +63,12 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterGame(this);
         mPlayer = new MediaPlayer();
+        rl_startgame.setVisibility(View.VISIBLE);
+        rl_exit.setVisibility(View.VISIBLE);
         initData();
         initEvent();
         play_start_game();
-        rl_startgame.setVisibility(View.VISIBLE);
-        rl_exit.setVisibility(View.VISIBLE);
+
 /*        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -81,8 +82,6 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
         Glide.with(this).load(R.drawable.bg_start_game).into(imageView13);
         //  Glide.with(this).load(R.drawable.icon_trieuphutrithuc_centrer).into(img_stargame);
         Glide.with(this).load(R.drawable.icon_teacher).into(imageView15);
-        rl_startgame.setVisibility(View.GONE);
-        rl_exit.setVisibility(View.GONE);
         Animation animation = AnimationUtils.loadAnimation(Activity_startgame_tptt.this, R.anim.animation_game_start);
         img_stargame.startAnimation(animation);
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
@@ -136,14 +135,16 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
             App.mLisGameTPTT.addAll(mLis);
             sPartId = mLis.get(0).getsPART_ID();
         } else {
-            rl_startgame.setVisibility(View.GONE);
-            //  showAlertDialog("Thông báo", mLis.get(0).getsRESULT());
+            rl_startgame.setVisibility(View.INVISIBLE);
+            showAlertDialog("Thông báo", mLis.get(0).getsRESULT());
         }
     }
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
         hideDialogLoading();
+        rl_startgame.setVisibility(View.INVISIBLE);
+        showAlertDialog("Thông báo", "Lỗi hệ thống, mời bạn thử lại sau");
     }
 
     @Override

@@ -176,12 +176,6 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
 
     MediaPlayer mp3;
 
-    public void play_mp3() {
-        //mp3 = new MediaPlayer();
-        mp3 = MediaPlayer.create(this, R.raw.happy_summer);
-        mp3.start();
-    }
-
     @Override
     public void show_list_list_buy(List<TuanDamua> mLis) {
 
@@ -209,6 +203,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         hideDialogLoading();
         btn_start_lambai.getBackground().setAlpha(50);
         btn_start_lambai.setEnabled(false);
+        showDialogNotify("Lỗi", "Có thể mẹ chưa mua bài tập này cho con, con kiểm tra và thử lại sau nhé.");
         //KeyboardUtil.button_disable(btn_start_lambai);
     }
 

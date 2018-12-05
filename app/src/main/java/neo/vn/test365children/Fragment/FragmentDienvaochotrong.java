@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,6 +105,9 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 }
             }, 1000);
 
+        } else if (event.message.equals("Audio")) {
+            KeyboardUtil.hideSoftKeyboard(getActivity());
+            KeyboardUtil.dismissKeyboard(browser);
         }
     }
 
@@ -117,9 +119,10 @@ public class FragmentDienvaochotrong extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_dienvaochotrong, container, false);
         ButterKnife.bind(this, view);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan()));
-      //  txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText(("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         WebSettings webSettings = browser.getSettings();
@@ -186,8 +189,12 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 "\n" +
                 "    </body>" +
                 "</html>";
-        browser.loadDataWithBaseURL("", StringUtil.convert_html(sHtlml), "text/html", "UTF-8", "");
-
+        browser.loadDataWithBaseURL("", StringUtil.convert_html(sHtlml),
+                "text/html", "UTF-8", "");
+        WebSettings settings = browser.getSettings();
+        WebSettings settings_dapan = webview_dapan.getSettings();
+        settings.setTextZoom((int) (settings.getTextZoom() * 1.2));
+        settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.2));
         initEvent();
         return view;
     }
@@ -199,13 +206,15 @@ public class FragmentDienvaochotrong extends BaseFragment {
             sAnwserChil9 = "", sAnwserChil10 = "";
     String sAnwserChil;
     boolean isGetpoint = false;
+    List<Integer> mLisTrue = new ArrayList<>();
 
     public void chamdiem(final boolean isClick) {
         if (!isGetpoint) {
-
+            KeyboardUtil.dismissKeyboard(browser);
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-            boolean isAnwserTrue = false;
+            boolean isAnwserTrue = true;
+            int iCountPoint = 0;
             List<String> mLisAnwser = new ArrayList<>();
             mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_1());
@@ -227,43 +236,64 @@ public class FragmentDienvaochotrong extends BaseFragment {
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_9());
             mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_10());
+            CauhoiDetail obj = App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1)
+                    .getLisInfo().get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1);
 
-            for (int i = 0; i < sAnwser_true.size(); i++) {
-                if (mLisAnwser.get(i) != null && mLisAnwser.get(i).length() > 0) {
-                    if (sAnwser_true.get(i).toUpperCase().equals(mLisAnwser.get(i).trim().toUpperCase())) {
-                        isAnwserTrue = true;
+            if (sAnwser_true.size() > 0) {
+                for (int i = 0; i < sAnwser_true.size(); i++) {
+                    if (mLisAnwser.get(i) != null && mLisAnwser.get(i).length() > 0) {
+                        if (sAnwser_true.get(i).toUpperCase().equals(mLisAnwser.get(i).trim().toUpperCase())) {
+                            mLisTrue.add(i);
+                            iCountPoint++;
+                        } else
+                            isAnwserTrue = false;
                     } else
                         isAnwserTrue = false;
-                } else
-                    isAnwserTrue = false;
 
-            }
-            String sHtl = mCauhoi.getsHTML_CONTENT().replaceAll("<<<", "<< < ").replaceAll(">>>", " > >>");
-            sAnwserChil = replaceAnwserChil("<<", ">>", sHtl, 0);
-            Log.i(TAG, "chamdiem: " + sAnwserChil);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwserChil);
-            if (isAnwserTrue) {
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                if (isClick) {
-                    Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-                    EventBus.getDefault().post(new MessageEvent("Point_true",
-                            Float.parseFloat(mCauhoi.getsPOINT()), 0));
                 }
+                float sTotalPoint = Float.parseFloat(obj.getsPOINT());
+                float sPoint = 0;
+                if (iCountPoint > 0) {
+                    sPoint = (iCountPoint * sTotalPoint) / (sAnwser_true.size());
+                }
+                String sHtl = mCauhoi.getsHTML_CONTENT().replaceAll("<<<", "<< < ").replaceAll(">>>", " > >>");
+                sAnwserChil = replaceAnwserChil("<<", ">>", sHtl, 0, false);
+                Log.i(TAG, "chamdiem: " + sAnwserChil);
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwserChil);
+                if (isAnwserTrue) {
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+                    if (isClick) {
+                        Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                        EventBus.getDefault().post(new MessageEvent("Point_true",
+                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
+                    }
 
+                } else {
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setfTempPoint(sPoint);
+                    if (isClick) {
+                        if (iCountPoint > 0) {
+                            EventBus.getDefault().post(new MessageEvent("Point_false", sPoint, 0));
+                        } else {
+                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                        }
+                        Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+
+                    }
+                }
             } else {
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-                if (isClick) {
-                    Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-                    EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
-                }
+                return;
             }
+
+
             isGetpoint = true;
             if (sAnwser_true.size() > 0) {
 
@@ -288,7 +318,7 @@ public class FragmentDienvaochotrong extends BaseFragment {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1)
                     .setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                            mCauhoi.getsANSWER_CHILD(), 1));
+                            mCauhoi.getsANSWER_CHILD(), 1, false));
             Log.i(TAG, "sendData: " + App.mLisCauhoi);
         }
 
@@ -296,87 +326,63 @@ public class FragmentDienvaochotrong extends BaseFragment {
         public void sendData2(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_2(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 2));
+
         }
 
         @JavascriptInterface
         public void sendData3(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_3(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 3));
+
         }
 
         @JavascriptInterface
         public void sendData4(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_4(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 4));
+
         }
 
         @JavascriptInterface
         public void sendData5(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_5(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 5));
+
         }
 
         @JavascriptInterface
         public void sendData6(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_6(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 6));
+
         }
 
         @JavascriptInterface
         public void sendData7(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_7(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 7));
+
         }
 
         @JavascriptInterface
         public void sendData8(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_8(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 8));
+
         }
 
         @JavascriptInterface
         public void sendData9(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_9(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 9));
+
         }
 
         @JavascriptInterface
         public void sendData10(String data) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_10(data);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                    mCauhoi.getsANSWER_CHILD(), 10));
 
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1)
-                    .setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
-                            mCauhoi.getsANSWER_CHILD(), 1));
-            Log.i(TAG, "sendData: " + App.mLisCauhoi);
         }
 
         public String getData() {
@@ -430,11 +436,15 @@ public class FragmentDienvaochotrong extends BaseFragment {
     public String replaceStringBuffer(int first, int last, String st, int index, int leght) {
         String s = "";
         StringBuffer sbf = new StringBuffer(st);
-        s = String.valueOf(sbf.replace(first, last, "<input id=\"txt_input" + index +
-                "\"class=\"form-control\"" +
-                " type=\"text\" size=\"" + leght + "\" style=\"text-align:center;\"" +
-                "onkeyup=\"loadChartData()\"" +
-                "></input>"));
+        s = String.valueOf(sbf.replace(first, last,
+                "<input id=\"txt_input" + index + "\"" +
+                        " class=\"form-control\"" +
+                        " type=\"text\"" +
+                        " size=\"" + (leght + 1) + "\"" +
+                        " maxlength=\"" + leght + "\"" +
+                        " style=\"text-align:center;\"" +
+                        " onkeyup=\"loadChartData()\"" + ">" +
+                        "</input>"));
         // s = String.valueOf(sbf.replace(first, last, "<img src=\"http://content1.test365.vn//upload//image/toan//tamgiacvuong.PNG\" style=\"height:10%; width:10%;\">"));
         return s;
     }
@@ -468,7 +478,7 @@ public class FragmentDienvaochotrong extends BaseFragment {
         return s;
     }
 
-    public String replaceAnwserChil(String start, String end, String st, int position) {
+    public String replaceAnwserChil(String start, String end, String st, int position, boolean isAnwser) {
         String s = st;
         if (s.length() == 0)
             return s;
@@ -483,16 +493,17 @@ public class FragmentDienvaochotrong extends BaseFragment {
             //   System.out.println(s.substring(startIndex + 1, endIndex));
             if (startIndex > -1 && startIndex < endIndex) {
                 String sAnwser = s.substring(startIndex + 2, endIndex);
-                s = replaceStringBuffer_position((startIndex), endIndex + 2, s, iCount, iCount);
+                s = replaceStringBuffer_position((startIndex), endIndex + 2, s, iCount, iCount, isAnwser);
             }
             index = s.indexOf(start, index + matchLength);
             iCount++;
         }
-
         return s;
     }
 
-    public String replaceStringBuffer_position(int first, int last, String st, int index, int position) {
+    public String replaceStringBuffer_position(int first, int last, String st,
+                                               int index, int position, boolean isAnwser) {
+        boolean isAnwserT = false;
         String s = "";
         StringBuffer sbf = new StringBuffer(st);
         List<String> mLisAnwser = new ArrayList<>();
@@ -517,10 +528,26 @@ public class FragmentDienvaochotrong extends BaseFragment {
         mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_10());
         if (mLisAnwser.get((position - 1)) != null && mLisAnwser.get((position - 1)).length() > 0) {
-            String sContent = mLisAnwser.get((position - 1));
-            s = String.valueOf(sbf.replace(first, last, "<u><b><font color='red'> " + sContent + " </font></b></u>"));
+            if (mLisTrue.size() > 0) {
+                for (int i : mLisTrue) {
+                    if (i == (position - 1)) {
+                        isAnwserT = true;
+                    }
+                }
+            }
+            if (isAnwserT) {
+                String sContent = mLisAnwser.get((position - 1));
+                s = String.valueOf(sbf.replace(first, last, "<u><b><font color='blue'> "
+                        + sContent + " </font></b></u>"));
+            } else {
+                String sContent = mLisAnwser.get((position - 1));
+                s = String.valueOf(sbf.replace(first, last, "<u><b><font color='red'> "
+                        + sContent + " </font></b></u>"));
+            }
+
         } else {
-            s = String.valueOf(sbf.replace(first, last, "<u><b><font color='red'>" + "___" + "</font></b></u>"));
+            s = String.valueOf(sbf.replace(first, last, "<u><b><font color='red'>"
+                    + "___" + "</font></b></u>"));
         }
         // s = String.valueOf(sbf.replace(first, last, "<img src=\"http://content1.test365.vn//upload//image/toan//tamgiacvuong.PNG\" style=\"height:10%; width:10%;\">"));
         return s;

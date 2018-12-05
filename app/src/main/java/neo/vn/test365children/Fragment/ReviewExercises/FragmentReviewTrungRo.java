@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class FragmentReviewTrungRo extends BaseFragment {
     @BindView(R.id.ll_true)
     LinearLayout ll_true;
 
+
     public static FragmentReviewTrungRo newInstance(CauhoiDetail restaurant) {
         FragmentReviewTrungRo restaurantDetailFragment = new FragmentReviewTrungRo();
         Bundle args = new Bundle();
@@ -95,7 +97,9 @@ public class FragmentReviewTrungRo extends BaseFragment {
     private void initData() {
         img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_xep_trung).into(img_background);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
             if (mCauhoi.getsRESULT_CHILD().equals("0")) {
@@ -117,6 +121,7 @@ public class FragmentReviewTrungRo extends BaseFragment {
         }
 
         if (!mCauhoi.isDalam()) {
+            txt_title_dapan_be.setVisibility(View.GONE);
             // txt_cauhoi.setVisibility(View.INVISIBLE);
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
@@ -142,22 +147,22 @@ public class FragmentReviewTrungRo extends BaseFragment {
         }
 
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
-            if (mCauhoi.getsEGG_1_RESULT()!=null&&mCauhoi.getsEGG_1_RESULT().length() > 0) {
+            if (mCauhoi.getsEGG_1_RESULT() != null && mCauhoi.getsEGG_1_RESULT().length() > 0) {
                 String[] mEggAnwser = mCauhoi.getsEGG_1_RESULT().split("::");
                 if (mEggAnwser != null && mEggAnwser.length > 0)
                     mLisAnwser.add(new Item_Xeptrung(mEggAnwser[1], R.drawable.egg_blue, mEggAnwser[0]));
             }
-            if (mCauhoi.getsEGG_2_RESULT()!=null&&mCauhoi.getsEGG_2_RESULT().length() > 0) {
+            if (mCauhoi.getsEGG_2_RESULT() != null && mCauhoi.getsEGG_2_RESULT().length() > 0) {
                 String[] mEggAnwser2 = mCauhoi.getsEGG_2_RESULT().split("::");
                 if (mEggAnwser2 != null && mEggAnwser2.length > 0)
                     mLisAnwser.add(new Item_Xeptrung(mEggAnwser2[1], R.drawable.egg_red, mEggAnwser2[0]));
             }
-            if (mCauhoi.getsEGG_3_RESULT()!=null&&mCauhoi.getsEGG_3_RESULT().length() > 0) {
+            if (mCauhoi.getsEGG_3_RESULT() != null && mCauhoi.getsEGG_3_RESULT().length() > 0) {
                 String[] mEggAnwser3 = mCauhoi.getsEGG_3_RESULT().split("::");
                 if (mEggAnwser3 != null && mEggAnwser3.length > 0)
                     mLisAnwser.add(new Item_Xeptrung(mEggAnwser3[1], R.drawable.egg_yellow, mEggAnwser3[0]));
             }
-            if (mCauhoi.getsEGG_4_RESULT()!=null&&mCauhoi.getsEGG_4_RESULT().length() > 0) {
+            if (mCauhoi.getsEGG_4_RESULT() != null && mCauhoi.getsEGG_4_RESULT().length() > 0) {
                 String[] mEggAnwser4 = mCauhoi.getsEGG_4_RESULT().split("::");
                 if (mEggAnwser4 != null && mEggAnwser4.length > 0)
                     mLisAnwser.add(new Item_Xeptrung(mEggAnwser4[1], R.drawable.egg_pink, mEggAnwser4[0]));

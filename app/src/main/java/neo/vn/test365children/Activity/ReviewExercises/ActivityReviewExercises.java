@@ -22,7 +22,7 @@ import neo.vn.test365children.Fragment.FragmentXemanhtraloi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentCompleteBaitapReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentDienvaochotrongReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentNgheAudioReview;
-import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewBatsau;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewBatsauNew;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewCauhoiCongchua;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewChemchuoi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewDapandung;
@@ -204,16 +204,18 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                             if (obj.getsERROR().equals("0000"))
                                 adapterViewpager.addFragment(FragmentReviewDapandung.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("2")) {
-                            adapterViewpager.addFragment(FragmentReviewBatsau.newInstance(mCauhoiDetail), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentReviewBatsauNew.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("3")) {
                             adapterViewpager.addFragment(FragmentReviewChemchuoi.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("4")) {
                             adapterViewpager.addFragment(FragmentReviewSapxep.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("5")) {
                             if (obj.getLisInfo().get(i).getsEGG_1() == null && obj.getLisInfo().get(i).getsEGG_2() == null
-                                    && obj.getLisInfo().get(i).getsEGG_3() == null && obj.getLisInfo().get(i).getsEGG_4() == null)
-                                return;
-                            adapterViewpager.addFragment(FragmentReviewTrungRo.newInstance(mCauhoiDetail), obj.getsERROR());
+                                    && obj.getLisInfo().get(i).getsEGG_3() == null && obj.getLisInfo().get(i).getsEGG_4() == null) {
+
+                            } else {
+                                adapterViewpager.addFragment(FragmentReviewTrungRo.newInstance(mCauhoiDetail), obj.getsERROR());
+                            }
                         } else if (obj.getsKIEU().equals("6")) {
                             adapterViewpager.addFragment(FragmentDienvaochotrongReview.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("7")) {

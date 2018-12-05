@@ -37,9 +37,8 @@
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
             android:padding="@dimen/dp5"
-            android:text="Câu 3: Chọn đáp án đúng"
             android:textColor="@color/lable_lambai"
-            android:textSize="@dimen/text_16sp"
+            android:textSize="@dimen/text_lable_lambai"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,21 +55,20 @@
     </LinearLayout>
 
     <Button
-        android:layout_marginBottom="@dimen/dp3"
         android:id="@+id/btn_xemdiem"
         android:layout_width="@dimen/btn_showpoint_width"
         android:layout_height="@dimen/btn_showpoint_hight"
+        android:layout_marginBottom="@dimen/dp3"
         android:background="@drawable/btn_1"
         android:fontFamily="@font/roboto_bold"
         android:padding="@dimen/dp5"
         android:text="@string/txt_showpoint"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_showpoint"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-
-
 
 
     <LinearLayout
@@ -108,6 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/dp3"
+                    android:layout_marginBottom="@dimen/image_next"
                     android:padding="@dimen/dp5" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
@@ -131,8 +130,17 @@
                 android:layout_margin="@dimen/margin_top_baidoc"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_17sp" />
-        </RelativeLayout>
 
+            <ImageView
+                android:id="@+id/icon_zoom"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp45"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/dp3"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_zoom"
+                />
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -147,4 +155,48 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
 
+    <RelativeLayout
+        android:id="@+id/rl_show_doanvan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_game_tnnl"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/img_broad_question"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_exit"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:scaleType="fitXY" />
+
+        <WebView
+            android:id="@+id/webview_debai_full"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_exit"
+            android:layout_marginLeft="@dimen/margin_webview_baidoc"
+            android:layout_marginTop="@dimen/margin_webview_baidoc"
+            android:layout_marginRight="@dimen/margin_webview_baidoc"
+            android:layout_marginBottom="@dimen/dp20"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="@dimen/btn_showpoint_width"
+            android:layout_height="@dimen/btn_showpoint_hight"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp5"
+            android:background="@drawable/btn_3"
+            android:fontFamily="@font/roboto_bold"
+            android:padding="@dimen/dp5"
+            android:text="Đóng"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_showpoint" />
+
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

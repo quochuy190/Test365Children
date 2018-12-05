@@ -11,10 +11,9 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-
         android:layout_height="@dimen/exercises_hight_title"
         android:layout_marginLeft="@dimen/exercises_margin_leght"
         android:layout_marginTop="@dimen/exer_margin_top"
@@ -27,142 +26,44 @@
             android:id="@+id/img_title_exe_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY" />
-
-        <TextView
-            android:id="@+id/lable_nhanxet"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:fontFamily="@font/font1"
-            android:gravity="center"
-            android:maxLines="2"
-            android:padding="@dimen/dp5"
-            android:singleLine="true"
-            android:text="@string/txt_lable_nhanxet"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_17sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/textView5"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/lable_nhanxet_content"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:gravity="center"
-            android:padding="@dimen/dp5"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_exer_xephang"
-            app:layout_constraintStart_toEndOf="@+id/txt_exer_point"
-            app:layout_constraintTop_toBottomOf="@id/lable_nhanxet" />
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_exer_nhatxet" />
 
         <ImageView
-            android:id="@+id/img_point"
-            android:layout_width="@dimen/exercises_icon_point_width"
-            android:layout_height="@dimen/exercises_icon_point"
-            android:layout_marginBottom="2dp"
-            android:src="@drawable/mark_4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textView4"
-            app:layout_constraintStart_toStartOf="@+id/textView4" />
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/icon_back_exercises"
+            android:layout_height="@dimen/icon_back_exercises"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp10"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/img_back_menu" />
 
-        <TextView
-            android:id="@+id/txt_exer_point"
-            android:layout_width="@dimen/exercises_icon_point_width"
-            android:layout_height="@dimen/exercises_icon_point"
-            android:layout_marginBottom="2dp"
-            android:fontFamily="@font/font1"
-            android:gravity="center"
-            android:src="@drawable/exer_icon_diem"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textView4"
-            app:layout_constraintStart_toStartOf="@+id/textView4" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/exer_margin_left_text_lable"
-            android:layout_marginTop="5dp"
-            android:text="@string/txt_exer_point"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/img_point"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:visibility="invisible"
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/exer_margin_left_text_lable"
-            android:layout_marginTop="5dp"
-            android:text="@string/txt_exer_point"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/img_point"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
         <ImageView
-            android:id="@+id/img_xephang"
-            android:layout_width="@dimen/exercises_icon_point"
-            android:layout_height="@dimen/exercises_icon_point"
-            android:layout_marginBottom="2dp"
-            android:src="@drawable/mark_0"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/txt_lable_xephang"
-            app:layout_constraintStart_toStartOf="@+id/txt_lable_xephang" />
+            android:id="@+id/img_back_right"
+            android:layout_width="@dimen/icon_back_exercises"
+            android:layout_height="@dimen/icon_back_exercises"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp10"
+            android:padding="@dimen/dp3"
+            android:src="@drawable/img_back_menu"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/txt_exer_xephang"
-            android:layout_width="@dimen/exercises_icon_point"
-            android:layout_height="@dimen/exercises_icon_point"
-            android:layout_marginBottom="2dp"
-            android:gravity="center"
-            android:src="@drawable/exer_icon_diem"
-            android:text="1080"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_15sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/txt_lable_xephang"
-            app:layout_constraintStart_toStartOf="@+id/txt_lable_xephang" />
-
-        <TextView
-            android:id="@+id/txt_lable_xephang"
-            android:layout_width="wrap_content"
+            android:id="@+id/txt_lable_exer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/img_back_right"
+            android:layout_toRightOf="@id/img_back"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="Toán tuần 1"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_lable_exer" />
 
-            android:layout_marginRight="@dimen/exer_margin_left_text_lable"
-            android:text="@string/txt_exer_xephang"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_16sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
     <RelativeLayout
 
@@ -187,9 +88,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:padding="@dimen/dp5">
 
 
@@ -199,7 +101,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="@dimen/dp7"
-
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_18sp"
                     android:textStyle="bold"
@@ -208,101 +109,57 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/txt_exer_namhoc"
-                    android:layout_width="0dp"
+                    android:id="@+id/txt_start_time"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
                     android:padding="@dimen/dp3"
-                    android:text="Năm học:"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_17sp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/txt_exer_khoihoc"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
-
-                <TextView
-                    android:id="@+id/txt_exer_khoihoc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:padding="@dimen/dp3"
-                    android:text="Khối:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_17sp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toRightOf="@id/txt_exer_namhoc"
-                    app:layout_constraintRight_toLeftOf="@+id/img_sticker"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
-
-                <ImageView
-                    android:id="@+id/img_sticker"
-                    android:layout_width="@dimen/exer_width_sticker"
-                    android:layout_height="@dimen/exer_width_sticker"
-                    android:layout_marginRight="@dimen/dp3"
-                    android:src="@drawable/sticker"
+                    android:textSize="@dimen/text_16sp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
 
                 <TextView
-                    android:id="@+id/txt_exer_tuan"
-                    android:layout_width="0dp"
+                    android:id="@+id/txt_duration_time"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
                     android:padding="@dimen/dp3"
-                    android:text="Năm học:"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_17sp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/txt_exer_khoihoc"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_namhoc" />
-
-                <TextView
-                    android:id="@+id/txt_exer_monhoc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:padding="@dimen/dp3"
-                    android:text="Khối:"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_17sp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toRightOf="@id/txt_exer_namhoc"
-                    app:layout_constraintRight_toLeftOf="@id/img_sticker"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_namhoc" />
+                    android:textSize="@dimen/text_16sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
 
                 <TextView
                     android:id="@+id/txt_exer_bancunglam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:padding="@dimen/dp5"
-                    android:text=""
+                    android:padding="@dimen/dp3"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_15sp"
+                    android:textSize="@dimen/text_16sp"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_tuan" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
 
                 <TextView
                     android:id="@+id/txt_exer_bancungtruong"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:padding="@dimen/dp5"
+                    android:padding="@dimen/dp3"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_15sp"
+                    android:textSize="@dimen/text_16sp"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancunglam" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai" />
 
                 <TextView
                     android:id="@+id/txt_exer_bancunglop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:padding="@dimen/dp5"
+                    android:padding="@dimen/dp3"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_15sp"
+                    android:textSize="@dimen/text_16sp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_exer_bancungtruong" />
 
@@ -326,6 +183,35 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp10"
+                            android:gravity="center"
+                            android:padding="@dimen/dp5"
+                            android:text="@string/txt_point"
+                            android:textColor="@color/red_test365"
+                            android:textSize="@dimen/text_16sp" />
+
+                        <TextView
+                            android:id="@+id/txt_point"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp10"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center"
+                            android:textColor="@color/red_test365"
+                            android:textSize="@dimen/text_lable_lambai"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
                             android:id="@+id/txt_exer_diemcaonhat"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -333,18 +219,19 @@
                             android:gravity="center"
                             android:padding="@dimen/dp5"
                             android:text="@string/txt_exer_pointmax"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_15sp" />
+                            android:textColor="@color/red_test365"
+                            android:textSize="@dimen/text_16sp" />
 
                         <TextView
                             android:id="@+id/txt_exer_pointmax"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp10"
-                            android:layout_marginTop="@dimen/dp5"
+                            android:fontFamily="@font/roboto_bold"
+
                             android:gravity="center"
                             android:textColor="@color/red_test365"
-                            android:textSize="@dimen/text_20sp"
+                            android:textSize="@dimen/text_lable_lambai"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -362,17 +249,17 @@
                             android:gravity="center"
                             android:padding="@dimen/dp5"
                             android:text="@string/txt_exer_pointtb"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_15sp" />
+                            android:textColor="@color/red_test365"
+                            android:textSize="@dimen/text_16sp" />
 
                         <TextView
                             android:id="@+id/txt_exer_pointtb"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp5"
+
                             android:gravity="center"
                             android:textColor="@color/red_test365"
-                            android:textSize="@dimen/text_20sp"
+                            android:textSize="@dimen/text_lable_lambai"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -390,17 +277,16 @@
                             android:gravity="center"
                             android:padding="@dimen/dp5"
                             android:text="@string/txt_exer_pointmin"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_15sp" />
+                            android:textColor="@color/red_test365"
+                            android:textSize="@dimen/text_16sp" />
 
                         <TextView
                             android:id="@+id/txt_exer_point_min"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp5"
                             android:gravity="center"
                             android:textColor="@color/red_test365"
-                            android:textSize="@dimen/text_20sp"
+                            android:textSize="@dimen/text_lable_lambai"
                             android:textStyle="bold"
                             app:layout_constraintLeft_toRightOf="@id/txt_exer_trungbinh"
                             app:layout_constraintRight_toRightOf="parent"
@@ -410,34 +296,55 @@
 
                 </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/txt_exer_comment_mother"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dp7"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_16sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ll_point" />
-
                 <Button
                     android:id="@+id/btn_xemlaibai"
                     android:layout_width="@dimen/dp250"
                     android:layout_height="@dimen/exercises_icon_point"
-                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp5"
                     android:background="@drawable/btn_1"
                     android:paddingLeft="@dimen/dp30"
                     android:paddingRight="@dimen/dp30"
                     android:text="Xem lại bài đã làm"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_comment_mother" />
+                    android:textSize="@dimen/text_16sp" />
 
-            </android.support.constraint.ConstraintLayout>
+                <RelativeLayout
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="@dimen/dp5"
+                        android:layout_toLeftOf="@id/img_sticker"
+                        android:textStyle="bold"
+                        android:textColor="@color/red_test365"
+                        android:textSize="@dimen/text_16sp"
+                        android:id="@+id/txt_lable_nhanxet"
+                        android:padding="@dimen/dp3"
+                        android:text="Nhận xét của mẹ:"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_toLeftOf="@id/img_sticker"
+                        android:layout_below="@id/txt_lable_nhanxet"
+                        android:id="@+id/txt_exer_comment_mother"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp3"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_16sp" />
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/img_sticker"
+                        android:layout_width="@dimen/exer_width_sticker"
+                        android:layout_height="@dimen/exer_width_sticker"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:src="@drawable/sticker" />
+                </RelativeLayout>
+
+            </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </RelativeLayout>
 

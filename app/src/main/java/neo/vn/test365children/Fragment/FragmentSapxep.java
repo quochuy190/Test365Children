@@ -50,7 +50,7 @@ import neo.vn.test365children.R;
  * @since 1.0
  */
 public class FragmentSapxep extends BaseFragment implements OnStartDragListener, RecyclerViewItemClickInterface {
-    private static final String TAG = "FragmentCauhoi";
+    private static final String TAG = "FragmentSapxep";
     private CauhoiDetail mCauhoi;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
@@ -145,10 +145,11 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu " + mCauhoi.getsSubNumberCau()
-                    + ": " + mCauhoi.getsCauhoi_huongdan()));
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
+                    +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-
+        Log.i(TAG, "initData: "+mCauhoi.getsHTML_CONTENT());
         // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
         if (mCauhoi.getsHTML_CONTENT() != null)
             txt_cauhoi.setText("Đáp án: " + mCauhoi.getsHTML_CONTENT().replace("::", " "));
@@ -158,9 +159,6 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
             String[] dapan = mCauhoi.getsHTML_CONTENT().split("::");
             mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
         }
-
-
-        //   mLisStart.addAll(mLiDapan)
         if (mLiDapan != null && mLiDapan.size() > 0) {
             for (String s : mLiDapan) {
                 mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));

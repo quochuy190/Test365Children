@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -68,7 +69,7 @@
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:hint="*Tài khoản mẹ"
-            android:imeOptions="flagNoExtractUi"
+            android:imeOptions="flagNoFullscreen|actionNext"
             android:inputType="text"
             android:padding="@dimen/dp7"
             android:textColor="@color/black"
@@ -110,7 +111,7 @@
             android:background="@color/white"
             android:backgroundTint="@color/white"
             android:hint="*Tài khoản con"
-            android:imeOptions="flagNoExtractUi"
+            android:imeOptions="flagNoFullscreen|actionNext"
             android:inputType="text"
             android:padding="@dimen/dp7"
             android:textColor="@color/black"
@@ -120,6 +121,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_pass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_edt_login"
@@ -149,8 +151,8 @@
             android:layout_toRightOf="@id/img_pass"
             android:background="@color/white"
             android:backgroundTint="@color/white"
-            android:hint="*Mật khẩu"
-            android:imeOptions="flagNoExtractUi"
+            android:hint="*Mật khẩu con"
+            android:imeOptions="flagNoFullscreen|actionGo"
             android:inputType="textPassword"
             android:padding="@dimen/dp7"
             android:textColor="@color/black"
@@ -189,4 +191,15 @@
         android:src="@drawable/img_mute"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/rl_pass"
+        app:layout_constraintRight_toRightOf="@id/rl_pass"
+        android:layout_marginTop="@dimen/dp5"
+        android:background="@drawable/spr_click_textview"
+        android:textSize="@dimen/text_15sp"
+        android:text="@string/txt_hotline"
+        android:layout_margin="@dimen/dp5"
+        android:id="@+id/txt_hotline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>

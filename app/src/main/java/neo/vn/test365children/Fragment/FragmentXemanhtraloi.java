@@ -178,7 +178,10 @@ public class FragmentXemanhtraloi extends BaseFragment {
     private void initData() {
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         if (mCauhoi != null && mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null) {
-            txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
+                        +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
             txt_question.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));
         }
         String s = Config.URL_IMAGE+mCauhoi.getsImagePath();

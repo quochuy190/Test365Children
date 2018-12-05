@@ -3,6 +3,7 @@ package neo.vn.test365children.Fragment.ReviewExercises;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,8 +93,10 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_dienvaochotrong, container, false);
         ButterKnife.bind(this, view);
         btn_xemdiem.setVisibility(View.GONE);
-
-        txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
+                    +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         //  browser.setInitialScale(220);
         //   webview_dapan.setInitialScale(220);
@@ -109,7 +112,10 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
         browser.setBackgroundColor(Color.TRANSPARENT);
         browser.getSettings().setJavaScriptEnabled(true);
         webview_dapan.setBackgroundColor(Color.TRANSPARENT);
-
+        WebSettings settings = browser.getSettings();
+        WebSettings settings_dapan = webview_dapan.getSettings();
+        settings.setTextZoom((int) (settings.getTextZoom() * 1.2));
+        settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.2));
         String sHtml_dapan;
         sHtml_dapan = "<br /> <div  style='text-align:center;'><b>Đáp án </b></div><br />" +
                 mCauhoi.getsHTML_CONTENT().replaceAll("<<", "<u><b><font color='blue'>")

@@ -55,8 +55,6 @@ public class FragmentCuuCongchua extends BaseFragment {
     int iCauhoiStart = 0;
     @BindView(R.id.img_done)
     ImageView img_done;
-    @BindView(R.id.img_done_gif)
-    ImageView img_done_gif;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
     @BindView(R.id.img_background)
@@ -95,7 +93,6 @@ public class FragmentCuuCongchua extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_congchua, container, false);
         ButterKnife.bind(this, view);
         Glide.with(getContext()).load(R.drawable.done).into(img_done);
-        Glide.with(getContext()).load(R.drawable.icon_heart).into(img_done_gif);
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         //     initData();
         init();
@@ -122,7 +119,7 @@ public class FragmentCuuCongchua extends BaseFragment {
 
             }
         });
-        txt_lable.setText("Bài: " + mCauhoi.getsHUONGDAN());
+        txt_lable.setText("Bài " + mCauhoi.getmNumber() + ": " + mCauhoi.getsHUONGDAN());
         Glide.with(this).load(R.drawable.bg_congchua).into(img_background);
         // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
         //txtCauhoi.setText(mCauhoi.getsQUESTION());
@@ -192,7 +189,6 @@ public class FragmentCuuCongchua extends BaseFragment {
                     iCauhoiStart++;
                     if (iCauhoiStart < mCauhoi.getLisInfo().size()) {
                         img_done.setVisibility(View.GONE);
-                        img_done_gif.setVisibility(View.GONE);
                         int value = getRandom(iStart);
                         iStart.add(value);
                         for (DapAn obj : mLis) {
@@ -206,9 +202,8 @@ public class FragmentCuuCongchua extends BaseFragment {
                         }
                         adapter.notifyDataSetChanged();
                     } else {
-                        txt_lable.setText("Chúc mừng bé đã giải cứu được công chúa");
+                        txt_lable.setText("Chúc mừng công chúa đã được giải cứu");
                         img_done.setVisibility(View.VISIBLE);
-                        img_done_gif.setVisibility(View.VISIBLE);
                         recycle_dapan.setVisibility(View.GONE);
                         for (DapAn obj : mLis) {
                             obj.setClick(false);
@@ -231,6 +226,11 @@ public class FragmentCuuCongchua extends BaseFragment {
                     for (DapAn obj : mLis) {
                         obj.setClick(false);
                     }
+                    img_done.setVisibility(View.VISIBLE);
+                    txt_lable.setText("Giải cứu thất bại");
+                    Glide.with(getContext()).load(R.drawable.icon_congchua_lost)
+                            .placeholder(R.drawable.icon_congchua_lost).into(img_done);
+                    recycle_dapan.setVisibility(View.GONE);
                     for (int i = 0; i < App.mLisCauhoi.size(); i++) {
                         Cauhoi obj = App.mLisCauhoi.get(i);
                         if (obj.getsKIEU().equals("10")) {

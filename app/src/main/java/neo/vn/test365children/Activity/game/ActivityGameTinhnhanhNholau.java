@@ -226,10 +226,12 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
             if (chil.getsUSERNAME() != null) {
                 txt_name_player_one.setText(chil.getsUSERNAME());
             }
-            if (chil.getsAVARTAR() != null && chil.getsAVARTAR().length() > 0) {
-                Glide.with(this).load(Config.URL_IMAGE + chil.getsAVARTAR()).into(img_avata_player1);
+            if (chil.getsAVATAR() != null && chil.getsAVATAR().length() > 0) {
+                Glide.with(this).load(Config.URL_IMAGE + chil.getsAVARTAR())
+                        .placeholder(R.drawable.icon_avata)
+                        .into(img_avata_player1);
             } else {
-                Glide.with(this).load(R.drawable.avatar_default).into(img_avata_player1);
+                Glide.with(this).load(R.drawable.icon_avata).into(img_avata_player1);
             }
         }
         mLisData = new ArrayList<>();

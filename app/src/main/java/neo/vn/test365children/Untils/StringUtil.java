@@ -164,13 +164,14 @@ public class StringUtil {
 
     public static void initWebview(WebView webview_debai, String link_web) {
 
-        //   webview_debai.setInitialScale(220);
         webview_debai.getSettings().setJavaScriptEnabled(true);
         webview_debai.getSettings();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
+      //  settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.1));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
@@ -187,6 +188,7 @@ public class StringUtil {
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body>";
         String pas = "</body></html>";
@@ -203,6 +205,7 @@ public class StringUtil {
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
@@ -224,6 +227,7 @@ public class StringUtil {
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
@@ -244,6 +248,7 @@ public class StringUtil {
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";

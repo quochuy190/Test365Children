@@ -8,7 +8,7 @@
         android:id="@+id/img_rotrung_1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hight_egg"
-        android:padding="@dimen/dp7"
+        android:padding="@dimen/dp5"
          />
 
     <TextView
@@ -26,7 +26,7 @@
         android:id="@+id/img_trung_dapan_1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/hight_egg"
-        android:padding="@dimen/dp20"
+        android:padding="@dimen/dp15"
        />
 
     <TextView

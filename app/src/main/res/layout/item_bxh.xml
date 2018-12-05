@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/hight_item_bottom">
+    android:layout_height="@dimen/hight_item_bottom"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
         android:layout_width="match_parent"
@@ -42,13 +42,15 @@
 
     </RelativeLayout>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_avata"
         android:layout_width="@dimen/hight_item_bottom"
         android:layout_height="@dimen/hight_item_bottom"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/orange"
         android:layout_toRightOf="@id/ll_stt"
         android:padding="@dimen/dp5"
-        android:src="@drawable/avatar_default" />
+      />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -98,6 +100,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txt_speed_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,13 +110,13 @@
                 android:textSize="@dimen/text_15sp" />
 
             <TextView
+                android:fontFamily="@font/roboto_bold"
                 android:id="@+id/txt_point"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp5"
-                android:text="Họ tên"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_15sp" />
+                android:textColor="@color/red_test365"
+                android:textSize="@dimen/text_16sp" />
         </LinearLayout>
     </LinearLayout>
 

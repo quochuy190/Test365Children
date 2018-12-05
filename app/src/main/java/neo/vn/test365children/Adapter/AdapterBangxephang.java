@@ -14,6 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
@@ -58,12 +59,14 @@ public class AdapterBangxephang extends RecyclerView.Adapter<AdapterBangxephang.
         holder.txt_name.setText("Bé: " + obj.getsFULLNAME());
         holder.txt_class.setText("Lớp: " + obj.getsCLASS());
         holder.txt_school.setText(obj.getsSCHOOL_NAME());
-        holder.txt_speed_time.setText("Thời gian: " + obj.getsSPEED());
-        holder.txt_point.setText("Điểm: " + StringUtil.format_point(Float.parseFloat(obj.getsDTB())));
+        holder.txt_speed_time.setText("Thời gian: " + Float.parseFloat(obj.getsSPEED()));
+        holder.txt_point.setText( StringUtil.format_point(Float.parseFloat(obj.getsDTB()))+" ĐIỂM");
         if (obj.getsAVATAR() != null && obj.getsAVATAR().length() > 0) {
-            Glide.with(context).load(Config.URL_IMAGE + obj.getsAVATAR()).into(holder.img_avata);
+            Glide.with(context).load(Config.URL_IMAGE + obj.getsAVATAR())
+                    .placeholder(R.drawable.icon_avata)
+                    .into(holder.img_avata);
         } else
-            Glide.with(context).load(R.drawable.avatar_default).into(holder.img_avata);
+            Glide.with(context).load(R.drawable.icon_avata).into(holder.img_avata);
         if (position < 6) {
             switch (position) {
                 case 0:
@@ -113,7 +116,7 @@ public class AdapterBangxephang extends RecyclerView.Adapter<AdapterBangxephang.
         @BindView(R.id.img_sst_bxh)
         ImageView img_sst_bxh;
         @BindView(R.id.img_avata)
-        ImageView img_avata;
+        CircleImageView img_avata;
 
 
         public TopicViewHoder(View itemView) {

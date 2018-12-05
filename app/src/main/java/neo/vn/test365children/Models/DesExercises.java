@@ -43,6 +43,26 @@ public class DesExercises {
     @SerializedName("POINT")
     String sPOINT;
 
+    @SerializedName("START_TAKE_TIME")
+    String sSTART_TAKE_TIME;
+    @SerializedName("END_TAKE_TIME")
+    String sEND_TAKE_TIME;
+    @SerializedName("DURATION")
+    String sDURATION;
+    @SerializedName("SUBMIT_TYPE")
+    String sSUBMIT_TYPE;
+    @SerializedName("RECOMMENT_MOTHER")
+    String sRECOMMENT_MOTHER;
+
+    @SerializedName("WORKHARD_POINT")
+    String sWORKHARD_POINT;
+    @SerializedName("STICKER_ID")
+    String sSTICKER_ID;
+    @SerializedName("IMPROMENT_POINT")
+    String sIMPROMENT_POINT;
+    @SerializedName("WEEK_NAME")
+    String sWEEK_NAME;
+
     @SerializedName("cunglam")
     String scunglam;
     @SerializedName("cungtruong")
@@ -95,6 +115,78 @@ public class DesExercises {
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public String getsSTART_TAKE_TIME() {
+        return sSTART_TAKE_TIME;
+    }
+
+    public void setsSTART_TAKE_TIME(String sSTART_TAKE_TIME) {
+        this.sSTART_TAKE_TIME = sSTART_TAKE_TIME;
+    }
+
+    public String getsEND_TAKE_TIME() {
+        return sEND_TAKE_TIME;
+    }
+
+    public void setsEND_TAKE_TIME(String sEND_TAKE_TIME) {
+        this.sEND_TAKE_TIME = sEND_TAKE_TIME;
+    }
+
+    public String getsDURATION() {
+        return sDURATION;
+    }
+
+    public void setsDURATION(String sDURATION) {
+        this.sDURATION = sDURATION;
+    }
+
+    public String getsSUBMIT_TYPE() {
+        return sSUBMIT_TYPE;
+    }
+
+    public void setsSUBMIT_TYPE(String sSUBMIT_TYPE) {
+        this.sSUBMIT_TYPE = sSUBMIT_TYPE;
+    }
+
+    public String getsRECOMMENT_MOTHER() {
+        return sRECOMMENT_MOTHER;
+    }
+
+    public void setsRECOMMENT_MOTHER(String sRECOMMENT_MOTHER) {
+        this.sRECOMMENT_MOTHER = sRECOMMENT_MOTHER;
+    }
+
+    public String getsWORKHARD_POINT() {
+        return sWORKHARD_POINT;
+    }
+
+    public void setsWORKHARD_POINT(String sWORKHARD_POINT) {
+        this.sWORKHARD_POINT = sWORKHARD_POINT;
+    }
+
+    public String getsSTICKER_ID() {
+        return sSTICKER_ID;
+    }
+
+    public void setsSTICKER_ID(String sSTICKER_ID) {
+        this.sSTICKER_ID = sSTICKER_ID;
+    }
+
+    public String getsIMPROMENT_POINT() {
+        return sIMPROMENT_POINT;
+    }
+
+    public void setsIMPROMENT_POINT(String sIMPROMENT_POINT) {
+        this.sIMPROMENT_POINT = sIMPROMENT_POINT;
+    }
+
+    public String getsWEEK_NAME() {
+        return sWEEK_NAME;
+    }
+
+    public void setsWEEK_NAME(String sWEEK_NAME) {
+        this.sWEEK_NAME = sWEEK_NAME;
     }
 
     public String getsADMIN_COMMENT() {

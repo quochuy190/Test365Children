@@ -3,6 +3,7 @@
     package="neo.vn.test365children">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -20,61 +21,68 @@
             android:name=".Activity.ActivityHome"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
+
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.ReviewExercises.ActivityBaitapdalam"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.ReviewExercises.ActivityExercisesDetail"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.ReviewExercises.ActivityReviewExercises"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityMenuGame"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityGuideGameTPTT"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.Activity_startgame_tptt"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityGameTrieuphutrithuc"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityGameTNNL"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityGameTinhnhanhNholau"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityStartGameTNNL"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.game.ActivityGameOverTPTT"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.bangxephang.ActivityBieuDo"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.bangxephang.ActivityBXH"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:name=".Activity.Activity_List_UserLogin"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
             android:name=".Activity.SplashScreen"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,20 +90,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.ActivityLogin"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.ActivityComplete"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.ActivityCauhoiCongchua"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:configChanges="orientation|screenSize"
             android:name=".Activity.Activity_Welcome"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.ActivityMenuBaitap"

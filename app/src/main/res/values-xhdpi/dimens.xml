@@ -75,11 +75,12 @@
 
     <!--xếp trứng margin-->
     <dimen name="width_egg">140dp</dimen>
-    <dimen name="hight_egg">110dp</dimen>
+    <dimen name="hight_egg">100dp</dimen>
     <dimen name="margin_egg_2">145dp</dimen>
     <dimen name="margin_egg_3">290dp</dimen>
     <dimen name="margin_egg_4">435dp</dimen>
     <dimen name="txt_xeptrung">17sp</dimen>
+    <dimen name="hight_egg_dapan">130dp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
     <dimen name="margin_top_chaomung">10dp</dimen>
@@ -90,12 +91,14 @@
     <!--Bài tập tuần đã làm-->
     <dimen name="item_baitaptuan_dalam">100dp</dimen>
     <!--Exercises Detail-->
-    <dimen name="exercises_hight_title">70dp</dimen>
-    <dimen name="exercises_margin_leght">30dp</dimen>
+    <dimen name="exercises_hight_title">45dp</dimen>
+    <dimen name="exercises_margin_leght">15dp</dimen>
     <dimen name="exercises_icon_point">40dp</dimen>
     <dimen name="exer_hight_debai">40dp</dimen>
     <dimen name="exer_margin_top">7dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
+    <dimen name="exer_width_sticker">70dp</dimen>
+    <dimen name="icon_back_exercises">40dp</dimen>
     <!--Game-->
     <dimen name="pading_button_menu">20dp</dimen>
     <dimen name="text_menu_game">15sp</dimen>
@@ -118,7 +121,7 @@
     <dimen name="width_bxh">120dp</dimen>
     <dimen name="hight_item_bottom">70dp</dimen>
     <!--Chém chuối-->
-    <dimen name="img_chemchuoi">200dp</dimen>
+    <dimen name="img_chemchuoi">110dp</dimen>
     <dimen name="icon_anwser_review">60dp</dimen>
     <!--Đọc và trả lời-->
     <dimen name="margin_top_baidoc">25dp</dimen>
@@ -148,4 +151,12 @@
     <dimen name="height_view_level_game_tnnl">190dp</dimen>
     <dimen name="btn_level_font">15sp</dimen>
     <dimen name="text_welcom">17sp</dimen>
+    <!--Menu_login-->
+    <dimen name="width_logo">220dp</dimen>
+    <dimen name="height_logo">70dp</dimen>
+    <dimen name="margin_list_user">90dp</dimen>
+    <!--Xem lại bài tập-->
+    <dimen name="txt_lable_exer">20sp</dimen>
+    <dimen name="img_avata_home">45dp</dimen>
+    <dimen name="margin_webview_baidoc">30dp</dimen>
 </resources>

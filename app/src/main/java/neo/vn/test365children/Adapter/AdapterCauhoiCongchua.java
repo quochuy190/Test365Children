@@ -1,6 +1,5 @@
 package neo.vn.test365children.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -50,11 +50,10 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
         return new TopicViewHoder(view);
     }
 
-    @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(TopicViewHoder holder, int position) {
         DapAn obj = list.get(position);
-        StringUtil.initWebview_Whitetext(holder.webview_debai, obj.getsContent());
+        initWebview_Whitetext(holder.webview_debai, obj.getsContent());
         if (obj.isClick()) {
             if (obj.getsName() != null && obj.getsName().equals(obj.getsDapan_Traloi())) {
                 holder.checkbox.setImageResource(R.drawable.ic_checked);
@@ -104,20 +103,34 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
         list = list;
         notifyDataSetChanged();
     }
-    private void initWebview(WebView webview_debai, String link_web) {
-        webview_debai.setInitialScale(250);
+
+    public void initWebview_Whitetext(WebView webview_debai, String link_web) {
         webview_debai.getSettings().setJavaScriptEnabled(true);
         webview_debai.getSettings();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(16);
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
-
-        webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
+        String text = "<html><head>"
+                + "<style type=\"text/css\">body{color: #fff;}"
+                + "</style></head>"
+                + "<body>"
+                + StringUtil.convert_html(link_web)
+                + "</body></html>";
+        webview_debai.loadDataWithBaseURL("", pish + text + pas,
                 "text/html", "UTF-8", "");
 
+        webview_debai.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+
+            }
+        });
     }
+
 }

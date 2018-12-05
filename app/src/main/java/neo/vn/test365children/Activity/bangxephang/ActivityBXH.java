@@ -15,12 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 import neo.vn.test365children.Adapter.AdapterBangxephang;
 import neo.vn.test365children.Base.BaseActivity;
+import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.Chart_To_Subject;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.Item_BXH;
+import neo.vn.test365children.Models.ObjLogin;
 import neo.vn.test365children.Presenter.ImlThongke;
 import neo.vn.test365children.Presenter.PresenterThongke;
 import neo.vn.test365children.R;
@@ -63,6 +66,8 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
     boolean is_finish_baitap = false;
     @BindView(R.id.txt_notify)
     TextView txt_notify;
+    @BindView(R.id.img_avata)
+    CircleImageView img_avata;
     @BindView(R.id.relative_bxh_me)
     RelativeLayout relative_bxh_me;
 
@@ -79,6 +84,7 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
         Glide.with(this).load(R.drawable.bg_chao_mung).into(img_background);
         Glide.with(this).load(R.drawable.bg_bxh_1).into(img_title);
         Glide.with(this).load(R.drawable.bg_bxh_2).into(imageView17);
+        txt_tuan.setTextColor(getResources().getColor(R.color.orange));
         init();
         initData("tuan");
         initEvent();
@@ -130,10 +136,13 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
 
     }
 
+    ObjLogin sChil;
+
     private void initData(String sType) {
         showDialogLoading();
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+        sChil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
         sDate = StringUtil.get_current_time();
         switch (sType) {
             case "tuan":
@@ -176,16 +185,7 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
             if (obj.getsUSERNAME().equals(sUserCon)) {
                 is_finish_baitap = true;
                 txt_stt.setText("" + (i + 1));
-                if (obj.getsFULLNAME() != null)
-                    txt_name.setText(obj.getsFULLNAME());
-                if (obj.getsLEVEL_NAME() != null)
-                    txt_class.setText(obj.getsLEVEL_NAME());
-                if (obj.getsSCHOOL_NAME() != null)
-                    txt_school.setText(obj.getsSCHOOL_NAME());
-                if (obj.getsSPEED() != null)
-                    txt_speed_time.setText("Thời gian: " + obj.getsSPEED());
-                if (obj.getsDTB() != null)
-                    txt_point.setText("Điểm: " + obj.getsDTB());
+                set_name(obj);
             }
         }
         if (!is_finish_baitap) {
@@ -215,16 +215,7 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
             if (obj.getsUSERNAME().equals(sUserCon)) {
                 is_finish_baitap = true;
                 txt_stt.setText("" + (i + 1));
-                if (obj.getsFULLNAME() != null)
-                    txt_name.setText(obj.getsFULLNAME());
-                if (obj.getsLEVEL_NAME() != null)
-                    txt_class.setText(obj.getsLEVEL_NAME());
-                if (obj.getsSCHOOL_NAME() != null)
-                    txt_school.setText(obj.getsSCHOOL_NAME());
-                if (obj.getsSPEED() != null)
-                    txt_speed_time.setText("Thời gian: " + obj.getsSPEED());
-                if (obj.getsDTB() != null)
-                    txt_point.setText("Điểm: " + obj.getsDTB());
+                set_name(obj);
             }
         }
         if (!is_finish_baitap) {
@@ -233,6 +224,32 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
         } else {
             txt_notify.setVisibility(View.GONE);
             relative_bxh_me.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void set_name(Item_BXH obj) {
+        if (sChil != null && sChil.getsAVATAR() != null && sChil.getsAVATAR().length() > 0) {
+            Glide.with(this).load(Config.URL_IMAGE + sChil.getsAVATAR())
+                    .placeholder(R.drawable.icon_avata)
+                    .into(img_avata);
+        }
+
+        if (obj.getsFULLNAME() != null)
+            txt_name.setText(obj.getsFULLNAME());
+        else txt_name.setText("");
+        if (obj.getsLEVEL_NAME() != null)
+            txt_class.setText(obj.getsLEVEL_NAME());
+        else txt_class.setText("");
+        if (obj.getsSCHOOL_NAME() != null)
+            txt_school.setText(obj.getsSCHOOL_NAME());
+        else txt_school.setText("");
+        if (obj.getsSPEED() != null)
+            txt_speed_time.setText("Thời gian: " + obj.getsSPEED());
+        else txt_speed_time.setText("");
+        if (obj.getsDTB() != null) {
+            txt_point.setText(StringUtil.format_point(Float.parseFloat(obj.getsDTB())) + " ĐIỂM");
+        } else {
+            txt_point.setText("");
         }
     }
 
@@ -249,24 +266,15 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
             if (obj.getsUSERNAME().equals(sUserCon)) {
                 is_finish_baitap = true;
                 txt_stt.setText("" + (i + 1));
-                if (obj.getsFULLNAME() != null)
-                    txt_name.setText(obj.getsFULLNAME());
-                if (obj.getsLEVEL_NAME() != null)
-                    txt_class.setText(obj.getsLEVEL_NAME());
-                if (obj.getsSCHOOL_NAME() != null)
-                    txt_school.setText(obj.getsSCHOOL_NAME());
-                if (obj.getsSPEED() != null)
-                    txt_speed_time.setText("Thời gian: " + obj.getsSPEED());
-                if (obj.getsDTB() != null)
-                    txt_point.setText("Điểm: " + obj.getsDTB());
+                set_name(obj);
             }
-            if (!is_finish_baitap) {
-                txt_notify.setVisibility(View.VISIBLE);
-                relative_bxh_me.setVisibility(View.GONE);
-            } else {
-                txt_notify.setVisibility(View.GONE);
-                relative_bxh_me.setVisibility(View.VISIBLE);
-            }
+        }
+        if (!is_finish_baitap) {
+            txt_notify.setVisibility(View.VISIBLE);
+            relative_bxh_me.setVisibility(View.GONE);
+        } else {
+            txt_notify.setVisibility(View.GONE);
+            relative_bxh_me.setVisibility(View.VISIBLE);
         }
     }
 

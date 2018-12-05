@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -192,14 +191,17 @@ public class FragmentXepTrung extends BaseFragment {
         Glide.with(this).load(R.drawable.icon_ro_trung).into(img_rotrung2);
         Glide.with(this).load(R.drawable.icon_ro_trung).into(img_rotrung3);
         Glide.with(this).load(R.drawable.icon_ro_trung).into(img_rotrung4);
+        Glide.with(this).load(R.drawable.bg_xep_trung)
+                .placeholder(R.drawable.bg_xep_trung)
+                .into(bg_dapan);
     }
 
     private void initData() {
         txt_cauhoi.setVisibility(View.GONE);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan()));
-       // txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         txt_cauhoi.setText("Đáp án: " + mCauhoi.getsEGG_1() + " , " + mCauhoi.getsEGG_2() + " , " + mCauhoi.getsEGG_3() + " , "
                 + mCauhoi.getsEGG_4());
         Glide.with(this).load(R.drawable.bg_xep_trung).into(img_background);
@@ -272,7 +274,9 @@ public class FragmentXepTrung extends BaseFragment {
 
     private boolean isClickXemdiem = false;
     @BindView(R.id.ll_dapan_xeptrung)
-    LinearLayout ll_dapan_xeptrung;
+    RelativeLayout ll_dapan_xeptrung;
+    @BindView(R.id.bg_dapan)
+    ImageView bg_dapan;
 
     private void initEvent() {
 

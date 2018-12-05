@@ -2,12 +2,15 @@ package neo.vn.test365children.Fragment.ReviewExercises;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -202,7 +205,10 @@ public class FragmentReviewNoicau extends BaseFragment {
         mLisAnwser_B = new ArrayList<>();
         mLisQuestion_A = new ArrayList<>();
         mLisQuestionr_B = new ArrayList<>();
-        txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         String[] egg1 = mCauhoi.getsHTML_A().split("::");
         String[] egg2 = mCauhoi.getsHTML_B().split("::");
         String[] egg3 = mCauhoi.getsHTML_C().split("::");
@@ -224,6 +230,17 @@ public class FragmentReviewNoicau extends BaseFragment {
         mLisAnwser_B.add(egg2[1]);
         mLisAnwser_B.add(egg3[1]);
         mLisAnwser_B.add(egg4[1]);
+
+        for (String sContent : mLisAnwser_A) {
+            if (sContent.indexOf("img src") > -1) {
+                isImageA = true;
+            }
+        }
+        for (String sContent : mLisAnwser_B) {
+            if (sContent.indexOf("img src") > -1) {
+                isImageB = true;
+            }
+        }
         if (mCauhoi.getsEGG_1_RESULT() != null && mCauhoi.getsEGG_1_RESULT().length() > 0) {
             String[] egg_result1 = mCauhoi.getsEGG_1_RESULT().split("::");
             if (egg_result1.length > 0 && egg_result1[0] != null) {
@@ -331,18 +348,124 @@ public class FragmentReviewNoicau extends BaseFragment {
         rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
     }
 
+    boolean isImageA = false, isImageB = false;
+    int iHeightmax = 0;
+
     private void initWebview(WebView webview_debai, String link_web) {
-        webview_debai.setInitialScale(250);
         webview_debai.getSettings();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.LARGEST);
-        webSettings.setDefaultFontSize(17);
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
         webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
                 "text/html", "UTF-8", "");
+        webview_debai.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(final WebView view, String url) {
+                super.onPageFinished(view, url);
+                new CountDownTimer(1000, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        int i = 0;
+                        switch (view.getId()) {
+                            case R.id.webview_dapannoicau_A_1:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_A_2:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_A_3:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_A_4:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+
+                            case R.id.webview_dapannoicau_B_1:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_B_2:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_B_3:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_B_4:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                        }
+
+                    }
+                }.start();
+
+            }
+        });
+    }
+    public void setHeight(int iHeight) {
+        setHeightAll(iHeight, rl_dapanA_1);
+        setHeightAll(iHeight, rl_dapanA_2);
+        setHeightAll(iHeight, rl_dapanA_3);
+        setHeightAll(iHeight, rl_dapanA_4);
+        setHeightAll(iHeight, rl_dapanB_1);
+        setHeightAll(iHeight, rl_dapanB_2);
+        setHeightAll(iHeight, rl_dapanB_3);
+        setHeightAll(iHeight, rl_dapanB_4);
+
+        setHeightAll(iHeight, rl_dapanA_traloi_1);
+        setHeightAll(iHeight, rl_dapanA_traloi_2);
+        setHeightAll(iHeight, rl_dapanA_traloi_3);
+        setHeightAll(iHeight, rl_dapanA_traloi_4);
+        setHeightAll(iHeight, rl_dapanB_traloi_4);
+        setHeightAll(iHeight, rl_dapanB_traloi_3);
+        setHeightAll(iHeight, rl_dapanB_traloi_2);
+        setHeightAll(iHeight, rl_dapanB_traloi_1);
+
+    }
+    private void setHeightAll(int iHeight, View view) {
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.height = iHeight;
+        view.setLayoutParams(params);
     }
 
     private void initTraloi() {

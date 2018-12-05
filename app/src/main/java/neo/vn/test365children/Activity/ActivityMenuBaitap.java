@@ -164,12 +164,6 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
 
     MediaPlayer mp3;
 
-    public void play_mp3() {
-        //mp3 = new MediaPlayer();
-        mp3 = MediaPlayer.create(this, R.raw.happy_summer);
-        mp3.start();
-    }
-
     Calendar cal;
     Date date;
     SimpleDateFormat dft = null;
@@ -259,7 +253,7 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
                 }
             }
             adapter.notifyDataSetChanged();
-            recycleBaitap.scrollToPosition((lisBaitap_quanhan.size() - 2));
+            recycleBaitap.scrollToPosition(0);
 
         }
     }

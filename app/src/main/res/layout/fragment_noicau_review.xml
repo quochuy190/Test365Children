@@ -18,6 +18,7 @@
         android:scaleType="fitXY" />
 
     <LinearLayout
+        android:layout_margin="@dimen/dp5"
         android:id="@+id/ll_lable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,12 +37,12 @@
             android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
             android:background="@drawable/spr_lable_lambai"
-            android:fontFamily="@font/font1"
+            android:fontFamily="@font/roboto_bold"
             android:gravity="center"
             android:padding="@dimen/dp5"
             android:text="Câu 3: Chọn đáp án đúng"
             android:textColor="@color/lable_lambai"
-            android:textSize="@dimen/text_17sp"
+            android:textSize="@dimen/text_lable_lambai"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -533,7 +534,7 @@
         android:layout_margin="@dimen/dp5"
         android:visibility="visible"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
         <ImageView
             android:id="@+id/img_anwser_chil"

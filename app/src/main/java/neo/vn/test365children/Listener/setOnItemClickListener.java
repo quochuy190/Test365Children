@@ -5,6 +5,6 @@ package neo.vn.test365children.Listener;
  */
 
 public interface setOnItemClickListener {
-    public void OnItemClickListener(int position);
-    public void OnLongItemClickListener(int position);
+  public void OnItemClickListener(int position);
+  public void OnLongItemClickListener(int position);
 }

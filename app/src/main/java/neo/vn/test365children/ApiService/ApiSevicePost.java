@@ -19,21 +19,21 @@ import retrofit2.http.POST;
  */
 
 public interface ApiSevicePost {
-    //Log info action user
-    @FormUrlEncoded
-    @POST("f/submitexe.jsp")
-    Call<ResponseBody> getApiService(@FieldMap Map<String, String> data);
+  //Log info action user
+  @FormUrlEncoded
+  @POST("f/submitexe.jsp")
+  Call<ResponseBody> getApiService(@FieldMap Map<String, String> data);
 
-    final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .build();
+  final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+          .connectTimeout(30, TimeUnit.SECONDS)
+          .writeTimeout(30, TimeUnit.SECONDS)
+          .readTimeout(30, TimeUnit.SECONDS)
+          .build();
 
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(Config.BASE_URL_POST)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build();
+  Retrofit retrofit = new Retrofit.Builder()
+          .baseUrl(Config.BASE_URL_POST)
+          .addConverterFactory(GsonConverterFactory.create())
+          .client(okHttpClient)
+          .build();
 
 }

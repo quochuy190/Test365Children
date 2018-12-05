@@ -17,11 +17,11 @@ import java.util.List;
  * @since 1.0
  */
 public class ParserJson {
-    public static <T> List<T> toList(String json, Class<T> clazz) {
-        if (null == json) {
-            return null;
-        }
-        Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<T>(){}.getType());
+  public static <T> List<T> toList(String json, Class<T> clazz) {
+    if (null == json) {
+      return null;
     }
+    Gson gson = new Gson();
+    return gson.fromJson(json, new TypeToken<T>(){}.getType());
+  }
 }

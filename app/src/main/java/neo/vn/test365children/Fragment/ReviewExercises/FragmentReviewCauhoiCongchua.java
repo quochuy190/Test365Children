@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,9 +119,9 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
         iRandom = ran.nextInt(arr_image.length);
         Glide.with(this).load(arr_image[iRandom]).into(img_background);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText("trả lời các câu hỏi để giải cứu công chúa");
-       /* if (mCauhoi.getsSubNumberCau() != null && mCauhoi.getsQUESTION() != null)
-            txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));*/
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
+                    +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
         if (mCauhoi.getsHTML_CONTENT() != null && mCauhoi.getsHTML_CONTENT().length() > 0) {
             StringUtil.initWebview_Whitetext(webview_debai,mCauhoi.getsHTML_CONTENT());
         }

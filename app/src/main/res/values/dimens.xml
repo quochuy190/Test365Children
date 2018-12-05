@@ -75,11 +75,12 @@
     <dimen name="margin_flight">5dp</dimen>
     <!--xếp trứng margin-->
     <dimen name="width_egg">150dp</dimen>
-    <dimen name="hight_egg">120dp</dimen>
+    <dimen name="hight_egg">110dp</dimen>
     <dimen name="margin_egg_2">170dp</dimen>
     <dimen name="margin_egg_3">340dp</dimen>
     <dimen name="margin_egg_4">510dp</dimen>
     <dimen name="txt_xeptrung">17sp</dimen>
+    <dimen name="hight_egg_dapan">150dp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
     <dimen name="margin_top_chaomung">10dp</dimen>
@@ -90,15 +91,15 @@
     <!--Bài tập tuần đã làm-->
     <dimen name="item_baitaptuan_dalam">100dp</dimen>
     <!--Exercises Detail-->
-    <dimen name="exercises_hight_title">70dp</dimen>
-    <dimen name="exercises_margin_leght">30dp</dimen>
+    <dimen name="exercises_hight_title">50dp</dimen>
+    <dimen name="exercises_margin_leght">15dp</dimen>
     <dimen name="exercises_icon_point">50dp</dimen>
     <dimen name="exercises_icon_point_width">70dp</dimen>
     <dimen name="exer_hight_debai">40dp</dimen>
     <dimen name="exer_margin_top">10dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
     <dimen name="exer_width_sticker">70dp</dimen>
-
+    <dimen name="icon_back_exercises">45dp</dimen>
     <!--Game-->
     <dimen name="pading_button_menu">25dp</dimen>
     <dimen name="text_menu_game">16sp</dimen>
@@ -123,10 +124,10 @@
     <dimen name="hight_item_bottom">70dp</dimen>
 
     <!--Chém chuối-->
-    <dimen name="img_chemchuoi">200dp</dimen>
+    <dimen name="img_chemchuoi">120dp</dimen>
     <dimen name="icon_anwser_review">60dp</dimen>
     <!--Đọc và trả lời-->
-    <dimen name="margin_top_baidoc">20dp</dimen>
+    <dimen name="margin_top_baidoc">15dp</dimen>
     <dimen name="margin_left_baidoc">20dp</dimen>
     <!--Login-->
     <!--Bảng xếp hạng-->
@@ -157,5 +158,14 @@
     <dimen name="txt_stt_item">35dp</dimen>
     <dimen name="txt_player_name">25dp</dimen>
     <dimen name="text_welcom">17sp</dimen>
-
+    <!--Menu_login-->
+    <dimen name="width_logo">250dp</dimen>
+    <dimen name="height_logo">90dp</dimen>
+    <dimen name="margin_list_user">100dp</dimen>
+    <dimen name="text_lable_lambai">18sp</dimen>
+    <!--Xem lại bài tập-->
+    <dimen name="txt_lable_exer">21sp</dimen>
+    <dimen name="img_avata_home">60dp</dimen>
+    <dimen name="margin_item_menu_home">10dp</dimen>
+    <dimen name="margin_webview_baidoc">40dp</dimen>
 </resources>

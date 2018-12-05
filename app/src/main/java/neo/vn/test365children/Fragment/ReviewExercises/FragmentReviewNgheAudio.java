@@ -199,9 +199,10 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
         if (mCauhoi != null) {
-            txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
-            // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
-            //  txt_question.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
+                        +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
             if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
                 katex.hourglass.in.mathlib.MathView mathView = new katex.hourglass.in.mathlib.MathView(getContext());
                 mathView.setClickable(true);

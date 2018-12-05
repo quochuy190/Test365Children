@@ -57,13 +57,13 @@
 
     <ImageView
         android:id="@+id/img_mute"
-
         android:layout_width="@dimen/dp40"
         android:layout_height="@dimen/dp40"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/img_mute" />
+        android:src="@drawable/img_mute"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/img_logout"
@@ -73,21 +73,38 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/img_back_menu" />
 
-    <TextView
-        android:gravity="center"
-        android:background="@drawable/spr_title_home"
-        android:layout_marginRight="@dimen/dp15"
-        android:layout_marginLeft="@dimen/dp15"
-        android:layout_toLeftOf="@id/img_mute"
-        android:id="@+id/txt_name_home"
-        android:layout_toRightOf="@id/img_logout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dp15"
         android:layout_marginTop="@dimen/dp5"
-        android:fontFamily="@font/font1"
-        android:padding="@dimen/dp5"
-        android:textColor="@color/orange"
-        android:textSize="@dimen/text_20sp" />
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_toLeftOf="@id/img_mute"
+        android:layout_toRightOf="@id/img_logout"
+        android:background="@drawable/spr_title_home">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_avata"
+            android:layout_width="@dimen/img_avata_home"
+            android:layout_height="@dimen/img_avata_home"
+            android:layout_marginLeft="@dimen/dp10"
+            android:padding="@dimen/dp3"
+            android:src="@drawable/icon_avata" />
+
+        <TextView
+            android:id="@+id/txt_name_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_toRightOf="@+id/img_avata"
+            android:fontFamily="@font/font1"
+            android:padding="@dimen/dp5"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/text_20sp" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

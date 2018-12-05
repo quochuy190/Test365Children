@@ -12,52 +12,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObjBaitap {
-    @SerializedName("ERROR")
-    String sERROR;
-    @SerializedName("MESSAGE")
-    String sMESSAGE;
-    @SerializedName("RESULT")
-    String sRESULT;
+  @SerializedName("ERROR")
+  String sERROR;
+  @SerializedName("MESSAGE")
+  String sMESSAGE;
+  @SerializedName("RESULT")
+  String sRESULT;
 
-    private static ObjBaitap getObject (JSONObject jsonObject){
-        return new Gson().fromJson(jsonObject.toString(),ObjBaitap.class);
-    }
+  private static ObjBaitap getObject (JSONObject jsonObject){
+    return new Gson().fromJson(jsonObject.toString(),ObjBaitap.class);
+  }
 
-    public ObjBaitap(String sERROR, String sMESSAGE, String sRESULT) {
-        this.sERROR = sERROR;
-        this.sMESSAGE = sMESSAGE;
-        this.sRESULT = sRESULT;
-    }
+  public ObjBaitap(String sERROR, String sMESSAGE, String sRESULT) {
+    this.sERROR = sERROR;
+    this.sMESSAGE = sMESSAGE;
+    this.sRESULT = sRESULT;
+  }
 
-    public  static ArrayList<ObjBaitap> getList(String jsonArray) throws JSONException {
-        ArrayList<ObjBaitap> arrayList = new ArrayList<>();
-        Type type = new TypeToken<List<ObjBaitap>>(){}.getType();
-        Gson gson= new Gson();
-        arrayList = gson.fromJson(jsonArray,type);
-        return arrayList;
-    }
+  public  static ArrayList<ObjBaitap> getList(String jsonArray) throws JSONException {
+    ArrayList<ObjBaitap> arrayList = new ArrayList<>();
+    Type type = new TypeToken<List<ObjBaitap>>(){}.getType();
+    Gson gson= new Gson();
+    arrayList = gson.fromJson(jsonArray,type);
+    return arrayList;
+  }
 
-    public String getsERROR() {
-        return sERROR;
-    }
+  public String getsERROR() {
+    return sERROR;
+  }
 
-    public void setsERROR(String sERROR) {
-        this.sERROR = sERROR;
-    }
+  public void setsERROR(String sERROR) {
+    this.sERROR = sERROR;
+  }
 
-    public String getsMESSAGE() {
-        return sMESSAGE;
-    }
+  public String getsMESSAGE() {
+    return sMESSAGE;
+  }
 
-    public void setsMESSAGE(String sMESSAGE) {
-        this.sMESSAGE = sMESSAGE;
-    }
+  public void setsMESSAGE(String sMESSAGE) {
+    this.sMESSAGE = sMESSAGE;
+  }
 
-    public String getsRESULT() {
-        return sRESULT;
-    }
+  public String getsRESULT() {
+    return sRESULT;
+  }
 
-    public void setsRESULT(String sRESULT) {
-        this.sRESULT = sRESULT;
-    }
+  public void setsRESULT(String sRESULT) {
+    this.sRESULT = sRESULT;
+  }
 }

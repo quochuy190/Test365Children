@@ -55,6 +55,7 @@ public class Cauhoi extends RealmObject implements Parcelable {
     @SerializedName("UPDATETIME")
     String sUPDATETIME;
     String mOption;
+    String mNumber;
 
     public Cauhoi(String sERROR, String sMESSAGE, String sRESULT, String mOption) {
         this.sERROR = sERROR;
@@ -127,6 +128,14 @@ public class Cauhoi extends RealmObject implements Parcelable {
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public String getmNumber() {
+        return mNumber;
+    }
+
+    public void setmNumber(String mNumber) {
+        this.mNumber = mNumber;
     }
 
     public String getsPATH_IMAGE() {

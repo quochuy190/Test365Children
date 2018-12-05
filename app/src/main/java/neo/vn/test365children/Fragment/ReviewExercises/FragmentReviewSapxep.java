@@ -64,6 +64,7 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
     TextView txt_cauhoi;
     @BindView(R.id.btn_xemdiem)
     Button btn_xemdiem;
+
     public static FragmentReviewSapxep newInstance(CauhoiDetail restaurant) {
         FragmentReviewSapxep restaurantDetailFragment = new FragmentReviewSapxep();
         Bundle args = new Bundle();
@@ -98,7 +99,9 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
     private void initData() {
         img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
             if (mCauhoi.getsRESULT_CHILD().equals("0")) {
@@ -135,8 +138,10 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
             }
         } else {
             txt_cauhoi.setText(Html.fromHtml("Đáp án"));
-            String[] dapan = mCauhoi.getsHTML_CONTENT().split("::");
-            mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
+            if (mCauhoi.getsHTML_CONTENT() != null && mCauhoi.getsHTML_CONTENT().length() > 0) {
+                String[] dapan = mCauhoi.getsHTML_CONTENT().split("::");
+                mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
+            }
             if (mLiDapan != null && mLiDapan.size() > 0) {
                 for (String s : mLiDapan) {
                     mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));
@@ -146,7 +151,6 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
                     mLis.add(new DapAn("1", s, "", "agcbd", false, ""));
                 }
             }
-            //recycle_dapan.setVisibility(View.INVISIBLE);
         }
 
     }

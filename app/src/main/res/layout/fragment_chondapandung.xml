@@ -39,7 +39,7 @@
             android:padding="@dimen/dp5"
             android:text="Câu 3: Chọn đáp án đúng"
             android:textColor="@color/lable_lambai"
-            android:textSize="@dimen/text_16sp"
+            android:textSize="@dimen/text_lable_lambai"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

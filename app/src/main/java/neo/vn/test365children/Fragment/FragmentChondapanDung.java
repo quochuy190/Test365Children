@@ -102,6 +102,7 @@ public class FragmentChondapanDung extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (!isClickXemdiem) {
+                    isClickXemdiem = true;
                     img_anwser_chil.setVisibility(View.VISIBLE);
                     boolean isTrue = false;
                     if (mLis != null && isTraloi) {
@@ -125,7 +126,7 @@ public class FragmentChondapanDung extends BaseFragment {
                         else
                             EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));*/
                     }
-                    isClickXemdiem = true;
+
                 }
             }
         });
@@ -133,14 +134,11 @@ public class FragmentChondapanDung extends BaseFragment {
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan()));
-        /*if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText("Bài " + mCauhoi.getsNumberDe() + ": " + mCauhoi.getsCauhoi_huongdan());*/
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-        // initWebview();
-
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
         if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
@@ -167,37 +165,40 @@ public class FragmentChondapanDung extends BaseFragment {
         adapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-                btn_xemdiem.setEnabled(true);
-                btn_xemdiem.getBackground().setAlpha(255);
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-                if (!mLis.get(position).isClick()) {
-                    for (DapAn obj : mLis) {
-                        //obj.setClick(true);
-                        if (obj.getsName().equals(mLis.get(position).getsName())) {
-                            if (obj.getsDapan_Dung().equals(obj.getsName())) {
+                if (!isClickXemdiem) {
+                    btn_xemdiem.setEnabled(true);
+                    btn_xemdiem.getBackground().setAlpha(255);
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
+                    if (!mLis.get(position).isClick()) {
+                        for (DapAn obj : mLis) {
+                            //obj.setClick(true);
+                            if (obj.getsName().equals(mLis.get(position).getsName())) {
+                                if (obj.getsDapan_Dung().equals(obj.getsName())) {
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+                                } else {
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                                }
+
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
+                                obj.setsDapan_Traloi(obj.getsName());
                             } else {
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                                obj.setsDapan_Traloi("");
                             }
 
-                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
-                            obj.setsDapan_Traloi(obj.getsName());
-                        } else {
-                            obj.setsDapan_Traloi("");
                         }
-
+                        isTraloi = true;
+                        adapter.notifyDataSetChanged();
                     }
-                    isTraloi = true;
-                    adapter.notifyDataSetChanged();
                 }
+
             }
         });
     }

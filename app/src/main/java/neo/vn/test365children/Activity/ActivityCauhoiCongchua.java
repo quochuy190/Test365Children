@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -37,6 +39,8 @@ public class ActivityCauhoiCongchua extends BaseActivity {
     ImageView img_background;
     @BindView(R.id.img_reload)
     ImageView img_reload;
+    @BindView(R.id.txt_lable)
+    TextView txt_lable;
     int[] arr_image = {R.drawable.bg_congchua1, R.drawable.bg_congchua2, R.drawable.bg_congchua3,
             R.drawable.bg_congchua4, R.drawable.bg_congchua5, R.drawable.bg_congchua6};
 
@@ -48,12 +52,11 @@ public class ActivityCauhoiCongchua extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mCauhoi = SharedPrefs.getInstance().get(Constants.KEY_SEND_CAUHOI_CONGCHUA, CauhoiDetail.class);
         init();
         btn_xemdiem.setEnabled(false);
         btn_xemdiem.getBackground().setAlpha(50);
-    //    KeyboardUtil.button_disable(btn_xemdiem);
+        //    KeyboardUtil.button_disable(btn_xemdiem);
         Random ran = new Random();
         iRandom = ran.nextInt(arr_image.length);
         Glide.with(this).load(arr_image[iRandom]).into(img_background);
@@ -133,6 +136,10 @@ public class ActivityCauhoiCongchua extends BaseActivity {
     private void initData() {
         mLis.clear();
         StringUtil.initWebview_Whitetext(txt_cauhoi, mCauhoi.getsHTML_CONTENT());
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         //  txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));

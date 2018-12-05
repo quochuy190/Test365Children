@@ -3,10 +3,10 @@ package neo.vn.test365children.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -149,7 +149,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
     ImageView img_dapan_B_4;
     boolean isDapanA_1 = false, isDapanA_2 = false, isDapanA_3 = false, isDapanA_4 = false;
     boolean isDangchon = false;
-    boolean isDapanB_1 = false, isDapanB_2 = false, isDapanB_3 = false, isDapanB_4 = false;
     String sDangchon = "";
     Map<String, String> map_answer_chil;
     Map<String, String> map_answer_true;
@@ -192,9 +191,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         Glide.with(getContext()).load(R.drawable.bg_chem_hoa_qua).into(img_background);
         initData();
-        btn_xemdiem.getBackground().setAlpha(255);
-        btn_xemdiem.setEnabled(true);
-        //   KeyboardUtil.button_disable(btn_xemdiem);
         initEvent();
         return view;
     }
@@ -210,6 +206,15 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         webview_dapannoicau_B_2.setOnTouchListener(this);
         webview_dapannoicau_B_3.setOnTouchListener(this);
         webview_dapannoicau_B_4.setOnTouchListener(this);
+
+        webview_dapannoicau_A_traloi_1.setOnTouchListener(this);
+        webview_dapannoicau_A_traloi_2.setOnTouchListener(this);
+        webview_dapannoicau_A_traloi_3.setOnTouchListener(this);
+        webview_dapannoicau_A_traloi_4.setOnTouchListener(this);
+        webview_dapannoicau_B_traloi_1.setOnTouchListener(this);
+        webview_dapannoicau_B_traloi_2.setOnTouchListener(this);
+        webview_dapannoicau_B_traloi_3.setOnTouchListener(this);
+        webview_dapannoicau_B_traloi_4.setOnTouchListener(this);
 
 
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
@@ -251,205 +256,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                 }
             }
         });
-        /*img_dapan_A_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isDangchon) {
-                    if (!isDapanA_1) {
-                        EventBus.getDefault().post(new MessageEvent("mp3",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        rl_dapanA_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-                        sDangchon = "1";
-                        isDapanA_1 = true;
-                        isDangchon = true;
-                    }
-                } else {
-                    sDangchon = "";
-                    isDapanA_1 = false;
-                    isDangchon = false;
-                    rl_dapanA_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-                }
-            }
-        });
-        img_dapan_A_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isDangchon && !isClickXemdiem) {
-                    if (!isDapanA_2) {
-                        EventBus.getDefault().post(new MessageEvent("mp3",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        rl_dapanA_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-                        sDangchon = "2";
-                        isDapanA_2 = true;
-                        isDangchon = true;
-                    }
-                }
-
-            }
-        });
-        img_dapan_A_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isDangchon && !isClickXemdiem) {
-                    if (!isDapanA_3) {
-                        EventBus.getDefault().post(new MessageEvent("mp3",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        rl_dapanA_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-                        sDangchon = "3";
-                        isDapanA_3 = true;
-                        isDangchon = true;
-                    }
-                }
-            }
-        });
-        img_dapan_A_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isDangchon && !isClickXemdiem) {
-                    if (!isDapanA_4) {
-                        EventBus.getDefault().post(new MessageEvent("mp3",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        rl_dapanA_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-                        sDangchon = "4";
-                        isDapanA_4 = true;
-                        isDangchon = true;
-                    }
-                }
-            }
-        });
-
-        // Khi click vao cot B
-        img_dapan_B_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isDangchon && !isClickXemdiem) {
-                    if (!isDapanB_1) {
-                        EventBus.getDefault().post(new MessageEvent("mp3",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        switch (sDangchon) {
-                            case "1":
-                                map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(0));
-                                rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-                                break;
-                            case "2":
-                                map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(0));
-                                rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-                                break;
-                            case "3":
-                                map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(0));
-                                rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-                                break;
-                            case "4":
-                                map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(0));
-                                rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-                                break;
-                        }
-                        sDangchon = "";
-                        isDapanB_1 = true;
-                        isDangchon = false;
-                        check_anwser();
-                    }
-                }
-            }
-        });
-        img_dapan_B_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isDangchon && !isClickXemdiem) {
-                    if (!isDapanB_2) {
-                        EventBus.getDefault().post(new MessageEvent("mp3",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        switch (sDangchon) {
-                            case "1":
-                                map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(1));
-                                rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-                                break;
-                            case "2":
-                                map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(1));
-                                rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-                                break;
-                            case "3":
-                                map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(1));
-                                rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-                                break;
-                            case "4":
-                                map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(1));
-                                rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-                                break;
-                        }
-                        sDangchon = "";
-                        isDapanB_2 = true;
-                        isDangchon = false;
-                        check_anwser();
-                    }
-                }
-            }
-        });
-        img_dapan_B_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isDangchon && !isClickXemdiem) {
-                    if (!isDapanB_3) {
-                        EventBus.getDefault().post(new MessageEvent("mp3", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        switch (sDangchon) {
-                            case "1":
-                                map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(2));
-                                rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-                                break;
-                            case "2":
-                                map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(2));
-                                rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-                                break;
-                            case "3":
-                                map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(2));
-                                rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-                                break;
-                            case "4":
-                                map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(2));
-                                rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-                                break;
-                        }
-                        sDangchon = "";
-                        isDapanB_3 = true;
-                        isDangchon = false;
-                        check_anwser();
-                    }
-                }
-            }
-        });
-        img_dapan_B_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isDangchon && !isClickXemdiem) {
-                    if (!isDapanB_4) {
-                        EventBus.getDefault().post(new MessageEvent("mp3",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        switch (sDangchon) {
-                            case "1":
-                                map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(3));
-                                rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-                                break;
-                            case "2":
-                                map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(3));
-                                rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-                                break;
-                            case "3":
-                                map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(3));
-                                rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-                                break;
-                            case "4":
-                                map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(3));
-                                rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-                                break;
-                        }
-                        sDangchon = "";
-                        isDapanB_4 = true;
-                        isDangchon = false;
-                        check_anwser();
-                    }
-                }
-            }
-        });*/
     }
 
     public void check_anwser() {
@@ -514,6 +320,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
 
     List<String> mLisAnwser_A;
     List<String> mLisAnwser_B;
+    boolean isImageA = false, isImageB = false;
 
     private void initData() {
         text_lable_dapan.setVisibility(View.GONE);
@@ -523,8 +330,9 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         mLisAnwser_A = new ArrayList<>();
         mLisAnwser_B = new ArrayList<>();
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan()));
+            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         String[] egg1 = mCauhoi.getsHTML_A().split("::");
         String[] egg2 = mCauhoi.getsHTML_B().split("::");
         String[] egg3 = mCauhoi.getsHTML_C().split("::");
@@ -542,15 +350,76 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         mLisAnwser_B.add(egg2[1]);
         mLisAnwser_B.add(egg3[1]);
         mLisAnwser_B.add(egg4[1]);
+        for (String sContent : mLisAnwser_A) {
+            if (sContent.indexOf("img src") > -1) {
+                isImageA = true;
+            }
+        }
+        for (String sContent : mLisAnwser_B) {
+            if (sContent.indexOf("img src") > -1) {
+                isImageB = true;
+            }
+        }
         initTraloi();
         Collections.shuffle(mLisAnwser_B);
-        Log.i(TAG, "initData: " + mLisAnwser_B);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_2, StringUtil.convert_html(mLisAnwser_A.get(1)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_3, StringUtil.convert_html(mLisAnwser_A.get(2)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_4, StringUtil.convert_html(mLisAnwser_A.get(3)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_1, StringUtil.convert_html(mLisAnwser_B.get(0)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_2, StringUtil.convert_html(mLisAnwser_B.get(1)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_3, StringUtil.convert_html(mLisAnwser_B.get(2)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_4, StringUtil.convert_html(mLisAnwser_B.get(3)));
+            }
+        });
 
-        initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
-        initWebview(webview_dapannoicau_A_2, StringUtil.convert_html(mLisAnwser_A.get(1)));
-        initWebview(webview_dapannoicau_A_3, StringUtil.convert_html(mLisAnwser_A.get(2)));
-        initWebview(webview_dapannoicau_A_4, StringUtil.convert_html(mLisAnwser_A.get(3)));
-        new CountDownTimer(1000, 100) {
+
+
+
+
+
+
+
+
+      /*  new CountDownTimer(1000, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -558,141 +427,25 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
 
             @Override
             public void onFinish() {
-                initWebview(webview_dapannoicau_B_1, StringUtil.convert_html(mLisAnwser_B.get(0)));
-                initWebview(webview_dapannoicau_B_2, StringUtil.convert_html(mLisAnwser_B.get(1)));
-                initWebview(webview_dapannoicau_B_3, StringUtil.convert_html(mLisAnwser_B.get(2)));
-                initWebview(webview_dapannoicau_B_4, StringUtil.convert_html(mLisAnwser_B.get(3)));
-            }
-        }.start();
 
-        set_height_view();
+            }
+        }.start();*/
 
     }
 
-    public void set_height_view() {
-        webview_dapannoicau_A_1.setWebViewClient(new WebViewClient() {
+    int iHeightmax = 0;
+
+    private void setHeightAll(final int iHeight, final View view) {
+        new Handler().post(new Runnable() {
             @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-               /* Log.i(TAG, "onPageFinished: " + rl_dapanA_1.getHeight());
-                Log.i(TAG, "onPageFinished: " + rl_dapanB_1.getHeight());
-                int iHeight_B1 = rl_dapanB_1.getHeight();
-                int iHeight_A1 = rl_dapanA_1.getHeight();
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_dapanA_1.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_dapanA_1.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_1.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_dapanB_1.setLayoutParams(params);
-                }
-*/
+            public void run() {
+                ViewGroup.LayoutParams params = view.getLayoutParams();
+                params.height = iHeight;
+                view.setLayoutParams(params);
             }
         });
-    /*    webview_dapannoicau_B_1.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                int iHeight_B1 = rl_dapanB_1.getHeight();
-                int iHeight_A1 = rl_dapanA_1.getHeight();
-                Log.i(TAG, "onPageFinished: B " + rl_dapanA_1.getHeight());
-                Log.i(TAG, "onPageFinished: B " + rl_dapanB_1.getHeight());
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_dapanA_1.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_dapanA_1.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_1.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_dapanB_1.setLayoutParams(params);
-                }
 
-            }
-        });*/
-        /*webview_dapannoicau_B_1.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                int iHeight_B1 = rl_dapanB_1.getHeight();
-                int iHeight_A1 = rl_dapanA_1.getHeight();
-                Log.i(TAG, "onPageFinished: A1 " + rl_dapanA_1.getHeight());
-                Log.i(TAG, "onPageFinished: B1 " + rl_dapanB_1.getHeight());
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_dapanA_1.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_dapanA_1.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_1.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_dapanB_1.setLayoutParams(params);
-                }
-
-            }
-        });
-        webview_dapannoicau_B_2.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                int iHeight_B1 = rl_dapanB_2.getHeight();
-                int iHeight_A1 = rl_dapanA_2.getHeight();
-                Log.i(TAG, "onPageFinished: B2 " + rl_dapanB_2.getHeight());
-                Log.i(TAG, "onPageFinished: A2 " + rl_dapanA_2.getHeight());
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_dapanA_2.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_dapanA_2.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_2.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_dapanB_2.setLayoutParams(params);
-                }
-
-            }
-        });
-        webview_dapannoicau_B_3.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                int iHeight_B1 = rl_dapanB_3.getHeight();
-                int iHeight_A1 = rl_dapanA_3.getHeight();
-                Log.i(TAG, "onPageFinished: B3 " + rl_dapanB_3.getHeight());
-                Log.i(TAG, "onPageFinished: A3 " + rl_dapanA_3.getHeight());
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_dapanA_3.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_dapanA_3.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_3.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_dapanB_3.setLayoutParams(params);
-                }
-
-            }
-        });
-        webview_dapannoicau_B_4.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                int iHeight_B1 = rl_dapanB_4.getHeight();
-                int iHeight_A1 = rl_dapanA_4.getHeight();
-                Log.i(TAG, "onPageFinished: B4 " + rl_dapanB_4.getHeight());
-                Log.i(TAG, "onPageFinished: A4 " + rl_dapanA_4.getHeight());
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_dapanA_4.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_dapanA_4.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_4.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_dapanB_4.setLayoutParams(params);
-                }
-
-            }
-        });*/
     }
-
-    boolean isdouble_click = false;
 
     private void initWebview(WebView webview_debai, String link_web) {
         webview_debai.getSettings();
@@ -700,102 +453,164 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
-        webview_debai.loadDataWithBaseURL("", pish + link_web + pas,
+        webview_debai.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
                 "text/html", "UTF-8", "");
         webview_debai.setWebViewClient(new WebViewClient() {
             @Override
-            public void onPageFinished(WebView view, String url) {
+            public void onPageFinished(final WebView view, String url) {
                 super.onPageFinished(view, url);
-                Log.i(TAG, "onPageFinished: " + view);
-                Log.i(TAG, "onPageFinished: A1 " + rl_dapanA_1.getHeight());
-                Log.i(TAG, "onPageFinished: B1 " + rl_dapanB_1.getHeight());
-                Log.i(TAG, "onPageFinished: A2 " + rl_dapanA_2.getHeight());
-                Log.i(TAG, "onPageFinished: B2 " + rl_dapanB_2.getHeight());
-                Log.i(TAG, "onPageFinished: B3 " + rl_dapanB_3.getHeight());
-                Log.i(TAG, "onPageFinished: A3 " + rl_dapanA_3.getHeight());
-                Log.i(TAG, "onPageFinished: B4 " + rl_dapanB_4.getHeight());
-                Log.i(TAG, "onPageFinished: A4 " + rl_dapanA_4.getHeight());
-                int iHeight_B1 = rl_dapanB_1.getHeight();
-                int iHeight_A1 = rl_dapanA_1.getHeight();
+                new CountDownTimer(1000, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
 
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_dapanA_1.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_dapanA_1.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_1.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_dapanB_1.setLayoutParams(params);
-                }
-                int iHeight_B2 = rl_dapanB_2.getHeight();
-                int iHeight_A2 = rl_dapanA_2.getHeight();
-                Log.i(TAG, "onPageFinished: B2 " + rl_dapanB_2.getHeight());
-                Log.i(TAG, "onPageFinished: A2 " + rl_dapanA_2.getHeight());
-                if (iHeight_B2 > iHeight_A2) {
-                    ViewGroup.LayoutParams params = rl_dapanA_2.getLayoutParams();
-                    params.height = iHeight_B2;
-                    rl_dapanA_2.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_2.getLayoutParams();
-                    params.height = iHeight_A2;
-                    rl_dapanB_2.setLayoutParams(params);
-                }
-                int iHeight_B3 = rl_dapanB_3.getHeight();
-                int iHeight_A3 = rl_dapanA_3.getHeight();
-                Log.i(TAG, "onPageFinished: B3 " + rl_dapanB_3.getHeight());
-                Log.i(TAG, "onPageFinished: A3 " + rl_dapanA_3.getHeight());
-                if (iHeight_B3 > iHeight_A3) {
-                    ViewGroup.LayoutParams params = rl_dapanA_3.getLayoutParams();
-                    params.height = iHeight_B3;
-                    rl_dapanA_3.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_3.getLayoutParams();
-                    params.height = iHeight_A3;
-                    rl_dapanB_3.setLayoutParams(params);
-                }
-                int iHeight_B4 = rl_dapanB_4.getHeight();
-                int iHeight_A4 = rl_dapanA_4.getHeight();
-                if (iHeight_B4 > iHeight_A4) {
-                    ViewGroup.LayoutParams params = rl_dapanA_4.getLayoutParams();
-                    params.height = iHeight_B4;
-                    rl_dapanA_4.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_4.getLayoutParams();
-                    params.height = iHeight_A4;
-                    rl_dapanB_4.setLayoutParams(params);
-                }
-              /*  int iHeight_B1 = rl_dapanB_4.getHeight();
-                int iHeight_A1 = rl_dapanA_4.getHeight();
-                Log.i(TAG, "onPageFinished: B4 " + rl_dapanB_4.getHeight());
-                Log.i(TAG, "onPageFinished: A4 " + rl_dapanA_4.getHeight());
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_dapanA_4.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_dapanA_4.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_dapanB_4.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_dapanB_4.setLayoutParams(params);
-                }*/
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        int i = 0;
+                        switch (view.getId()) {
+                            case R.id.webview_dapannoicau_A_1:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_A_2:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_A_3:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_A_4:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+
+                            case R.id.webview_dapannoicau_B_1:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_B_2:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_B_3:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                            case R.id.webview_dapannoicau_B_4:
+                                i = rl_dapanA_1.getHeight();
+                                if (i > iHeightmax) {
+                                    iHeightmax = i;
+                                    setHeight(iHeightmax);
+                                }
+                                break;
+                        }
+
+                    }
+                }.start();
 
             }
         });
     }
 
+    public void setHeight(int iHeight) {
+        setHeightAll(iHeight, rl_dapanA_1);
+        setHeightAll(iHeight, rl_dapanA_2);
+        setHeightAll(iHeight, rl_dapanA_3);
+        setHeightAll(iHeight, rl_dapanA_4);
+        setHeightAll(iHeight, rl_dapanB_1);
+        setHeightAll(iHeight, rl_dapanB_2);
+        setHeightAll(iHeight, rl_dapanB_3);
+        setHeightAll(iHeight, rl_dapanB_4);
+
+        setHeightAll(iHeight, rl_dapanA_traloi_1);
+        setHeightAll(iHeight, rl_dapanA_traloi_2);
+        setHeightAll(iHeight, rl_dapanA_traloi_3);
+        setHeightAll(iHeight, rl_dapanA_traloi_4);
+        setHeightAll(iHeight, rl_dapanB_traloi_4);
+        setHeightAll(iHeight, rl_dapanB_traloi_3);
+        setHeightAll(iHeight, rl_dapanB_traloi_2);
+        setHeightAll(iHeight, rl_dapanB_traloi_1);
+
+    }
+
     private void initTraloi() {
-        initWebview(webview_dapannoicau_A_traloi_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
-        initWebview(webview_dapannoicau_A_traloi_2, StringUtil.convert_html(mLisAnwser_A.get(1)));
-        initWebview(webview_dapannoicau_A_traloi_3, StringUtil.convert_html(mLisAnwser_A.get(2)));
-        initWebview(webview_dapannoicau_A_traloi_4, StringUtil.convert_html(mLisAnwser_A.get(3)));
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_traloi_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_traloi_2, StringUtil.convert_html(mLisAnwser_A.get(1)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_traloi_3, StringUtil.convert_html(mLisAnwser_A.get(2)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_traloi_4, StringUtil.convert_html(mLisAnwser_A.get(3)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_traloi_1, StringUtil.convert_html(mLisAnwser_B.get(0)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
 
-        initWebview(webview_dapannoicau_B_traloi_1, StringUtil.convert_html(mLisAnwser_B.get(0)));
-        initWebview(webview_dapannoicau_B_traloi_2, StringUtil.convert_html(mLisAnwser_B.get(1)));
-        initWebview(webview_dapannoicau_B_traloi_3, StringUtil.convert_html(mLisAnwser_B.get(2)));
-        initWebview(webview_dapannoicau_B_traloi_4, StringUtil.convert_html(mLisAnwser_B.get(3)));
+                initWebview(webview_dapannoicau_B_traloi_2, StringUtil.convert_html(mLisAnwser_B.get(1)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_traloi_3, StringUtil.convert_html(mLisAnwser_B.get(2)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
 
+                initWebview(webview_dapannoicau_B_traloi_4, StringUtil.convert_html(mLisAnwser_B.get(3)));
+            }
+        });
         rl_dapanA_traloi_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
         rl_dapanB_traloi_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
 
@@ -813,36 +628,37 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                if (!isClickXemdiem) {
+                    switch (v.getId()) {
+                        case R.id.webview_dapannoicau_A_1:
+                            initEvent_AClick("A1");
+                            break;
+                        case R.id.webview_dapannoicau_A_2:
+                            initEvent_AClick("A2");
+                            break;
+                        case R.id.webview_dapannoicau_A_3:
+                            initEvent_AClick("A3");
+                            break;
+                        case R.id.webview_dapannoicau_A_4:
+                            initEvent_AClick("A4");
+                            break;
+                        case R.id.webview_dapannoicau_B_1:
+                            initEvent_AClick("B1");
+                            break;
+                        case R.id.webview_dapannoicau_B_2:
+                            initEvent_AClick("B2");
+                            break;
+                        case R.id.webview_dapannoicau_B_3:
+                            initEvent_AClick("B3");
+                            break;
+                        case R.id.webview_dapannoicau_B_4:
+                            initEvent_AClick("B4");
+                            break;
+                    }
+                }
                 break;
             case MotionEvent.ACTION_UP:
-                switch (v.getId()) {
-                    case R.id.webview_dapannoicau_A_1:
-                        initEvent_AClick("A1");
-                        break;
-                    case R.id.webview_dapannoicau_A_2:
-                        initEvent_AClick("A2");
-                        break;
-                    case R.id.webview_dapannoicau_A_3:
-                        initEvent_AClick("A3");
-                        break;
-                    case R.id.webview_dapannoicau_A_4:
-                        initEvent_AClick("A4");
-                        break;
-                    case R.id.webview_dapannoicau_B_1:
-                        initEvent_AClick("B1");
-                        break;
 
-                    case R.id.webview_dapannoicau_B_2:
-                        initEvent_AClick("B2");
-                        break;
-                    case R.id.webview_dapannoicau_B_3:
-                        initEvent_AClick("B3");
-                        break;
-
-                    case R.id.webview_dapannoicau_B_4:
-                        initEvent_AClick("B4");
-                        break;
-                }
                 break;
         }
         return false;
@@ -953,18 +769,24 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                 if (isDangchon) {
                     initClickEventB(rl_dapanB_1, "B1", sDangchon, 0);
                     check_anwser();
+                } else {
+                    initNotClickB("B1", rl_dapanB_1, 1);
                 }
                 break;
             case "B2":
                 if (isDangchon) {
                     initClickEventB(rl_dapanB_2, "B2", sDangchon, 1);
                     check_anwser();
+                } else {
+                    initNotClickB("B2", rl_dapanB_2, 2);
                 }
                 break;
             case "B3":
                 if (isDangchon) {
                     initClickEventB(rl_dapanB_3, "B3", sDangchon, 2);
                     check_anwser();
+                } else {
+                    initNotClickB("B3", rl_dapanB_3, 3);
                 }
                 break;
             case "B4":
@@ -972,41 +794,295 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                     initClickEventB(rl_dapanB_4, "B4", sDangchon, 3);
                     check_anwser();
                 } else {
-
+                    initNotClickB("B4", rl_dapanB_4, 4);
                 }
                 break;
         }
     }
 
+    boolean isUnClick = false;
+    String sUnClick = "";
+
+    private void initNotClickB(String sClick, RelativeLayout rl, int postion) {
+        if (!isUnClick) {
+            switch (sClick) {
+                case "B1":
+                    if (isClickB1) {
+                        rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                        sUnClick = "B1";
+                        isClickB1 = false;
+                        isDangchon = true;
+                        if (arayClickA1[1].length() > 0 && arayClickA1[1].equals("B1")) {
+                            sDangchon = arayClickA1[0];
+                            arayClickA1[1] = "";
+                        } else if (arayClickA2[1].length() > 0 && arayClickA2[1].equals("B1")) {
+                            sDangchon = arayClickA2[0];
+                            arayClickA2[1] = "";
+                        } else if (arayClickA3[1].length() > 0 && arayClickA3[1].equals("B1")) {
+                            sDangchon = arayClickA3[0];
+                            arayClickA3[1] = "";
+                        } else if (arayClickA4[1].length() > 0 && arayClickA4[1].equals("B1")) {
+                            sDangchon = arayClickA4[0];
+                            arayClickA4[1] = "";
+                        }
+                    }
+                    break;
+                case "B2":
+                    if (isClickB2) {
+                        rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                        sUnClick = "B2";
+                        isClickB2 = false;
+                        isDangchon = true;
+                        if (arayClickA1[1].length() > 0 && arayClickA1[1].equals("B2")) {
+                            sDangchon = arayClickA1[0];
+                            arayClickA1[1] = "";
+                        } else if (arayClickA2[1].length() > 0 && arayClickA2[1].equals("B2")) {
+                            sDangchon = arayClickA2[0];
+                            arayClickA2[1] = "";
+                        } else if (arayClickA3[1].length() > 0 && arayClickA3[1].equals("B2")) {
+                            sDangchon = arayClickA3[0];
+                            arayClickA3[1] = "";
+                        } else if (arayClickA4[1].length() > 0 && arayClickA4[1].equals("B2")) {
+                            sDangchon = arayClickA4[0];
+                            arayClickA4[1] = "";
+                        }
+                    }
+                    break;
+                case "B3":
+                    if (isClickB3) {
+                        rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                        sUnClick = "B3";
+                        isClickB3 = false;
+                        isDangchon = true;
+                        if (arayClickA1[1].length() > 0 && arayClickA1[1].equals("B3")) {
+                            sDangchon = arayClickA1[0];
+                            arayClickA1[1] = "";
+                        } else if (arayClickA2[1].length() > 0 && arayClickA2[1].equals("B3")) {
+                            sDangchon = arayClickA2[0];
+                            arayClickA2[1] = "";
+                        } else if (arayClickA3[1].length() > 0 && arayClickA3[1].equals("B3")) {
+                            sDangchon = arayClickA3[0];
+                            arayClickA3[1] = "";
+                        } else if (arayClickA4[1].length() > 0 && arayClickA4[1].equals("B3")) {
+                            sDangchon = arayClickA4[0];
+                            arayClickA4[1] = "";
+                        }
+                    }
+                    break;
+                case "B4":
+                    if (isClickB4) {
+                        rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                        sUnClick = "B4";
+                        isClickB4 = false;
+                        isDangchon = true;
+                        if (arayClickA1[1].length() > 0 && arayClickA1[1].equals("B4")) {
+                            sDangchon = arayClickA1[0];
+                            arayClickA1[1] = "";
+                        } else if (arayClickA2[1].length() > 0 && arayClickA2[1].equals("B4")) {
+                            sDangchon = arayClickA2[0];
+                            arayClickA2[1] = "";
+                        } else if (arayClickA3[1].length() > 0 && arayClickA3[1].equals("B4")) {
+                            sDangchon = arayClickA3[0];
+                            arayClickA3[1] = "";
+                        } else if (arayClickA4[1].length() > 0 && arayClickA4[1].equals("B4")) {
+                            sDangchon = arayClickA4[0];
+                            arayClickA4[1] = "";
+                        }
+                    }
+                    break;
+            }
+
+        }
+
+
+    }
+
+    boolean isClickB1, isClickB2, isClickB3, isClickB4 = false;
+
     private void initClickEventB(RelativeLayout rl, String sClick, String schon, int position) {
         switch (schon) {
             case "A1":
-                arayClickA1[1] = sClick;
-                map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(position));
-                rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-                isDangchon = false;
-                sDangchon = "";
+                switch (sClick) {
+                    case "B1":
+                        if (!isClickB1) {
+                            arayClickA1[1] = sClick;
+                            map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB1 = true;
+                        }
+                        break;
+                    case "B2":
+                        if (!isClickB2) {
+                            arayClickA1[1] = sClick;
+                            map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB2 = true;
+                        }
+                        break;
+                    case "B3":
+                        if (!isClickB3) {
+                            arayClickA1[1] = sClick;
+                            map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB3 = true;
+                        }
+                        break;
+                    case "B4":
+                        if (!isClickB4) {
+                            arayClickA1[1] = sClick;
+                            map_answer_chil.put("egg_1", mLisAnwser_A.get(0) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB4 = true;
+                        }
+                        break;
+
+                }
+
                 break;
             case "A2":
-                arayClickA2[1] = sClick;
-                map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(position));
-                rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-                isDangchon = false;
-                sDangchon = "";
+                switch (sClick) {
+                    case "B1":
+                        if (!isClickB1) {
+                            arayClickA2[1] = sClick;
+                            map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB1 = true;
+                        }
+                        break;
+                    case "B2":
+                        if (!isClickB2) {
+                            arayClickA2[1] = sClick;
+                            map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB2 = true;
+                        }
+                        break;
+                    case "B3":
+                        if (!isClickB3) {
+                            arayClickA2[1] = sClick;
+                            map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB3 = true;
+                        }
+                        break;
+                    case "B4":
+                        if (!isClickB4) {
+                            arayClickA2[1] = sClick;
+                            map_answer_chil.put("egg_2", mLisAnwser_A.get(1) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB4 = true;
+                        }
+                        break;
+                }
+
+
                 break;
             case "A3":
-                arayClickA3[1] = sClick;
-                map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(position));
-                rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-                isDangchon = false;
-                sDangchon = "";
+                switch (sClick) {
+                    case "B1":
+                        if (!isClickB1) {
+                            arayClickA3[1] = sClick;
+                            map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB1 = true;
+                        }
+                        break;
+                    case "B2":
+                        if (!isClickB2) {
+                            arayClickA3[1] = sClick;
+                            map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB2 = true;
+                        }
+                        break;
+                    case "B3":
+                        if (!isClickB3) {
+                            arayClickA3[1] = sClick;
+                            map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB3 = true;
+                        }
+                        break;
+                    case "B4":
+                        if (!isClickB4) {
+                            arayClickA3[1] = sClick;
+                            map_answer_chil.put("egg_3", mLisAnwser_A.get(2) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB4 = true;
+                        }
+                        break;
+                }
+
+
                 break;
             case "A4":
-                arayClickA4[1] = sClick;
-                map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(position));
-                rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-                isDangchon = false;
-                sDangchon = "";
+                switch (sClick) {
+                    case "B1":
+                        if (!isClickB1) {
+                            arayClickA4[1] = sClick;
+                            map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB1 = true;
+                        }
+                        break;
+                    case "B2":
+                        if (!isClickB2) {
+                            arayClickA4[1] = sClick;
+                            map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB2 = true;
+                        }
+                        break;
+                    case "B3":
+                        if (!isClickB3) {
+                            arayClickA4[1] = sClick;
+                            map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB3 = true;
+                        }
+                        break;
+                    case "B4":
+                        if (!isClickB4) {
+                            arayClickA4[1] = sClick;
+                            map_answer_chil.put("egg_4", mLisAnwser_A.get(3) + "::" + mLisAnwser_B.get(position));
+                            rl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+                            isDangchon = false;
+                            sDangchon = "";
+                            isClickB4 = true;
+                        }
+                        break;
+                }
+
                 break;
         }
     }

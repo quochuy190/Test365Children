@@ -1,6 +1,7 @@
 package neo.vn.test365children.Activity.game;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,8 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -198,6 +200,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             public void onClick(View v) {
                 KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_5050);
                 if (!isSupport5050) {
+                    img_delete_sp_5050.setVisibility(View.VISIBLE);
                     play_mp3_click();
                     final GameTrieuPhuTriThuc obj = mLisGameTptt.get(iCurrentQuestion);
                     if (obj.getsANSWER().equals("A") || obj.getsANSWER().equals("B")) {
@@ -217,6 +220,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             public void onClick(View v) {
                 KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_call);
                 if (!isAddTwoAnwser) {
+                    img_delete_sp_call.setVisibility(View.VISIBLE);
                     play_mp3_click();
                     isTwoAnwser_ing = true;
                     isAddTwoAnwser = !isAddTwoAnwser;
@@ -230,6 +234,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                 KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_khangia);
                 if (time > 0) {
                     if (!isAddTime) {
+                        img_delete_sp_add_time.setVisibility(View.VISIBLE);
                         play_mp3_click();
                         resetTime60(time + 60000);
                         isAddTime = !isAddTime;
@@ -241,14 +246,15 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         rl_sp_minus_monney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_minus_monney);
                 if (!isSp_minus_monney) {
+
                     play_mp3_click();
                     showDialogComfirm("Thông báo", "Sử dụng quyền trợ giúp này giúp bạn vượt qua câu hỏi này và bị trừ 1.000đ bạn có đồng ý không", false, new ClickDialog() {
                         @Override
                         public void onClickYesDialog() {
                             //play_mp3_click();
+                            img_delete_sp_add_time.setVisibility(View.VISIBLE);
                             isSp_minus_monney = true;
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -618,112 +624,15 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         if (obj.getsHTML_CONTENT().length() > 0)
             StringUtil.initWebview_Whitetext(webview_game, obj.getsHTML_CONTENT());
         if (obj.getsHTML_A().length() > 0)
-            StringUtil.initWebview_Whitetext(webview_anwser_A, obj.getsHTML_A());
+            initWebview_Anwser(webview_anwser_A, obj.getsHTML_A());
         if (obj.getsHTML_B().length() > 0)
-            StringUtil.initWebview_Whitetext(webview_anwser_B, obj.getsHTML_B());
+            initWebview_Anwser(webview_anwser_B, obj.getsHTML_B());
         if (obj.getsHTML_C().length() > 0)
-            StringUtil.initWebview_Whitetext(webview_anwser_C, obj.getsHTML_C());
+            initWebview_Anwser(webview_anwser_C, obj.getsHTML_C());
         if (obj.getsHTML_D().length() > 0)
-            StringUtil.initWebview_Whitetext(webview_anwser_D, obj.getsHTML_D());
-        set_height();
+            initWebview_Anwser(webview_anwser_D, obj.getsHTML_D());
         resetTime();
         isAnwserIng = false;
-    }
-
-    int iHeight_A, iHeight_B, iHeight_C, iHeight_D, iHeight_Max;
-
-    private void set_height() {
-        webview_anwser_C.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                iHeight_C = rl_anwser_C.getHeight();
-                Log.i(TAG, "onPageFinished C -: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
-               /* iHeight_A = rl_anwser_A.getHeight();
-                Log.i(TAG, "onPageFinished c heightA: " + rl_anwser_A.getHeight());
-                Log.i(TAG, "onPageFinished c heightC: " + rl_anwser_C.getHeight());
-                int iHeight_B1 = rl_anwser_C.getHeight();
-                int iHeight_A1 = rl_anwser_A.getHeight();
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_anwser_A.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_anwser_A.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_anwser_C.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_anwser_C.setLayoutParams(params);
-                }*/
-            }
-        });
-        webview_anwser_D.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                iHeight_D = rl_anwser_D.getHeight();
-                Log.i(TAG, "onPageFinished D -: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
-               /* int iHeight_B1 = rl_anwser_D.getHeight();
-                int iHeight_A1 = rl_anwser_B.getHeight();
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_anwser_B.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_anwser_B.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_anwser_D.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_anwser_D.setLayoutParams(params);
-                }*/
-               /* Log.i(TAG, "onPageFinished: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
-                if (iHeight_A > iHeight_C) {
-                    ViewGroup.LayoutParams params = rl_anwser_C.getLayoutParams();
-                    params.height = iHeight_A;
-                    rl_anwser_C.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_anwser_A.getLayoutParams();
-                    params.height = iHeight_C;
-                    rl_anwser_A.setLayoutParams(params);
-                }*/
-            }
-        });
-        webview_anwser_B.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                iHeight_B = rl_anwser_B.getHeight();
-                //Log.i(TAG, "onPageFinished B -: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
-               /* int iHeight_B1 = rl_anwser_D.getHeight();
-                int iHeight_A1 = rl_anwser_B.getHeight();
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_anwser_B.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_anwser_B.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_anwser_D.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_anwser_D.setLayoutParams(params);
-                }*/
-            }
-        });
-        webview_anwser_A.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                iHeight_A = rl_anwser_A.getHeight();
-                Log.i(TAG, "onPageFinished A -: A" + iHeight_A + "B" + iHeight_B + "C" + iHeight_C + "D" + iHeight_D);
-               /* int iHeight_B1 = rl_anwser_D.getHeight();
-                int iHeight_A1 = rl_anwser_B.getHeight();
-                if (iHeight_B1 > iHeight_A1) {
-                    ViewGroup.LayoutParams params = rl_anwser_B.getLayoutParams();
-                    params.height = iHeight_B1;
-                    rl_anwser_B.setLayoutParams(params);
-                } else {
-                    ViewGroup.LayoutParams params = rl_anwser_D.getLayoutParams();
-                    params.height = iHeight_A1;
-                    rl_anwser_D.setLayoutParams(params);
-                }*/
-            }
-        });
-
-
     }
 
     public void click_anwser(String sClick) {
@@ -1102,5 +1011,57 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     @Override
     public void onBackPressed() {
         // super.onBackPressed();
+    }
+
+    public void initWebview_Anwser(WebView webview_debai, String link_web) {
+        //webview_debai.setInitialScale(220);
+        webview_debai.getSettings().setJavaScriptEnabled(true);
+        webview_debai.getSettings();
+        webview_debai.setBackgroundColor(Color.TRANSPARENT);
+        WebSettings webSettings = webview_debai.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
+        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+        String text = "<html><head>"
+                + "<style type=\"text/css\">body{color: #fff;}"
+                + "</style></head>"
+                + "<body>"
+                + StringUtil.convert_html(link_web)
+                + "</body></html>";
+        webview_debai.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
+
+     /*   webview_debai.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                int i = view.getHeight();
+                Log.i(TAG, "onPageFinished: " + view.getId());
+                Log.i(TAG, "onPageFinished: " + i);
+                if (i > iHeightmax) {
+                    iHeightmax = i;
+                    setHeightAll(iHeightmax, rl_anwser_A);
+                    setHeightAll(iHeightmax, rl_anwser_B);
+                    setHeightAll(iHeightmax, rl_anwser_C);
+                    setHeightAll(iHeightmax, rl_anwser_D);
+                }
+            }
+        });*/
+    }
+
+    int iHeightmax = 0;
+
+    private void setHeightAll(final int iHeight, final View view) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                ViewGroup.LayoutParams params = view.getLayoutParams();
+                params.height = iHeight;
+                view.setLayoutParams(params);
+            }
+        });
+
     }
 }

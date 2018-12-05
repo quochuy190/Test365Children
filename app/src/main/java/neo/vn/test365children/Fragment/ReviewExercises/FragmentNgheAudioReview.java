@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -212,7 +213,10 @@ public class FragmentNgheAudioReview extends BaseFragment implements MediaPlayer
         }
 
         if (mCauhoi != null) {
-            txt_lable.setText("Bài: " + mCauhoi.getsNumberDe() + " " + mCauhoi.getsCauhoi_huongdan());
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
+                        +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
             initWebview();
         }
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);

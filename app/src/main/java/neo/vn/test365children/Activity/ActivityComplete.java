@@ -142,6 +142,8 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
                                     fPoint = fPoint + fTotalPoint;
                                 }
                             }
+                        } else if (obj.getsKIEU().equals("6")) {
+                            fPoint = fPoint + objCauhoiDetail.getfTempPoint();
                         }
                     }
                 }
@@ -158,7 +160,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
         if (objExer.getsThoiluonglambai() != null && objExer.getsThoiluonglambai().length() > 0) {
             durationInMillis = Long.parseLong(objExer.getsThoiluonglambai());
             txt_timelambai.setText("Thời gian làm bài: "
-                    + TimeUtils.formatDuration((int) durationInMillis));
+                    + TimeUtils.formatTime_Complete((int) durationInMillis));
         } else {
             txt_timelambai.setText("Thời gian làm bài không xác định");
         }
@@ -216,7 +218,9 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
     public void show_submit_execercise(List<ErrorApi> mLis) {
         hideDialogLoading();
         if (mLis != null && mLis.get(0).equals("0000")) {
-
+            Log.i(TAG, "show_submit_execercise: success");
+        } else {
+            Log.i(TAG, "show_submit_execercise: " + mLis.get(0).getsRESULT());
         }
     }
 }

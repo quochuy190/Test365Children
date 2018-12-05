@@ -12,6 +12,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * @author Quốc Huy
  * @version 1.0.0
@@ -23,7 +26,7 @@ import java.util.List;
  * @updated on 7/31/2018
  * @since 1.0
  */
-public class ObjLogin implements Serializable {
+public class ObjLogin extends RealmObject implements Serializable {
     @SerializedName("ERROR")
     private String sERROR;
     @SerializedName("MESSAGE")
@@ -48,13 +51,13 @@ public class ObjLogin implements Serializable {
     private String sAPI_SERVER;
     @SerializedName("MEDIA_SERVER")
     private String sMEDIA_SERVER;
+    @PrimaryKey
     @SerializedName("USERNAME")
     private String sUSERNAME;
     @SerializedName("STATE")
     private String sSTATE;
     @SerializedName("UPDATETIME")
     private String sUPDATETIME;
-
     @SerializedName("DEVICE_TYPE")
     private String sDEVICE_TYPE;
     @SerializedName("SCHOOL_ID")
@@ -67,6 +70,20 @@ public class ObjLogin implements Serializable {
     private String sPROVINCE_NAME;
     @SerializedName("LEVEL_ID")
     private String sLEVEL_ID;
+
+    @SerializedName("ID_PROVINCE")
+    private String sID_PROVINCE;
+    @SerializedName("DISTRICT_ID")
+    private String sDISTRICT_ID;
+    @SerializedName("ID")
+    private String sID;
+    @SerializedName("CLASS")
+    private String sCLASS;
+    @SerializedName("AVATAR")
+    private String sAVATAR;
+    @SerializedName("PASS")
+    private String sPASS;
+    private String sUserMe;
 
     public ObjLogin() {
     }
@@ -84,6 +101,62 @@ public class ObjLogin implements Serializable {
         arrayList = gson.fromJson(jsonArray, type);
 
         return arrayList;
+    }
+
+    public String getsUserMe() {
+        return sUserMe;
+    }
+
+    public void setsUserMe(String sUserMe) {
+        this.sUserMe = sUserMe;
+    }
+
+    public String getsID_PROVINCE() {
+        return sID_PROVINCE;
+    }
+
+    public void setsID_PROVINCE(String sID_PROVINCE) {
+        this.sID_PROVINCE = sID_PROVINCE;
+    }
+
+    public String getsDISTRICT_ID() {
+        return sDISTRICT_ID;
+    }
+
+    public void setsDISTRICT_ID(String sDISTRICT_ID) {
+        this.sDISTRICT_ID = sDISTRICT_ID;
+    }
+
+    public String getsID() {
+        return sID;
+    }
+
+    public void setsID(String sID) {
+        this.sID = sID;
+    }
+
+    public String getsCLASS() {
+        return sCLASS;
+    }
+
+    public void setsCLASS(String sCLASS) {
+        this.sCLASS = sCLASS;
+    }
+
+    public String getsAVATAR() {
+        return sAVATAR;
+    }
+
+    public void setsAVATAR(String sAVATAR) {
+        this.sAVATAR = sAVATAR;
+    }
+
+    public String getsPASS() {
+        return sPASS;
+    }
+
+    public void setsPASS(String sPASS) {
+        this.sPASS = sPASS;
     }
 
     public String getsLEVEL_ID() {

@@ -12,8 +12,9 @@ import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.MessageEvent;
 
 public class ServiceDownTime extends Service {
-    public  int TOTAL_TIME = 30 * 60 * 1000;
+    public int TOTAL_TIME = 30 * 60 * 1000;
     CountDownTimer Timer;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -23,10 +24,20 @@ public class ServiceDownTime extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         int time = intent.getIntExtra(Constants.KEY_SEND_TIME_SERVICE, 0);
+        /*Intent notificationIntent = new Intent(this, ActivityLambaitap.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, notificationIntent, 0);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Home365")
+                .setContentText("Làm bài tập")
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                //.setContentIntent(pendingIntent)
+                .build();
+        startForeground(1, notification);*/
         if (time > 0) {
             TOTAL_TIME = time;
         }
-         Timer = new CountDownTimer(TOTAL_TIME, 1000) {
+        Timer = new CountDownTimer(TOTAL_TIME, 1000) {
             public void onTick(long millisUntilFinished) {
                 EventBus.getDefault().post(new MessageEvent("Service", 0, millisUntilFinished));
             }
@@ -43,7 +54,5 @@ public class ServiceDownTime extends Service {
         Timer.cancel();
         super.onDestroy();
     }
-    public void show_notify(){
-       
-    }
+
 }

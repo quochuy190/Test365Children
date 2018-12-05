@@ -46,4 +46,5 @@ public class Constants {
     public static final String KEY_SEND_SP_MINUS_MONNEY= "KEY_SEND_SP_MINUS_MONNEY";
 
     public static final String KEY_SEND_LEVEL= "KEY_SEND_LEVEL";
+    public static final String KEY_SHOW_APP_MOTHER= "KEY_SHOW_APP_MOTHER";
 }
