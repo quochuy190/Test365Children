@@ -38,7 +38,7 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
     @BindView(R.id.imageView3)
     ImageView img_background;
     int[] arr_image = {R.drawable.bg_congchua1, R.drawable.bg_congchua2, R.drawable.bg_congchua3,
-            R.drawable.bg_congchua4, R.drawable.bg_congchua5, R.drawable.bg_congchua6};
+            R.drawable.bg_congchua4, R.drawable.bg_congchua6};
 
     public static FragmentReviewCauhoiCongchua newInstance(CauhoiDetail restaurant) {
         FragmentReviewCauhoiCongchua restaurantDetailFragment = new FragmentReviewCauhoiCongchua();
@@ -134,13 +134,17 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
         if (mCauhoi.getsA() != null && mCauhoi.getsA().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+            mLis.add(new DapAn("A", mCauhoi.getsA(), mCauhoi.getsANSWER_CHILD(),
+                    mCauhoi.getsANSWER(), true, ""));
         if (mCauhoi.getsB() != null && mCauhoi.getsB().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+            mLis.add(new DapAn("B", mCauhoi.getsB(), mCauhoi.getsANSWER_CHILD(),
+                    mCauhoi.getsANSWER(), true, ""));
         if (mCauhoi.getsC() != null && mCauhoi.getsC().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+            mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(),
+                    mCauhoi.getsANSWER(), true, ""));
         if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+            mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(),
+                    mCauhoi.getsANSWER(), true, ""));
         adapter.notifyDataSetChanged();
 
         adapter.setOnIListener(new ItemClickListener() {

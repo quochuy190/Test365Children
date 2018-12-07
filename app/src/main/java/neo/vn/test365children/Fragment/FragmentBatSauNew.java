@@ -175,11 +175,11 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
         ll_anwser_B.setOnClickListener(this);
         ll_anwser_C.setOnClickListener(this);
         ll_anwser_D.setOnClickListener(this);
-/*
+
         webview_anwser_A.setOnTouchListener(this);
         webview_anwser_B.setOnTouchListener(this);
         webview_anwser_C.setOnTouchListener(this);
-        webview_anwser_D.setOnTouchListener(this);*/
+        webview_anwser_D.setOnTouchListener(this);
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,11 +238,11 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+        initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+     /*   initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
         initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
         initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());*/
 
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_anwser_A.setVisibility(View.VISIBLE);
@@ -438,14 +438,30 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                 new CountDownTimer(1000, 100) {
                     @Override
                     public void onTick(long millisUntilFinished) {
+
                     }
 
                     @Override
                     public void onFinish() {
                         int i = 0;
                         switch (view.getId()) {
+                            case R.id.webview_debai:
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+                                    }
+                                });
+                                break;
                             case R.id.webview_anwser_A:
-                                i = ll_webview_A.getHeight();
+
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
+                                    }
+                                });
+                              /*  i = ll_webview_A.getHeight();
                                 Log.i(TAG, "onPageFinished: height A " + i);
                                 if (i > iHeightmax) {
                                     iHeightmax = i;
@@ -453,10 +469,16 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                                     setHeightAll(iHeightmax, ll_webview_B);
                                     setHeightAll(iHeightmax, ll_webview_C);
                                     setHeightAll(iHeightmax, ll_webview_D);
-                                }
+                                }*/
                                 break;
                             case R.id.webview_anwser_B:
-                                i = ll_webview_B.getHeight();
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
+                                    }
+                                });
+                             /*   i = ll_webview_B.getHeight();
                                 Log.i(TAG, "onPageFinished: height B " + i);
                                 if (i > iHeightmax) {
                                     iHeightmax = i;
@@ -464,29 +486,47 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                                     setHeightAll(iHeightmax, ll_webview_B);
                                     setHeightAll(iHeightmax, ll_webview_C);
                                     setHeightAll(iHeightmax, ll_webview_D);
-                                }
+                                }*/
                                 break;
                             case R.id.webview_anwser_C:
-                                i = ll_webview_C.getHeight();
-                                Log.i(TAG, "onPageFinished: height C " + i);
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+                                    }
+                                });
                                 break;
                             case R.id.webview_anwser_D:
-                                i = ll_webview_D.getHeight();
-                                Log.i(TAG, "onPageFinished: height D " + i);
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
+
+                                if (ll_webview_A.getHeight() > iHeightmax) {
+                                    iHeightmax = ll_webview_A.getHeight();
+                                }
+                                if (ll_webview_B.getHeight() > iHeightmax) {
+                                    iHeightmax = ll_webview_B.getHeight();
+                                }
+                                if (ll_webview_C.getHeight() > iHeightmax) {
+                                    iHeightmax = ll_webview_C.getHeight();
+                                }
+                                if (ll_webview_D.getHeight() > iHeightmax) {
+                                    iHeightmax = ll_webview_D.getHeight();
+                                }
+                                if (iHeightmax > 0) {
                                     setHeightAll(iHeightmax, ll_webview_A);
                                     setHeightAll(iHeightmax, ll_webview_B);
                                     setHeightAll(iHeightmax, ll_webview_C);
                                     setHeightAll(iHeightmax, ll_webview_D);
                                 }
+                                Log.i(TAG, "onFinish: Dáp an D");
+                                webview_debai.reload();
+                                webview_anwser_A.reload();
+                                webview_anwser_B.reload();
+                                webview_anwser_C.reload();
+                                webview_anwser_D.reload();
+                                webview_debai.setWebViewClient(new WebViewClient());
+                                webview_anwser_A.setWebViewClient(new WebViewClient());
+                                webview_anwser_B.setWebViewClient(new WebViewClient());
+                                webview_anwser_C.setWebViewClient(new WebViewClient());
+                                webview_anwser_D.setWebViewClient(new WebViewClient());
                                 break;
                         }
                     }

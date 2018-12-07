@@ -73,13 +73,11 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sapxep, container, false);
@@ -92,7 +90,6 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         initViews(true);
         return view;
     }
-
     private boolean isClickXemdiem = false;
     List<String> mLiDapan;
 

@@ -229,6 +229,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                         EventBus.getDefault().post(new MessageEvent("Point_true",
                                 Float.parseFloat(mCauhoi.getsPOINT()), 0));
                     } else {
+                        initTraloi();
                         text_lable_dapan.setVisibility(View.VISIBLE);
                         ll_dapan_traloi.setVisibility(View.VISIBLE);
                         CauhoiDetail obj = App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1)
@@ -320,6 +321,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
 
     List<String> mLisAnwser_A;
     List<String> mLisAnwser_B;
+    List<String> mLisAnwser_B_traloi;
     boolean isImageA = false, isImageB = false;
 
     private void initData() {
@@ -329,6 +331,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         mLisDapanA = new ArrayList<>();
         mLisAnwser_A = new ArrayList<>();
         mLisAnwser_B = new ArrayList<>();
+        mLisAnwser_B_traloi = new ArrayList<>();
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
@@ -350,6 +353,11 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         mLisAnwser_B.add(egg2[1]);
         mLisAnwser_B.add(egg3[1]);
         mLisAnwser_B.add(egg4[1]);
+
+        mLisAnwser_B_traloi.add(egg1[1]);
+        mLisAnwser_B_traloi.add(egg2[1]);
+        mLisAnwser_B_traloi.add(egg3[1]);
+        mLisAnwser_B_traloi.add(egg4[1]);
         for (String sContent : mLisAnwser_A) {
             if (sContent.indexOf("img src") > -1) {
                 isImageA = true;
@@ -360,7 +368,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                 isImageB = true;
             }
         }
-        initTraloi();
+        //  initTraloi();
         Collections.shuffle(mLisAnwser_B);
         new Handler().post(new Runnable() {
             @Override
@@ -368,69 +376,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                 initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
             }
         });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_dapannoicau_A_2, StringUtil.convert_html(mLisAnwser_A.get(1)));
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_dapannoicau_A_3, StringUtil.convert_html(mLisAnwser_A.get(2)));
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_dapannoicau_A_4, StringUtil.convert_html(mLisAnwser_A.get(3)));
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_dapannoicau_B_1, StringUtil.convert_html(mLisAnwser_B.get(0)));
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_dapannoicau_B_2, StringUtil.convert_html(mLisAnwser_B.get(1)));
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_dapannoicau_B_3, StringUtil.convert_html(mLisAnwser_B.get(2)));
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_dapannoicau_B_4, StringUtil.convert_html(mLisAnwser_B.get(3)));
-            }
-        });
-
-
-
-
-
-
-
-
-
-      /*  new CountDownTimer(1000, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        }.start();*/
-
     }
 
     int iHeightmax = 0;
@@ -474,59 +419,95 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_dapannoicau_A_1:
-                                i = rl_dapanA_1.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeight(iHeightmax);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_dapannoicau_B_1,
+                                                StringUtil.convert_html(mLisAnwser_B.get(0)));
+                                    }
+                                });
                                 break;
                             case R.id.webview_dapannoicau_A_2:
-                                i = rl_dapanA_1.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeight(iHeightmax);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_dapannoicau_B_2,
+                                                StringUtil.convert_html(mLisAnwser_B.get(1)));
+                                    }
+                                });
                                 break;
                             case R.id.webview_dapannoicau_A_3:
-                                i = rl_dapanA_1.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeight(iHeightmax);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_dapannoicau_B_3,
+                                                StringUtil.convert_html(mLisAnwser_B.get(2)));
+                                    }
+                                });
                                 break;
                             case R.id.webview_dapannoicau_A_4:
-                                i = rl_dapanA_1.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeight(iHeightmax);
-                                }
-                                break;
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_dapannoicau_B_4,
+                                                StringUtil.convert_html(mLisAnwser_B.get(3)));
+                                    }
+                                });
 
+                                break;
                             case R.id.webview_dapannoicau_B_1:
-                                i = rl_dapanA_1.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeight(iHeightmax);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_dapannoicau_A_2,
+                                                StringUtil.convert_html(mLisAnwser_A.get(1)));
+                                    }
+                                });
                                 break;
                             case R.id.webview_dapannoicau_B_2:
-                                i = rl_dapanA_1.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeight(iHeightmax);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_dapannoicau_A_3,
+                                                StringUtil.convert_html(mLisAnwser_A.get(2)));
+                                    }
+                                });
                                 break;
                             case R.id.webview_dapannoicau_B_3:
-                                i = rl_dapanA_1.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeight(iHeightmax);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_dapannoicau_A_4,
+                                                StringUtil.convert_html(mLisAnwser_A.get(3)));
+                                    }
+                                });
                                 break;
                             case R.id.webview_dapannoicau_B_4:
-                                i = rl_dapanA_1.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
+                                if (rl_dapanA_1.getHeight() > iHeightmax) {
+                                    iHeightmax = rl_dapanA_1.getHeight();
+                                }
+                                if (rl_dapanA_2.getHeight() > iHeightmax) {
+                                    iHeightmax = rl_dapanA_2.getHeight();
+                                }
+                                if (rl_dapanA_3.getHeight() > iHeightmax) {
+                                    iHeightmax = rl_dapanA_3.getHeight();
+                                }
+                                if (rl_dapanA_4.getHeight() > iHeightmax) {
+                                    iHeightmax = rl_dapanA_4.getHeight();
+                                }
+                                if (rl_dapanB_1.getHeight() > iHeightmax) {
+                                    iHeightmax = rl_dapanB_1.getHeight();
+                                }
+                                if (rl_dapanB_2.getHeight() > iHeightmax) {
+                                    iHeightmax = rl_dapanB_2.getHeight();
+                                }
+                                if (rl_dapanB_3.getHeight() > iHeightmax) {
+                                    iHeightmax = rl_dapanB_3.getHeight();
+                                }
+                                if (rl_dapanB_4.getHeight() > iHeightmax) {
+                                    iHeightmax = rl_dapanB_4.getHeight();
+                                }
+                                if (iHeightmax > 0) {
                                     setHeight(iHeightmax);
                                 }
                                 break;
@@ -588,27 +569,26 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                initWebview(webview_dapannoicau_B_traloi_1, StringUtil.convert_html(mLisAnwser_B.get(0)));
+                initWebview(webview_dapannoicau_B_traloi_1, StringUtil.convert_html(mLisAnwser_B_traloi.get(0)));
             }
         });
         new Handler().post(new Runnable() {
             @Override
             public void run() {
 
-                initWebview(webview_dapannoicau_B_traloi_2, StringUtil.convert_html(mLisAnwser_B.get(1)));
+                initWebview(webview_dapannoicau_B_traloi_2, StringUtil.convert_html(mLisAnwser_B_traloi.get(1)));
             }
         });
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                initWebview(webview_dapannoicau_B_traloi_3, StringUtil.convert_html(mLisAnwser_B.get(2)));
+                initWebview(webview_dapannoicau_B_traloi_3, StringUtil.convert_html(mLisAnwser_B_traloi.get(2)));
             }
         });
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-
-                initWebview(webview_dapannoicau_B_traloi_4, StringUtil.convert_html(mLisAnwser_B.get(3)));
+                initWebview(webview_dapannoicau_B_traloi_4, StringUtil.convert_html(mLisAnwser_B_traloi.get(3)));
             }
         });
         rl_dapanA_traloi_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));

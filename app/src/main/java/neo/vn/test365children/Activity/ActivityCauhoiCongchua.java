@@ -42,7 +42,7 @@ public class ActivityCauhoiCongchua extends BaseActivity {
     @BindView(R.id.txt_lable)
     TextView txt_lable;
     int[] arr_image = {R.drawable.bg_congchua1, R.drawable.bg_congchua2, R.drawable.bg_congchua3,
-            R.drawable.bg_congchua4, R.drawable.bg_congchua5, R.drawable.bg_congchua6};
+            R.drawable.bg_congchua4, R.drawable.bg_congchua6};
 
     @Override
     public int setContentViewId() {

@@ -216,11 +216,11 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
-        StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+        initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+     /*   initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
         initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
         initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());*/
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_anwser_A.setVisibility(View.VISIBLE);
         } else {
@@ -397,45 +397,68 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                     public void onFinish() {
                         int i = 0;
                         switch (view.getId()) {
+                            case R.id.webview_debai:
+                                webview_debai.setVisibility(View.VISIBLE);
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+                                    }
+                                });
+                                break;
                             case R.id.webview_anwser_A:
-                                i = rl_dapan_A.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, webview_anwser_A);
-                                    setHeightAll(iHeightmax, webview_anwser_B);
-                                    setHeightAll(iHeightmax, webview_anwser_C);
-                                    setHeightAll(iHeightmax, webview_anwser_D);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
+                                    }
+                                });
                                 break;
                             case R.id.webview_anwser_B:
-                                i = rl_dapan_B.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, webview_anwser_A);
-                                    setHeightAll(iHeightmax, webview_anwser_B);
-                                    setHeightAll(iHeightmax, webview_anwser_C);
-                                    setHeightAll(iHeightmax, webview_anwser_D);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
+                                    }
+                                });
                                 break;
                             case R.id.webview_anwser_C:
-                                i = rl_dapan_C.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, webview_anwser_A);
-                                    setHeightAll(iHeightmax, webview_anwser_B);
-                                    setHeightAll(iHeightmax, webview_anwser_C);
-                                    setHeightAll(iHeightmax, webview_anwser_D);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+                                    }
+                                });
                                 break;
                             case R.id.webview_anwser_D:
-                                i = rl_dapan_D.getHeight();
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
+                                if (webview_anwser_A.getHeight() > iHeightmax) {
+                                    iHeightmax = webview_anwser_A.getHeight();
+                                }
+                                if (webview_anwser_B.getHeight() > iHeightmax) {
+                                    iHeightmax = webview_anwser_B.getHeight();
+                                }
+                                if (webview_anwser_C.getHeight() > iHeightmax) {
+                                    iHeightmax = webview_anwser_C.getHeight();
+                                }
+                                if (webview_anwser_D.getHeight() > iHeightmax) {
+                                    iHeightmax = webview_anwser_D.getHeight();
+                                }
+                                if (iHeightmax > 0) {
                                     setHeightAll(iHeightmax, webview_anwser_A);
                                     setHeightAll(iHeightmax, webview_anwser_B);
                                     setHeightAll(iHeightmax, webview_anwser_C);
                                     setHeightAll(iHeightmax, webview_anwser_D);
                                 }
+                                webview_debai.reload();
+                                webview_anwser_A.reload();
+                                webview_anwser_B.reload();
+                                webview_anwser_C.reload();
+                                webview_anwser_D.reload();
+                                webview_debai.setWebViewClient(new WebViewClient());
+                                webview_anwser_A.setWebViewClient(new WebViewClient());
+                                webview_anwser_B.setWebViewClient(new WebViewClient());
+                                webview_anwser_C.setWebViewClient(new WebViewClient());
+                                webview_anwser_D.setWebViewClient(new WebViewClient());
                                 break;
                         }
                     }
@@ -455,7 +478,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                 view.setLayoutParams(params);
             }
         });
-
     }
 
     @Override

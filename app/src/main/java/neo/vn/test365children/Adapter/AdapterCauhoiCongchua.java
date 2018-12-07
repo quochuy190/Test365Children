@@ -111,7 +111,7 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
-        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.1));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";

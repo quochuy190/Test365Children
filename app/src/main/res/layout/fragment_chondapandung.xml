@@ -94,8 +94,52 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             </WebView>
+            <LinearLayout
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:ignore="WebViewLayout">
+                        <ImageView
+                            android:id="@+id/checkbox_dapan"
+                            android:layout_width="@dimen/dp35"
+                            android:layout_height="@dimen/dp35"
+                            android:src="@drawable/ic_checker" />
+                        <WebView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                        </WebView>
+                    </LinearLayout>
+
+
+                    <WebView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                    </WebView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                </LinearLayout>
+            </LinearLayout>
             <android.support.v7.widget.RecyclerView
+                android:visibility="visible"
                 android:id="@+id/recycle_dapan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

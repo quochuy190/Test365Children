@@ -6,7 +6,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,11 +179,11 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
-        StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-        initWebview_sau(webview_anwser_A, mCauhoi.getsHTML_A());
+        initWebview_sau(webview_debai, mCauhoi.getsHTML_CONTENT());
+        /*initWebview_sau(webview_anwser_A, mCauhoi.getsHTML_A());
         initWebview_sau(webview_anwser_B, mCauhoi.getsHTML_B());
         initWebview_sau(webview_anwser_C, mCauhoi.getsHTML_C());
-        initWebview_sau(webview_anwser_D, mCauhoi.getsHTML_D());
+        initWebview_sau(webview_anwser_D, mCauhoi.getsHTML_D());*/
 
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_anwser_A.setVisibility(View.VISIBLE);
@@ -283,49 +282,68 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
                     public void onFinish() {
                         int i = 0;
                         switch (view.getId()) {
+                            case R.id.webview_debai:
+                                webview_debai.setVisibility(View.VISIBLE);
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview_sau(webview_anwser_A, mCauhoi.getsHTML_A());
+                                    }
+                                });
+                                break;
                             case R.id.webview_anwser_A:
-                                i = ll_webview_A.getHeight();
-                                Log.i(TAG, "onPageFinished: height A " + i);
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview_sau(webview_anwser_B, mCauhoi.getsHTML_B());
+                                    }
+                                });
                                 break;
                             case R.id.webview_anwser_B:
-                                i = ll_webview_B.getHeight();
-                                Log.i(TAG, "onPageFinished: height B " + i);
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview_sau(webview_anwser_C, mCauhoi.getsHTML_C());
+                                    }
+                                });
                                 break;
                             case R.id.webview_anwser_C:
-                                i = ll_webview_C.getHeight();
-                                Log.i(TAG, "onPageFinished: height C " + i);
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initWebview_sau(webview_anwser_D, mCauhoi.getsHTML_D());
+                                    }
+                                });
                                 break;
                             case R.id.webview_anwser_D:
-                                i = ll_webview_D.getHeight();
-                                Log.i(TAG, "onPageFinished: height D " + i);
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
+                                if (ll_webview_A.getHeight() > iHeightmax) {
+                                    iHeightmax = ll_webview_A.getHeight();
+                                }
+                                if (ll_webview_B.getHeight() > iHeightmax) {
+                                    iHeightmax = ll_webview_B.getHeight();
+                                }
+                                if (ll_webview_C.getHeight() > iHeightmax) {
+                                    iHeightmax = ll_webview_C.getHeight();
+                                }
+                                if (ll_webview_D.getHeight() > iHeightmax) {
+                                    iHeightmax = ll_webview_D.getHeight();
+                                }
+                                if (iHeightmax > 0) {
                                     setHeightAll(iHeightmax, ll_webview_A);
                                     setHeightAll(iHeightmax, ll_webview_B);
                                     setHeightAll(iHeightmax, ll_webview_C);
                                     setHeightAll(iHeightmax, ll_webview_D);
                                 }
+                                webview_debai.reload();
+                                webview_anwser_A.reload();
+                                webview_anwser_B.reload();
+                                webview_anwser_C.reload();
+                                webview_anwser_D.reload();
+                                webview_debai.setWebViewClient(new WebViewClient());
+                                webview_anwser_A.setWebViewClient(new WebViewClient());
+                                webview_anwser_B.setWebViewClient(new WebViewClient());
+                                webview_anwser_C.setWebViewClient(new WebViewClient());
+                                webview_anwser_D.setWebViewClient(new WebViewClient());
                                 break;
                         }
                     }

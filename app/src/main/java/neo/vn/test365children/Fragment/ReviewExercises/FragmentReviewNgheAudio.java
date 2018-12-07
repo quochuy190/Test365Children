@@ -4,7 +4,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -66,6 +66,8 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
     LinearLayout ll_cauhoi;
     @BindView(R.id.recycler_dapan)
     RecyclerView recycle_dapan;
+    @BindView(R.id.webview_debai)
+    WebView webview_debai;
     List<DapAn> mLis;
     AdapterDapan adapter;
     private boolean isTraloi = false;
@@ -201,32 +203,9 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
         if (mCauhoi != null) {
             if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
                 txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                        + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
-                        +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
-            if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
-                katex.hourglass.in.mathlib.MathView mathView = new katex.hourglass.in.mathlib.MathView(getContext());
-                mathView.setClickable(true);
-                mathView.setTextSize(17);
-                mathView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mathView.setDisplayText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-                mathView.setViewBackgroundColor(getContext().getResources().getColor(R.color.bg_item_dapan));
-                ll_cauhoi.addView(mathView);
-            } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
-                ImageView txt_dapan = new ImageView(getContext());
-                int hight_image = (int) getContext().getResources().getDimension(R.dimen.item_dapan);
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        hight_image));
-                Glide.with(getContext()).load(Config.URL_IMAGE + mCauhoi.getsQUESTION()).into(txt_dapan);
-                ll_cauhoi.addView(txt_dapan);
-            } else {
-                TextView txt_dapan = new TextView(getContext());
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                txt_dapan.setTextSize(17);
-                txt_dapan.setTextColor(getContext().getResources().getColor(R.color.black));
-                txt_dapan.setText(Html.fromHtml(mCauhoi.getsQUESTION()));
-                ll_cauhoi.addView(txt_dapan);
-            }
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+            StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
         }
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         try {
@@ -247,12 +226,14 @@ public class FragmentReviewNgheAudio extends BaseFragment implements MediaPlayer
             mLis.add(new DapAn("C", mCauhoi.getsC(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
         if (mCauhoi.getsD() != null && mCauhoi.getsD().length() > 0)
             mLis.add(new DapAn("D", mCauhoi.getsD(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-         adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
+
     private int getDuration(int progress) {
         int duration = (int) (mPlayer.getDuration() * ((float) progress / seekBar.getMax()));
         return duration;
     }
+
     private void init() {
         mLis = new ArrayList<>();
         adapter = new AdapterDapan(mLis, getContext());
