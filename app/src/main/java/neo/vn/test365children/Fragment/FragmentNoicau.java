@@ -510,6 +510,25 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                                 if (iHeightmax > 0) {
                                     setHeight(iHeightmax);
                                 }
+                                webview_dapannoicau_A_1.reload();
+                                webview_dapannoicau_A_2.reload();
+                                webview_dapannoicau_A_3.reload();
+                                webview_dapannoicau_A_4.reload();
+                                webview_dapannoicau_B_1.reload();
+                                webview_dapannoicau_B_2.reload();
+                                webview_dapannoicau_B_3.reload();
+                                webview_dapannoicau_B_4.reload();
+
+                                webview_dapannoicau_A_1.setWebViewClient(new WebViewClient());
+                                webview_dapannoicau_A_2.setWebViewClient(new WebViewClient());
+                                webview_dapannoicau_A_3.setWebViewClient(new WebViewClient());
+                                webview_dapannoicau_A_4.setWebViewClient(new WebViewClient());
+
+                                webview_dapannoicau_B_1.setWebViewClient(new WebViewClient());
+                                webview_dapannoicau_B_2.setWebViewClient(new WebViewClient());
+                                webview_dapannoicau_B_3.setWebViewClient(new WebViewClient());
+                                webview_dapannoicau_B_4.setWebViewClient(new WebViewClient());
+
                                 break;
                         }
 
@@ -519,7 +538,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
             }
         });
     }
-
     public void setHeight(int iHeight) {
         setHeightAll(iHeight, rl_dapanA_1);
         setHeightAll(iHeight, rl_dapanA_2);

@@ -41,6 +41,23 @@ public class ActivityCauhoiCongchua extends BaseActivity {
     ImageView img_reload;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
+
+    @BindView(R.id.img_checkbox_A)
+    ImageView img_checkbox_A;
+    @BindView(R.id.img_checkbox_B)
+    ImageView img_checkbox_B;
+    @BindView(R.id.img_checkbox_C)
+    ImageView img_checkbox_C;
+    @BindView(R.id.img_checkbox_D)
+    ImageView img_checkbox_D;
+    @BindView(R.id.webview_anwser_A)
+    WebView webview_anwser_A;
+    @BindView(R.id.webview_anwser_B)
+    WebView webview_anwser_B;
+    @BindView(R.id.webview_anwser_C)
+    WebView webview_anwser_C;
+    @BindView(R.id.webview_anwser_D)
+    WebView webview_anwser_D;
     int[] arr_image = {R.drawable.bg_congchua1, R.drawable.bg_congchua2, R.drawable.bg_congchua3,
             R.drawable.bg_congchua4, R.drawable.bg_congchua6};
 
@@ -135,12 +152,12 @@ public class ActivityCauhoiCongchua extends BaseActivity {
 
     private void initData() {
         mLis.clear();
-        StringUtil.initWebview_Whitetext(txt_cauhoi, mCauhoi.getsHTML_CONTENT());
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        //  txt_cauhoi.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));
+
+        StringUtil.initWebview_Whitetext(txt_cauhoi, mCauhoi.getsHTML_CONTENT());
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
         }
@@ -174,4 +191,5 @@ public class ActivityCauhoiCongchua extends BaseActivity {
             }
         });
     }
+
 }

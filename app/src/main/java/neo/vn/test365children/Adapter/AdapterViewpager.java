@@ -29,7 +29,7 @@ public class AdapterViewpager extends FragmentPagerAdapter {
         return mFragmentList.size();
     }
     public void addFragment(Fragment fragment1, String title) {
-       if (fragment1!=null){
+        if (fragment1!=null){
             mFragmentList.add(fragment1);
             mFragmentTitleList.add(title);
         }

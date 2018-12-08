@@ -22,7 +22,6 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import neo.vn.test365children.Activity.ActivityCauhoiCongchua;
 import neo.vn.test365children.Adapter.AdapterCongchua;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
@@ -163,7 +162,7 @@ public class FragmentCuuCongchua extends BaseFragment {
             public void onClickItem(int position, Object item) {
                 DapAn obj1 = (DapAn) item;
                 if (obj1.isClick()) {
-                    Intent intent_schools = new Intent(getContext(), ActivityCauhoiCongchua.class);
+                    Intent intent_schools = new Intent(getContext(), ActivityGiaiCuuCongChua.class);
                     CauhoiDetail obj = mCauhoi.getLisInfo().get(iCauhoiStart);
                     SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, false);
                     //  intent_schools.putExtra(Constants.KEY_SEND_CAUHOI_CONGCHUA, (Serializable) obj);

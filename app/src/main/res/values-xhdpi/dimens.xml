@@ -121,7 +121,7 @@
     <dimen name="width_bxh">120dp</dimen>
     <dimen name="hight_item_bottom">70dp</dimen>
     <!--Chém chuối-->
-    <dimen name="img_chemchuoi">110dp</dimen>
+    <dimen name="img_chemchuoi">120dp</dimen>
     <dimen name="icon_anwser_review">60dp</dimen>
     <!--Đọc và trả lời-->
     <dimen name="margin_top_baidoc">25dp</dimen>
