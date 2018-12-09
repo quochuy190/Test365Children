@@ -87,7 +87,7 @@
     <dimen name="item_congchua">85dp</dimen>
     <dimen name="item_dapan">150dp</dimen>
     <!--Bài tập tuần đã làm-->
-    <dimen name="item_baitaptuan_dalam">100dp</dimen>
+    <dimen name="item_baitaptuan_dalam">105dp</dimen>
     <!--Exercises Detail-->
     <dimen name="exercises_hight_title">55dp</dimen>
     <dimen name="exercises_margin_leght">20dp</dimen>

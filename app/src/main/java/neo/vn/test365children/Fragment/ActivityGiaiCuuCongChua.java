@@ -56,6 +56,7 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
     ImageView img_background;
     @BindView(R.id.webview_debai)
     WebView webview_debai;
+
     @BindView(R.id.webview_anwser_A)
     WebView webview_anwser_A;
     @BindView(R.id.webview_anwser_B)
@@ -143,6 +144,26 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         showDialogLoading();
         initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
+            ll_webview_A.setVisibility(View.VISIBLE);
+        } else {
+            ll_webview_A.setVisibility(View.GONE);
+        }
+        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
+            ll_webview_B.setVisibility(View.VISIBLE);
+        } else {
+            ll_webview_B.setVisibility(View.GONE);
+        }
+        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
+            ll_webview_C.setVisibility(View.VISIBLE);
+        } else {
+            ll_webview_C.setVisibility(View.GONE);
+        }
+        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
+            ll_webview_D.setVisibility(View.VISIBLE);
+        } else {
+            ll_webview_D.setVisibility(View.GONE);
+        }
      /*   initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
         initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
         initWebview(webview_anwser_C, mCauhoi.getsHTML_C());

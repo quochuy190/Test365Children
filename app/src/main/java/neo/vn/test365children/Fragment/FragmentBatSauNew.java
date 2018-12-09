@@ -233,6 +233,9 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
     }
 
     private void initData() {
+        if (mCauhoi.getsNumberDe().equals("1")) {
+            showDialogLoading();
+        }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())

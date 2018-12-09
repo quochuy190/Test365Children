@@ -143,7 +143,6 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
             //  viewpager_lambai = new CustomViewPager(this);
             adapterViewpager = new AdapterViewpager(getSupportFragmentManager());
             maxPage = 0;
-            boolean isStarCongchua = false;
             for (int j = 0; j < mLisCauhoi.size(); j++) {
                 Cauhoi mCauhoi = mLisCauhoi.get(j);
                 Cauhoi obj = new Cauhoi();

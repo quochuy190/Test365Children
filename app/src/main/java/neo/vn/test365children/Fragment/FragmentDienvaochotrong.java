@@ -134,9 +134,9 @@ public class FragmentDienvaochotrong extends BaseFragment {
         browser.setWebChromeClient(new WebChromeClient());
         browser.getSettings().setJavaScriptEnabled(true);
         browser.setBackgroundColor(Color.TRANSPARENT);
-        browser.getSettings().setJavaScriptEnabled(true);
         webview_dapan.setBackgroundColor(Color.TRANSPARENT);
         browser.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
+        browser.getSettings().setJavaScriptEnabled(true);
         browser.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
         sHtml = replaceXML("<<",
                 ">>", mCauhoi.getsHTML_CONTENT().replace(">>>", "> >>"));
@@ -148,7 +148,6 @@ public class FragmentDienvaochotrong extends BaseFragment {
         for (int i = 0; i < 10; i++) {
 
         }
-
         sHtlml = "<html>\n" +
                 "<head>\n" +
  /*               "<style>\n" +
@@ -256,7 +255,8 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 if (iCountPoint > 0) {
                     sPoint = (iCountPoint * sTotalPoint) / (sAnwser_true.size());
                 }
-                String sHtl = mCauhoi.getsHTML_CONTENT().replaceAll("<<<", "<< < ").replaceAll(">>>", " > >>");
+                String sHtl = mCauhoi.getsHTML_CONTENT().replaceAll("<<<", "<< < ")
+                        .replaceAll(">>>", " > >>");
                 sAnwserChil = replaceAnwserChil("<<", ">>", sHtl, 0, false);
                 Log.i(TAG, "chamdiem: " + sAnwserChil);
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
@@ -286,17 +286,13 @@ public class FragmentDienvaochotrong extends BaseFragment {
                             EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                         }
                         Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-
                     }
                 }
             } else {
                 return;
             }
-
-
             isGetpoint = true;
             if (sAnwser_true.size() > 0) {
-
             }
         }
 
@@ -413,7 +409,10 @@ public class FragmentDienvaochotrong extends BaseFragment {
                                             .replaceAll(">>", "</font></b></u>");
                             Log.i(TAG, "onClick: " + sAnwserChil);
                             browser.setVisibility(View.GONE);
-                            webview_dapan.loadDataWithBaseURL("", "<div style='text-align:center;'><b>Bé trả lời </b><br/><br/>" + sAnwserChil + sHtml_dapan + "</div>", "text/html", "UTF-8", "");
+                            webview_dapan.loadDataWithBaseURL("",
+                                    "<div style='text-align:center;'><b>Bé trả lời </b><br/><br/>"
+                                            + sAnwserChil + sHtml_dapan + "</div>", "text/html",
+                                    "UTF-8", "");
                             webview_dapan.setVisibility(View.VISIBLE);
                         }
                     }, 100);

@@ -83,6 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll_read_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -93,15 +94,109 @@
                 android:orientation="vertical">
 
                 <WebView
-                    android:id="@+id/txt_debai"
+                    android:id="@+id/webview_debai"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ll_lable" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/ll_webview_A"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            tools:ignore="WebViewLayout">
 
+                            <ImageView
+                                android:id="@+id/img_checkbox_A"
+                                android:layout_width="@dimen/dp40"
+                                android:layout_height="@dimen/dp40"
+                                android:padding="@dimen/dp5" />
+
+                            <WebView
+                                android:id="@+id/webview_anwser_A"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dp5">
+
+                            </WebView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_webview_B"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            tools:ignore="WebViewLayout">
+
+                            <ImageView
+                                android:id="@+id/img_checkbox_B"
+                                android:layout_width="@dimen/dp40"
+                                android:layout_height="@dimen/dp40"
+                                android:padding="@dimen/dp5" />
+
+                            <WebView
+                                android:id="@+id/webview_anwser_B"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dp5">
+
+                            </WebView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_webview_C"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            tools:ignore="WebViewLayout">
+
+                            <ImageView
+                                android:id="@+id/img_checkbox_C"
+                                android:layout_width="@dimen/dp40"
+                                android:layout_height="@dimen/dp40"
+                                android:padding="@dimen/dp5" />
+
+                            <WebView
+                                android:id="@+id/webview_anwser_C"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dp5">
+
+                            </WebView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_webview_D"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            tools:ignore="WebViewLayout">
+
+                            <ImageView
+                                android:id="@+id/img_checkbox_D"
+                                android:layout_width="@dimen/dp40"
+                                android:layout_height="@dimen/dp40"
+                                android:padding="@dimen/dp5" />
+
+                            <WebView
+                                android:id="@+id/webview_anwser_D"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dp5">
+                            </WebView>
+                        </LinearLayout>
                 <android.support.v7.widget.RecyclerView
+                    android:visibility="gone"
                     android:id="@+id/recycle_dapan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

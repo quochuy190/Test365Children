@@ -211,6 +211,9 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     }
 
     private void initData() {
+        if (mCauhoi.getsNumberDe().equals("1")) {
+            showDialogLoading();
+        }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
@@ -459,6 +462,7 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                                 webview_anwser_B.setWebViewClient(new WebViewClient());
                                 webview_anwser_C.setWebViewClient(new WebViewClient());
                                 webview_anwser_D.setWebViewClient(new WebViewClient());
+                                hideDialogLoading();
                                 break;
                         }
                     }

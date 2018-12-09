@@ -117,9 +117,11 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
         settings.setTextZoom((int) (settings.getTextZoom() * 1.2));
         settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.2));
         String sHtml_dapan;
-        sHtml_dapan = "<br /> <div  style='text-align:center;'><b>Đáp án </b></div><br />" +
+        sHtml_dapan = "<br /> <div  style='text-align:center;'>" +
+                "<b>Đáp án </b></div><br />" +
                 mCauhoi.getsHTML_CONTENT().replaceAll("<<", "<u><b><font color='blue'>")
-                        .replaceAll(">>", "</font></b></u>");
+                        .replaceAll(">>", "</font>" +
+                                "</b></u>");
         webview_dapan.loadDataWithBaseURL("", sHtml_dapan, "text/html", "UTF-8", "");
         webview_dapan.setVisibility(View.VISIBLE);
         img_anwser_chil.setVisibility(View.VISIBLE);

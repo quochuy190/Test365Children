@@ -3,7 +3,7 @@ package neo.vn.test365children.Activity.ReviewExercises;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -16,13 +16,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import io.realm.Realm;
-import neo.vn.test365children.Adapter.AdapterCategoryShop;
+import neo.vn.test365children.Adapter.AdapterObjBaitapTuan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
-import neo.vn.test365children.Listener.OnListenerItemClickObjService;
+import neo.vn.test365children.Listener.setOnItemClickListener;
 import neo.vn.test365children.Models.ExerciseAnswer;
-import neo.vn.test365children.Models.ListTuan;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
 import neo.vn.test365children.Untils.SharedPrefs;
@@ -30,12 +29,22 @@ import neo.vn.test365children.Untils.SharedPrefs;
 public class ActivityBaitapdalam extends BaseActivity {
     private static final String TAG = "ActivityBaitapdalam";
     Realm mRealm;
-    AdapterCategoryShop adapter;
+    AdapterObjBaitapTuan adapter;
+    AdapterObjBaitapTuan adapter_TV;
+    AdapterObjBaitapTuan adapter_TA;
     RecyclerView.LayoutManager mLayoutManager;
-    List<ListTuan> mLisTuan;
+    RecyclerView.LayoutManager mLayoutManagerTV;
+    RecyclerView.LayoutManager mLayoutManagerTA;
+    List<ExerciseAnswer> mLisTToan;
+    List<ExerciseAnswer> mLisTV;
+    List<ExerciseAnswer> mLisTAnh;
     List<ExerciseAnswer> lisExercise;
-    @BindView(R.id.recycle_baitapdalam)
-    RecyclerView recycle_baitapdalam;
+    @BindView(R.id.recycle_toan)
+    RecyclerView recycle_toan;
+    @BindView(R.id.recycle_tv)
+    RecyclerView recycle_tv;
+    @BindView(R.id.recycle_tienganh)
+    RecyclerView recycle_tienganh;
     @BindView(R.id.imageView5)
     ImageView imageView5;
     @BindView(R.id.btn_back)
@@ -65,7 +74,9 @@ public class ActivityBaitapdalam extends BaseActivity {
 
     private void initData() {
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-        mLisTuan = new ArrayList<>();
+        mLisTToan = new ArrayList<>();
+        mLisTV = new ArrayList<>();
+        mLisTAnh = new ArrayList<>();
         Glide.with(this).load(R.drawable.bg_lambai).into(imageView5);
         lisExercise = RealmController.getInstance().getExercises();
         if (lisExercise != null)
@@ -83,37 +94,86 @@ public class ActivityBaitapdalam extends BaseActivity {
                 .equalTo("isTrangthailambai", "2")
                 .equalTo("sId_userCon", sUserCon).findAll();
         if (lisEx.size() > 0) {
-            mLisTuan.add(new ListTuan("Toán", lisEx));
+            mLisTToan.addAll(lisEx);
         }
         if (lisExTV.size() > 0) {
-            mLisTuan.add(new ListTuan("Tiếng Việt", lisExTV));
+            mLisTV.addAll(lisExTV);
+            //mLisTuan.add(new ListTuan("Tiếng Việt", lisExTV));
         }
         if (lisExTA.size() > 0) {
-            mLisTuan.add(new ListTuan("Tiếng Anh", lisExTA));
+            mLisTAnh.addAll(lisExTA);
+            // mLisTuan.add(new ListTuan("Tiếng Anh", lisExTA));
         }
-        Log.i(TAG, "initData: " + mLisTuan);
+        // Log.i(TAG, "initData: " + mLisTuan);
     }
 
     private void init() {
-        adapter = new AdapterCategoryShop(this, mLisTuan, new OnListenerItemClickObjService() {
+        adapter = new AdapterObjBaitapTuan(this, mLisTToan);
+        adapter_TV = new AdapterObjBaitapTuan(this, mLisTV);
+        adapter_TA = new AdapterObjBaitapTuan(this, mLisTAnh);
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mLayoutManagerTV = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mLayoutManagerTA = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        //recycle_category.setNestedScrollingEnabled(false);
+        recycle_toan.setHasFixedSize(true);
+        recycle_toan.setLayoutManager(mLayoutManager);
+        recycle_toan.setItemAnimator(new DefaultItemAnimator());
+        recycle_toan.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        recycle_tv.setHasFixedSize(true);
+        recycle_tv.setLayoutManager(mLayoutManagerTV);
+        recycle_tv.setItemAnimator(new DefaultItemAnimator());
+        recycle_tv.setAdapter(adapter_TV);
+        adapter_TV.notifyDataSetChanged();
+
+        recycle_tienganh.setHasFixedSize(true);
+        recycle_tienganh.setLayoutManager(mLayoutManagerTA);
+        recycle_tienganh.setItemAnimator(new DefaultItemAnimator());
+        recycle_tienganh.setAdapter(adapter_TA);
+        adapter_TA.notifyDataSetChanged();
+
+        adapter.setOnIListener(new setOnItemClickListener() {
             @Override
-            public void onClickListener(ExerciseAnswer objService) {
-                App.mLisCauhoi.clear();
-                ExerciseAnswer obj = (ExerciseAnswer) objService;
-                App.mLisCauhoi.addAll(obj.getmLisCauhoi());
+            public void OnItemClickListener(int position) {
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
-                intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, objService.getsId_exercise());
-                intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_POINT, objService.getsPoint());
-                // SharedPrefs.getInstance().put(Constants.KEY_SEND_EXERCISES_DETAIL, objService);
+                intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTToan.get(position).getsId_exercise());
+                App.mLisCauhoi.addAll(mLisTToan.get(position).getmLisCauhoi());
                 startActivity(intent);
             }
+
+            @Override
+            public void OnLongItemClickListener(int position) {
+
+            }
         });
-        mLayoutManager = new GridLayoutManager(this, 1);
-        //recycle_category.setNestedScrollingEnabled(false);
-        recycle_baitapdalam.setHasFixedSize(true);
-        recycle_baitapdalam.setLayoutManager(mLayoutManager);
-        recycle_baitapdalam.setItemAnimator(new DefaultItemAnimator());
-        recycle_baitapdalam.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter_TV.setOnIListener(new setOnItemClickListener() {
+            @Override
+            public void OnItemClickListener(int position) {
+                Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
+                intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTV.get(position).getsId_exercise());
+                App.mLisCauhoi.addAll(mLisTV.get(position).getmLisCauhoi());
+                startActivity(intent);
+            }
+
+            @Override
+            public void OnLongItemClickListener(int position) {
+
+            }
+        });
+        adapter_TA.setOnIListener(new setOnItemClickListener() {
+            @Override
+            public void OnItemClickListener(int position) {
+                Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
+                intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTAnh.get(position).getsId_exercise());
+                App.mLisCauhoi.addAll(mLisTAnh.get(position).getmLisCauhoi());
+                startActivity(intent);
+            }
+
+            @Override
+            public void OnLongItemClickListener(int position) {
+
+            }
+        });
     }
 }

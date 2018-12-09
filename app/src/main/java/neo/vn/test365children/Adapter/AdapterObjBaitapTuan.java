@@ -16,7 +16,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import neo.vn.test365children.Listener.OnListenerItemClickObjService;
 import neo.vn.test365children.Listener.setOnItemClickListener;
 import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.R;
@@ -27,7 +26,7 @@ public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapT
     private List<ExerciseAnswer> mLisObjService;
     private Context context;
     private setOnItemClickListener OnIListener;
-    private OnListenerItemClickObjService onListenerItemClickObjService;
+
 
     public setOnItemClickListener getOnIListener() {
         return OnIListener;
@@ -37,9 +36,9 @@ public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapT
         OnIListener = onIListener;
     }
 
-    public AdapterObjBaitapTuan(Context context, OnListenerItemClickObjService onListenerItemClickObjService) {
+    public AdapterObjBaitapTuan(Context context, List<ExerciseAnswer> mLis) {
         this.context = context;
-        this.onListenerItemClickObjService = onListenerItemClickObjService;
+        this.mLisObjService = mLis;
     }
 
 
@@ -60,27 +59,22 @@ public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapT
         obj.setsPoint(objService.getsPoint());
         switch (objService.getsMonhoc()) {
             case "1":
-              //  holder.txt_monhoc.setText("Môn Toán");
-                Glide.with(context).load(R.drawable.mark_2).into(holder.img_bg);
+                //  holder.txt_monhoc.setText("Môn Toán");
+                Glide.with(context).load(R.drawable.img_menu_toan).into(holder.img_bg);
                 break;
             case "2":
-               // holder.txt_monhoc.setText("Tiếng Việt");
-                Glide.with(context).load(R.drawable.mark_0).into(holder.img_bg);
+                // holder.txt_monhoc.setText("Tiếng Việt");
+                Glide.with(context).load(R.drawable.img_menu_blue).into(holder.img_bg);
                 break;
             case "3":
-               // holder.txt_monhoc.setText("Tiếng Anh");
-                Glide.with(context).load(R.drawable.mark_4).into(holder.img_bg);
+                // holder.txt_monhoc.setText("Tiếng Anh");
+                Glide.with(context).load(R.drawable.img_menu_tim).into(holder.img_bg);
                 break;
         }
-        holder.txt_monhoc.setText("Tuần "+objService.getsIdTuan());
-        holder.txt_diem.setText(StringUtil.format_point(Float.parseFloat(objService.getsPoint()))+" Điểm");
+        holder.txt_monhoc.setText("Tuần " + objService.getsIdTuan() + " - "
+                + StringUtil.format_point(Float.parseFloat(objService.getsPoint())) + " Đ");
+        //holder.txt_diem.setText(StringUtil.format_point(Float.parseFloat(objService.getsPoint())) + " Điểm");
 
-        holder.holder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onListenerItemClickObjService.onClickListener(mLisObjService.get(position));
-            }
-        });
     }
 
 
@@ -92,8 +86,8 @@ public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapT
     public class FlightInfoViewHoder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         @BindView(R.id.txt_monhoc)
         TextView txt_monhoc;
-        @BindView(R.id.txt_diem)
-        TextView txt_diem;
+        /*   @BindView(R.id.txt_diem)
+           TextView txt_diem;*/
         @BindView(R.id.holder)
         RelativeLayout holder;
         @BindView(R.id.img_bg)
@@ -102,7 +96,7 @@ public class AdapterObjBaitapTuan extends RecyclerView.Adapter<AdapterObjBaitapT
         public FlightInfoViewHoder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            //  itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
 
         }
 

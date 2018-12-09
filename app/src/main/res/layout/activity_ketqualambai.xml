@@ -11,6 +11,98 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_title_toan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/orange"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/dp3"
+                    android:text="Môn Toán - Đã làm"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_20sp" />
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="@dimen/dp30"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/dp5"
+                    android:src="@drawable/img_back_menu" />
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/rl_title_toan"
+                android:id="@+id/recycle_toan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+            <RelativeLayout
+                android:layout_below="@id/recycle_toan"
+                android:id="@+id/rl_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/title_dalam"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/dp3"
+                    android:text="Tiếng Việt - Đã làm"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_20sp" />
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/rl_title_tv"
+                android:id="@+id/recycle_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <RelativeLayout
+                android:layout_below="@id/recycle_tv"
+                android:id="@+id/rl_title_tienganh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/title_chualam"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/dp3"
+                    android:text="Tiếng Việt - Đã làm"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_20sp" />
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/rl_title_tienganh"
+                android:id="@+id/recycle_tienganh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
     <RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
@@ -20,6 +112,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,18 +130,15 @@
             android:text="BÀI TẬP ĐÃ LÀM"
             android:textColor="@color/white"
             android:textSize="@dimen/text_18sp" />
-        <ImageView
-            android:id="@+id/btn_back"
-            android:src="@drawable/img_back_menu"
-            android:layout_width="@dimen/dp30"
-            android:layout_height="@dimen/dp30" />
+
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:padding="@dimen/dp5"
         android:id="@+id/recycle_baitapdalam"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="@dimen/dp5"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

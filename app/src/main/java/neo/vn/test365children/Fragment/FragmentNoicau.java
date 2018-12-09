@@ -325,6 +325,9 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
     boolean isImageA = false, isImageB = false;
 
     private void initData() {
+        if (mCauhoi.getsNumberDe().equals("1")) {
+            showDialogLoading();
+        }
         text_lable_dapan.setVisibility(View.GONE);
         ll_dapan_traloi.setVisibility(View.GONE);
         mLisDapanB = new ArrayList<>();

@@ -122,7 +122,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             } else
                 startService(intent_service);*/
         }
-        showDialogLoadingLambai();
+        //showDialogLoadingLambai();
         initData();
         initEvent();
         Animation animationRotale = AnimationUtils.loadAnimation(this, R.anim.animation_time);
