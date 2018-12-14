@@ -10,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -117,20 +120,68 @@ public class FragmentDocvaTraloi extends BaseFragment
     ImageView img_checkbox_D;
     @BindView(R.id.scroll_read_text)
     NestedScrollView scroll_read_text;
+    private int current;
 
-
-    public static FragmentDocvaTraloi newInstance(CauhoiDetail restaurant) {
+    public static FragmentDocvaTraloi newInstance(CauhoiDetail restaurant, int current) {
         FragmentDocvaTraloi restaurantDetailFragment = new FragmentDocvaTraloi();
         Bundle args = new Bundle();
         args.putParcelable("cauhoi", Parcels.wrap(restaurant));
+        args.putInt("current", current);
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.message.equals("docvatraloi")) {
+            Log.i(TAG, "onMessageEvent: docvatraloi: " + event.getPoint());
+            int iPoint = (int) event.getPoint();
+            if (iPoint > 0) {
+                if (current == (iPoint + 1)) {
+                    reload();
+                }
+                if (current == (iPoint - 1)) {
+                    reload();
+                }
+            } else if (current == (iPoint + 1)) {
+                reload();
+            }
+            //Log.i(TAG, "onMessageEvent: " + current);
+        }
+    }
+
+    private void reload() {
+        webview_debai.reload();
+        webview_anwser_A.reload();
+        webview_anwser_C.reload();
+        webview_anwser_D.reload();
+        webview_anwser_B.reload();
+        txt_cauhoi.reload();
+        txt_cauhoi.setWebViewClient(new WebViewClient());
+        webview_debai.setWebViewClient(new WebViewClient());
+        webview_anwser_A.setWebViewClient(new WebViewClient());
+        webview_anwser_B.setWebViewClient(new WebViewClient());
+        webview_anwser_C.setWebViewClient(new WebViewClient());
+        webview_anwser_D.setWebViewClient(new WebViewClient());
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
+        current = getArguments().getInt("current");
     }
 
     @Override
@@ -143,12 +194,17 @@ public class FragmentDocvaTraloi extends BaseFragment
                 .placeholder(R.drawable.ic_zoom)
                 .into(icon_zoom);
         // init();
+        init_gone_webview();
         btn_xemdiem.setEnabled(false);
         btn_xemdiem.getBackground().setAlpha(50);
         initLoadImage();
         initData();
         initEvent();
         return view;
+    }
+
+    private void init_gone_webview() {
+        txt_cauhoi.setVisibility(View.GONE);
     }
 
     public class WebAppInterface {
@@ -204,6 +260,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.txt_cauhoi:
+                                txt_cauhoi.setVisibility(View.VISIBLE);
                                 new Handler().post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -262,71 +319,27 @@ public class FragmentDocvaTraloi extends BaseFragment
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-                                    }
-                                });
-                                break;
-                            case R.id.webview_anwser_A:
-
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-                                    }
-                                });
-                                break;
-                            case R.id.webview_anwser_B:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-                                    }
-                                });
-                                break;
-                            case R.id.webview_anwser_C:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
-                                    }
-                                });
-                                break;
-                            case R.id.webview_anwser_D:
-
-                              /*  if (ll_webview_A.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_A.getHeight();
-                                }
-                                if (ll_webview_B.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_B.getHeight();
-                                }
-                                if (ll_webview_C.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_C.getHeight();
-                                }
-                                if (ll_webview_D.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_D.getHeight();
-                                }
-                                if (iHeightmax > 0) {
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }
-                                Log.i(TAG, "onFinish: Dáp an D");*/
                                 webview_debai.reload();
-                                webview_anwser_A.reload();
-                                webview_anwser_B.reload();
-                                webview_anwser_C.reload();
-                                webview_anwser_D.reload();
                                 webview_debai.setWebViewClient(new WebViewClient());
-                                webview_anwser_A.setWebViewClient(new WebViewClient());
-                                webview_anwser_B.setWebViewClient(new WebViewClient());
-                                webview_anwser_C.setWebViewClient(new WebViewClient());
-                                webview_anwser_D.setWebViewClient(new WebViewClient());
                                 scroll_read_text.scrollTo(0, 0);
                                 hideDialogLoading();
+                                break;
+                            case R.id.webview_anwser_A:
+                                webview_anwser_A.reload();
+                                webview_anwser_A.setWebViewClient(new WebViewClient());
+
+                                break;
+                            case R.id.webview_anwser_B:
+                                webview_anwser_B.reload();
+                                webview_anwser_B.setWebViewClient(new WebViewClient());
+                                break;
+                            case R.id.webview_anwser_C:
+                                webview_anwser_C.reload();
+                                webview_anwser_C.setWebViewClient(new WebViewClient());
+                                break;
+                            case R.id.webview_anwser_D:
+                                webview_anwser_D.reload();
+                                webview_anwser_D.setWebViewClient(new WebViewClient());
                                 break;
                         }
                     }
@@ -437,23 +450,48 @@ public class FragmentDocvaTraloi extends BaseFragment
                 }
             });
         }
+
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_webview_A.setVisibility(View.VISIBLE);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+                }
+            });
         } else {
             ll_webview_A.setVisibility(View.GONE);
         }
         if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
             ll_webview_B.setVisibility(View.VISIBLE);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
+                }
+            });
         } else {
             ll_webview_B.setVisibility(View.GONE);
         }
         if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
             ll_webview_C.setVisibility(View.VISIBLE);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
+                }
+            });
         } else {
             ll_webview_C.setVisibility(View.GONE);
         }
         if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
             ll_webview_D.setVisibility(View.VISIBLE);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+                }
+            });
         } else {
             ll_webview_D.setVisibility(View.GONE);
         }

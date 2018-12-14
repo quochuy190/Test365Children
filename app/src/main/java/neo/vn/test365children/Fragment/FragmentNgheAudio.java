@@ -105,8 +105,8 @@ public class FragmentNgheAudio extends BaseFragment implements
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-    }
 
+    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         if (event.message.equals("Audio")) {
@@ -115,6 +115,11 @@ public class FragmentNgheAudio extends BaseFragment implements
                 Log.i(TAG, "onMessageEvent: Audio play");
                 btnPlay.setImageResource(R.drawable.btn_play);
                 mPlayer.pause();
+
+            }
+            if (webview_debai != null) {
+                webview_debai.reload();
+               // StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
             }
         }
     }
@@ -283,13 +288,17 @@ public class FragmentNgheAudio extends BaseFragment implements
             Log.e(TAG, "play: ", e);
         }
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
+            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "",
+                    mCauhoi.getsANSWER(), false, ""));
         if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(), false, ""));
+            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "",
+                    mCauhoi.getsANSWER(), false, ""));
         if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(), false, ""));
+            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "",
+                    mCauhoi.getsANSWER(), false, ""));
         if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
+            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "",
+                    mCauhoi.getsANSWER(), false, ""));
         adapter.notifyDataSetChanged();
     }
 

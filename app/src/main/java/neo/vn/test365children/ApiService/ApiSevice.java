@@ -18,10 +18,10 @@ import retrofit2.http.QueryMap;
  */
 
 public interface ApiSevice {
+    String sUrl = "";
     //Log info action user
     @GET("services/SqlServices/ref?response=application/json")
     Call<ResponseBody> getApiService(@QueryMap Map<String, String> data);
-
     final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)

@@ -144,6 +144,30 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         showDialogLoading();
         initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+            }
+        });
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_webview_A.setVisibility(View.VISIBLE);
         } else {
@@ -335,7 +359,7 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                 + "<body>"
                 + StringUtil.convert_html(link_web)
                 + "</body></html>";
-        webview.loadDataWithBaseURL("", pish + text + pas,
+        webview.loadDataWithBaseURL("", text,
                 "text/html", "UTF-8", "");
        /* webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
                 "text/html", "UTF-8", "");*/
@@ -353,21 +377,13 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-                                    }
-                                });
+                                webview_debai.reload();
+                                webview_debai.setWebViewClient(new WebViewClient());
+                                hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A:
-
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-                                    }
-                                });
+                                webview_anwser_A.reload();
+                                webview_anwser_A.setWebViewClient(new WebViewClient());
                               /*  i = ll_webview_A.getHeight();
                                 Log.i(TAG, "onPageFinished: height A " + i);
                                 if (i > iHeightmax) {
@@ -379,12 +395,8 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                                 }*/
                                 break;
                             case R.id.webview_anwser_B:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-                                    }
-                                });
+                                webview_anwser_B.reload();
+                                webview_anwser_B.setWebViewClient(new WebViewClient());
                              /*   i = ll_webview_B.getHeight();
                                 Log.i(TAG, "onPageFinished: height B " + i);
                                 if (i > iHeightmax) {
@@ -396,16 +408,11 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                                 }*/
                                 break;
                             case R.id.webview_anwser_C:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
-                                    }
-                                });
+                                webview_anwser_C.reload();
+                                webview_anwser_C.setWebViewClient(new WebViewClient());
                                 break;
                             case R.id.webview_anwser_D:
-
-                                if (ll_webview_A.getHeight() > iHeightmax) {
+                               /* if (ll_webview_A.getHeight() > iHeightmax) {
                                     iHeightmax = ll_webview_A.getHeight();
                                 }
                                 if (ll_webview_B.getHeight() > iHeightmax) {
@@ -422,19 +429,11 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                                     setHeightAll(iHeightmax, ll_webview_B);
                                     setHeightAll(iHeightmax, ll_webview_C);
                                     setHeightAll(iHeightmax, ll_webview_D);
-                                }
+                                }*/
                                 Log.i(TAG, "onFinish: Dáp an D");
-                                webview_debai.reload();
-                                webview_anwser_A.reload();
-                                webview_anwser_B.reload();
-                                webview_anwser_C.reload();
                                 webview_anwser_D.reload();
-                                webview_debai.setWebViewClient(new WebViewClient());
-                                webview_anwser_A.setWebViewClient(new WebViewClient());
-                                webview_anwser_B.setWebViewClient(new WebViewClient());
-                                webview_anwser_C.setWebViewClient(new WebViewClient());
                                 webview_anwser_D.setWebViewClient(new WebViewClient());
-                                hideDialogLoading();
+
                                 break;
                         }
                     }
@@ -511,5 +510,10 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
     }
 }

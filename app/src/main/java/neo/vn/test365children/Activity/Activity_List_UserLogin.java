@@ -112,6 +112,7 @@ public class Activity_List_UserLogin extends BaseActivity {
                     objLogin.setsDEVICE_TYPE(obj.getsDEVICE_TYPE());
                     SharedPrefs.getInstance().put(Constants.KEY_USER_CON, objLogin.getsUSERNAME());
                     SharedPrefs.getInstance().put(Constants.KEY_SAVE_CHIL, objLogin);
+                    SharedPrefs.getInstance().put(Constants.KEY_USER_ME, objLogin.getsUserMe());
                     startActivity(intent);
                     finish();
                 }

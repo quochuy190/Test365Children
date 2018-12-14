@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -100,19 +103,87 @@ public class FragmentChondapanDung extends BaseFragment
     ImageView img_checkbox_C;
     @BindView(R.id.img_checkbox_D)
     ImageView img_checkbox_D;
+    private int current;
 
-    public static FragmentChondapanDung newInstance(CauhoiDetail restaurant) {
+    public static FragmentChondapanDung newInstance(CauhoiDetail restaurant, int current) {
         FragmentChondapanDung restaurantDetailFragment = new FragmentChondapanDung();
         Bundle args = new Bundle();
         args.putParcelable("cauhoi", Parcels.wrap(restaurant));
+        args.putInt("current", current);
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.message.equals("Audio")) {
+            Log.i(TAG, "onMessageEvent: Audio");
+            /*if (webview_debai != null) {
+                webview_debai.reload();
+                webview_anwser_A.reload();
+                webview_anwser_C.reload();
+                webview_anwser_D.reload();
+                webview_anwser_B.reload();
+                // StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+                webview_debai.setWebViewClient(new WebViewClient());
+                webview_anwser_A.setWebViewClient(new WebViewClient());
+                webview_anwser_B.setWebViewClient(new WebViewClient());
+                webview_anwser_C.setWebViewClient(new WebViewClient());
+                webview_anwser_D.setWebViewClient(new WebViewClient());
+            }*/
+        } else if (event.message.equals("chondapan")) {
+            Log.i(TAG, "onMessageEvent: " + event.getPoint());
+            Log.i(TAG, "onMessageEvent: chondapan" + current);
+            int iPoint = (int) event.getPoint();
+            if (iPoint > 0) {
+                if (current == (iPoint + 1)) {
+                    reload();
+                }
+                if (current == (iPoint - 1)) {
+                    reload();
+                }
+            } else if (current == (iPoint + 1)) {
+                reload();
+            }
+            if (current == iPoint) {
+                webview_debai.reload();
+                webview_debai.setWebViewClient(new WebViewClient());
+            }
+            //Log.i(TAG, "onMessageEvent: " + current);
+        }
+    }
+
+    private void reload() {
+        webview_debai.reload();
+        webview_anwser_A.reload();
+        webview_anwser_C.reload();
+        webview_anwser_D.reload();
+        webview_anwser_B.reload();
+
+        webview_debai.setWebViewClient(new WebViewClient());
+        webview_anwser_A.setWebViewClient(new WebViewClient());
+        webview_anwser_B.setWebViewClient(new WebViewClient());
+        webview_anwser_C.setWebViewClient(new WebViewClient());
+        webview_anwser_D.setWebViewClient(new WebViewClient());
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
+        current = getArguments().getInt("current");
     }
 
     @Override
@@ -171,7 +242,7 @@ public class FragmentChondapanDung extends BaseFragment
     }
 
     private void initData() {
-        if (mCauhoi.getsNumberDe().equals("1")) {
+        if (mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau().equals("1")) {
             showDialogLoading();
         }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
@@ -179,7 +250,18 @@ public class FragmentChondapanDung extends BaseFragment
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+                initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+                initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
+                initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
+                initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+            }
+        });
+
+
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_webview_A.setVisibility(View.VISIBLE);
         } else {
@@ -228,8 +310,9 @@ public class FragmentChondapanDung extends BaseFragment
                 + "</body></html>";
         webview.loadDataWithBaseURL("", text,
                 "text/html", "UTF-8", "");
-       /* webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
-                "text/html", "UTF-8", "");*/
+        // webview.setWebViewClient(new WebViewClient());
+        webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
+                "text/html", "UTF-8", "");
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(final WebView view, String url) {
@@ -244,41 +327,25 @@ public class FragmentChondapanDung extends BaseFragment
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-                                    }
-                                });
+                                webview_debai.reload();
+                                hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A:
-
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-                                    }
-                                });
+                                webview_anwser_A.reload();
+                                webview_anwser_A.setWebViewClient(new WebViewClient());
                                 break;
                             case R.id.webview_anwser_B:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-                                    }
-                                });
+                                webview_anwser_B.reload();
+                                webview_anwser_B.setWebViewClient(new WebViewClient());
                                 break;
                             case R.id.webview_anwser_C:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
-                                    }
-                                });
+                                webview_anwser_C.reload();
+                                webview_anwser_C.setWebViewClient(new WebViewClient());
                                 break;
                             case R.id.webview_anwser_D:
-/*
-                                if (ll_webview_A.getHeight() > iHeightmax) {
+                                webview_anwser_D.reload();
+                                webview_anwser_D.setWebViewClient(new WebViewClient());
+                              /*  if (ll_webview_A.getHeight() > iHeightmax) {
                                     iHeightmax = ll_webview_A.getHeight();
                                 }
                                 if (ll_webview_B.getHeight() > iHeightmax) {
@@ -295,18 +362,8 @@ public class FragmentChondapanDung extends BaseFragment
                                     setHeightAll(iHeightmax, ll_webview_B);
                                     setHeightAll(iHeightmax, ll_webview_C);
                                     setHeightAll(iHeightmax, ll_webview_D);
-                                }
-                                Log.i(TAG, "onFinish: Dáp an D");*/
-                                webview_debai.reload();
-                                webview_anwser_A.reload();
-                                webview_anwser_B.reload();
-                                webview_anwser_C.reload();
-                                webview_anwser_D.reload();
+                                }*/
                                 webview_debai.setWebViewClient(new WebViewClient());
-                                webview_anwser_A.setWebViewClient(new WebViewClient());
-                                webview_anwser_B.setWebViewClient(new WebViewClient());
-                                webview_anwser_C.setWebViewClient(new WebViewClient());
-                                webview_anwser_D.setWebViewClient(new WebViewClient());
                                 hideDialogLoading();
                                 break;
                         }

@@ -89,6 +89,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     private long iCurrenTime = 0;
     int iTotalTime;
     private SoundPool mSoundPool;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +130,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         img_time.startAnimation(animationRotale);
         // initViewPager(mCauhoi);
     }
+
     private int cPlayTrue;
     private int cPlayClick;
     private int cPlayFalse;
@@ -138,6 +140,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     private int PRIORITY = 1;
     private int LOOP = 0;
     private float RATE = 1.0f;
+
     private void initSound() {
         cPlayTrue = mSoundPool.load(getApplicationContext(), R.raw.true_mp3, 1);
         cPlayClick = mSoundPool.load(getApplicationContext(), R.raw.click, 1);
@@ -298,10 +301,20 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               /* Fragment page = getSupportFragmentManager().findFragmentByTag
+                        ("android:switcher:" + R.id.viewpager_lambai + ":" + viewpager_lambai.getCurrentItem());
+                // based on the current position you can then cast the page to the correct
+                // class and call the method:
+                if (viewpager_lambai.getCurrentItem() == 0 && page != null) {
+                    EventBus.getDefault().post(new MessageEvent("chondapan", 1, 0));
+                }*/
                 int current = viewpager_lambai.getCurrentItem();
                 if (maxPage > 0)
                     if (current < (maxPage)) {
+                        EventBus.getDefault().post(new MessageEvent("chondapan", current, 0));
                         EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
+                        EventBus.getDefault().post(new MessageEvent("docvatraloi", current, 0));
+                        EventBus.getDefault().post(new MessageEvent("batsau", current, 0));
                         viewpager_lambai.setCurrentItem((current + 1));
                     }
             }
@@ -314,6 +327,9 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                 if (current > 0) {
                     viewpager_lambai.setCurrentItem((current - 1));
                     EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
+                    EventBus.getDefault().post(new MessageEvent("chondapan", current, 0));
+                    EventBus.getDefault().post(new MessageEvent("docvatraloi", current, 0));
+                    EventBus.getDefault().post(new MessageEvent("batsau", current, 0));
                 }
             }
         });
@@ -325,8 +341,10 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
 
             @Override
             public void onPageSelected(int i) {
-
                 EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
+                EventBus.getDefault().post(new MessageEvent("chondapan", i, 0));
+                EventBus.getDefault().post(new MessageEvent("docvatraloi", i, 0));
+                EventBus.getDefault().post(new MessageEvent("batsau", i, 0));
             }
 
             @Override
@@ -336,8 +354,10 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     }
 
     private ExerciseAnswer objExer;
+    int current = 0;
 
     private void initData() {
+        current = 0;
         objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);
         mLisCauhoi = new ArrayList<>();
         mLisCauhoi.addAll(App.mLisCauhoi);
@@ -357,6 +377,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                         obj.setmNumber("" + (j + 1));
                         adapterViewpager.addFragment(FragmentCuuCongchua.
                                 newInstance(obj), obj.getsERROR());
+                        current++;
                     }
                     for (int i = 0; i < obj.getLisInfo().size(); i++) {
                         maxPage++;
@@ -371,30 +392,40 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                         App.mLisCauhoi.get(j).getLisInfo().get(i).setsANSWER_CHILD("");
                         if (obj.getsKIEU().equals("1")) {
                             if (obj.getsERROR().equals("0000"))
-                                adapterViewpager.addFragment(FragmentChondapanDung.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                                adapterViewpager.addFragment(FragmentChondapanDung.
+                                        newInstance(obj.getLisInfo().get(i), current), obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("2")) {
-                            adapterViewpager.addFragment(FragmentBatSauNew.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentBatSauNew.newInstance(obj.
+                                    getLisInfo().get(i), current), obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("3")) {
-                            adapterViewpager.addFragment(FragmentChemchuoi.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentChemchuoi.newInstance(obj.getLisInfo().get(i), current)
+                                    , obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("4")) {
                             adapterViewpager.addFragment(FragmentSapxep.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("5")) {
                             adapterViewpager.addFragment(FragmentXepTrung.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("6")) {
                             adapterViewpager.addFragment(FragmentDienvaochotrong.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("7")) {
-                            adapterViewpager.addFragment(FragmentDocvaTraloi.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentDocvaTraloi.newInstance(obj.getLisInfo().get(i),
+                                    current), obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("8")) {
                             adapterViewpager.addFragment(FragmentXemanhtraloi.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("9")) {
                             adapterViewpager.addFragment(FragmentNgheAudio.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            current++;
                         } else if (obj.getsKIEU().equals("11")) {
                             adapterViewpager.addFragment(FragmentNoicau.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
-                        }/* else if (obj.getsKIEU().equals("10")) {
-
-                                adapterViewpager.addFragment(FragmentCuuCongchua.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
-
-                        }*/
+                            current++;
+                        }
                     }
                 }
             }

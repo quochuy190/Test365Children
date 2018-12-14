@@ -32,6 +32,7 @@ import butterknife.BindView;
 import io.realm.Realm;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.BuildConfig;
+import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.ErrorApi;
@@ -77,6 +78,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRealm = RealmController.with(this).getRealm();
+        img_showpass.setImageDrawable(getResources().getDrawable(R.drawable.ic_eye_hide));
         loadImage();
         initData();
         initEvent();
@@ -227,13 +229,13 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
             @Override
             public void onClick(View v) {
                 if (!isShowpass) {
-                    img_showpass.setImageDrawable(getResources().getDrawable(R.drawable.ic_eye_show));
+                    img_showpass.setImageDrawable(getResources().getDrawable(R.drawable.ic_eye_hide));
                     //Glide.with(ActivityLogin.this).load(R.drawable.ic_eye_hide).into(img_showpass);
                     edtPassCon.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     isShowpass = !isShowpass;
 
                 } else {
-                    img_showpass.setImageDrawable(getResources().getDrawable(R.drawable.ic_eye_hide));
+                    img_showpass.setImageDrawable(getResources().getDrawable(R.drawable.ic_eye_show));
                     edtPassCon.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     isShowpass = !isShowpass;
 
@@ -260,6 +262,11 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
                 SharedPrefs.getInstance().put(Constants.KEY_USER_ME, sUserMe);
                 SharedPrefs.getInstance().put(Constants.KEY_USER_CON, sUserCon);
                 SharedPrefs.getInstance().put(Constants.KEY_PASSWORD, sPassWord);
+                SharedPrefs.getInstance().put(Constants.KEY_URL_MEDIA, mLis.get(0).getsMEDIA_SERVER());
+                SharedPrefs.getInstance().put(Constants.KEY_URL_BASE, mLis.get(0).getsAPI_SERVER());
+                Config.URL_IMAGE = mLis.get(0).getsMEDIA_SERVER();
+                Config.URL_VIDEO = mLis.get(0).getsMEDIA_SERVER();
+                Config.BASE_URL = mLis.get(0).getsAPI_SERVER();
                 Intent intent = new Intent(ActivityLogin.this, ActivityHome.class);
                 Intent intent_welcom = new Intent(ActivityLogin.this, Activity_Welcome.class);
                 intent_welcom.putExtra(Constants.KEY_SEND_OBJLOGIN, mLis.get(0));

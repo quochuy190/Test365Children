@@ -58,6 +58,8 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
     TextView txt_cauhoi;
     @BindView(R.id.recycle_dapan)
     RecyclerView recycle_dapan;
+    @BindView(R.id.recycle_ketqua)
+    RecyclerView recycle_ketqua;
     RecyclerView.LayoutManager mLayoutManager;
     List<DapAn> mLis;
     List<DapAn> mLisStart;
@@ -89,8 +91,6 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         View view = inflater.inflate(R.layout.fragment_sapxep, container, false);
         ButterKnife.bind(this, view);
         mLisStart = new ArrayList<>();
-        btn_xemdiem.setEnabled(true);
-        btn_xemdiem.getBackground().setAlpha(255);
         initData();
         initViews(true);
         initEvent();
@@ -118,13 +118,14 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
                     if (isa) {
                         Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
                         EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        txt_cauhoi.setVisibility(View.INVISIBLE);
+                        recycle_ketqua.setVisibility(View.GONE);
                     }
                     //  EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                     else {
                         Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-                        txt_cauhoi.setVisibility(View.VISIBLE);
+                        recycle_ketqua.setVisibility(View.VISIBLE);
                         EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                        initDapan();
                     }
 
                     isClickXemdiem = true;
@@ -140,16 +141,17 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         });
     }
 
-
+    int[] arrBgItem = new int[]{R.drawable.img_menu_toan, R.drawable.img_menu_blue, R.drawable.img_menu_tim,
+            R.drawable.img_menu_green, R.drawable.img_menu_red,};
     List<String> mLiDapan;
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
-                    +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        Log.i(TAG, "initData: "+mCauhoi.getsHTML_CONTENT());
+        Log.i(TAG, "initData: " + mCauhoi.getsHTML_CONTENT());
         // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
         if (mCauhoi.getsHTML_CONTENT() != null)
             txt_cauhoi.setText("Đáp án: " + mCauhoi.getsHTML_CONTENT().replace("::", " "));
@@ -160,17 +162,25 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
             mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
         }
         if (mLiDapan != null && mLiDapan.size() > 0) {
-            for (String s : mLiDapan) {
-                mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));
+            for (int i = 0; i < mLiDapan.size(); i++) {
+                String s = mLiDapan.get(i);
+                mLisStart.add(new DapAn("1", s, "",
+                        "agcbd", false, "" + i));
+                mLis.add(new DapAn("1", s, "",
+                        "agcbd", false, "" + i));
             }
-            Collections.shuffle(mLiDapan);
-            for (String s : mLiDapan) {
-                mLis.add(new DapAn("1", s, "", "agcbd", false, ""));
+      /*      for (String s : mLiDapan) {
+
             }
+            for (String s : mLiDapan) {
+
+            }*/
+            Collections.shuffle(mLis);
         }
     }
 
     AdapterSapxep adapterSapxep;
+    AdapterSapxep adapterSapxep_ketqua;
 
     private void initViews(boolean ischange) {
         LinearLayoutManager linearLayoutManager
@@ -189,6 +199,22 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         recycle_dapan.setAdapter(adapterSapxep);
 
 
+    }
+
+    private void initDapan() {
+        LinearLayoutManager linearLayoutManager2
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+       /* linearLayoutManager2 = new GridLayoutManager(getContext(),
+                6, GridLayoutManager.VERTICAL, false);*/
+        recycle_ketqua.setLayoutManager(linearLayoutManager2);
+        // setData();
+        adapterSapxep_ketqua = new AdapterSapxep(getContext(), mLisStart, this);
+    /*    ItemTouchHelper.Callback callback_ketqua =
+                new RecyclerViewItemTouchHelperCallback(adapterSapxep_ketqua, false);
+        mItemTouchHelper = new ItemTouchHelper(callback_ketqua);
+        mItemTouchHelper.attachToRecyclerView(recycle_ketqua);
+        adapterSapxep_ketqua.delegate = this;*/
+        recycle_ketqua.setAdapter(adapterSapxep_ketqua);
     }
 
     @Override

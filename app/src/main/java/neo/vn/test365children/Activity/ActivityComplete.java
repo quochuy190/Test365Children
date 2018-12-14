@@ -219,6 +219,10 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
         hideDialogLoading();
         if (mLis != null && mLis.get(0).equals("0000")) {
             Log.i(TAG, "show_submit_execercise: success");
+            objExer.setIsTrangthailambai("3");
+            mRealm.beginTransaction();
+            mRealm.copyToRealmOrUpdate(objExer);
+            mRealm.commitTransaction();
         } else {
             Log.i(TAG, "show_submit_execercise: " + mLis.get(0).getsRESULT());
         }

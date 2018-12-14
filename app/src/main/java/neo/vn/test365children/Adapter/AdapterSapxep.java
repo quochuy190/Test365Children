@@ -54,8 +54,8 @@ public class AdapterSapxep extends RecyclerView.Adapter<AdapterSapxep.MyViewHold
                 //delegate.onItemClicked(String.valueOf(dataModel.getName()));
             }
         });
-
-        switch (position) {
+        int iBg = Integer.parseInt(dataModel.getsImage());
+        switch (iBg) {
             case 0:
                 holder.img_bg.setImageResource(R.drawable.img_menu_toan);
                 break;
@@ -71,9 +71,12 @@ public class AdapterSapxep extends RecyclerView.Adapter<AdapterSapxep.MyViewHold
             case 4:
                 holder.img_bg.setImageResource(R.drawable.img_menu_red);
                 break;
+            case 5:
+                holder.img_bg.setImageResource(R.drawable.img_menu_toan);
+                break;
         }
-        if (position > 4)
-            holder.img_bg.setImageResource(R.drawable.img_menu_blue);
+/*        if (position > 4)
+            holder.img_bg.setImageResource(R.drawable.img_menu_blue);*/
 
         holder.rl_item_sapxep.setOnTouchListener(new View.OnTouchListener() {
             @Override

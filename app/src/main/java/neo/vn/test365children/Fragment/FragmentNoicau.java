@@ -325,7 +325,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
     boolean isImageA = false, isImageB = false;
 
     private void initData() {
-        if (mCauhoi.getsNumberDe().equals("1")) {
+        if (mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau().equals("1")) {
             showDialogLoading();
         }
         text_lable_dapan.setVisibility(View.GONE);
@@ -486,6 +486,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                                 });
                                 break;
                             case R.id.webview_dapannoicau_B_4:
+
                                 if (rl_dapanA_1.getHeight() > iHeightmax) {
                                     iHeightmax = rl_dapanA_1.getHeight();
                                 }
@@ -531,7 +532,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                                 webview_dapannoicau_B_2.setWebViewClient(new WebViewClient());
                                 webview_dapannoicau_B_3.setWebViewClient(new WebViewClient());
                                 webview_dapannoicau_B_4.setWebViewClient(new WebViewClient());
-
+                                hideDialogLoading();
                                 break;
                         }
 
@@ -541,6 +542,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
             }
         });
     }
+
     public void setHeight(int iHeight) {
         setHeightAll(iHeight, rl_dapanA_1);
         setHeightAll(iHeight, rl_dapanA_2);

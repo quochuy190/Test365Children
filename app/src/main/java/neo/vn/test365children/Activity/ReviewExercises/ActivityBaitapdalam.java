@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -49,6 +51,12 @@ public class ActivityBaitapdalam extends BaseActivity {
     ImageView imageView5;
     @BindView(R.id.btn_back)
     ImageView btn_back;
+    @BindView(R.id.txt_montoan)
+    TextView txt_montoan;
+    @BindView(R.id.rl_title_tv)
+    RelativeLayout rl_title_tv;
+    @BindView(R.id.rl_title_tienganh)
+    RelativeLayout rl_title_tienganh;
 
     @Override
     public int setContentViewId() {
@@ -83,26 +91,35 @@ public class ActivityBaitapdalam extends BaseActivity {
             Log.i(TAG, "initData: " + lisExercise.size());
         List<ExerciseAnswer> lisEx = new ArrayList<>();
         lisEx = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "1")
-                .equalTo("isTrangthailambai", "2")
+                .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTV = new ArrayList<>();
         lisExTV = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "2")
-                .equalTo("isTrangthailambai", "2")
+                .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTA = new ArrayList<>();
         lisExTA = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "3")
-                .equalTo("isTrangthailambai", "2")
+                .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         if (lisEx.size() > 0) {
             mLisTToan.addAll(lisEx);
+            txt_montoan.setVisibility(View.VISIBLE);
+        } else {
+            txt_montoan.setVisibility(View.INVISIBLE);
         }
         if (lisExTV.size() > 0) {
             mLisTV.addAll(lisExTV);
+            rl_title_tv.setVisibility(View.VISIBLE);
             //mLisTuan.add(new ListTuan("Tiếng Việt", lisExTV));
+        } else {
+            rl_title_tv.setVisibility(View.GONE);
         }
         if (lisExTA.size() > 0) {
             mLisTAnh.addAll(lisExTA);
+            recycle_tienganh.setVisibility(View.VISIBLE);
             // mLisTuan.add(new ListTuan("Tiếng Anh", lisExTA));
+        } else {
+            recycle_tienganh.setVisibility(View.GONE);
         }
         // Log.i(TAG, "initData: " + mLisTuan);
     }

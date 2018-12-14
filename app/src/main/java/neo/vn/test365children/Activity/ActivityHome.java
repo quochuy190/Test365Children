@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,6 +25,7 @@ import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.ErrorApi;
+import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.Models.ObjLogin;
 import neo.vn.test365children.Models.Sticker;
 import neo.vn.test365children.Presenter.ImlListSticker;
@@ -62,8 +64,19 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener, 
         mPresenter = new PresenterSticker(this);
         initData();
         initEvent();
+        initCheckCommitExer();
         mRealm = RealmController.with(this).getRealm();
         //play_mp3();
+    }
+
+    private void initCheckCommitExer() {
+        List<ExerciseAnswer> lisEx = new ArrayList<>();
+        lisEx = mRealm.where(ExerciseAnswer.class)
+                .equalTo("isTrangthailambai", "2")
+                .equalTo("sId_userCon", sUserCon).findAll();
+        if (lisEx.size() > 0) {
+
+        }
     }
 
     private void initData() {
@@ -108,21 +121,21 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener, 
             public void onClick(View v) {
                 showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn đăng xuất không?",
                         false, new ClickDialog() {
-                    @Override
-                    public void onClickYesDialog() {
-                        SharedPrefs.getInstance().put(Constants.KEY_ISLOGIN, false);
-                        SharedPrefs.getInstance().put(Constants.KEY_IS_WELCOME, false);
-                        SharedPrefs.getInstance().put(Constants.KEY_USER_CON, "");
-                        Intent intent = new Intent(ActivityHome.this, Activity_List_UserLogin.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                            @Override
+                            public void onClickYesDialog() {
+                                SharedPrefs.getInstance().put(Constants.KEY_ISLOGIN, false);
+                                SharedPrefs.getInstance().put(Constants.KEY_IS_WELCOME, false);
+                                SharedPrefs.getInstance().put(Constants.KEY_USER_CON, "");
+                                Intent intent = new Intent(ActivityHome.this, Activity_List_UserLogin.class);
+                                startActivity(intent);
+                                finish();
+                            }
 
-                    @Override
-                    public void onClickNoDialog() {
+                            @Override
+                            public void onClickNoDialog() {
 
-                    }
-                });
+                            }
+                        });
 
             }
         });

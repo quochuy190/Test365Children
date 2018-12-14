@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -139,7 +140,8 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
             public void onClick(View v) {
                 if (!isClickStart) {
                     KeyboardUtil.animation_click_button(ActivityStartBaitap.this, btn_start_lambai);
-                    mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(), get_current_time(), "30");
+                    mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(), get_current_time(),
+                            "30");
                     obj_answer.setsTimebatdaulambai(get_current_time());
                     // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
                     obj_answer.setIsTrangthailambai("1");
@@ -245,7 +247,8 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
 
     @Override
     public void show_start_taken(List<ErrorApi> mLis) {
-
+        if (mLis != null && mLis.get(0).getsERROR().equals("0000"))
+            Log.i(TAG, "show_start_taken: success");
     }
 
     @Override

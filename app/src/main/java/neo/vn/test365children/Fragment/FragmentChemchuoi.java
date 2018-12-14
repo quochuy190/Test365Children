@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -105,19 +107,63 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     @BindView(R.id.img_anwser_chil)
     ImageView img_anwser_chil;
 
-    public static FragmentChemchuoi newInstance(CauhoiDetail restaurant) {
+    public static FragmentChemchuoi newInstance(CauhoiDetail restaurant, int current) {
         FragmentChemchuoi restaurantDetailFragment = new FragmentChemchuoi();
         Bundle args = new Bundle();
         //args.putSerializable("cauhoi",restaurant);
         args.putParcelable("cauhoi", Parcels.wrap(restaurant));
+        args.putInt("current", current);
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private int current;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.message.equals("batsau")) {
+            int iPoint = (int) event.getPoint();
+            if (iPoint > 0) {
+                if (current == (iPoint + 1)) {
+                    reload();
+                }
+                if (current == (iPoint - 1)) {
+                    reload();
+                }
+            } else if (current == (iPoint + 1)) {
+                reload();
+            }
+        }
+    }
+
+    private void reload() {
+        webview_debai.reload();
+        webview_anwser_A.reload();
+        webview_anwser_C.reload();
+        webview_anwser_D.reload();
+        webview_anwser_B.reload();
+        webview_debai.setWebViewClient(new WebViewClient());
+        webview_anwser_A.setWebViewClient(new WebViewClient());
+        webview_anwser_B.setWebViewClient(new WebViewClient());
+        webview_anwser_C.setWebViewClient(new WebViewClient());
+        webview_anwser_D.setWebViewClient(new WebViewClient());
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
+        current = getArguments().getInt("current");
     }
 
     @Override
