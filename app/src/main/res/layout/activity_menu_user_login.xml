@@ -38,9 +38,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_list_user"
                 android:layout_marginRight="@dimen/margin_list_user"
-                android:orientation="vertical"
-
-                >
+                android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycle_list_userlogin"
@@ -64,7 +62,6 @@
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
-
 
     </RelativeLayout>
 

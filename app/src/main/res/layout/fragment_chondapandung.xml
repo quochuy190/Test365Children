@@ -85,6 +85,7 @@
             android:orientation="vertical">
 
             <WebView
+                android:padding="@dimen/dp5"
                 android:id="@+id/webview_debai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -232,7 +233,16 @@
                 android:padding="@dimen/dp5" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
+    <ImageView
+        android:id="@+id/img_reload"
+        android:layout_width="@dimen/dp30"
+        android:layout_height="@dimen/dp30"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/dp5"
+        android:src="@drawable/icon_reload"
+        android:visibility="visible"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
     <ImageView
         android:id="@+id/img_anwser_chil"
         android:layout_width="@dimen/icon_anwser_review"

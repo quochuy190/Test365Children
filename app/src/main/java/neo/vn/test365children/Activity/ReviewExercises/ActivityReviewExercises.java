@@ -21,12 +21,12 @@ import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Fragment.FragmentXemanhtraloi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentCompleteBaitapReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentDienvaochotrongReview;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentDocvaTraloiReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentNgheAudioReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewBatsauNew;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewCauhoiCongchua;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewChemchuoi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewDapandung;
-import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewDocvaTraloi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewNoicau;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewSapxep;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewTrungRo;
@@ -216,9 +216,11 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                                 adapterViewpager.addFragment(FragmentReviewTrungRo.newInstance(mCauhoiDetail), obj.getsERROR());
                             }
                         } else if (obj.getsKIEU().equals("6")) {
-                            adapterViewpager.addFragment(FragmentDienvaochotrongReview.newInstance(mCauhoiDetail), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentDienvaochotrongReview.newInstance(mCauhoiDetail),
+                                    obj.getsERROR());
                         } else if (obj.getsKIEU().equals("7")) {
-                            adapterViewpager.addFragment(FragmentReviewDocvaTraloi.newInstance(mCauhoiDetail), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentDocvaTraloiReview.newInstance(mCauhoiDetail, 0),
+                                    obj.getsERROR());
                         } else if (obj.getsKIEU().equals("8")) {
                             adapterViewpager.addFragment(FragmentXemanhtraloi.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("9")) {

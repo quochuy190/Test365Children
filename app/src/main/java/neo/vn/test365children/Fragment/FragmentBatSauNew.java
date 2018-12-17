@@ -42,6 +42,7 @@ import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.StringUtil;
+
 /**
  * @author Quốc Huy
  * @version 1.0.0
@@ -114,6 +115,8 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
     ImageView img_la_B;
     @BindView(R.id.img_la_D)
     ImageView img_la_D;
+    @BindView(R.id.img_reload)
+    ImageView img_reload;
 
     public static FragmentBatSauNew newInstance(CauhoiDetail restaurant, int current) {
         FragmentBatSauNew restaurantDetailFragment = new FragmentBatSauNew();
@@ -141,7 +144,8 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        if (event.message.equals("batsau")) {
+        Log.i(TAG, "onMessageEvent: " + event.getPoint());
+       /* if (event.message.equals("batsau")) {
             int iPoint = (int) event.getPoint();
             if (iPoint > 0) {
                 if (current == (iPoint + 1)) {
@@ -153,7 +157,7 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
             } else if (current == (iPoint + 1)) {
                 reload();
             }
-        }
+        }*/
     }
 
     @Override
@@ -175,11 +179,12 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
         initImage(arrayImage[iRandom]);
         //initGoneView();
         initData();
-        btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);
+/*        btn_xemdiem.setEnabled(false);
+        btn_xemdiem.getBackground().setAlpha(50);*/
         initEvent();
         return view;
     }
+
     private void initImage(int iImage) {
         Glide.with(getContext()).load(iImage)
                 .placeholder(R.drawable.icon_sau).into(img_saucon_A);
@@ -200,7 +205,9 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
     }
 
     private boolean isClickXemdiem = false;
+
     private void initEvent() {
+        img_reload.setOnClickListener(this);
         ll_anwser_A.setOnClickListener(this);
         ll_anwser_B.setOnClickListener(this);
         ll_anwser_C.setOnClickListener(this);
@@ -272,6 +279,12 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+            }
+        });
      /*   initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
         initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
         initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
@@ -301,6 +314,9 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.img_reload) {
+            reload();
+        }
         if (!isAnimation) {
             switch (v.getId()) {
                 case R.id.ll_anwser_A:
@@ -390,8 +406,8 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
     private void anwser() {
         if (!isdouble_click) {
             isdouble_click = true;
-            btn_xemdiem.setEnabled(true);
-            btn_xemdiem.getBackground().setAlpha(255);
+        /*    btn_xemdiem.setEnabled(true);
+            btn_xemdiem.getBackground().setAlpha(255);*/
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
             if (sAnwser.length() > 0) {
@@ -479,12 +495,6 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-                                    }
-                                });
                                 webview_debai.setVisibility(View.VISIBLE);
                                 break;
                             case R.id.webview_anwser_A:
@@ -518,7 +528,6 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                                 new CountDownTimer(1000, 100) {
                                     @Override
                                     public void onTick(long millisUntilFinished) {
-
                                     }
 
                                     @Override
@@ -537,10 +546,10 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                                         if (ll_webview_D.getHeight() > iHeightmax) {
                                             iHeightmax = ll_webview_D.getHeight();
                                         }
-                                        Log.i(TAG, "onFinish: A "+ll_webview_A.getHeight());
-                                        Log.i(TAG, "onFinish: B "+ll_webview_B.getHeight());
-                                        Log.i(TAG, "onFinish: C "+ll_webview_C.getHeight());
-                                        Log.i(TAG, "onFinish: D "+ll_webview_D.getHeight());
+                                        Log.i(TAG, "onFinish: A " + ll_webview_A.getHeight());
+                                        Log.i(TAG, "onFinish: B " + ll_webview_B.getHeight());
+                                        Log.i(TAG, "onFinish: C " + ll_webview_C.getHeight());
+                                        Log.i(TAG, "onFinish: D " + ll_webview_D.getHeight());
                                         if (iHeightmax > 0) {
                                             setHeightAll(iHeightmax, ll_webview_A);
                                             setHeightAll(iHeightmax, ll_webview_B);
@@ -548,19 +557,9 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                                             setHeightAll(iHeightmax, ll_webview_D);
                                         }
                                         Log.i(TAG, "onFinish: Dáp an D");
-                                        webview_debai.reload();
-                                        webview_anwser_A.reload();
-                                        webview_anwser_B.reload();
-                                        webview_anwser_C.reload();
-                                        webview_anwser_D.reload();
-                                        webview_debai.setWebViewClient(new WebViewClient());
-                                        webview_anwser_A.setWebViewClient(new WebViewClient());
-                                        webview_anwser_B.setWebViewClient(new WebViewClient());
-                                        webview_anwser_C.setWebViewClient(new WebViewClient());
-                                        webview_anwser_D.setWebViewClient(new WebViewClient());
+                                        reload();
                                     }
                                 }.start();
-
                                 hideDialogLoading();
                                 break;
                         }

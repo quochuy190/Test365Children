@@ -133,6 +133,5 @@ public class Activity_List_UserLogin extends BaseActivity {
                 }
             });
         }
-
     }
 }

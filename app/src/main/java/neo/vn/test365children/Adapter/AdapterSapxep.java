@@ -47,6 +47,7 @@ public class AdapterSapxep extends RecyclerView.Adapter<AdapterSapxep.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final DapAn dataModel = lisDapan.get(position);
+        int iBg = 0;
         holder.txt_dapan.setText(Html.fromHtml(dataModel.getsContent()));
         holder.rl_item_sapxep.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +55,10 @@ public class AdapterSapxep extends RecyclerView.Adapter<AdapterSapxep.MyViewHold
                 //delegate.onItemClicked(String.valueOf(dataModel.getName()));
             }
         });
-        int iBg = Integer.parseInt(dataModel.getsImage());
+        if (dataModel.getsImage()!=null&&dataModel.getsImage().length()>0){
+            iBg = Integer.parseInt(dataModel.getsImage());
+        }
+      
         switch (iBg) {
             case 0:
                 holder.img_bg.setImageResource(R.drawable.img_menu_toan);

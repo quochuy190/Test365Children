@@ -1,10 +1,13 @@
-package neo.vn.test365children.Fragment;
+package neo.vn.test365children.Fragment.ReviewExercises;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -31,6 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,6 +43,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
@@ -56,7 +62,7 @@ import neo.vn.test365children.Untils.StringUtil;
  * @updated on 8/6/2018
  * @since 1.0
  */
-public class FragmentDocvaTraloi extends BaseFragment
+public class FragmentDocvaTraloiReview extends BaseFragment
         implements View.OnClickListener, View.OnTouchListener {
     private static final String TAG = "FragmentCauhoi";
     private CauhoiDetail mCauhoi;
@@ -118,8 +124,8 @@ public class FragmentDocvaTraloi extends BaseFragment
     @BindView(R.id.img_reload)
     ImageView img_reload;
 
-    public static FragmentDocvaTraloi newInstance(CauhoiDetail restaurant, int current) {
-        FragmentDocvaTraloi restaurantDetailFragment = new FragmentDocvaTraloi();
+    public static FragmentDocvaTraloiReview newInstance(CauhoiDetail restaurant, int current) {
+        FragmentDocvaTraloiReview restaurantDetailFragment = new FragmentDocvaTraloiReview();
         Bundle args = new Bundle();
         args.putParcelable("cauhoi", Parcels.wrap(restaurant));
         args.putInt("current", current);
@@ -190,12 +196,33 @@ public class FragmentDocvaTraloi extends BaseFragment
                 .placeholder(R.drawable.ic_zoom)
                 .into(icon_zoom);
         // init();
-  /*      btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);*/
+        init_gone_webview();
+        btn_xemdiem.setVisibility(View.INVISIBLE);
         initLoadImage();
         initData();
         initEvent();
+        if (mCauhoi.getsANSWER_CHILD() != null && mCauhoi.getsANSWER_CHILD().length() > 0) {
+            setImageFalse(mCauhoi.getsANSWER_CHILD());
+        } else {
+            setImageFalse("");
+        }
         return view;
+    }
+
+    private void init_gone_webview() {
+        txt_cauhoi.setVisibility(View.GONE);
+    }
+
+    public class WebAppInterface {
+        Context mContext;
+
+        WebAppInterface(Context ctx) {
+            this.mContext = ctx;
+        }
+
+        @JavascriptInterface
+        public void sendData(String data) {
+        }
     }
 
     public void initWebview_white_text(final WebView webview, String link_web) {
@@ -209,6 +236,7 @@ public class FragmentDocvaTraloi extends BaseFragment
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         webview.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
         webview.getSettings().setJavaScriptEnabled(true);
+        webview.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
         String text = "<html><head>"
@@ -238,6 +266,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.txt_cauhoi:
+                                txt_cauhoi.setVisibility(View.VISIBLE);
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -247,7 +276,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                                 }, 1000);
                                 break;
                             case R.id.webview_debai_full:
-
+                                webview_debai_full.setWebViewClient(new WebViewClient());
                                 break;
                         }
                     }
@@ -322,8 +351,8 @@ public class FragmentDocvaTraloi extends BaseFragment
         webSettings.setDefaultFontSize(18);
         webview.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
-     /*   String pish = "<html><body  align='center'>";
-        String pas = "</body></html>";*/
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
         String text = "<html><head>"
                 + "</style></head>"
                 + "<body>"
@@ -335,8 +364,42 @@ public class FragmentDocvaTraloi extends BaseFragment
                 "text/html", "UTF-8", "");
        /* webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
                 "text/html", "UTF-8", "");*/
+        webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(final WebView view, String url) {
+                super.onPageFinished(view, url);
+                new CountDownTimer(1000, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
 
+                    @Override
+                    public void onFinish() {
+                        int i = 0;
+                        switch (view.getId()) {
+                            case R.id.webview_debai:
+
+                                break;
+                            case R.id.webview_anwser_A:
+
+
+                                break;
+                            case R.id.webview_anwser_B:
+
+                                break;
+                            case R.id.webview_anwser_C:
+
+                                break;
+                            case R.id.webview_anwser_D:
+
+                                break;
+                        }
+                    }
+                }.start();
+            }
+        });
     }
+
 
     private void initLoadImage() {
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_A);
@@ -368,7 +431,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                 reload();
             }
         });
-        ll_webview_A.setOnClickListener(this);
+       /* ll_webview_A.setOnClickListener(this);
         ll_webview_B.setOnClickListener(this);
         ll_webview_C.setOnClickListener(this);
         ll_webview_D.setOnClickListener(this);
@@ -379,7 +442,7 @@ public class FragmentDocvaTraloi extends BaseFragment
         webview_anwser_A.setOnTouchListener(this);
         webview_anwser_B.setOnTouchListener(this);
         webview_anwser_C.setOnTouchListener(this);
-        webview_anwser_D.setOnTouchListener(this);
+        webview_anwser_D.setOnTouchListener(this);*/
         icon_zoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -390,7 +453,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                 rl_show_doanvan.startAnimation(animationRotale);
             }
         });
-        btn_xemdiem.setOnClickListener(new View.OnClickListener() {
+      /*  btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isClickXemdiem) {
@@ -406,7 +469,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                     }
                 }
             }
-        });
+        });*/
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -438,6 +501,15 @@ public class FragmentDocvaTraloi extends BaseFragment
     Button btn_exit;
 
     private void initData() {
+        img_anwser_chil.setVisibility(View.VISIBLE);
+        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
+            Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+        } else {
+            Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+        }
+        if (!mCauhoi.isDalam()) {
+            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
+        }
         if (mCauhoi.getsHTML_CONTENT() != null) {
             new Handler().post(new Runnable() {
                 @Override
@@ -508,12 +580,60 @@ public class FragmentDocvaTraloi extends BaseFragment
         });
     }
 
+    private void init() {
+        mLis = new ArrayList<>();
+        adapter = new AdapterDapan(mLis, getContext());
+        mLayoutManager = new GridLayoutManager(getContext(),
+                1, GridLayoutManager.VERTICAL, false);
+        //mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
+        recycle_dapan.setNestedScrollingEnabled(false);
+        recycle_dapan.setHasFixedSize(true);
+        recycle_dapan.setLayoutManager(mLayoutManager);
+        recycle_dapan.setItemAnimator(new DefaultItemAnimator());
+        recycle_dapan.setAdapter(adapter);
+        adapter.setOnIListener(new ItemClickListener() {
+            @Override
+            public void onClickItem(int position, Object item) {
+                if (!isClickXemdiem) {
+                    btn_xemdiem.setEnabled(true);
+                    btn_xemdiem.getBackground().setAlpha(255);
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
+                    if (!mLis.get(position).isClick()) {
+                        for (DapAn obj : mLis) {
+                            //obj.setClick(true);
+                            if (obj.getsName().equals(mLis.get(position).getsName())) {
+                                if (obj.getsDapan_Dung().equals(obj.getsName())) {
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+                                } else {
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                                }
+                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
+                                obj.setsDapan_Traloi(obj.getsName());
+                            } else {
+                                obj.setsDapan_Traloi("");
+                            }
+                        }
+                        isTraloi = true;
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+
+            }
+        });
+    }
+
     private boolean anwser() {
         if (sAnwser.length() > 0) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
             if (sAnwser.equals(mCauhoi.getsANSWER())) {
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
@@ -659,6 +779,8 @@ public class FragmentDocvaTraloi extends BaseFragment
 
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
+            btn_xemdiem.setEnabled(true);
+            btn_xemdiem.getBackground().setAlpha(255);
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);

@@ -91,6 +91,7 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         View view = inflater.inflate(R.layout.fragment_sapxep, container, false);
         ButterKnife.bind(this, view);
         mLisStart = new ArrayList<>();
+
         initData();
         initViews(true);
         initEvent();

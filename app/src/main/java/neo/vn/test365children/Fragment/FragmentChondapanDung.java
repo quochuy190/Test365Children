@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -13,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,7 +27,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,7 +34,6 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
-import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
@@ -103,6 +100,8 @@ public class FragmentChondapanDung extends BaseFragment
     ImageView img_checkbox_C;
     @BindView(R.id.img_checkbox_D)
     ImageView img_checkbox_D;
+    @BindView(R.id.img_reload)
+    ImageView img_reload;
     private int current;
 
     public static FragmentChondapanDung newInstance(CauhoiDetail restaurant, int current) {
@@ -147,7 +146,7 @@ public class FragmentChondapanDung extends BaseFragment
             Log.i(TAG, "onMessageEvent: " + event.getPoint());
             Log.i(TAG, "onMessageEvent: chondapan" + current);
             int iPoint = (int) event.getPoint();
-            if (iPoint > 0) {
+        /*    if (iPoint > 0) {
                 if (current == (iPoint + 1)) {
                     reload();
                 }
@@ -156,7 +155,7 @@ public class FragmentChondapanDung extends BaseFragment
                 }
             } else if (current == (iPoint + 1)) {
                 reload();
-            }
+            }*/
             if (current == iPoint) {
                 webview_debai.reload();
                 webview_debai.setWebViewClient(new WebViewClient());
@@ -193,8 +192,8 @@ public class FragmentChondapanDung extends BaseFragment
         initLoadImage();
         //init();
         initData();
-        btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);
+/*        btn_xemdiem.setEnabled(false);
+        btn_xemdiem.getBackground().setAlpha(50);*/
         initEvent();
         return view;
     }
@@ -202,6 +201,12 @@ public class FragmentChondapanDung extends BaseFragment
     private boolean isClickXemdiem = false;
 
     private void initEvent() {
+        img_reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reload();
+            }
+        });
         ll_webview_A.setOnClickListener(this);
         ll_webview_B.setOnClickListener(this);
         ll_webview_C.setOnClickListener(this);
@@ -228,7 +233,6 @@ public class FragmentChondapanDung extends BaseFragment
                         EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
                         setImageFalse(sAnwser);
                     }
-
                 }
             }
         });
@@ -240,7 +244,20 @@ public class FragmentChondapanDung extends BaseFragment
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
     }
+    private void reload_delay(final WebView sWebview) {
+        new CountDownTimer(1000, 100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
 
+            }
+
+            @Override
+            public void onFinish() {
+                sWebview.reload();
+                sWebview.setWebViewClient(new WebViewClient());
+            }
+        }.start();
+    }
     private void initData() {
         if (mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau().equals("1")) {
             showDialogLoading();
@@ -253,7 +270,7 @@ public class FragmentChondapanDung extends BaseFragment
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+                initWebview_center(webview_debai, mCauhoi.getsHTML_CONTENT());
                 initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
                 initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
                 initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
@@ -292,7 +309,62 @@ public class FragmentChondapanDung extends BaseFragment
             mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
 */
     }
+    public void initWebview_center(final WebView webview, String link_web) {
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings();
+        webview.setBackgroundColor(Color.TRANSPARENT);
+        webview.setWebChromeClient(new WebChromeClient());
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webview.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+        String text = "<html><head>"
+                + "</style></head>"
+                + "<body>"
+                + "<div>"
+                + StringUtil.convert_html(link_web)
+                + "</div>"
+                + "</body></html>";
+/*        webview.loadDataWithBaseURL("", text,
+                "text/html", "UTF-8", "");*/
+        webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
+                "text/html", "UTF-8", "");
+        webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(final WebView view, String url) {
+                super.onPageFinished(view, url);
+                new CountDownTimer(1000, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
 
+                    @Override
+                    public void onFinish() {
+                        switch (view.getId()) {
+                            case R.id.webview_debai:
+                                new CountDownTimer(1000, 100) {
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        webview_debai.reload();
+                                        webview_debai.setWebViewClient(new WebViewClient());
+                                        hideDialogLoading();
+                                    }
+                                }.start();
+                                break;
+                        }
+                    }
+                }.start();
+            }
+        });
+    }
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
@@ -327,44 +399,30 @@ public class FragmentChondapanDung extends BaseFragment
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                                webview_debai.reload();
+                                reload_delay(webview_debai);
+                             /*   webview_debai.reload();
+                                webview_debai.setWebViewClient(new WebViewClient());*/
                                 hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A:
-                                webview_anwser_A.reload();
-                                webview_anwser_A.setWebViewClient(new WebViewClient());
+                                reload_delay(webview_anwser_A);
+                              /*  webview_anwser_A.reload();
+                                webview_anwser_A.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_B:
-                                webview_anwser_B.reload();
-                                webview_anwser_B.setWebViewClient(new WebViewClient());
+                                reload_delay(webview_anwser_B);
+                              /*  webview_anwser_B.reload();
+                                webview_anwser_B.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_C:
-                                webview_anwser_C.reload();
-                                webview_anwser_C.setWebViewClient(new WebViewClient());
+                                reload_delay(webview_anwser_C);
+                             /*   webview_anwser_C.reload();
+                                webview_anwser_C.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_D:
-                                webview_anwser_D.reload();
-                                webview_anwser_D.setWebViewClient(new WebViewClient());
-                              /*  if (ll_webview_A.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_A.getHeight();
-                                }
-                                if (ll_webview_B.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_B.getHeight();
-                                }
-                                if (ll_webview_C.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_C.getHeight();
-                                }
-                                if (ll_webview_D.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_D.getHeight();
-                                }
-                                if (iHeightmax > 0) {
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }*/
-                                webview_debai.setWebViewClient(new WebViewClient());
-                                hideDialogLoading();
+                                reload_delay(webview_anwser_D);
+                               /* webview_anwser_D.reload();
+                                webview_anwser_D.setWebViewClient(new WebViewClient());*/
                                 break;
                         }
                     }
@@ -387,62 +445,12 @@ public class FragmentChondapanDung extends BaseFragment
 
     }
 
-    private void init() {
-        mLis = new ArrayList<>();
-        adapter = new AdapterDapan(mLis, getContext());
-        mLayoutManager = new GridLayoutManager(getContext(),
-                2, GridLayoutManager.VERTICAL, false);
-        //mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
-        recycle_dapan.setNestedScrollingEnabled(false);
-        recycle_dapan.setHasFixedSize(true);
-        recycle_dapan.setLayoutManager(mLayoutManager);
-        recycle_dapan.setItemAnimator(new DefaultItemAnimator());
-        recycle_dapan.setAdapter(adapter);
-        adapter.setOnIListener(new ItemClickListener() {
-            @Override
-            public void onClickItem(int position, Object item) {
-                if (!isClickXemdiem) {
-                    btn_xemdiem.setEnabled(true);
-                    btn_xemdiem.getBackground().setAlpha(255);
-                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-                    if (!mLis.get(position).isClick()) {
-                        for (DapAn obj : mLis) {
-                            //obj.setClick(true);
-                            if (obj.getsName().equals(mLis.get(position).getsName())) {
-                                if (obj.getsDapan_Dung().equals(obj.getsName())) {
-                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                                } else {
-                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-                                }
-
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
-                                obj.setsDapan_Traloi(obj.getsName());
-                            } else {
-                                obj.setsDapan_Traloi("");
-                            }
-
-                        }
-                        isTraloi = true;
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-
-            }
-        });
-    }
-
     private boolean anwser() {
         if (sAnwser.length() > 0) {
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
             if (sAnwser.equals(mCauhoi.getsANSWER())) {
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
@@ -617,8 +625,8 @@ public class FragmentChondapanDung extends BaseFragment
 
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
-            btn_xemdiem.setEnabled(true);
-            btn_xemdiem.getBackground().setAlpha(255);
+  /*          btn_xemdiem.setEnabled(true);
+            btn_xemdiem.getBackground().setAlpha(255);*/
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);

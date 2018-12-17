@@ -95,6 +95,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:fontFamily="@font/roboto_bold"
                 android:id="@+id/btn_guidiem"
                 android:layout_width="@dimen/dp200"
                 android:layout_height="@dimen/dp40"
@@ -103,7 +104,7 @@
                 android:layout_marginTop="@dimen/dp20"
                 android:background="@drawable/btn_2"
                 android:padding="@dimen/dp5"
-                android:text="GỬI CHO MẸ"
+                android:text="KẾT THÚC"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_17sp" />
         </RelativeLayout>

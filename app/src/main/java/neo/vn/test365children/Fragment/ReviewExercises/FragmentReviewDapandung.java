@@ -86,6 +86,7 @@ public class FragmentReviewDapandung extends BaseFragment {
         init();
         initData();
         initEvent();
+
         return view;
     }
 

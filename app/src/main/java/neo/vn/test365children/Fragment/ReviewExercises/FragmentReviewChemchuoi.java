@@ -119,6 +119,7 @@ public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClic
         initImage();
         initData();
         initEvent();
+
         return view;
     }
 
@@ -151,6 +152,7 @@ public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClic
 
     private void initData() {
         rr.setVisibility(View.VISIBLE);
+
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
             Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
         } else {

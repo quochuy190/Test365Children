@@ -157,8 +157,8 @@ public class FragmentXepTrung extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trung_ro, container, false);
         ButterKnife.bind(this, view);
-        btn_xemdiem.setEnabled(true);
-        btn_xemdiem.getBackground().setAlpha(255);
+/*        btn_xemdiem.setEnabled(true);
+        btn_xemdiem.getBackground().setAlpha(255);*/
         insertImage();
 
         mLisTrung = new ArrayList<>();

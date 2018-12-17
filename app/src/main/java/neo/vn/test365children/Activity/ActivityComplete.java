@@ -71,6 +71,8 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
         super.onCreate(savedInstanceState);
         mRealm = RealmController.getInstance().getRealm();
         mPresenter = new PresenterBaitap(this);
+        btn_guidiem.setEnabled(false);
+        btn_guidiem.getBackground().setAlpha(50);
         initData();
         initEvent();
     }
@@ -98,7 +100,8 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
     private void initData() {
         ObjLogin chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
         if (chil != null && chil.getsFULLNAME() != null) {
-            txt_chucmung.setText("CHÚC MỪNG BẠN " + chil.getsFULLNAME().toUpperCase() + "\n ĐÃ HOÀN THÀNH BÀI TẬP HÔM NAY");
+            txt_chucmung.setText("CHÚC MỪNG BẠN " + chil.getsFULLNAME().toUpperCase() +
+                    "\n ĐÃ HOÀN THÀNH BÀI TẬP HÔM NAY");
         }
         Glide.with(this).load(R.drawable.bg_lambai).into(img_background);
         Glide.with(this).load(R.drawable.bg_complete_1).into(img_bg_complete1);
@@ -170,6 +173,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String sDanhsachcau = gson.toJson(mListCauhoiAnswer);
         Log.i(TAG, "put_api_nopbai: " + sDanhsachcau);
+        showDialogLoading();
         mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise(),
                 objExer.getsTimebatdaulambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
                 "" + (durationInMillis / 1000), objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
@@ -217,13 +221,18 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
     @Override
     public void show_submit_execercise(List<ErrorApi> mLis) {
         hideDialogLoading();
-        if (mLis != null && mLis.get(0).equals("0000")) {
+        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+            btn_guidiem.setEnabled(true);
+            btn_guidiem.getBackground().setAlpha(255);
             Log.i(TAG, "show_submit_execercise: success");
             objExer.setIsTrangthailambai("3");
             mRealm.beginTransaction();
             mRealm.copyToRealmOrUpdate(objExer);
             mRealm.commitTransaction();
         } else {
+            showDialogNotify("Lỗi", mLis.get(0).getsRESULT());
+            btn_guidiem.setEnabled(true);
+            btn_guidiem.getBackground().setAlpha(255);
             Log.i(TAG, "show_submit_execercise: " + mLis.get(0).getsRESULT());
         }
     }

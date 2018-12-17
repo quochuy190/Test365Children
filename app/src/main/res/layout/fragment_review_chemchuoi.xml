@@ -22,12 +22,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-
         <TextView
-            android:layout_margin="@dimen/dp5"
             android:id="@+id/txt_lable"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
             android:layout_marginLeft="@dimen/dp5"
             android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
@@ -49,6 +48,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingBottom="@dimen/dp20"
         app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -67,6 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_lable">
 
             <WebView
+                android:padding="@dimen/dp5"
                 android:id="@+id/webview_debai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,12 +199,12 @@
 
 
                         tools:ignore="WebViewLayout">
+
                         <WebView
                             android:id="@+id/webview_anwser_D"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true">
-                        </WebView>
+                            android:layout_centerHorizontal="true"></WebView>
                     </RelativeLayout>
 
                     <ImageView
@@ -218,14 +219,15 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
     <RelativeLayout
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_lable"
         android:id="@+id/rr"
-        android:visibility="visible"
         android:layout_width="@dimen/icon_anwser_review"
         android:layout_height="@dimen/icon_anwser_review"
-        android:layout_margin="@dimen/dp5">
+        android:layout_margin="@dimen/dp5"
+        android:visibility="visible"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_lable">
 
         <ImageView
             android:id="@+id/img_anwser_chil"

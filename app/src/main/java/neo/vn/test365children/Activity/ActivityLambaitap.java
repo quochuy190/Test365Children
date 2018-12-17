@@ -312,7 +312,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                 if (maxPage > 0)
                     if (current < (maxPage)) {
                         EventBus.getDefault().post(new MessageEvent("chondapan", current, 0));
-                        EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
+                        EventBus.getDefault().post(new MessageEvent("Audio", current, 0));
                         EventBus.getDefault().post(new MessageEvent("docvatraloi", current, 0));
                         EventBus.getDefault().post(new MessageEvent("batsau", current, 0));
                         viewpager_lambai.setCurrentItem((current + 1));
@@ -326,7 +326,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                 int current = viewpager_lambai.getCurrentItem();
                 if (current > 0) {
                     viewpager_lambai.setCurrentItem((current - 1));
-                    EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
+                    EventBus.getDefault().post(new MessageEvent("Audio", current, 0));
                     EventBus.getDefault().post(new MessageEvent("chondapan", current, 0));
                     EventBus.getDefault().post(new MessageEvent("docvatraloi", current, 0));
                     EventBus.getDefault().post(new MessageEvent("batsau", current, 0));
@@ -341,7 +341,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
 
             @Override
             public void onPageSelected(int i) {
-                EventBus.getDefault().post(new MessageEvent("Audio", 1, 0));
+                EventBus.getDefault().post(new MessageEvent("Audio", i, 0));
                 EventBus.getDefault().post(new MessageEvent("chondapan", i, 0));
                 EventBus.getDefault().post(new MessageEvent("docvatraloi", i, 0));
                 EventBus.getDefault().post(new MessageEvent("batsau", i, 0));
@@ -420,7 +420,8 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                             adapterViewpager.addFragment(FragmentXemanhtraloi.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
                             current++;
                         } else if (obj.getsKIEU().equals("9")) {
-                            adapterViewpager.addFragment(FragmentNgheAudio.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentNgheAudio.newInstance(obj.getLisInfo().get(i), current),
+                                    obj.getsERROR());
                             current++;
                         } else if (obj.getsKIEU().equals("11")) {
                             adapterViewpager.addFragment(FragmentNoicau.newInstance(obj.getLisInfo().get(i)), obj.getsERROR());

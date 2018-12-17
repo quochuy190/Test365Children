@@ -64,6 +64,10 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
     TextView txt_cauhoi;
     @BindView(R.id.btn_xemdiem)
     Button btn_xemdiem;
+    @BindView(R.id.txt_title_dapan)
+    TextView txt_title_dapan;
+    @BindView(R.id.txt_title_traloi)
+    TextView txt_title_traloi;
 
     public static FragmentReviewSapxep newInstance(CauhoiDetail restaurant) {
         FragmentReviewSapxep restaurantDetailFragment = new FragmentReviewSapxep();
@@ -73,11 +77,13 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sapxep, container, false);
@@ -87,11 +93,14 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         //init();
         btn_xemdiem.setVisibility(View.GONE);
         initData();
+        initDapan();
         initViews(true);
         return view;
     }
+
     private boolean isClickXemdiem = false;
     List<String> mLiDapan;
+    List<String> mLiDapan_true = new ArrayList<>();
 
     private void initData() {
         img_anwser_chil.setVisibility(View.VISIBLE);
@@ -102,18 +111,35 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
             if (mCauhoi.getsRESULT_CHILD().equals("0")) {
-                txt_cauhoi.setVisibility(View.VISIBLE);
+                txt_title_dapan.setVisibility(View.VISIBLE);
+                txt_title_traloi.setVisibility(View.VISIBLE);
+                //  txt_cauhoi.setVisibility(View.VISIBLE);
+                recycle_ketqua.setVisibility(View.VISIBLE);
+                recycle_dapan.setVisibility(View.VISIBLE);
+                initDapan();
                 Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
             } else {
+                txt_title_dapan.setVisibility(View.GONE);
+                txt_title_traloi.setVisibility(View.GONE);
+                recycle_dapan.setVisibility(View.VISIBLE);
                 txt_cauhoi.setVisibility(View.INVISIBLE);
+                recycle_ketqua.setVisibility(View.GONE);
                 Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
             }
         } else {
+            txt_title_dapan.setVisibility(View.VISIBLE);
+            txt_title_traloi.setVisibility(View.GONE);
+            recycle_ketqua.setVisibility(View.VISIBLE);
+            recycle_dapan.setVisibility(View.GONE);
             txt_cauhoi.setVisibility(View.VISIBLE);
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
 
         if (!mCauhoi.isDalam()) {
+            txt_title_dapan.setVisibility(View.VISIBLE);
+            txt_title_traloi.setVisibility(View.GONE);
+            recycle_ketqua.setVisibility(View.VISIBLE);
+            recycle_dapan.setVisibility(View.GONE);
             txt_cauhoi.setVisibility(View.VISIBLE);
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
@@ -124,14 +150,32 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
         if (mCauhoi.getsANSWER_CHILD() != null && mCauhoi.getsANSWER_CHILD().length() > 0) {
             String[] dapan = mCauhoi.getsANSWER_CHILD().split("::");
             mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
+            if (mCauhoi.getsHTML_CONTENT() != null && mCauhoi.getsHTML_CONTENT().length() > 0) {
+                String[] dapan_tru = mCauhoi.getsHTML_CONTENT().split("::");
+                mLiDapan_true = new ArrayList<String>(Arrays.asList(dapan_tru));
+            }
             if (mLiDapan != null && mLiDapan.size() > 0) {
-                for (String s : mLiDapan) {
+                for (int i = 0; i < mLiDapan.size(); i++) {
+                    String s = mLiDapan.get(i);
+                    /*mLisStart.add(new DapAn("1", s, "",
+                            "agcbd", false, "" + i));*/
+                    mLis.add(new DapAn("1", s, "",
+                            "agcbd", false, "" + i));
+                }
+                for (int i = 0; i < mLiDapan_true.size(); i++) {
+                    String s = mLiDapan_true.get(i);
+                    /*mLis.add(new DapAn("1", s, "",
+                            "agcbd", false, "" + i));*/
+                    mLisStart.add(new DapAn("1", s, "",
+                            "agcbd", false, "" + i));
+                }
+              /*  for (String s : mLiDapan) {
                     mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));
                 }
 
                 for (String s : mLiDapan) {
                     mLis.add(new DapAn("1", s, "", "agcbd", false, ""));
-                }
+                }*/
             }
         } else {
             txt_cauhoi.setText(Html.fromHtml("Đáp án"));
@@ -140,19 +184,45 @@ public class FragmentReviewSapxep extends BaseFragment implements OnStartDragLis
                 mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
             }
             if (mLiDapan != null && mLiDapan.size() > 0) {
-                for (String s : mLiDapan) {
+                for (int i = 0; i < mLiDapan.size(); i++) {
+                    String s = mLiDapan.get(i);
+                    mLisStart.add(new DapAn("1", s, "",
+                            "agcbd", false, "" + i));
+                    mLis.add(new DapAn("1", s, "",
+                            "agcbd", false, "" + i));
+                }
+               /* for (String s : mLiDapan) {
                     mLisStart.add(new DapAn("1", s, "", "agcbd", false, ""));
                 }
 
                 for (String s : mLiDapan) {
                     mLis.add(new DapAn("1", s, "", "agcbd", false, ""));
-                }
+                }*/
             }
         }
 
     }
 
     AdapterSapxep adapterSapxep;
+    @BindView(R.id.recycle_ketqua)
+    RecyclerView recycle_ketqua;
+    AdapterSapxep adapterSapxep_ketqua;
+
+    private void initDapan() {
+        LinearLayoutManager linearLayoutManager2
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+       /* linearLayoutManager2 = new GridLayoutManager(getContext(),
+                6, GridLayoutManager.VERTICAL, false);*/
+        recycle_ketqua.setLayoutManager(linearLayoutManager2);
+        // setData();
+        adapterSapxep_ketqua = new AdapterSapxep(getContext(), mLisStart, this);
+    /*    ItemTouchHelper.Callback callback_ketqua =
+                new RecyclerViewItemTouchHelperCallback(adapterSapxep_ketqua, false);
+        mItemTouchHelper = new ItemTouchHelper(callback_ketqua);
+        mItemTouchHelper.attachToRecyclerView(recycle_ketqua);
+        adapterSapxep_ketqua.delegate = this;*/
+        recycle_ketqua.setAdapter(adapterSapxep_ketqua);
+    }
 
     private void initViews(boolean ischange) {
         LinearLayoutManager linearLayoutManager

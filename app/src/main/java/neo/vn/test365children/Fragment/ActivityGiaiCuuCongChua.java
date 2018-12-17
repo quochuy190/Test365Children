@@ -107,8 +107,8 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
         iRandom = ran.nextInt(arr_image.length);
         Glide.with(this).load(arr_image[iRandom]).into(img_background);
         initData();
-        btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);
+/*        btn_xemdiem.setEnabled(false);
+        btn_xemdiem.getBackground().setAlpha(50);*/
         initEvent();
     }
 
@@ -277,8 +277,8 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
 
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
-            btn_xemdiem.setEnabled(true);
-            btn_xemdiem.getBackground().setAlpha(255);
+/*            btn_xemdiem.setEnabled(true);
+            btn_xemdiem.getBackground().setAlpha(255);*/
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_white).into(img_checkbox_A);

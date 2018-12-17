@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,7 +24,6 @@ import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.ErrorApi;
-import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.Models.ObjLogin;
 import neo.vn.test365children.Models.Sticker;
 import neo.vn.test365children.Presenter.ImlListSticker;
@@ -64,12 +62,12 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener, 
         mPresenter = new PresenterSticker(this);
         initData();
         initEvent();
-        initCheckCommitExer();
+       // initCheckCommitExer();
         mRealm = RealmController.with(this).getRealm();
         //play_mp3();
     }
 
-    private void initCheckCommitExer() {
+   /* private void initCheckCommitExer() {
         List<ExerciseAnswer> lisEx = new ArrayList<>();
         lisEx = mRealm.where(ExerciseAnswer.class)
                 .equalTo("isTrangthailambai", "2")
@@ -77,7 +75,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener, 
         if (lisEx.size() > 0) {
 
         }
-    }
+    }*/
 
     private void initData() {
         Glide.with(this).load(R.drawable.img_background_home).into(img_background);
