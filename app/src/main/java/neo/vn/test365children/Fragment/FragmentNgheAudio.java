@@ -156,14 +156,15 @@ public class FragmentNgheAudio extends BaseFragment implements
                 mPlayer.pause();
             }
             int iPoint = (int) event.getPoint();
-            if (iPoint > 0) {
+          /*  if (iPoint > 0) {
                 if (current == (iPoint + 1)) {
                     reload();
                 }
                 if (current == (iPoint - 1)) {
                     reload();
                 }
-            } else if (current == (iPoint + 1)) {
+            } else */
+            if (current == (iPoint + 1)) {
                 // reload();
                 webview_debai.reload();
                 webview_debai.setWebViewClient(new WebViewClient());

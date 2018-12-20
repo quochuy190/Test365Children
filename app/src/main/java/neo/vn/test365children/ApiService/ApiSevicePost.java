@@ -25,9 +25,9 @@ public interface ApiSevicePost {
   Call<ResponseBody> getApiService(@FieldMap Map<String, String> data);
 
   final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-          .connectTimeout(30, TimeUnit.SECONDS)
-          .writeTimeout(30, TimeUnit.SECONDS)
-          .readTimeout(30, TimeUnit.SECONDS)
+          .connectTimeout(15, TimeUnit.SECONDS)
+          .writeTimeout(15, TimeUnit.SECONDS)
+          .readTimeout(15, TimeUnit.SECONDS)
           .build();
 
   Retrofit retrofit = new Retrofit.Builder()

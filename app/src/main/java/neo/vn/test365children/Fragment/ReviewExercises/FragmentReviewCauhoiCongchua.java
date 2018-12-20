@@ -37,6 +37,8 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
     CauhoiDetail mCauhoi;
     @BindView(R.id.imageView3)
     ImageView img_background;
+    @BindView(R.id.img_reload_review)
+    ImageView img_reload_review;
     int[] arr_image = {R.drawable.bg_congchua1, R.drawable.bg_congchua2, R.drawable.bg_congchua3,
             R.drawable.bg_congchua4, R.drawable.bg_congchua6};
 
@@ -61,30 +63,22 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_review_cauhoicongchua, container, false);
         ButterKnife.bind(this, view);
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
+        img_reload_review.setVisibility(View.GONE);
         init();
         initData();
         initEvent();
         return view;
     }
-    /*    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mCauhoi = SharedPrefs.getInstance().get(Constants.KEY_SEND_CAUHOI_CONGCHUA, CauhoiDetail.class);
-        init();
-        initData();
-        initEvent();
-    }
-
-    @Override
-    public void onBackPressed() {
-        // super.onBackPressed();
-    }*/
-
     boolean isTrue = false;
     private String sDapan = "";
 
     private void initEvent() {
+        img_reload_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     boolean isLambai = false;
@@ -106,7 +100,6 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
         recycle_dapan.setLayoutManager(mLayoutManager);
         recycle_dapan.setItemAnimator(new DefaultItemAnimator());
         recycle_dapan.setAdapter(adapter);
-
     }
 
     int iRandom;
@@ -114,16 +107,17 @@ public class FragmentReviewCauhoiCongchua extends BaseFragment {
     ImageView img_anwser_chil;
     @BindView(R.id.webview_debai)
     WebView webview_debai;
+
     private void initData() {
         Random ran = new Random();
         iRandom = ran.nextInt(arr_image.length);
         Glide.with(this).load(arr_image[iRandom]).into(img_background);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
-                    +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         if (mCauhoi.getsHTML_CONTENT() != null && mCauhoi.getsHTML_CONTENT().length() > 0) {
-            StringUtil.initWebview_Whitetext(webview_debai,mCauhoi.getsHTML_CONTENT());
+            StringUtil.initWebview_Whitetext(webview_debai, mCauhoi.getsHTML_CONTENT());
         }
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
             Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);

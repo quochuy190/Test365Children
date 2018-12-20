@@ -353,8 +353,8 @@ public class FragmentChondapanDung extends BaseFragment
 
                                     @Override
                                     public void onFinish() {
-                                        webview_debai.reload();
-                                        webview_debai.setWebViewClient(new WebViewClient());
+                                      /*  webview_debai.reload();
+                                        webview_debai.setWebViewClient(new WebViewClient());*/
                                         hideDialogLoading();
                                     }
                                 }.start();
@@ -383,8 +383,8 @@ public class FragmentChondapanDung extends BaseFragment
         webview.loadDataWithBaseURL("", text,
                 "text/html", "UTF-8", "");
         // webview.setWebViewClient(new WebViewClient());
-        webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
-                "text/html", "UTF-8", "");
+      /*  webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
+                "text/html", "UTF-8", "");*/
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(final WebView view, String url) {
@@ -399,28 +399,28 @@ public class FragmentChondapanDung extends BaseFragment
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                                reload_delay(webview_debai);
+                              //  reload_delay(webview_debai);
                              /*   webview_debai.reload();
                                 webview_debai.setWebViewClient(new WebViewClient());*/
                                 hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A:
-                                reload_delay(webview_anwser_A);
+                              //  reload_delay(webview_anwser_A);
                               /*  webview_anwser_A.reload();
                                 webview_anwser_A.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_B:
-                                reload_delay(webview_anwser_B);
+                               // reload_delay(webview_anwser_B);
                               /*  webview_anwser_B.reload();
                                 webview_anwser_B.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_C:
-                                reload_delay(webview_anwser_C);
+                               // reload_delay(webview_anwser_C);
                              /*   webview_anwser_C.reload();
                                 webview_anwser_C.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_D:
-                                reload_delay(webview_anwser_D);
+                             //   reload_delay(webview_anwser_D);
                                /* webview_anwser_D.reload();
                                 webview_anwser_D.setWebViewClient(new WebViewClient());*/
                                 break;

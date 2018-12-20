@@ -48,4 +48,5 @@ public class Constants {
 
     public static final String KEY_SEND_LEVEL = "KEY_SEND_LEVEL";
     public static final String KEY_SHOW_APP_MOTHER = "KEY_SHOW_APP_MOTHER";
+    public static final String KEY_SEND_LEVEL_KOW = "KEY_SEND_LEVEL_KOW";
 }

@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -105,6 +106,12 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
     ImageView img_la_B;
     @BindView(R.id.img_la_D)
     ImageView img_la_D;
+    @BindView(R.id.img_reload)
+    ImageView img_reload;
+    @BindView(R.id.img_reload_review)
+    ImageView img_reload_review;
+    @BindView(R.id.btn_xemdiem)
+    Button btn_xemdiem;
 
     public static FragmentReviewBatsauNew newInstance(CauhoiDetail restaurant) {
         FragmentReviewBatsauNew restaurantDetailFragment = new FragmentReviewBatsauNew();
@@ -125,6 +132,9 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_batsau_new, container, false);
         ButterKnife.bind(this, view);
+        btn_xemdiem.setVisibility(View.INVISIBLE);
+        img_reload.setVisibility(View.GONE);
+        img_reload_review.setVisibility(View.VISIBLE);
         int[] arrayImage = {R.drawable.icon_sau, R.drawable.ic_sau_bo,
                 R.drawable.ic_butterfly_red, R.drawable.ic_butterfly,
                 R.drawable.ic_sau_pink};
@@ -154,8 +164,14 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
         Glide.with(getContext()).load(R.drawable.icon_la_cay)
                 .placeholder(R.drawable.icon_la_cay).into(img_la_D);
     }
-    private void initEvent() {
 
+    private void initEvent() {
+        img_reload_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reload();
+            }
+        });
 
     }
 
@@ -176,7 +192,7 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
             txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
+        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
         new Handler().post(new Runnable() {
             @Override
@@ -342,8 +358,6 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
                                             setHeightAll(iHeightmax, ll_webview_C);
                                             setHeightAll(iHeightmax, ll_webview_D);
                                         }
-                                        Log.i(TAG, "onFinish: Dáp an D");
-                                        reload();
                                     }
                                 }.start();
                                 hideDialogLoading();

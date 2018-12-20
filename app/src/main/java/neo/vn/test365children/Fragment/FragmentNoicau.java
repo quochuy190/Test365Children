@@ -166,6 +166,8 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
     String[] arayClickA2 = {"", ""};
     String[] arayClickA3 = {"", ""};
     String[] arayClickA4 = {"", ""};
+    @BindView(R.id.img_reload)
+    ImageView img_reload;
 
     public static FragmentNoicau newInstance(CauhoiDetail restaurant) {
         FragmentNoicau restaurantDetailFragment = new FragmentNoicau();
@@ -198,6 +200,29 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
     private boolean isClickXemdiem = false;
 
     private void initEvent() {
+        img_reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webview_dapannoicau_A_1.reload();
+                webview_dapannoicau_A_2.reload();
+                webview_dapannoicau_A_3.reload();
+                webview_dapannoicau_A_4.reload();
+                webview_dapannoicau_B_1.reload();
+                webview_dapannoicau_B_2.reload();
+                webview_dapannoicau_B_3.reload();
+                webview_dapannoicau_B_4.reload();
+
+                webview_dapannoicau_A_1.setWebViewClient(new WebViewClient());
+                webview_dapannoicau_A_2.setWebViewClient(new WebViewClient());
+                webview_dapannoicau_A_3.setWebViewClient(new WebViewClient());
+                webview_dapannoicau_A_4.setWebViewClient(new WebViewClient());
+
+                webview_dapannoicau_B_1.setWebViewClient(new WebViewClient());
+                webview_dapannoicau_B_2.setWebViewClient(new WebViewClient());
+                webview_dapannoicau_B_3.setWebViewClient(new WebViewClient());
+                webview_dapannoicau_B_4.setWebViewClient(new WebViewClient());
+            }
+        });
         webview_dapannoicau_A_1.setOnTouchListener(this);
         webview_dapannoicau_A_2.setOnTouchListener(this);
         webview_dapannoicau_A_3.setOnTouchListener(this);
@@ -486,7 +511,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                                 });
                                 break;
                             case R.id.webview_dapannoicau_B_4:
-
                                 if (rl_dapanA_1.getHeight() > iHeightmax) {
                                     iHeightmax = rl_dapanA_1.getHeight();
                                 }
@@ -514,7 +538,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                                 if (iHeightmax > 0) {
                                     setHeight(iHeightmax);
                                 }
-                                webview_dapannoicau_A_1.reload();
+                              /*  webview_dapannoicau_A_1.reload();
                                 webview_dapannoicau_A_2.reload();
                                 webview_dapannoicau_A_3.reload();
                                 webview_dapannoicau_A_4.reload();
@@ -531,7 +555,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                                 webview_dapannoicau_B_1.setWebViewClient(new WebViewClient());
                                 webview_dapannoicau_B_2.setWebViewClient(new WebViewClient());
                                 webview_dapannoicau_B_3.setWebViewClient(new WebViewClient());
-                                webview_dapannoicau_B_4.setWebViewClient(new WebViewClient());
+                                webview_dapannoicau_B_4.setWebViewClient(new WebViewClient());*/
                                 hideDialogLoading();
                                 break;
                         }

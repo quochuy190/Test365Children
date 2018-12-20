@@ -102,7 +102,7 @@
     <dimen name="icon_back_exercises">50dp</dimen>
     <!--Game-->
     <dimen name="pading_button_menu">45dp</dimen>
-    <dimen name="text_menu_game">22sp</dimen>
+    <dimen name="text_menu_game">20sp</dimen>
     <dimen name="icon_center_tptt">370dp</dimen>
     <dimen name="icon_btn_play">180dp</dimen>
     <dimen name="margin_btn_play">80dp</dimen>
@@ -159,4 +159,25 @@
     <dimen name="txt_lable_exer">27sp</dimen>
     <dimen name="img_avata_home">100dp</dimen>
     <dimen name="margin_webview_baidoc">60dp</dimen>
+    <!--Game King of word-->
+    <dimen name="kow_width_btn_start">300dp</dimen>
+    <dimen name="kow_height_btn_start">60dp</dimen>
+    <dimen name="kow_txt_btn_start" >20sp</dimen>
+    <dimen name="kow_btnstart_margin_bottom" >35dp</dimen>
+    <dimen name="kow_width_menu_level" >140dp</dimen>
+    <dimen name="kow_height_menu_level" >160dp</dimen>
+    <dimen name="kow_menu_level_margin_left_guild">30dp</dimen>
+    <dimen name="kow_menu_level_margin_bottom_guild">50sp</dimen>
+    <dimen name="kow_txt_menu_level">20sp</dimen>
+
+    <dimen name="kow_height_theme_title">100dp</dimen>
+    <dimen name="kow_margin_top_playgame">10dp</dimen>
+    <dimen name="kow_height_text_theme">70dp</dimen>
+    <dimen name="kow_title_theme_gamekow">30sp</dimen>
+    <dimen name="margin_kow_chucai">20dp</dimen>
+    <dimen name="item_chucai_height">80dp</dimen>
+
+
+    <dimen name="kow_width_logo_kow">180dp</dimen>
+    <dimen name="item_back_kow">60dp</dimen>
 </resources>

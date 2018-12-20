@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import neo.vn.test365children.Config.Config;
+import neo.vn.test365children.Config.Constants;
+import neo.vn.test365children.Untils.SharedPrefs;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -18,14 +20,14 @@ import retrofit2.http.QueryMap;
  */
 
 public interface ApiSevice {
-    String sUrl = "";
+    String sUrl = SharedPrefs.getInstance().get(Constants.KEY_URL_BASE, String.class);
     //Log info action user
     @GET("services/SqlServices/ref?response=application/json")
     Call<ResponseBody> getApiService(@QueryMap Map<String, String> data);
     final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
             .build();
 
     Retrofit retrofit = new Retrofit.Builder()

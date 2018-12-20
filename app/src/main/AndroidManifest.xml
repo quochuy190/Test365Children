@@ -106,6 +106,18 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
+            android:name=".Activity.game.game_kow.ActivityKoWStart"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.game.game_kow.ActivityKoWMenuGame"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.game.game_kow.ActivityKoWPlayGame"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
             android:name=".Activity.Activity_Welcome"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>

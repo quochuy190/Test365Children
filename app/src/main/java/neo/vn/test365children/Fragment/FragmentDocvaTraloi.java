@@ -143,7 +143,7 @@ public class FragmentDocvaTraloi extends BaseFragment
     public void onMessageEvent(MessageEvent event) {
         if (event.message.equals("docvatraloi")) {
             Log.i(TAG, "onMessageEvent: docvatraloi: " + event.getPoint());
-            int iPoint = (int) event.getPoint();
+         /*   int iPoint = (int) event.getPoint();
             if (iPoint > 0) {
                 if (current == (iPoint + 1)) {
                     reload();
@@ -153,7 +153,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                 }
             } else if (current == (iPoint + 1)) {
                 reload();
-            }
+            }*/
             //Log.i(TAG, "onMessageEvent: " + current);
         }
     }

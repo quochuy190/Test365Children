@@ -25,6 +25,6 @@
         android:pivotX="50%"
         android:pivotY="50%"
         android:repeatCount="0"
-        android:toXScale="1"
-        android:toYScale="1" />
+        android:toXScale="1.5"
+        android:toYScale="1.5" />
 </set>

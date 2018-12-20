@@ -7,12 +7,14 @@
     <color name="bg_bxh">#ecf4f0f0</color>
     <color name="red">#ff0000</color>
     <color name="blue">#0000FF</color>
+    <color name="blue_theme_game_kow">#2E4A9F</color>
     <color name="blue_tnnl">#227ad9</color>
     <color name="black">#060606</color>
     <color name="green">#90d437</color>
     <color name="anwser_true">#ef68a913</color>
     <color name="black_mo">#6c6767</color>
     <color name="orange">#f4a609</color>
+    <color name="bg_chucai">#7d816631</color>
     <color name="txt_point">#c28b1b</color>
     <color name="background_login">#f2f6f9</color>
     <color name="red_test365">#c21b37</color>
@@ -44,4 +46,5 @@
     <color name="bg_noicau">#79aeaaaa</color>
     <color name="bg_question_congchua">#811b0b6e</color>
     <color name="bg_game_tnnl">#a50e0e0e</color>
+    <color name="bg_game_kow">#b3050505</color>
 </resources>

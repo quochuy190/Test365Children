@@ -45,11 +45,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String sUserKid = mMap.get("userchild");
             String sUserName = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
             String sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-            if (sUserMe != null && sUserKid != null && sUserName != null && sUserCon != null) {
+         /*   if (sUserMe != null && sUserKid != null && sUserName != null && sUserCon != null) {
                 if (sUserMe.equals(sUserName) && sUserCon.equals(sUserKid)) {
                     displayCustomNotificationForOrders(mMap);
                 }
-            }
+            }*/
+            displayCustomNotificationForOrders(mMap);
         }
 
     }

@@ -91,15 +91,15 @@ public class ActivityBaitapdalam extends BaseActivity {
             Log.i(TAG, "initData: " + lisExercise.size());
         List<ExerciseAnswer> lisEx = new ArrayList<>();
         lisEx = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "1")
-                .equalTo("isTrangthailambai", "2")
+                .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTV = new ArrayList<>();
         lisExTV = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "2")
-                .equalTo("isTrangthailambai", "2")
+                .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTA = new ArrayList<>();
         lisExTA = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "3")
-                .equalTo("isTrangthailambai", "2")
+                .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         if (lisEx.size() > 0) {
             mLisTToan.addAll(lisEx);

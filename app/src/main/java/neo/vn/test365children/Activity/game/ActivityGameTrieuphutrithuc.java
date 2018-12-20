@@ -606,6 +606,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     private GameTrieuPhuTriThuc mObjGame;
 
     public void getData(GameTrieuPhuTriThuc obj) {
+        iHeightmax = 0;
         mObjGame = obj;
         webview_anwser_B.clearView();
         webview_anwser_A.clearView();

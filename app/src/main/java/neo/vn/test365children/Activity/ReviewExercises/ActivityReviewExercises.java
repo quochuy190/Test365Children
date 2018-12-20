@@ -19,6 +19,7 @@ import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Fragment.FragmentXemanhtraloi;
+import neo.vn.test365children.Fragment.ReviewExercises.FragmentChondapanDungReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentCompleteBaitapReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentDienvaochotrongReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentDocvaTraloiReview;
@@ -26,7 +27,6 @@ import neo.vn.test365children.Fragment.ReviewExercises.FragmentNgheAudioReview;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewBatsauNew;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewCauhoiCongchua;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewChemchuoi;
-import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewDapandung;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewNoicau;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewSapxep;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewTrungRo;
@@ -201,7 +201,8 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                         mCauhoiDetail.setsHTML_D(obj.getLisInfo().get(i).getsHTML_D());
                         if (obj.getsKIEU().equals("1")) {
                             if (obj.getsERROR().equals("0000"))
-                                adapterViewpager.addFragment(FragmentReviewDapandung.newInstance(mCauhoiDetail), obj.getsERROR());
+                                adapterViewpager.addFragment(FragmentChondapanDungReview.newInstance(mCauhoiDetail, 0),
+                                        obj.getsERROR());
                         } else if (obj.getsKIEU().equals("2")) {
                             adapterViewpager.addFragment(FragmentReviewBatsauNew.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("3")) {

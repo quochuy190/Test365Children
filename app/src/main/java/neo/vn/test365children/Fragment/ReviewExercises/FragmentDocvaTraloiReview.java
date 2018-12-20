@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +32,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +39,6 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
-import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
@@ -148,7 +143,7 @@ public class FragmentDocvaTraloiReview extends BaseFragment
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         if (event.message.equals("docvatraloi")) {
-            Log.i(TAG, "onMessageEvent: docvatraloi: " + event.getPoint());
+           /* Log.i(TAG, "onMessageEvent: docvatraloi: " + event.getPoint());
             int iPoint = (int) event.getPoint();
             if (iPoint > 0) {
                 if (current == (iPoint + 1)) {
@@ -159,7 +154,7 @@ public class FragmentDocvaTraloiReview extends BaseFragment
                 }
             } else if (current == (iPoint + 1)) {
                 reload();
-            }
+            }*/
             //Log.i(TAG, "onMessageEvent: " + current);
         }
     }
@@ -576,56 +571,6 @@ public class FragmentDocvaTraloiReview extends BaseFragment
             @Override
             public void run() {
                 initWebview_white_text(txt_cauhoi, mCauhoi.getsTextDebai());
-            }
-        });
-    }
-
-    private void init() {
-        mLis = new ArrayList<>();
-        adapter = new AdapterDapan(mLis, getContext());
-        mLayoutManager = new GridLayoutManager(getContext(),
-                1, GridLayoutManager.VERTICAL, false);
-        //mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
-        recycle_dapan.setNestedScrollingEnabled(false);
-        recycle_dapan.setHasFixedSize(true);
-        recycle_dapan.setLayoutManager(mLayoutManager);
-        recycle_dapan.setItemAnimator(new DefaultItemAnimator());
-        recycle_dapan.setAdapter(adapter);
-        adapter.setOnIListener(new ItemClickListener() {
-            @Override
-            public void onClickItem(int position, Object item) {
-                if (!isClickXemdiem) {
-                    btn_xemdiem.setEnabled(true);
-                    btn_xemdiem.getBackground().setAlpha(255);
-                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-                    if (!mLis.get(position).isClick()) {
-                        for (DapAn obj : mLis) {
-                            //obj.setClick(true);
-                            if (obj.getsName().equals(mLis.get(position).getsName())) {
-                                if (obj.getsDapan_Dung().equals(obj.getsName())) {
-                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                                } else {
-                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-                                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-                                }
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
-                                obj.setsDapan_Traloi(obj.getsName());
-                            } else {
-                                obj.setsDapan_Traloi("");
-                            }
-                        }
-                        isTraloi = true;
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-
             }
         });
     }

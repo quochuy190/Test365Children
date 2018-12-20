@@ -557,7 +557,7 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                                             setHeightAll(iHeightmax, ll_webview_D);
                                         }
                                         Log.i(TAG, "onFinish: Dáp an D");
-                                        reload();
+                                      //  reload();
                                     }
                                 }.start();
                                 hideDialogLoading();

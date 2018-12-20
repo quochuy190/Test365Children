@@ -103,8 +103,8 @@ public class FragmentReviewDapandung extends BaseFragment {
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
-                    +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
             if (mCauhoi.getsRESULT_CHILD().equals("0")) {
@@ -117,34 +117,6 @@ public class FragmentReviewDapandung extends BaseFragment {
         if (!mCauhoi.isDalam()) {
             Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
         }
-
-        // txt_cauhoi.setText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-       /* if (mCauhoi.getsQUESTION() != null)
-            if (mCauhoi.getsQUESTION().indexOf("//") > 0) {
-                MathView mathView = new MathView(getContext());
-                mathView.setClickable(true);
-                mathView.setTextSize(17);
-                mathView.setTextColor(ContextCompat.getColor(getContext(), android.R.color.black));
-                mathView.setDisplayText(StringUtil.StringFraction(mCauhoi.getsQUESTION()));
-                mathView.setViewBackgroundColor(getContext().getResources().getColor(R.color.bg_item_dapan));
-                ll_cauhoi.addView(mathView);
-            } else if (mCauhoi.getsQUESTION().indexOf("image") > 0) {
-                ImageView txt_dapan = new ImageView(getContext());
-                int hight_image = (int) getContext().getResources().getDimension(R.dimen.item_dapan);
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        hight_image));
-                Glide.with(getContext()).load(Config.URL_IMAGE + mCauhoi.getsQUESTION()).into(txt_dapan);
-                ll_cauhoi.addView(txt_dapan);
-            } else {
-                TextView txt_dapan = new TextView(getContext());
-                txt_dapan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                txt_dapan.setTextSize(17);
-                txt_dapan.setTextColor(getContext().getResources().getColor(R.color.black));
-                txt_dapan.setText(Html.fromHtml(mCauhoi.getsQUESTION()));
-                ll_cauhoi.addView(txt_dapan);
-            }*/
-       // initWebview();
         StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
@@ -171,34 +143,7 @@ public class FragmentReviewDapandung extends BaseFragment {
         adapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-               /* App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-                if (!mLis.get(position).isClick()) {
-                    for (DapAn obj : mLis) {
-                        //obj.setClick(true);
-                        if (obj.getsName().equals(mLis.get(position).getsName())) {
-                            if (obj.getsDapan_Dung().equals(obj.getsName())) {
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                            } else {
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-                            }
-                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
-                            obj.setsDapan_Traloi(obj.getsName());
-                        } else {
-                            obj.setsDapan_Traloi("");
-                        }
 
-                    }
-                    isTraloi = true;
-                    adapter.notifyDataSetChanged();
-                }*/
             }
         });
     }

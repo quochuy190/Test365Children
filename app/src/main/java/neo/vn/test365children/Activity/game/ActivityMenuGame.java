@@ -13,22 +13,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import neo.vn.test365children.Activity.ActivityHome;
+import neo.vn.test365children.Activity.game.game_kow.ActivityKoWStart;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.KeyboardUtil;
-import neo.vn.test365children.Untils.StringUtil;
 
 public class ActivityMenuGame extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "ActivityMenuGame";
@@ -46,6 +42,10 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
     ImageView img_tptt;
     @BindView(R.id.img_tnnl)
     ImageView img_tnnl;
+    @BindView(R.id.img_game_kow)
+    ImageView img_game_kow;
+    @BindView(R.id.img_game_sudoku)
+    ImageView img_game_sudoku;
     @BindView(R.id.imageView12)
     ImageView imageView12;
     @BindView(R.id.img_title_menugame)
@@ -80,23 +80,25 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
                 startActivity(new Intent(ActivityMenuGame.this, Activity_startgame_tptt.class));
                 break;
             case R.id.rl_sodoku:
-                List<Integer> mlis = new ArrayList<>();
-                Log.i(TAG, "onClick: " + StringUtil.check_random(mlis));
+                KeyboardUtil.animation_click_button(ActivityMenuGame.this, img_game_kow);
                 break;
             case R.id.rl_tinhnhanhnholau:
                 KeyboardUtil.animation_click_button(ActivityMenuGame.this, img_tnnl);
                 startActivity(new Intent(ActivityMenuGame.this, ActivityStartGameTNNL.class));
                 break;
             case R.id.rl_kingofword:
-                displayCustomNotificationForOrders("Test notifycation", "gdbc");
+                KeyboardUtil.animation_click_button(ActivityMenuGame.this, img_game_kow);
+                startActivity(new Intent(ActivityMenuGame.this, ActivityKoWStart.class));
                 break;
             case R.id.img_back:
                 finish();
                 break;
         }
     }
+
     private NotificationChannel mChannel;
     private NotificationManager notifManager;
+
     private void test_linkedlist() {
         Uri uri = Uri.parse("market://details?id=" + getApplication().getPackageName());
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);

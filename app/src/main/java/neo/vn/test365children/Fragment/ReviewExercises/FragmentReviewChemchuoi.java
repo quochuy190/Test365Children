@@ -95,6 +95,8 @@ public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClic
     RelativeLayout rl_dapan_C;
     @BindView(R.id.txt_dapan_A)
     RelativeLayout rl_dapan_A;
+    @BindView(R.id.img_reload)
+    ImageView img_reload;
 
     public static FragmentReviewChemchuoi newInstance(CauhoiDetail restaurant) {
         FragmentReviewChemchuoi restaurantDetailFragment = new FragmentReviewChemchuoi();
@@ -119,13 +121,28 @@ public class FragmentReviewChemchuoi extends BaseFragment implements View.OnClic
         initImage();
         initData();
         initEvent();
-
         return view;
     }
 
     private boolean isClickXemdiem = false;
 
     private void initEvent() {
+        img_reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webview_debai.reload();
+                webview_anwser_A.reload();
+                webview_anwser_B.reload();
+                webview_anwser_C.reload();
+                webview_anwser_D.reload();
+
+                webview_debai.setWebViewClient(new WebViewClient());
+                webview_anwser_A.setWebViewClient(new WebViewClient());
+                webview_anwser_B.setWebViewClient(new WebViewClient());
+                webview_anwser_C.setWebViewClient(new WebViewClient());
+                webview_anwser_D.setWebViewClient(new WebViewClient());
+            }
+        });
         ll_anwser_A.setOnClickListener(this);
         ll_anwser_B.setOnClickListener(this);
         ll_anwser_C.setOnClickListener(this);

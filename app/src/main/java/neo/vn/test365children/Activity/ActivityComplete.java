@@ -167,12 +167,13 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
         } else {
             txt_timelambai.setText("Thời gian làm bài không xác định");
         }
+        int iTime = (int) (durationInMillis / 1000);
+        objExer.setsThoiluonglambai("" + iTime);
         mRealm.beginTransaction();
         mRealm.copyToRealmOrUpdate(objExer);
         mRealm.commitTransaction();
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String sDanhsachcau = gson.toJson(mListCauhoiAnswer);
-        Log.i(TAG, "put_api_nopbai: " + sDanhsachcau);
         showDialogLoading();
         mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise(),
                 objExer.getsTimebatdaulambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
@@ -200,7 +201,9 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
-
+        hideDialogLoading();
+        btn_guidiem.setEnabled(true);
+        btn_guidiem.getBackground().setAlpha(255);
     }
 
     @Override
