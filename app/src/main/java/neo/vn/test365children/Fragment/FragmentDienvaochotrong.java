@@ -14,6 +14,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -113,11 +114,27 @@ public class FragmentDienvaochotrong extends BaseFragment {
 
     String sHtml;
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_dapan.clearHistory();
+        webview_dapan.clearFormData();
+        webview_dapan.clearCache(true);
+
+        browser.clearHistory();
+        browser.clearFormData();
+        browser.clearCache(true);
+    }
+
     @SuppressLint("JavascriptInterface")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dienvaochotrong, container, false);
         ButterKnife.bind(this, view);
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
+            showDialogLoading();
+        }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
@@ -132,22 +149,23 @@ public class FragmentDienvaochotrong extends BaseFragment {
         webSettings2.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings2.setDefaultFontSize(18);
         browser.setWebChromeClient(new WebChromeClient());
+        webview_dapan.clearHistory();
+        webview_dapan.clearFormData();
+        webview_dapan.clearCache(true);
+        browser.clearHistory();
+        browser.clearFormData();
+        browser.clearCache(true);
         browser.getSettings().setJavaScriptEnabled(true);
         browser.setBackgroundColor(Color.TRANSPARENT);
         webview_dapan.setBackgroundColor(Color.TRANSPARENT);
         browser.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
         browser.getSettings().setJavaScriptEnabled(true);
         browser.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
-        sHtml = replaceXML("<<",
-                ">>", mCauhoi.getsHTML_CONTENT().replace(">>>", "> >>"));
+        sHtml = replaceXML("<<", ">>", mCauhoi.getsHTML_CONTENT().replace(">>>", "> >>"));
         App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD
                 (replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT()));
         String sAnwser = replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT());
-        Log.i(TAG, "onCreateView: " + sAnwser);
-        for (int i = 0; i < 10; i++) {
-
-        }
         sHtlml = "<html>\n" +
                 "<head>\n" +
  /*               "<style>\n" +
@@ -195,14 +213,18 @@ public class FragmentDienvaochotrong extends BaseFragment {
         settings.setTextZoom((int) (settings.getTextZoom() * 1.2));
         settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.2));
         initEvent();
+        browser.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(final WebView view, String url) {
+                super.onPageFinished(view, url);
+                if (view.getId() == R.id.webview_dienchotrong) {
+                    hideDialogLoading();
+                }
+            }
+        });
         return view;
     }
 
-    public static String sAnwserChil1 = "", sAnwserChil2 = "",
-            sAnwserChil3 = "", sAnwserChil4 = "",
-            sAnwserChil5 = "", sAnwserChil6 = "",
-            sAnwserChil7 = "", sAnwserChil8 = "",
-            sAnwserChil9 = "", sAnwserChil10 = "";
     String sAnwserChil;
     boolean isGetpoint = false;
     List<Integer> mLisTrue = new ArrayList<>();
@@ -258,7 +280,6 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 String sHtl = mCauhoi.getsHTML_CONTENT().replaceAll("<<<", "<< < ")
                         .replaceAll(">>>", " > >>");
                 sAnwserChil = replaceAnwserChil("<<", ">>", sHtl, 0, false);
-                Log.i(TAG, "chamdiem: " + sAnwserChil);
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwserChil);
                 if (isAnwserTrue) {
@@ -292,11 +313,8 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 return;
             }
             isGetpoint = true;
-            if (sAnwser_true.size() > 0) {
-            }
+
         }
-
-
     }
 
     public class WebAppInterface {
@@ -315,7 +333,6 @@ public class FragmentDienvaochotrong extends BaseFragment {
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1)
                     .setsANSWER_CHILD(replaceAnwserChil("<<", ">>",
                             mCauhoi.getsANSWER_CHILD(), 1, false));
-            Log.i(TAG, "sendData: " + App.mLisCauhoi);
         }
 
         @JavascriptInterface
@@ -407,7 +424,6 @@ public class FragmentDienvaochotrong extends BaseFragment {
                             sHtml_dapan = "<br /><br /> <b>Đáp án </b><br /><br />" +
                                     sHtml_dapan.replaceAll("<<", "<u><b><font color='blue'>")
                                             .replaceAll(">>", "</font></b></u>");
-                            Log.i(TAG, "onClick: " + sAnwserChil);
                             browser.setVisibility(View.GONE);
                             webview_dapan.loadDataWithBaseURL("",
                                     "<div style='text-align:center;'><b>Bé trả lời </b><br/><br/>"
@@ -421,15 +437,6 @@ public class FragmentDienvaochotrong extends BaseFragment {
 
             }
         });
-      /*  browser.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-
-                }
-                return true;
-            }
-        });*/
-
     }
 
     public String replaceStringBuffer(int first, int last, String st, int index, int leght) {
@@ -536,11 +543,11 @@ public class FragmentDienvaochotrong extends BaseFragment {
             }
             if (isAnwserT) {
                 String sContent = mLisAnwser.get((position - 1));
-                s = String.valueOf(sbf.replace(first, last, "<u><b><font color='blue'> "
+                s = String.valueOf(sbf.replace(first, last, " <u><b><font color='blue'> "
                         + sContent + " </font></b></u>"));
             } else {
                 String sContent = mLisAnwser.get((position - 1));
-                s = String.valueOf(sbf.replace(first, last, "<u><b><font color='red'> "
+                s = String.valueOf(sbf.replace(first, last, " <u><b><font color='red'> "
                         + sContent + " </font></b></u>"));
             }
 

@@ -536,16 +536,13 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
             }
             isWating = true;
             play_lathinh();
-            Log.i(TAG, "check_click: click lần 2 " + possition);
             String s = mLisData.get(possition).getsContent();
             StringUtil.initWebview_Whitetext(webview_question_2, s);
             txt_title_broad_1.setText("Ô số " + (iPositionOne + 1));
             txt_title_broad_2.setText("Ô số " + (possition + 1));
             isTwoClick = true;
             iPositionTwo = possition;
-            Log.i(TAG, "check_click: click 2 " + flipView);
             boolean flipStatus = flipView.isFlipEnabled();
-            Log.i(TAG, "check_click: " + flipStatus);
             flipView.setFlipDuration(1000);
             flipView.flipTheView();
             new Handler().postDelayed(new Runnable() {
@@ -565,9 +562,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     @Override
     public void onViewFlipCompleted(EasyFlipView easyFlipView, EasyFlipView.FlipState newCurrentSide) {
         isWating = false;
-        Log.i(TAG, "onFinish: not check istwoclick" + linkedBoxOpen);
-        Log.i(TAG, "onViewFlipCompleted: " + isTwoClick);
-        Log.i(TAG, "onViewFlipCompleted: " + isFirstClick);
         if (isTwoClick) {
             new CountDownTimer(2000, 100) {
                 @Override
@@ -587,7 +581,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                         linkedBoxOpen.add(iPositionOne);
                         linkedBoxOpen.add(iPositionTwo);
                     }
-                    Log.i(TAG, "onFinish: " + linkedBoxOpen);
                     isTwoClick = false;
                     isFirstClick = false;
 
@@ -635,7 +628,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                                 }
                             }
                         }.start();
-                        Log.i(TAG, "onFinish: anwser true");
                     } else {
                         play_anwser_false();
                         if (!isPlayerOne) {
@@ -647,7 +639,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                                 }
                             }, 1100);
                         }
-                        Log.i(TAG, "onFinish: anwser false");
                         isAnwser = false;
                     }
                     btn_exit.getBackground().setAlpha(255);
@@ -704,7 +695,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     boolean isComputerPlay = false;
 
     private void change_color(final boolean isPlayerOne) {
-        Log.i(TAG, "change_color: ");
         gone_question_view(true);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -713,12 +703,11 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                 resetTime();
                 if (isPlayerOne) {
                     isComputerPlay = false;
-                    Log.i(TAG, "change_color: play one");
+
                     btn_exit.setVisibility(View.VISIBLE);
                     img_bg_player_two.getBackground().setAlpha(50);
                     img_bg_player_one.getBackground().setAlpha(255);
                 } else {
-                    Log.i(TAG, "change_color: play two");
                     btn_exit.setVisibility(View.INVISIBLE);
                     img_bg_player_one.getBackground().setAlpha(50);
                     img_bg_player_two.getBackground().setAlpha(255);
@@ -731,19 +720,15 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
 
     public List<Integer> get_ai_level_2(List<Integer> mListBoxShow, List<Integer> linkedBoxOpen) {
         List<Integer> mLisOutput = new ArrayList<>();
-        Log.i(TAG, "get_ai_level_2 listshowbox: " + mListBoxShow);
-        Log.i(TAG, "get_ai_level_2 lisboxopen: " + linkedBoxOpen);
         if (linkedBoxOpen.size() > 0) {
             if (mListBoxShow.size() > 0) {
                 linkedBoxOpen.removeAll(mListBoxShow);
-                Log.i(TAG, "get_ai_level_2 lisboxopen remove: " + linkedBoxOpen);
                 if (linkedBoxOpen.size() > 0) {
                     for (int i = 0; i < linkedBoxOpen.size(); i++) {
                         for (int j = 0; j < linkedBoxOpen.size(); j++) {
                             if (linkedBoxOpen.get(i) != linkedBoxOpen.get(j) && mLisData.
                                     get(linkedBoxOpen.get(i)).getsId().equals(mLisData.
                                     get(linkedBoxOpen.get(j)).getsId())) {
-                                Log.i(TAG, "get_ai_level_2: for in box open");
                                 mLisOutput.add(linkedBoxOpen.get(i));
                                 mLisOutput.add(linkedBoxOpen.get(j));
                                 return mLisOutput;
@@ -753,16 +738,13 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                     List<Integer> mLisTong = new ArrayList<>();
                     mLisTong.addAll(mListBoxShow);
                     mLisTong.addAll(linkedBoxOpen);
-                    Log.i(TAG, "get_ai_level_2 lis tổng: " + mLisTong);
                     int iOne = StringUtil.check_random_one(mLisTong);
-                    Log.i(TAG, "get_ai_level_2: random so 1: " + iOne);
                     boolean iCheck_id = false;
                     for (int iTwo : linkedBoxOpen) {
                         if (mLisData.get(iOne).getsId().equals(mLisData.get(iTwo).getsId())) {
                             iCheck_id = true;
                             mLisOutput.add(iOne);
                             mLisOutput.add(iTwo);
-                            Log.i(TAG, "get_ai_level_2: for in box 2: " + iTwo);
                             return mLisOutput;
                         }
                     }
@@ -771,7 +753,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                         int iTwo = StringUtil.check_random_one(mLisTong);
                         mLisOutput.add(iOne);
                         mLisOutput.add(iTwo);
-                        Log.i(TAG, "get_ai_level_2: random " + iTwo);
                         return mLisOutput;
                     }
                 }
@@ -782,7 +763,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                         if (linkedBoxOpen.get(i) != linkedBoxOpen.get(j) && mLisData.
                                 get(linkedBoxOpen.get(i)).getsId().equals(mLisData.
                                 get(linkedBoxOpen.get(j)).getsId())) {
-                            Log.i(TAG, "get_ai_level_2: for in box open_chưa mở ô");
                             mLisOutput.add(linkedBoxOpen.get(i));
                             mLisOutput.add(linkedBoxOpen.get(j));
                             return mLisOutput;
@@ -792,7 +772,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                 List<Integer> mLisTong = new ArrayList<>();
                 mLisTong.addAll(mListBoxShow);
                 mLisTong.addAll(linkedBoxOpen);
-                Log.i(TAG, "get_ai_level_2 list tong " + mLisTong);
                 int iOne = StringUtil.check_random_one(mLisTong);
                 boolean iCheck_id = false;
                 for (int iTwo : linkedBoxOpen) {
@@ -836,12 +815,10 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
             mLisClick = get_ai_level_2(mListBoxShow, linkedBoxOpen);
         }
         if (mLisClick.size() > 0) {
-            Log.i(TAG, "ai_lever_1: " + mLisClick);
             final int position_one = mLisClick.get(0);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(TAG, "run: ai_click_1");
                     isWating = false;
                     isFirstClick = false;
                     ai_click(position_one);
@@ -857,7 +834,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(TAG, "run: ai_click_2");
                     isWating = false;
                     isTwoClick = false;
                     ai_click_two(position_two);
@@ -887,7 +863,6 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        Log.i(TAG, "onClick: player 1" + isComputerPlay);
         switch (v.getId()) {
             case R.id.flipView_0:
                 if (!isComputerPlay)

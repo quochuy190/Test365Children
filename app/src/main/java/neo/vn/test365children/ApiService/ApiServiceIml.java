@@ -1,7 +1,5 @@
 package neo.vn.test365children.ApiService;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +8,9 @@ import java.io.IOException;
 import java.util.Map;
 
 import neo.vn.test365children.Config.Config;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.CallbackData;
+import neo.vn.test365children.Untils.SharedPrefs;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,11 +26,14 @@ public class ApiServiceIml {
     ApiSevicePost apiServicePost;
     ApiSevice apiService;
     ApiSeviceLogin apiServiceLogin;
+
     public void getApiService(final CallbackData<String> callbackData, Map<String, String> mData) {
-       String sUrl = Config.BASE_URL;
-        Log.i(TAG, "getApiService: "+sUrl);
+        String sUrl = SharedPrefs.getInstance().get(Constants.KEY_URL_BASE, String.class);
+        if (sUrl != null && sUrl.length() > 0)
+            Config.BASE_URL = sUrl;
+
         apiService = ApiSevice.retrofit.create(ApiSevice.class);
-        Call<ResponseBody> getApiservice = apiService.getApiService( mData);
+        Call<ResponseBody> getApiservice = apiService.getApiService(mData);
         getApiservice.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -38,7 +41,7 @@ public class ApiServiceIml {
                 JSONObject jobj;
                 JSONArray jArray;
                 try {
-                    if (response.body()!=null){
+                    if (response.body() != null) {
                         jsonString = response.body().string();
                         jobj = new JSONObject(jsonString);
                         String c = jobj.getString("return");
@@ -52,6 +55,7 @@ public class ApiServiceIml {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 callbackData.onGetDataErrorFault(new Exception(t));
@@ -61,7 +65,7 @@ public class ApiServiceIml {
 
     public void getApiServicePost(final CallbackData<String> callbackData, Map<String, String> mData) {
         apiServicePost = ApiSevicePost.retrofit.create(ApiSevicePost.class);
-        Call<ResponseBody> getApiservice = apiServicePost.getApiService( mData);
+        Call<ResponseBody> getApiservice = apiServicePost.getApiService(mData);
         getApiservice.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -69,7 +73,7 @@ public class ApiServiceIml {
                 JSONObject jobj;
                 JSONArray jArray;
                 try {
-                    if (response.body()!=null){
+                    if (response.body() != null) {
                         jsonString = response.body().string();
                       /*  jobj = new JSONObject(jsonString);
                         String c = jobj.getString("return");*/
@@ -81,6 +85,7 @@ public class ApiServiceIml {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 callbackData.onGetDataErrorFault(new Exception(t));
@@ -90,7 +95,7 @@ public class ApiServiceIml {
 
     public void getApiServiceLogin(final CallbackData<String> callbackData, Map<String, String> mData) {
         apiServiceLogin = ApiSeviceLogin.retrofit2.create(ApiSeviceLogin.class);
-        Call<ResponseBody> getApiservice = apiServiceLogin.getApiService( mData);
+        Call<ResponseBody> getApiservice = apiServiceLogin.getApiService(mData);
         getApiservice.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -98,7 +103,7 @@ public class ApiServiceIml {
                 JSONObject jobj;
                 JSONArray jArray;
                 try {
-                    if (response.body()!=null){
+                    if (response.body() != null) {
                         jsonString = response.body().string();
                         jobj = new JSONObject(jsonString);
                         String c = jobj.getString("return");
@@ -112,6 +117,7 @@ public class ApiServiceIml {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 callbackData.onGetDataErrorFault(new Exception(t));

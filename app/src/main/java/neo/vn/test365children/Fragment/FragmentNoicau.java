@@ -216,7 +216,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                 webview_dapannoicau_A_2.setWebViewClient(new WebViewClient());
                 webview_dapannoicau_A_3.setWebViewClient(new WebViewClient());
                 webview_dapannoicau_A_4.setWebViewClient(new WebViewClient());
-
                 webview_dapannoicau_B_1.setWebViewClient(new WebViewClient());
                 webview_dapannoicau_B_2.setWebViewClient(new WebViewClient());
                 webview_dapannoicau_B_3.setWebViewClient(new WebViewClient());
@@ -284,6 +283,35 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_dapannoicau_A_1.clearFormData();
+        webview_dapannoicau_A_1.clearCache(true);
+        webview_dapannoicau_A_1.clearHistory();
+        webview_dapannoicau_A_2.clearFormData();
+        webview_dapannoicau_A_2.clearCache(true);
+        webview_dapannoicau_A_2.clearHistory();
+        webview_dapannoicau_A_3.clearFormData();
+        webview_dapannoicau_A_3.clearCache(true);
+        webview_dapannoicau_A_3.clearHistory();
+        webview_dapannoicau_A_4.clearFormData();
+        webview_dapannoicau_A_4.clearCache(true);
+        webview_dapannoicau_A_4.clearHistory();
+        webview_dapannoicau_B_4.clearFormData();
+        webview_dapannoicau_B_4.clearCache(true);
+        webview_dapannoicau_B_4.clearHistory();
+        webview_dapannoicau_B_3.clearFormData();
+        webview_dapannoicau_B_3.clearCache(true);
+        webview_dapannoicau_B_3.clearHistory();
+        webview_dapannoicau_B_2.clearFormData();
+        webview_dapannoicau_B_2.clearCache(true);
+        webview_dapannoicau_B_2.clearHistory();
+        webview_dapannoicau_B_1.clearFormData();
+        webview_dapannoicau_B_1.clearCache(true);
+        webview_dapannoicau_B_1.clearHistory();
+    }
+
     public void check_anwser() {
         boolean isEgg1 = false, isEgg2 = false, isEgg3 = false, isEgg4 = false;
         App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
@@ -343,14 +371,13 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnswerChil);
         }
     }
-
     List<String> mLisAnwser_A;
     List<String> mLisAnwser_B;
     List<String> mLisAnwser_B_traloi;
-    boolean isImageA = false, isImageB = false;
 
     private void initData() {
-        if (mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau().equals("1")) {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
             showDialogLoading();
         }
         text_lable_dapan.setVisibility(View.GONE);
@@ -386,16 +413,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         mLisAnwser_B_traloi.add(egg2[1]);
         mLisAnwser_B_traloi.add(egg3[1]);
         mLisAnwser_B_traloi.add(egg4[1]);
-        for (String sContent : mLisAnwser_A) {
-            if (sContent.indexOf("img src") > -1) {
-                isImageA = true;
-            }
-        }
-        for (String sContent : mLisAnwser_B) {
-            if (sContent.indexOf("img src") > -1) {
-                isImageB = true;
-            }
-        }
+
         //  initTraloi();
         Collections.shuffle(mLisAnwser_B);
         new Handler().post(new Runnable() {
@@ -417,11 +435,12 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                 view.setLayoutParams(params);
             }
         });
-
     }
-
     private void initWebview(WebView webview_debai, String link_web) {
         webview_debai.getSettings();
+        webview_debai.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
@@ -538,24 +557,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                                 if (iHeightmax > 0) {
                                     setHeight(iHeightmax);
                                 }
-                              /*  webview_dapannoicau_A_1.reload();
-                                webview_dapannoicau_A_2.reload();
-                                webview_dapannoicau_A_3.reload();
-                                webview_dapannoicau_A_4.reload();
-                                webview_dapannoicau_B_1.reload();
-                                webview_dapannoicau_B_2.reload();
-                                webview_dapannoicau_B_3.reload();
-                                webview_dapannoicau_B_4.reload();
-
-                                webview_dapannoicau_A_1.setWebViewClient(new WebViewClient());
-                                webview_dapannoicau_A_2.setWebViewClient(new WebViewClient());
-                                webview_dapannoicau_A_3.setWebViewClient(new WebViewClient());
-                                webview_dapannoicau_A_4.setWebViewClient(new WebViewClient());
-
-                                webview_dapannoicau_B_1.setWebViewClient(new WebViewClient());
-                                webview_dapannoicau_B_2.setWebViewClient(new WebViewClient());
-                                webview_dapannoicau_B_3.setWebViewClient(new WebViewClient());
-                                webview_dapannoicau_B_4.setWebViewClient(new WebViewClient());*/
                                 hideDialogLoading();
                                 break;
                         }
@@ -585,7 +586,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         setHeightAll(iHeight, rl_dapanB_traloi_3);
         setHeightAll(iHeight, rl_dapanB_traloi_2);
         setHeightAll(iHeight, rl_dapanB_traloi_1);
-
     }
 
     private void initTraloi() {
@@ -685,7 +685,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                 }
                 break;
             case MotionEvent.ACTION_UP:
-
                 break;
         }
         return false;
@@ -970,7 +969,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                             isClickB4 = true;
                         }
                         break;
-
                 }
 
                 break;
@@ -1017,8 +1015,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                         }
                         break;
                 }
-
-
                 break;
             case "A3":
                 switch (sClick) {
@@ -1063,8 +1059,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                         }
                         break;
                 }
-
-
                 break;
             case "A4":
                 switch (sClick) {
@@ -1109,7 +1103,6 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                         }
                         break;
                 }
-
                 break;
         }
     }

@@ -163,24 +163,26 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
                 String sPoint = StringUtil.format_point(point);
                 entries.add(new Entry(index, Float.parseFloat(sPoint)));
             }
-
         }
+        if (entries != null && entries.size() > 0) {
+            LineDataSet set = new LineDataSet(entries, "Toán");
+            set.setColor(Color.RED);
+            set.setLineWidth(2.5f);
+            set.setCircleColor(Color.RED);
+            set.setCircleRadius(3f);
+            set.setFillColor(Color.RED);
+            set.setMode(LineDataSet.Mode.LINEAR);
+            set.setDrawValues(true);
+            set.setValueTextSize(10f);
+            set.setValueTextColor(Color.RED);
 
-        LineDataSet set = new LineDataSet(entries, "Toán");
-        set.setColor(Color.RED);
-        set.setLineWidth(2.5f);
-        set.setCircleColor(Color.RED);
-        set.setCircleRadius(3f);
-        set.setFillColor(Color.RED);
-        set.setMode(LineDataSet.Mode.LINEAR);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(Color.RED);
+            set.setAxisDependency(YAxis.AxisDependency.LEFT);
+            d.addDataSet(set);
 
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        d.addDataSet(set);
+            return set;
+        } else return null;
 
-        return set;
+
     }
 
     private static DataSet dataChartTiengViet(List<String> mListData) {
@@ -191,24 +193,26 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
         ArrayList<Entry> entries = new ArrayList<Entry>();
         for (int index = 0; index < mListData.size(); index++) {
             if (mListData.get(index) != null && mListData.get(index).length() > 0)
-                entries.add(new Entry(index, Float.parseFloat(StringUtil.format_point(Float.parseFloat(mListData.get(index))))));
+                entries.add(new Entry(index, Float.parseFloat(StringUtil.
+                        format_point(Float.parseFloat(mListData.get(index))))));
         }
-        LineDataSet set = new LineDataSet(entries, "Tiếng Việt");
-        //  set.setColor(Color.GREEN);
-        set.setColor(Color.rgb(67, 145, 88));
-        set.setLineWidth(2.5f);
-        set.setCircleColor(Color.rgb(67, 145, 88));
-        set.setCircleRadius(3f);
-        set.setFillColor(Color.rgb(67, 145, 88));
-        set.setMode(LineDataSet.Mode.LINEAR);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(Color.rgb(67, 145, 88));
+        if (entries != null && entries.size() > 0) {
+            LineDataSet set = new LineDataSet(entries, "Tiếng Việt");
+            //  set.setColor(Color.GREEN);
+            set.setColor(Color.rgb(67, 145, 88));
+            set.setLineWidth(2.5f);
+            set.setCircleColor(Color.rgb(67, 145, 88));
+            set.setCircleRadius(3f);
+            set.setFillColor(Color.rgb(67, 145, 88));
+            set.setMode(LineDataSet.Mode.LINEAR);
+            set.setDrawValues(true);
+            set.setValueTextSize(10f);
+            set.setValueTextColor(Color.rgb(67, 145, 88));
 
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        d.addDataSet(set);
-
-        return set;
+            set.setAxisDependency(YAxis.AxisDependency.LEFT);
+            d.addDataSet(set);
+            return set;
+        } else return null;
     }
 
     private static DataSet dataChartTiengAnh(List<String> mListData) {
@@ -221,21 +225,21 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
             if (mListData.get(index) != null && mListData.get(index).length() > 0)
                 entries.add(new Entry(index, Float.parseFloat(StringUtil.format_point(Float.parseFloat(mListData.get(index))))));
         }
-        LineDataSet set = new LineDataSet(entries, "Tiếng Anh");
-        set.setColor(Color.rgb(15, 97, 225));
-        set.setLineWidth(2.5f);
-        set.setCircleColor(Color.rgb(15, 97, 225));
-        set.setCircleRadius(3f);
-        set.setFillColor(Color.rgb(15, 97, 225));
-        set.setMode(LineDataSet.Mode.LINEAR);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(Color.rgb(15, 97, 225));
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        d.addDataSet(set);
-
-        return set;
+        if (entries != null && entries.size() > 0) {
+            LineDataSet set = new LineDataSet(entries, "Tiếng Anh");
+            set.setColor(Color.rgb(15, 97, 225));
+            set.setLineWidth(2.5f);
+            set.setCircleColor(Color.rgb(15, 97, 225));
+            set.setCircleRadius(3f);
+            set.setFillColor(Color.rgb(15, 97, 225));
+            set.setMode(LineDataSet.Mode.LINEAR);
+            set.setDrawValues(true);
+            set.setValueTextSize(10f);
+            set.setValueTextColor(Color.rgb(15, 97, 225));
+            set.setAxisDependency(YAxis.AxisDependency.LEFT);
+            d.addDataSet(set);
+            return set;
+        } else return null;
     }
 
     @Override
@@ -350,13 +354,13 @@ public class ActivityBieuDo extends BaseActivity implements OnChartValueSelected
             mListTiengViet.add(0, "0");
             mListTiengAnh.add(0, "0");*/
             if (mListToan.size() == 0) {
-                mListToan = null;
+                mListToan.add("0");
             }
             if (mListTiengAnh.size() == 0) {
-                mListTiengAnh = null;
+                mListTiengAnh.add("0");
             }
             if (mListTiengViet.size() == 0) {
-                mListTiengViet = null;
+                mListTiengViet.add("0");
             }
             initChart(mListToan, mListTiengViet, mListTiengAnh);
         }

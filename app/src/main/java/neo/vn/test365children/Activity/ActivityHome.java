@@ -86,7 +86,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener, 
     private void initConfig() {
         Config.URL_IMAGE = SharedPrefs.getInstance().get(Constants.KEY_URL_MEDIA, String.class);
         Config.URL_VIDEO = SharedPrefs.getInstance().get(Constants.KEY_URL_MEDIA, String.class);
-        Config.BASE_URL = SharedPrefs.getInstance().get(Constants.KEY_URL_BASE, String.class);
+       // Config.BASE_URL = SharedPrefs.getInstance().get(Constants.KEY_URL_BASE, String.class);
     }
 
     ExerciseAnswer objExer;

@@ -179,6 +179,10 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
     ImageView img_anwser_chil;
 
     private void initData() {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
+            showDialogLoading();
+        }
         img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
             Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
@@ -273,6 +277,9 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearCache(true);
+        webview.clearFormData();
+        webview.clearHistory();
         webview.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
@@ -381,7 +388,25 @@ public class FragmentReviewBatsauNew extends BaseFragment implements View.OnClic
         webview_anwser_C.setWebViewClient(new WebViewClient());
         webview_anwser_D.setWebViewClient(new WebViewClient());
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearHistory();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_debai.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
+    }
     int iHeightmax = 0;
 
     private void setHeightAll(final int iHeight, final View view) {

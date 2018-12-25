@@ -150,8 +150,6 @@ public class FragmentCuuCongchua extends BaseFragment {
         adapter = new AdapterCongchua(mLis, getContext());
         mLayoutManager = new GridLayoutManager(getContext(),
                 4, GridLayoutManager.VERTICAL, false);
-        //mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
-        //recycle_dapan.setNestedScrollingEnabled(false);
         recycle_dapan.setHasFixedSize(true);
         recycle_dapan.setLayoutManager(mLayoutManager);
         recycle_dapan.setItemAnimator(new DefaultItemAnimator());
@@ -216,8 +214,6 @@ public class FragmentCuuCongchua extends BaseFragment {
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
-                          /*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
                         }
                     }
                 } else {
@@ -244,7 +240,6 @@ public class FragmentCuuCongchua extends BaseFragment {
                     adapter.notifyDataSetChanged();
                     EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                 }
-
                 break;
         }
     }

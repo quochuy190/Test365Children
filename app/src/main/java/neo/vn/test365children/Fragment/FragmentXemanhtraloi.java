@@ -86,6 +86,7 @@ public class FragmentXemanhtraloi extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_xemanhtraloi, container, false);
         ButterKnife.bind(this, view);
         init();
+        btn_xemdiem.setEnabled(false);
  /*       btn_xemdiem.setEnabled(false);
         btn_xemdiem.getBackground().setAlpha(50);*/
         initData();
@@ -117,10 +118,6 @@ public class FragmentXemanhtraloi extends BaseFragment {
                             Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
                             EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
                         }
-                        /*if (isTrue)
-                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()),0));
-                        else
-                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));*/
                     }
                     isClickXemdiem = true;
                 }
@@ -140,6 +137,7 @@ public class FragmentXemanhtraloi extends BaseFragment {
         adapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
+                btn_xemdiem.setEnabled(true);
               /*  btn_xemdiem.setEnabled(true);
                 btn_xemdiem.getBackground().setAlpha(255);*/
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()

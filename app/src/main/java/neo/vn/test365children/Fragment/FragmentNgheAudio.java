@@ -143,7 +143,25 @@ public class FragmentNgheAudio extends BaseFragment implements
         EventBus.getDefault().unregister(this);
 
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_A.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
+        webview_debai.clearHistory();
+    }
     private int current;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -156,19 +174,6 @@ public class FragmentNgheAudio extends BaseFragment implements
                 mPlayer.pause();
             }
             int iPoint = (int) event.getPoint();
-          /*  if (iPoint > 0) {
-                if (current == (iPoint + 1)) {
-                    reload();
-                }
-                if (current == (iPoint - 1)) {
-                    reload();
-                }
-            } else */
-            if (current == (iPoint + 1)) {
-                // reload();
-                webview_debai.reload();
-                webview_debai.setWebViewClient(new WebViewClient());
-            }
         }
     }
 
@@ -199,6 +204,7 @@ public class FragmentNgheAudio extends BaseFragment implements
         View view = inflater.inflate(R.layout.fragment_nghevatraloi, container, false);
         mLis = new ArrayList<>();
         ButterKnife.bind(this, view);
+        btn_xemdiem.setEnabled(false);
         initLoadImage();
         initData();
         initEvent();
@@ -263,37 +269,6 @@ public class FragmentNgheAudio extends BaseFragment implements
                 }
             }
         });
-      /*  btn_xemdiem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isClickXemdiem) {
-                    img_anwser_chil.setVisibility(View.VISIBLE);
-                    boolean isTrue = false;
-                    if (mLis != null && isTraloi) {
-                        for (DapAn obj : mLis) {
-                            obj.setClick(true);
-                            if (obj.getsDapan_Dung().equals(obj.getsDapan_Traloi())) {
-                                isTrue = true;
-                            }
-                        }
-                        adapter.notifyDataSetChanged();
-                        if (isTrue) {
-                            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        } else {
-                            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-                            EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
-                        }
-                     *//*   if (isTrue)
-                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        else
-                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));*//*
-                    }
-                    isClickXemdiem = true;
-                }
-
-            }
-        });*/
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -354,19 +329,6 @@ public class FragmentNgheAudio extends BaseFragment implements
         txtDuration.setText(TimeUtils.formatDuration(duration));
 
     }
-
-    /* private Runnable mProgressCallback = new Runnable() {
-         @Override
-         public void run() {
- //            if (isDetached()) return;
-             if(mPlayer != null){
-                 int mCurrentPosition = mPlayer.getCurrentPosition() / 1000;
-                 mSeekBar.setProgress(mCurrentPosition);
-             }
-             mHandler.postDelayed(this, 1000);
-             mHandler.postDelayed(this, UPDATE_PROGRESS_INTERVAL);
-         }
-     };*/
     private void initData() {
         if (mCauhoi != null) {
             if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
@@ -374,6 +336,10 @@ public class FragmentNgheAudio extends BaseFragment implements
                         + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                         + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
             StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+        }
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
+            showDialogLoading();
         }
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         try {
@@ -419,25 +385,14 @@ public class FragmentNgheAudio extends BaseFragment implements
         } else {
             ll_webview_D.setVisibility(View.GONE);
         }
-
-       /* if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "",
-                    mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "",
-                    mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "",
-                    mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "",
-                    mCauhoi.getsANSWER(), false, ""));
-        adapter.notifyDataSetChanged();*/
     }
 
     public void initWebview_center(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -490,6 +445,9 @@ public class FragmentNgheAudio extends BaseFragment implements
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
@@ -504,9 +462,6 @@ public class FragmentNgheAudio extends BaseFragment implements
                 + "</body></html>";
         webview.loadDataWithBaseURL("", text,
                 "text/html", "UTF-8", "");
-        // webview.setWebViewClient(new WebViewClient());
-      /*  webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
-                "text/html", "UTF-8", "");*/
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(final WebView view, String url) {
@@ -577,7 +532,6 @@ public class FragmentNgheAudio extends BaseFragment implements
                             } else {
                                 obj.setsDapan_Traloi("");
                             }
-
                         }
                         isTraloi = true;
                         adapter.notifyDataSetChanged();
@@ -634,7 +588,6 @@ public class FragmentNgheAudio extends BaseFragment implements
         Log.i(TAG, "onError: mp3");
         return false;
     }
-
     private String sAnwser = "";
 
     @Override
@@ -715,8 +668,7 @@ public class FragmentNgheAudio extends BaseFragment implements
 
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
-    /*        btn_xemdiem.setEnabled(true);
-            btn_xemdiem.getBackground().setAlpha(255);*/
+            btn_xemdiem.setEnabled(true);
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);

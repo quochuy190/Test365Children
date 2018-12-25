@@ -43,4 +43,6 @@ Mỗi tuần chỉ chơi một lần vào bất kỳ ngày nào.
     <string name="txt_showpoint">Chấm điểm</string>
     <string name="channel_name">Home365</string>
     <string name="txt_hotline">Hotline <b><u>1900561548</u></b></string>
+    <string name="notification_title">Home365</string>
+    <string name="notification_message">Đang làm bài tập</string>
 </resources>

@@ -27,9 +27,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -41,7 +38,6 @@ import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
-import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.StringUtil;
 
@@ -127,38 +123,6 @@ public class FragmentDocvaTraloiReview extends BaseFragment
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-        if (event.message.equals("docvatraloi")) {
-           /* Log.i(TAG, "onMessageEvent: docvatraloi: " + event.getPoint());
-            int iPoint = (int) event.getPoint();
-            if (iPoint > 0) {
-                if (current == (iPoint + 1)) {
-                    reload();
-                }
-                if (current == (iPoint - 1)) {
-                    reload();
-                }
-            } else if (current == (iPoint + 1)) {
-                reload();
-            }*/
-            //Log.i(TAG, "onMessageEvent: " + current);
-        }
-    }
-
     private void reload() {
         webview_debai.reload();
         webview_anwser_A.reload();
@@ -223,6 +187,9 @@ public class FragmentDocvaTraloiReview extends BaseFragment
     public void initWebview_white_text(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearCache(true);
+        webview.clearFormData();
+        webview.clearHistory();
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -283,6 +250,9 @@ public class FragmentDocvaTraloiReview extends BaseFragment
     public void initWebview_center(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearCache(true);
+        webview.clearFormData();
+        webview.clearHistory();
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -339,6 +309,9 @@ public class FragmentDocvaTraloiReview extends BaseFragment
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearCache(true);
+        webview.clearFormData();
+        webview.clearHistory();
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -373,20 +346,20 @@ public class FragmentDocvaTraloiReview extends BaseFragment
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-
+                                hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A:
-
+                                hideDialogLoading();
 
                                 break;
                             case R.id.webview_anwser_B:
-
+                                hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_C:
-
+                                hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_D:
-
+                                hideDialogLoading();
                                 break;
                         }
                     }
@@ -415,6 +388,33 @@ public class FragmentDocvaTraloiReview extends BaseFragment
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearHistory();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_debai.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
+        txt_cauhoi.clearHistory();
+        txt_cauhoi.clearFormData();
+        txt_cauhoi.clearCache(true);
+
+        webview_debai_full.clearHistory();
+        webview_debai_full.clearFormData();
+        webview_debai_full.clearCache(true);
     }
 
     private boolean isClickXemdiem = false;
@@ -496,6 +496,10 @@ public class FragmentDocvaTraloiReview extends BaseFragment
     Button btn_exit;
 
     private void initData() {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
+            showDialogLoading();
+        }
         img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
             Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
@@ -563,9 +567,6 @@ public class FragmentDocvaTraloiReview extends BaseFragment
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        if (mCauhoi.getsNumberDe().equals("1")) {
-            showDialogLoading();
-        }
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         new Handler().post(new Runnable() {
             @Override

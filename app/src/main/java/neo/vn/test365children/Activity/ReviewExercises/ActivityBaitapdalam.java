@@ -93,33 +93,59 @@ public class ActivityBaitapdalam extends BaseActivity {
         lisEx = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "1")
                 .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
+        List<ExerciseAnswer> lisEx2 = new ArrayList<>();
+        lisEx2 = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "1")
+                .equalTo("isTrangthailambai", "2")
+                .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTV = new ArrayList<>();
         lisExTV = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "2")
                 .equalTo("isTrangthailambai", "3")
+                .equalTo("sId_userCon", sUserCon).findAll();
+        List<ExerciseAnswer> lisExTV2 = new ArrayList<>();
+        lisExTV2 = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "2")
+                .equalTo("isTrangthailambai", "2")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTA = new ArrayList<>();
         lisExTA = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "3")
                 .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
+        List<ExerciseAnswer> lisExTA2 = new ArrayList<>();
+        lisExTA2 = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "3")
+                .equalTo("isTrangthailambai", "2")
+                .equalTo("sId_userCon", sUserCon).findAll();
         if (lisEx.size() > 0) {
             mLisTToan.addAll(lisEx);
+        }
+        if (lisEx2.size() > 0) {
+            mLisTToan.addAll(lisEx2);
+        }
+        if (lisExTV.size() > 0) {
+            mLisTV.addAll(lisExTV);
+        }
+        if (lisExTV2.size() > 0) {
+            mLisTV.addAll(lisExTV2);
+        }
+        if (lisExTA.size() > 0) {
+            mLisTAnh.addAll(lisExTA);
+        }
+        if (lisExTA2.size() > 0) {
+            mLisTAnh.addAll(lisExTA2);
+        }
+
+        if (mLisTToan.size() > 0) {
             txt_montoan.setVisibility(View.VISIBLE);
         } else {
             txt_montoan.setVisibility(View.INVISIBLE);
         }
-        if (lisExTV.size() > 0) {
-            mLisTV.addAll(lisExTV);
+        if (mLisTV.size() > 0) {
             rl_title_tv.setVisibility(View.VISIBLE);
-            //mLisTuan.add(new ListTuan("Tiếng Việt", lisExTV));
         } else {
             rl_title_tv.setVisibility(View.GONE);
         }
-        if (lisExTA.size() > 0) {
-            mLisTAnh.addAll(lisExTA);
-            recycle_tienganh.setVisibility(View.VISIBLE);
-            // mLisTuan.add(new ListTuan("Tiếng Anh", lisExTA));
+        if (mLisTAnh.size() > 0) {
+            rl_title_tienganh.setVisibility(View.VISIBLE);
         } else {
-            recycle_tienganh.setVisibility(View.GONE);
+            rl_title_tienganh.setVisibility(View.GONE);
         }
         // Log.i(TAG, "initData: " + mLisTuan);
     }

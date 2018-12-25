@@ -191,7 +191,7 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
-        showDialogNotify("Lỗi", "Lỗi kết nối, kiểm tra lại kết nối mạng hoặc wifi của bạn");
+        //showDialogNotify("Lỗi", "Lỗi kết nối, kiểm tra lại kết nối mạng hoặc wifi của bạn");
         hideDialogLoading();
     }
 

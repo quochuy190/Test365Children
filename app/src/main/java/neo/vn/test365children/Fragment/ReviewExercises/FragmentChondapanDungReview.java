@@ -6,7 +6,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,9 +21,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -36,7 +32,6 @@ import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
-import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.StringUtil;
 
@@ -115,54 +110,12 @@ public class FragmentChondapanDungReview extends BaseFragment
         return restaurantDetailFragment;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-        if (event.message.equals("Audio")) {
-            Log.i(TAG, "onMessageEvent: Audio");
-            /*if (webview_debai != null) {
-                webview_debai.reload();
-                webview_anwser_A.reload();
-                webview_anwser_C.reload();
-                webview_anwser_D.reload();
-                webview_anwser_B.reload();
-                // StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-                webview_debai.setWebViewClient(new WebViewClient());
-                webview_anwser_A.setWebViewClient(new WebViewClient());
-                webview_anwser_B.setWebViewClient(new WebViewClient());
-                webview_anwser_C.setWebViewClient(new WebViewClient());
-                webview_anwser_D.setWebViewClient(new WebViewClient());
-            }*/
-        } else if (event.message.equals("chondapan")) {
-            Log.i(TAG, "onMessageEvent: " + event.getPoint());
-            Log.i(TAG, "onMessageEvent: chondapan" + current);
-            int iPoint = (int) event.getPoint();
-            if (current == iPoint) {
-                webview_debai.reload();
-                webview_debai.setWebViewClient(new WebViewClient());
-            }
-            //Log.i(TAG, "onMessageEvent: " + current);
-        }
-    }
-
     private void reload() {
         webview_debai.reload();
         webview_anwser_A.reload();
         webview_anwser_C.reload();
         webview_anwser_D.reload();
         webview_anwser_B.reload();
-
         webview_debai.setWebViewClient(new WebViewClient());
         webview_anwser_A.setWebViewClient(new WebViewClient());
         webview_anwser_B.setWebViewClient(new WebViewClient());
@@ -183,6 +136,7 @@ public class FragmentChondapanDungReview extends BaseFragment
         ButterKnife.bind(this, view);
         img_reload.setVisibility(View.GONE);
         img_reload_review.setVisibility(View.VISIBLE);
+        btn_xemdiem.setVisibility(View.INVISIBLE);
         initLoadImage();
         initData();
         initEvent();
@@ -198,35 +152,6 @@ public class FragmentChondapanDungReview extends BaseFragment
                 reload();
             }
         });
-        /*ll_webview_A.setOnClickListener(this);
-        ll_webview_B.setOnClickListener(this);
-        ll_webview_C.setOnClickListener(this);
-        ll_webview_D.setOnClickListener(this);
-        img_checkbox_A.setOnClickListener(this);
-        img_checkbox_B.setOnClickListener(this);
-        img_checkbox_C.setOnClickListener(this);
-        img_checkbox_D.setOnClickListener(this);
-        webview_anwser_A.setOnTouchListener(this);
-        webview_anwser_B.setOnTouchListener(this);
-        webview_anwser_C.setOnTouchListener(this);
-        webview_anwser_D.setOnTouchListener(this);
-        btn_xemdiem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isClickXemdiem) {
-                    isClickXemdiem = true;
-                    img_anwser_chil.setVisibility(View.VISIBLE);
-                    if (anwser()) {
-                        Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-                        EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                    } else {
-                        Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-                        EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
-                        setImageFalse(sAnwser);
-                    }
-                }
-            }
-        });*/
     }
 
     private void initLoadImage() {
@@ -237,6 +162,10 @@ public class FragmentChondapanDungReview extends BaseFragment
     }
 
     private void initData() {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
+            showDialogLoading();
+        }
         img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
             Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
@@ -286,20 +215,34 @@ public class FragmentChondapanDungReview extends BaseFragment
         } else {
             ll_webview_D.setVisibility(View.GONE);
         }
-       /* if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
-*/
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearHistory();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_debai.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
     }
 
     public void initWebview_center(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearCache(true);
+        webview.clearFormData();
+        webview.clearHistory();
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();

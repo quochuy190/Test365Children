@@ -24,8 +24,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -76,7 +74,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     WebView webview_anwser_C;
     @BindView(R.id.webview_anwser_D)
     WebView webview_anwser_D;
-
     @BindView(R.id.ll_anwser_A)
     LinearLayout ll_anwser_A;
     @BindView(R.id.ll_anwser_B)
@@ -85,7 +82,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     LinearLayout ll_anwser_C;
     @BindView(R.id.ll_anwser_D)
     LinearLayout ll_anwser_D;
-
     @BindView(R.id.txt_dapan_D)
     RelativeLayout rl_dapan_D;
     @BindView(R.id.txt_dapan_B)
@@ -94,7 +90,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     RelativeLayout rl_dapan_C;
     @BindView(R.id.txt_dapan_A)
     RelativeLayout rl_dapan_A;
-
     @BindView(R.id.img_hoaqua_D)
     ImageView img_hoaqua_D;
     @BindView(R.id.img_hoaqua_C)
@@ -112,46 +107,15 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     public static FragmentChemchuoi newInstance(CauhoiDetail restaurant, int current) {
         FragmentChemchuoi restaurantDetailFragment = new FragmentChemchuoi();
         Bundle args = new Bundle();
-        //args.putSerializable("cauhoi",restaurant);
         args.putParcelable("cauhoi", Parcels.wrap(restaurant));
         args.putInt("current", current);
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
     private int current;
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-      /*  if (event.message.equals("batsau")) {
-            int iPoint = (int) event.getPoint();
-            if (iPoint > 0) {
-                if (current == (iPoint + 1)) {
-                    reload();
-                }
-                if (current == (iPoint - 1)) {
-                    reload();
-                }
-            } else if (current == (iPoint + 1)) {
-                reload();
-            }
-        }*/
-    }
-
     private void reload() {
-
         webview_debai.reload();
         webview_anwser_A.reload();
         webview_anwser_C.reload();
@@ -175,11 +139,9 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chemchuoi, container, false);
         ButterKnife.bind(this, view);
-        //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         initImage();
         initData();
-/*        btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);*/
+        btn_xemdiem.setEnabled(false);
         initEvent();
         return view;
     }
@@ -193,7 +155,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                 .placeholder(R.drawable.fruit_banana).into(img_hoaqua_C);
         Glide.with(getContext()).load(R.drawable.fruit_pineapple)
                 .placeholder(R.drawable.fruit_banana).into(img_hoaqua_D);
-
     }
 
     private boolean isClickXemdiem = false;
@@ -233,7 +194,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                                     animation_anwsertrue(img_hoaqua_D);
                                     break;
                             }
-
                         } else {
                             Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
                             EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
@@ -251,10 +211,7 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                                     animation_anwsertrue(img_hoaqua_D);
                                     break;
                             }
-
                         }
-
-
                     }
                     isClickXemdiem = true;
                 }
@@ -263,7 +220,8 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     }
 
     private void initData() {
-        if (mCauhoi.getsNumberDe().equals("1")) {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
             showDialogLoading();
         }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
@@ -278,10 +236,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                 initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
             }
         });
-     /*   initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());*/
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_anwser_A.setVisibility(View.VISIBLE);
         } else {
@@ -319,7 +273,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                     sAnwser = "A";
                     anwser();
                 }
-
                 break;
             case R.id.ll_anwser_B:
                 if (!isClickXemdiem) {
@@ -330,7 +283,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                     sAnwser = "B";
                     anwser();
                 }
-
                 break;
             case R.id.ll_anwser_C:
                 if (!isClickXemdiem) {
@@ -341,7 +293,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                     sAnwser = "C";
                     anwser();
                 }
-
                 break;
             case R.id.ll_anwser_D:
                 if (!isClickXemdiem) {
@@ -352,7 +303,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                     sAnwser = "D";
                     anwser();
                 }
-
                 break;
         }
     }
@@ -360,22 +310,39 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     private void animation_click(ImageView img) {
         Animation animationRotale = AnimationUtils.loadAnimation(getContext(), R.anim.animation_chemchuoi);
         img.startAnimation(animationRotale);
-
     }
 
     private void animation_anwsertrue(ImageView img) {
         Animation animationRotale = AnimationUtils.loadAnimation(getContext(), R.anim.animation_image_batsau_dung);
         img.startAnimation(animationRotale);
-
     }
 
     boolean isdouble_click = false;
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_A.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
+        webview_debai.clearHistory();
+    }
+
     private void anwser() {
         if (!isdouble_click) {
             isdouble_click = true;
-      /*      btn_xemdiem.setEnabled(true);
-            btn_xemdiem.getBackground().setAlpha(255);*/
+            btn_xemdiem.setEnabled(true);
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
             if (sAnwser.length() > 0) {
@@ -407,14 +374,12 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                 }
             }
             isTraloi = true;
-
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     isdouble_click = false;
                 }
             }, 1000);
-
         }
     }
 
@@ -437,13 +402,14 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
-        //  settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.1));
-        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
         webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
@@ -508,31 +474,16 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                                         if (rl_dapan_D.getHeight() > iHeightmax) {
                                             iHeightmax = rl_dapan_D.getHeight();
                                         }
-                                        /*Log.i(TAG, "onFinish: A " + ll_webview_A.getHeight());
-                                        Log.i(TAG, "onFinish: B " + ll_webview_B.getHeight());
-                                        Log.i(TAG, "onFinish: C " + ll_webview_C.getHeight());
-                                        Log.i(TAG, "onFinish: D " + ll_webview_D.getHeight());*/
                                         if (iHeightmax > 0) {
                                             setHeightAll(iHeightmax, rl_dapan_A);
                                             setHeightAll(iHeightmax, rl_dapan_B);
                                             setHeightAll(iHeightmax, rl_dapan_C);
                                             setHeightAll(iHeightmax, rl_dapan_D);
                                         }
-                                        reload();
+                                        //reload();
                                         hideDialogLoading();
                                     }
                                 }.start();
-                           /*     webview_debai.reload();
-                                webview_anwser_A.reload();
-                                webview_anwser_B.reload();
-                                webview_anwser_C.reload();
-                                webview_anwser_D.reload();
-                                webview_debai.setWebViewClient(new WebViewClient());
-                                webview_anwser_A.setWebViewClient(new WebViewClient());
-                                webview_anwser_B.setWebViewClient(new WebViewClient());
-                                webview_anwser_C.setWebViewClient(new WebViewClient());
-                                webview_anwser_D.setWebViewClient(new WebViewClient());*/
-
                                 break;
                         }
                     }
@@ -570,7 +521,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                             sAnwser = "A";
                             anwser();
                         }
-
                         break;
                     case R.id.webview_anwser_B:
                         if (!isClickXemdiem) {
@@ -581,7 +531,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                             sAnwser = "B";
                             anwser();
                         }
-
                         break;
                     case R.id.webview_anwser_C:
                         if (!isClickXemdiem) {
@@ -592,7 +541,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                             sAnwser = "C";
                             anwser();
                         }
-
                         break;
                     case R.id.webview_anwser_D:
                         if (!isClickXemdiem) {
@@ -604,7 +552,6 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                             anwser();
                         }
                         break;
-
                 }
                 break;
         }

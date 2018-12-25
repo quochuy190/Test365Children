@@ -190,9 +190,26 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         stopService(intent_service);
         mPlayer.release();
+        webview_game.clearHistory();
+        webview_game.clearFormData();
+        webview_game.clearCache(true);
+        webview_anwser_A.clearHistory();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_anwser_A_test.clearHistory();
+        webview_anwser_A_test.clearFormData();
+        webview_anwser_A_test.clearCache(true);
     }
 
     int iCount = 0;
@@ -218,7 +235,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                     }
                     isSupport5050 = true;
                 }
-
             }
         });
         rl_sp_call.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +247,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                     isTwoAnwser_ing = true;
                     isAddTwoAnwser = !isAddTwoAnwser;
                 }
-
             }
         });
         rl_sp_khangia.setOnClickListener(new View.OnClickListener() {
@@ -245,7 +260,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                         resetTime60(time + 60000);
                         isAddTime = !isAddTime;
                     }
-
                 }
             }
         });
@@ -613,6 +627,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         webview_anwser_C.clearView();
         webview_anwser_D.clearView();
         webview_game.clearView();
+        webview_anwser_A_test.clearView();
         txt_curren_question.setText("Câu " + (iCurrentQuestion + 1) + ": ");
         if (iCurrentQuestion < 4) {
             rl_sp_minus_monney.setVisibility(View.GONE);
@@ -645,21 +660,16 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             initWebview(webview_anwser_A, obj.getsHTML_A());
             initWebview(webview_anwser_A_test, obj.getsHTML_A());
         }
-
-      /*  if (obj.getsHTML_B().length() > 0)
-            initWebview_Anwser(webview_anwser_B, obj.getsHTML_B());
-        if (obj.getsHTML_C().length() > 0)
-            initWebview_Anwser(webview_anwser_C, obj.getsHTML_C());
-        if (obj.getsHTML_D().length() > 0)
-            initWebview_Anwser(webview_anwser_D, obj.getsHTML_D());*/
         resetTime();
         isAnwserIng = false;
     }
 
     public void initWebview(final WebView webview, String link_web) {
-
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearCache(true);
+        webview.clearFormData();
+        webview.clearHistory();
         webview.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
@@ -726,10 +736,8 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                                     setHeightAll(iHeightmax, rl_anwser_C);
                                     setHeightAll(iHeightmax, rl_anwser_B);
                                     setHeightAll(iHeightmax, rl_anwser_D);
-
                                 }
                                 hideDialogLoading();
-
                                 break;
                         }
                     }
@@ -1048,6 +1056,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
 
     }
 
+
     private void initAnwserFalse(int iLever, boolean isDungcuochoi) {
         Intent intent = new Intent(ActivityGameTrieuphutrithuc.this, ActivityGameOverTPTT.class);
         Log.i(TAG, "initAnwserFalse: start complete game");
@@ -1114,44 +1123,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     @Override
     public void onBackPressed() {
         // super.onBackPressed();
-    }
-
-    public void initWebview_Anwser(WebView webview_debai, String link_web) {
-        //webview_debai.setInitialScale(220);
-        webview_debai.getSettings().setJavaScriptEnabled(true);
-        webview_debai.getSettings();
-        webview_debai.setBackgroundColor(Color.TRANSPARENT);
-        WebSettings webSettings = webview_debai.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
-        webSettings.setDefaultFontSize(18);
-        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
-        /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
-        String pish = "<html><body  align='center'>";
-        String pas = "</body></html>";
-        String text = "<html><head>"
-                + "<style type=\"text/css\">body{color: #fff;}"
-                + "</style></head>"
-                + "<body>"
-                + StringUtil.convert_html(link_web)
-                + "</body></html>";
-        webview_debai.loadDataWithBaseURL("", text, "text/html", "UTF-8", "");
-
-     /*   webview_debai.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                int i = view.getHeight();
-                Log.i(TAG, "onPageFinished: " + view.getId());
-                Log.i(TAG, "onPageFinished: " + i);
-                if (i > iHeightmax) {
-                    iHeightmax = i;
-                    setHeightAll(iHeightmax, rl_anwser_A);
-                    setHeightAll(iHeightmax, rl_anwser_B);
-                    setHeightAll(iHeightmax, rl_anwser_C);
-                    setHeightAll(iHeightmax, rl_anwser_D);
-                }
-            }
-        });*/
     }
 
     int iHeightmax = 0;

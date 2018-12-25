@@ -12,13 +12,14 @@
         android:scaleType="fitXY" />
 
     <LinearLayout
+        app:layout_constraintWidth_percent="0.85"
         android:id="@+id/ll_lable"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
@@ -27,8 +28,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp5"
-            android:layout_marginLeft="@dimen/dp5"
-            android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
             android:background="@drawable/spr_lable_lambai"
             android:fontFamily="@font/roboto_bold"

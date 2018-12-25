@@ -10,11 +10,13 @@ public class Config {
     public static String BASE_URL_POST = "http://content1.test365.vn/";
     public static String URL_IMAGE = "http://content1.test365.vn";
     public static String URL_VIDEO = "http://content1.test365.vn";*/
-
-    public static String BASE_URL_POST = "https://content1.home365.online/";
-    public static String BASE_URL = "https://api1.home365.online/365/";
+  //  https://admin.home365.online/
+    public static String BASE_URL_POST = "https://admin.home365.online/";
+    public static String BASE_URL = "https://api1.home365.online/";
     public static String BASE_URL_LOGIN = "https://api1.home365.online/365/";
     public static String BASE_URL_2 = "https://api1.home365.online/365/";
     public static String URL_IMAGE = "https://content1.home365.online";
     public static String URL_VIDEO = "https://content1.home365.online";
+
+ public static String URL_REST_LOGIN = "https://nodejs.home365.online";
 }

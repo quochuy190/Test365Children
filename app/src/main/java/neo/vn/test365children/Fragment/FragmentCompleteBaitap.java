@@ -56,7 +56,6 @@ public class FragmentCompleteBaitap extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_complete_baitap, container, false);
         ButterKnife.bind(this, view);
-        //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         initEvent();
         Glide.with(this).load(R.drawable.bg_chao_mung).into(img_background);
         return view;
@@ -72,16 +71,12 @@ public class FragmentCompleteBaitap extends BaseFragment {
                             public void onClickYesDialog() {
                                 EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
                             }
-
                             @Override
                             public void onClickNoDialog() {
 
                             }
                         });
-               // EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
             }
         });
     }
-
-
 }

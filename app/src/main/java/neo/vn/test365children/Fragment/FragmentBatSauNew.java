@@ -4,16 +4,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,11 +23,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
-import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -38,7 +32,6 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Models.CauhoiDetail;
-import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.StringUtil;
@@ -61,8 +54,6 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
     TextView txt_lable;
     @BindView(R.id.ll_cauhoi)
     LinearLayout ll_cauhoi;
-    RecyclerView.LayoutManager mLayoutManager;
-    List<DapAn> mLis;
     @BindView(R.id.btn_xemdiem)
     Button btn_xemdiem;
     private boolean isTraloi = false;
@@ -127,39 +118,7 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
     private int current;
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-        Log.i(TAG, "onMessageEvent: " + event.getPoint());
-       /* if (event.message.equals("batsau")) {
-            int iPoint = (int) event.getPoint();
-            if (iPoint > 0) {
-                if (current == (iPoint + 1)) {
-                    reload();
-                }
-                if (current == (iPoint - 1)) {
-                    reload();
-                }
-            } else if (current == (iPoint + 1)) {
-                reload();
-            }
-        }*/
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,16 +130,13 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_batsau_new, container, false);
         ButterKnife.bind(this, view);
-        //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         int[] arrayImage = {R.drawable.icon_sau, R.drawable.ic_sau_bo,
                 R.drawable.ic_butterfly_red, R.drawable.ic_butterfly,
                 R.drawable.ic_sau_pink};
         int iRandom = new Random().nextInt(4);
         initImage(arrayImage[iRandom]);
-        //initGoneView();
         initData();
-/*        btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);*/
+        btn_xemdiem.setEnabled(false);
         initEvent();
         return view;
     }
@@ -268,9 +224,9 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
             }
         });
     }
-
     private void initData() {
-        if (mCauhoi.getsNumberDe().equals("1")) {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
             showDialogLoading();
         }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
@@ -285,11 +241,6 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                 initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
             }
         });
-     /*   initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());*/
-
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_anwser_A.setVisibility(View.VISIBLE);
         } else {
@@ -331,7 +282,6 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                         sAnwser = "A";
                         anwser();
                     }
-
                     break;
                 case R.id.ll_anwser_B:
                     if (!isClickXemdiem) {
@@ -345,7 +295,6 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                         sAnwser = "B";
                         anwser();
                     }
-
                     break;
                 case R.id.ll_anwser_C:
                     if (!isClickXemdiem) {
@@ -359,7 +308,6 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                         sAnwser = "C";
                         anwser();
                     }
-
                     break;
                 case R.id.ll_anwser_D:
                     if (!isClickXemdiem) {
@@ -394,20 +342,15 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
         }, 2000);
 
     }
-
     private void animation_anwsertrue(ImageView img) {
         Animation animationRotale = AnimationUtils.loadAnimation(getContext(), R.anim.animation_image_batsau_dung);
         img.startAnimation(animationRotale);
-
     }
-
     boolean isdouble_click = false;
-
     private void anwser() {
         if (!isdouble_click) {
             isdouble_click = true;
-        /*    btn_xemdiem.setEnabled(true);
-            btn_xemdiem.getBackground().setAlpha(255);*/
+            btn_xemdiem.setEnabled(true);
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
             if (sAnwser.length() > 0) {
@@ -468,9 +411,32 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
 
     int iHeightmax = 0;
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_A.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
+        webview_debai.clearHistory();
+    }
+
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
@@ -546,18 +512,12 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                                         if (ll_webview_D.getHeight() > iHeightmax) {
                                             iHeightmax = ll_webview_D.getHeight();
                                         }
-                                        Log.i(TAG, "onFinish: A " + ll_webview_A.getHeight());
-                                        Log.i(TAG, "onFinish: B " + ll_webview_B.getHeight());
-                                        Log.i(TAG, "onFinish: C " + ll_webview_C.getHeight());
-                                        Log.i(TAG, "onFinish: D " + ll_webview_D.getHeight());
                                         if (iHeightmax > 0) {
                                             setHeightAll(iHeightmax, ll_webview_A);
                                             setHeightAll(iHeightmax, ll_webview_B);
                                             setHeightAll(iHeightmax, ll_webview_C);
                                             setHeightAll(iHeightmax, ll_webview_D);
                                         }
-                                        Log.i(TAG, "onFinish: Dáp an D");
-                                      //  reload();
                                     }
                                 }.start();
                                 hideDialogLoading();
@@ -580,18 +540,6 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
         webview_anwser_B.setWebViewClient(new WebViewClient());
         webview_anwser_C.setWebViewClient(new WebViewClient());
         webview_anwser_D.setWebViewClient(new WebViewClient());
-    }
-
-    /**
-     * WebView interface to communicate with Javascript
-     */
-    public class WebAppInterface {
-        @JavascriptInterface
-        public void resize(final float height) {
-            float webViewHeight = (height * getResources().getDisplayMetrics().density);
-            Log.i(TAG, "resize: " + webViewHeight);
-            //webViewHeight is the actual height of the WebView in pixels as per device screen density
-        }
     }
 
     private void setHeightAll(final int iHeight, final View view) {

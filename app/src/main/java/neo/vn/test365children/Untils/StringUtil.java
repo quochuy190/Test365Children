@@ -201,6 +201,9 @@ public class StringUtil {
         // webview_debai.setInitialScale(220);
         webview_debai.getSettings().setJavaScriptEnabled(true);
         webview_debai.getSettings();
+        webview_debai.clearCache(true);
+        webview_debai.clearFormData();
+        webview_debai.clearHistory();
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);

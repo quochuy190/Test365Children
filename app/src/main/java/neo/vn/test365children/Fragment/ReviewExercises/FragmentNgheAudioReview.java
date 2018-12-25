@@ -151,12 +151,7 @@ public class FragmentNgheAudioReview extends BaseFragment implements
                 Log.i(TAG, "onMessageEvent: Audio play");
                 btnPlay.setImageResource(R.drawable.btn_play);
                 mPlayer.pause();
-
             }
-          /*  if (webview_debai != null) {
-                webview_debai.reload();
-               // StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-            }*/
         }
     }
 
@@ -173,7 +168,6 @@ public class FragmentNgheAudioReview extends BaseFragment implements
         webview_anwser_C.reload();
         webview_anwser_D.reload();
         webview_anwser_B.reload();
-
         webview_debai.setWebViewClient(new WebViewClient());
         webview_anwser_A.setWebViewClient(new WebViewClient());
         webview_anwser_B.setWebViewClient(new WebViewClient());
@@ -187,10 +181,9 @@ public class FragmentNgheAudioReview extends BaseFragment implements
         mLis = new ArrayList<>();
         ButterKnife.bind(this, view);
         initLoadImage();
-        //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
-        init();
-        initData();
         btn_xemdiem.setVisibility(View.INVISIBLE);
+        initData();
+
         initEvent();
         if (mCauhoi.getsANSWER_CHILD() != null)
             setImageFalse(mCauhoi.getsANSWER_CHILD());
@@ -241,54 +234,6 @@ public class FragmentNgheAudioReview extends BaseFragment implements
                 }
             }
         });
-        btn_xemdiem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             /*   if (!isClickXemdiem) {
-                    isClickXemdiem = true;
-                    img_anwser_chil.setVisibility(View.VISIBLE);
-                    if (anwser()) {
-                        Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-                        EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                    } else {
-                        Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-                        EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
-                        setImageFalse(sAnwser);
-                    }
-                }*/
-            }
-        });
-      /*  btn_xemdiem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isClickXemdiem) {
-                    img_anwser_chil.setVisibility(View.VISIBLE);
-                    boolean isTrue = false;
-                    if (mLis != null && isTraloi) {
-                        for (DapAn obj : mLis) {
-                            obj.setClick(true);
-                            if (obj.getsDapan_Dung().equals(obj.getsDapan_Traloi())) {
-                                isTrue = true;
-                            }
-                        }
-                        adapter.notifyDataSetChanged();
-                        if (isTrue) {
-                            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        } else {
-                            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-                            EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
-                        }
-                     *//*   if (isTrue)
-                            EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        else
-                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));*//*
-                    }
-                    isClickXemdiem = true;
-                }
-
-            }
-        });*/
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -349,20 +294,11 @@ public class FragmentNgheAudioReview extends BaseFragment implements
         txtDuration.setText(TimeUtils.formatDuration(duration));
 
     }
-
-    /* private Runnable mProgressCallback = new Runnable() {
-         @Override
-         public void run() {
- //            if (isDetached()) return;
-             if(mPlayer != null){
-                 int mCurrentPosition = mPlayer.getCurrentPosition() / 1000;
-                 mSeekBar.setProgress(mCurrentPosition);
-             }
-             mHandler.postDelayed(this, 1000);
-             mHandler.postDelayed(this, UPDATE_PROGRESS_INTERVAL);
-         }
-     };*/
     private void initData() {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
+            showDialogLoading();
+        }
         img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().equals("0")) {
             Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
@@ -454,10 +390,31 @@ public class FragmentNgheAudioReview extends BaseFragment implements
             }
         }.start();
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearHistory();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_debai.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
+    }
     public void initWebview_center(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearCache(true);
+        webview.clearFormData();
+        webview.clearHistory();
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -546,30 +503,15 @@ public class FragmentNgheAudioReview extends BaseFragment implements
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                                reload_delay(webview_debai);
-                             /*   webview_debai.reload();
-                                webview_debai.setWebViewClient(new WebViewClient());*/
                                 hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A:
-                                reload_delay(webview_anwser_A);
-                              /*  webview_anwser_A.reload();
-                                webview_anwser_A.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_B:
-                                reload_delay(webview_anwser_B);
-                              /*  webview_anwser_B.reload();
-                                webview_anwser_B.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_C:
-                                reload_delay(webview_anwser_C);
-                             /*   webview_anwser_C.reload();
-                                webview_anwser_C.setWebViewClient(new WebViewClient());*/
                                 break;
                             case R.id.webview_anwser_D:
-                                reload_delay(webview_anwser_D);
-                               /* webview_anwser_D.reload();
-                                webview_anwser_D.setWebViewClient(new WebViewClient());*/
                                 break;
                         }
                     }
@@ -593,8 +535,8 @@ public class FragmentNgheAudioReview extends BaseFragment implements
             @Override
             public void onClickItem(int position, Object item) {
                 if (!isClickXemdiem) {
-                    btn_xemdiem.setEnabled(true);
-                    btn_xemdiem.getBackground().setAlpha(255);
+                   /* btn_xemdiem.setEnabled(true);
+                    btn_xemdiem.getBackground().setAlpha(255);*/
                     App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
                     if (!mLis.get(position).isClick()) {

@@ -107,11 +107,14 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
     public void initWebview_Whitetext(WebView webview_debai, String link_web) {
         webview_debai.getSettings().setJavaScriptEnabled(true);
         webview_debai.getSettings();
+        webview_debai.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
-        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.1));
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
@@ -121,7 +124,7 @@ public class AdapterCauhoiCongchua extends RecyclerView.Adapter<AdapterCauhoiCon
                 + "<body>"
                 + StringUtil.convert_html(link_web)
                 + "</body></html>";
-        webview_debai.loadDataWithBaseURL("", pish + text + pas,
+        webview_debai.loadDataWithBaseURL("", text,
                 "text/html", "UTF-8", "");
 
         webview_debai.setWebViewClient(new WebViewClient() {

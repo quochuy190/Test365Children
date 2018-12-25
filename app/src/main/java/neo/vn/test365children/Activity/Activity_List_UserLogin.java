@@ -72,6 +72,7 @@ public class Activity_List_UserLogin extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Activity_List_UserLogin.this, ActivityLogin.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

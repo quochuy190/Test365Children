@@ -52,7 +52,7 @@ public class PresenterLogin implements ImlLogin.Presenter {
         mMap.put("P7", sOsVersion);
         mMap.put("P8", sTokenKey);
 
-        mApiService.getApiService(new CallbackData<String>() {
+        mApiService.getApiServiceLogin(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);

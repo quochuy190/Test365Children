@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -56,6 +55,10 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
     TextView txt_lable;
     @BindView(R.id.txt_cauhoi)
     TextView txt_cauhoi;
+    @BindView(R.id.txt_title_dapan)
+    TextView txt_title_dapan;
+    @BindView(R.id.txt_title_traloi)
+    TextView txt_title_traloi;
     @BindView(R.id.recycle_dapan)
     RecyclerView recycle_dapan;
     @BindView(R.id.recycle_ketqua)
@@ -112,7 +115,6 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
                 for (int i = 0; i < adapterSapxep.getList().size(); i++) {
                     string_sapxep[i] = adapterSapxep.getList().get(i).getsContent();
                 }
-
                 boolean isa = Arrays.equals(string_start, string_sapxep);
                 if (!isClickXemdiem) {
                     img_anwser_chil.setVisibility(View.VISIBLE);
@@ -123,18 +125,18 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
                     }
                     //  EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));
                     else {
+                        txt_title_traloi.setVisibility(View.VISIBLE);
+                        txt_title_dapan.setVisibility(View.VISIBLE);
                         Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
                         recycle_ketqua.setVisibility(View.VISIBLE);
                         EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                         initDapan();
                     }
-
                     isClickXemdiem = true;
                     for (DapAn obj : mLis) {
                         obj.setClick(true);
                     }
                     initViews(false);
-                    Log.i(TAG, "onClick: " + App.mLisCauhoi);
                     adapterSapxep.notifyDataSetChanged();
                 }
 
@@ -170,12 +172,6 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
                 mLis.add(new DapAn("1", s, "",
                         "agcbd", false, "" + i));
             }
-      /*      for (String s : mLiDapan) {
-
-            }
-            for (String s : mLiDapan) {
-
-            }*/
             Collections.shuffle(mLis);
         }
     }
@@ -189,9 +185,7 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
   /*      mLayoutManager = new GridLayoutManager(getContext(),
                 6, GridLayoutManager.VERTICAL, false);*/
         recycle_dapan.setLayoutManager(linearLayoutManager);
-        // setData();
         adapterSapxep = new AdapterSapxep(getContext(), mLis, this);
-
         ItemTouchHelper.Callback callback =
                 new RecyclerViewItemTouchHelperCallback(adapterSapxep, ischange);
         mItemTouchHelper = new ItemTouchHelper(callback);
@@ -228,7 +222,6 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
     public void onEndDrag() {
         App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-        Log.i(TAG, "onEndDrag: " + App.mLisCauhoi.get(0));
         String answer_chil = "";
         for (int i = 0; i < mLis.size(); i++) {
             if (i < mLis.size() - 1)
@@ -262,6 +255,6 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
 
     @Override
     public void onItemClicked(String name) {
-        Toast.makeText(getContext(), String.valueOf(name), Toast.LENGTH_SHORT).show();
+
     }
 }

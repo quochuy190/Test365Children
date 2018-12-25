@@ -95,8 +95,8 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
         btn_xemdiem.setVisibility(View.GONE);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
-                    +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
+                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         //  browser.setInitialScale(220);
         //   webview_dapan.setInitialScale(220);
@@ -107,6 +107,12 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
         webSettings2.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings2.setDefaultFontSize(17);
         browser.setWebChromeClient(new WebChromeClient());
+        browser.clearCache(true);
+        browser.clearFormData();
+        browser.clearHistory();
+        webview_dapan.clearCache(true);
+        webview_dapan.clearFormData();
+        webview_dapan.clearHistory();
         browser.getSettings().setJavaScriptEnabled(true);
         browser.getSettings();
         browser.setBackgroundColor(Color.TRANSPARENT);
@@ -122,7 +128,8 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
                 mCauhoi.getsHTML_CONTENT().replaceAll("<<", "<u><b><font color='blue'>")
                         .replaceAll(">>", "</font>" +
                                 "</b></u>");
-        webview_dapan.loadDataWithBaseURL("", sHtml_dapan, "text/html", "UTF-8", "");
+        webview_dapan.loadDataWithBaseURL("", sHtml_dapan, "text/html",
+                "UTF-8", "");
         webview_dapan.setVisibility(View.VISIBLE);
         img_anwser_chil.setVisibility(View.VISIBLE);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsANSWER_CHILD().length() > 0) {
@@ -138,6 +145,18 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_dapan.clearHistory();
+        webview_dapan.clearFormData();
+        webview_dapan.clearCache(true);
+
+        browser.clearHistory();
+        browser.clearFormData();
+        browser.clearCache(true);
     }
 
     public String replaceStringBuffer(int first, int last, String st, int index, int leght) {

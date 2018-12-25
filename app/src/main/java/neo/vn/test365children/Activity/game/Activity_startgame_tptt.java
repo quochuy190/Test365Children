@@ -65,6 +65,7 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
         mPlayer = new MediaPlayer();
         rl_startgame.setVisibility(View.VISIBLE);
         rl_exit.setVisibility(View.VISIBLE);
+        btn_play_game.setEnabled(false);
         initData();
         initEvent();
         play_start_game();
@@ -121,6 +122,8 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
                         finish();
                         //mPresenter.api_start_tptt(sUserMe, sUserCon, sPartId);
                     } else {
+                        btn_play_game.setEnabled(false);
+                        showDialogLoading();
                         mPresenter.api_start_tptt(sUserMe, sUserCon, sPartId);
                     }
                 break;
@@ -131,19 +134,20 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
     public void show_get_game_tptt(List<GameTrieuPhuTriThuc> mLis) {
         hideDialogLoading();
         if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+            btn_play_game.setEnabled(true);
             App.mLisGameTPTT.clear();
             App.mLisGameTPTT.addAll(mLis);
             sPartId = mLis.get(0).getsPART_ID();
         } else {
-            rl_startgame.setVisibility(View.INVISIBLE);
+            btn_play_game.setEnabled(true);
             showAlertDialog("Thông báo", mLis.get(0).getsRESULT());
         }
     }
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
+        btn_play_game.setEnabled(false);
         hideDialogLoading();
-        rl_startgame.setVisibility(View.INVISIBLE);
         showAlertDialog("Thông báo", "Lỗi hệ thống, mời bạn thử lại sau");
     }
 
@@ -151,11 +155,12 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
     public void show_start_tptt(List<ErrorApi> mLis) {
         hideDialogLoading();
         if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+            btn_play_game.setEnabled(true);
             Intent intent = new Intent(Activity_startgame_tptt.this, ActivityGameTrieuphutrithuc.class);
             startActivity(intent);
             finish();
         } else {
-            //showDialogNotify("Thông báo", mLis.get(0).getsRESULT());
+            btn_play_game.setEnabled(true);
             showAlertDialog("Thông báo", mLis.get(0).getsRESULT());
         }
 

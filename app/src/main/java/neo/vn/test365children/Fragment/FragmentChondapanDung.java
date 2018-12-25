@@ -6,7 +6,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,8 +22,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -58,8 +55,6 @@ public class FragmentChondapanDung extends BaseFragment
     private CauhoiDetail mCauhoi;
     @BindView(R.id.txt_lable)
     TextView txt_lable;
-    /*    @BindView(R.id.txt_cauhoi)
-        LinearLayout ll_cauhoi;*/
     List<DapAn> mLis;
     AdapterDapan adapter;
     @BindView(R.id.recycle_dapan)
@@ -113,57 +108,26 @@ public class FragmentChondapanDung extends BaseFragment
         return restaurantDetailFragment;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+    public void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_A.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
+        webview_debai.clearHistory();
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-        if (event.message.equals("Audio")) {
-            Log.i(TAG, "onMessageEvent: Audio");
-            /*if (webview_debai != null) {
-                webview_debai.reload();
-                webview_anwser_A.reload();
-                webview_anwser_C.reload();
-                webview_anwser_D.reload();
-                webview_anwser_B.reload();
-                // StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-                webview_debai.setWebViewClient(new WebViewClient());
-                webview_anwser_A.setWebViewClient(new WebViewClient());
-                webview_anwser_B.setWebViewClient(new WebViewClient());
-                webview_anwser_C.setWebViewClient(new WebViewClient());
-                webview_anwser_D.setWebViewClient(new WebViewClient());
-            }*/
-        } else if (event.message.equals("chondapan")) {
-            Log.i(TAG, "onMessageEvent: " + event.getPoint());
-            Log.i(TAG, "onMessageEvent: chondapan" + current);
-            int iPoint = (int) event.getPoint();
-        /*    if (iPoint > 0) {
-                if (current == (iPoint + 1)) {
-                    reload();
-                }
-                if (current == (iPoint - 1)) {
-                    reload();
-                }
-            } else if (current == (iPoint + 1)) {
-                reload();
-            }*/
-            if (current == iPoint) {
-                webview_debai.reload();
-                webview_debai.setWebViewClient(new WebViewClient());
-            }
-            //Log.i(TAG, "onMessageEvent: " + current);
-        }
-    }
-
     private void reload() {
         webview_debai.reload();
         webview_anwser_A.reload();
@@ -190,10 +154,8 @@ public class FragmentChondapanDung extends BaseFragment
         View view = inflater.inflate(R.layout.fragment_chondapandung, container, false);
         ButterKnife.bind(this, view);
         initLoadImage();
-        //init();
         initData();
-/*        btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);*/
+        btn_xemdiem.setEnabled(false);
         initEvent();
         return view;
     }
@@ -244,22 +206,9 @@ public class FragmentChondapanDung extends BaseFragment
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
     }
-    private void reload_delay(final WebView sWebview) {
-        new CountDownTimer(1000, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                sWebview.reload();
-                sWebview.setWebViewClient(new WebViewClient());
-            }
-        }.start();
-    }
     private void initData() {
-        if (mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau().equals("1")) {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
             showDialogLoading();
         }
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
@@ -277,8 +226,6 @@ public class FragmentChondapanDung extends BaseFragment
                 initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
             }
         });
-
-
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
             ll_webview_A.setVisibility(View.VISIBLE);
         } else {
@@ -299,19 +246,13 @@ public class FragmentChondapanDung extends BaseFragment
         } else {
             ll_webview_D.setVisibility(View.GONE);
         }
-       /* if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
-*/
     }
     public void initWebview_center(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -321,15 +262,6 @@ public class FragmentChondapanDung extends BaseFragment
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
-        String text = "<html><head>"
-                + "</style></head>"
-                + "<body>"
-                + "<div>"
-                + StringUtil.convert_html(link_web)
-                + "</div>"
-                + "</body></html>";
-/*        webview.loadDataWithBaseURL("", text,
-                "text/html", "UTF-8", "");*/
         webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
                 "text/html", "UTF-8", "");
         webview.setWebViewClient(new WebViewClient() {
@@ -350,11 +282,8 @@ public class FragmentChondapanDung extends BaseFragment
                                     public void onTick(long millisUntilFinished) {
 
                                     }
-
                                     @Override
                                     public void onFinish() {
-                                      /*  webview_debai.reload();
-                                        webview_debai.setWebViewClient(new WebViewClient());*/
                                         hideDialogLoading();
                                     }
                                 }.start();
@@ -368,13 +297,14 @@ public class FragmentChondapanDung extends BaseFragment
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
-        String pish = "<html><body  align='center'>";
-        String pas = "</body></html>";
         String text = "<html><head>"
                 + "</style></head>"
                 + "<body>"
@@ -382,9 +312,6 @@ public class FragmentChondapanDung extends BaseFragment
                 + "</body></html>";
         webview.loadDataWithBaseURL("", text,
                 "text/html", "UTF-8", "");
-        // webview.setWebViewClient(new WebViewClient());
-      /*  webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
-                "text/html", "UTF-8", "");*/
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(final WebView view, String url) {
@@ -399,30 +326,18 @@ public class FragmentChondapanDung extends BaseFragment
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                              //  reload_delay(webview_debai);
-                             /*   webview_debai.reload();
-                                webview_debai.setWebViewClient(new WebViewClient());*/
                                 hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A:
-                              //  reload_delay(webview_anwser_A);
-                              /*  webview_anwser_A.reload();
-                                webview_anwser_A.setWebViewClient(new WebViewClient());*/
+
                                 break;
                             case R.id.webview_anwser_B:
-                               // reload_delay(webview_anwser_B);
-                              /*  webview_anwser_B.reload();
-                                webview_anwser_B.setWebViewClient(new WebViewClient());*/
+
                                 break;
                             case R.id.webview_anwser_C:
-                               // reload_delay(webview_anwser_C);
-                             /*   webview_anwser_C.reload();
-                                webview_anwser_C.setWebViewClient(new WebViewClient());*/
+
                                 break;
                             case R.id.webview_anwser_D:
-                             //   reload_delay(webview_anwser_D);
-                               /* webview_anwser_D.reload();
-                                webview_anwser_D.setWebViewClient(new WebViewClient());*/
                                 break;
                         }
                     }
@@ -430,20 +345,7 @@ public class FragmentChondapanDung extends BaseFragment
             }
         });
     }
-
     int iHeightmax = 0;
-
-    private void setHeightAll(final int iHeight, final View view) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-                params.height = iHeight;
-                view.setLayoutParams(params);
-            }
-        });
-
-    }
 
     private boolean anwser() {
         if (sAnwser.length() > 0) {
@@ -509,7 +411,6 @@ public class FragmentChondapanDung extends BaseFragment
                 switch (v.getId()) {
                     case R.id.webview_anwser_A:
                         if (!isClickXemdiem) {
-
                             sAnwser = "A";
                             click_anwser(sAnwser);
                             //  anwser();
@@ -525,7 +426,6 @@ public class FragmentChondapanDung extends BaseFragment
                         break;
                     case R.id.webview_anwser_C:
                         if (!isClickXemdiem) {
-
                             sAnwser = "C";
                             click_anwser(sAnwser);
                             // anwser();
@@ -544,7 +444,6 @@ public class FragmentChondapanDung extends BaseFragment
         }
         return false;
     }
-
     private String sAnwser = "";
 
     @Override
@@ -560,30 +459,24 @@ public class FragmentChondapanDung extends BaseFragment
                 break;
             case R.id.ll_anwser_B:
                 if (!isClickXemdiem) {
-
                     sAnwser = "B";
                     click_anwser(sAnwser);
                     //anwser();
                 }
-
                 break;
             case R.id.ll_anwser_C:
                 if (!isClickXemdiem) {
-
                     sAnwser = "C";
                     click_anwser(sAnwser);
                     // anwser();
                 }
-
                 break;
             case R.id.ll_anwser_D:
                 if (!isClickXemdiem) {
-
                     sAnwser = "D";
                     click_anwser(sAnwser);
                     //  anwser();
                 }
-
                 break;
             case R.id.img_checkbox_A:
                 if (!isClickXemdiem) {
@@ -591,42 +484,34 @@ public class FragmentChondapanDung extends BaseFragment
                     click_anwser(sAnwser);
                     /*anwser();*/
                 }
-
                 break;
             case R.id.img_checkbox_B:
                 if (!isClickXemdiem) {
-
                     sAnwser = "B";
                     click_anwser(sAnwser);
                     //anwser();
                 }
-
                 break;
             case R.id.img_checkbox_C:
                 if (!isClickXemdiem) {
-
                     sAnwser = "C";
                     click_anwser(sAnwser);
                     // anwser();
                 }
-
                 break;
             case R.id.img_checkbox_D:
                 if (!isClickXemdiem) {
-
                     sAnwser = "D";
                     click_anwser(sAnwser);
                     //  anwser();
                 }
-
                 break;
         }
     }
 
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
-  /*          btn_xemdiem.setEnabled(true);
-            btn_xemdiem.getBackground().setAlpha(255);*/
+            btn_xemdiem.setEnabled(true);
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);

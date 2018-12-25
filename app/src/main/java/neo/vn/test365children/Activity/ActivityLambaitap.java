@@ -1,6 +1,5 @@
 package neo.vn.test365children.Activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -107,7 +106,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             intent_service = new Intent(ActivityLambaitap.this, ServiceDownTime.class);
             intent_service.putExtra(Constants.KEY_SEND_TIME_SERVICE, iTotalTime);
             startService(intent_service);
-       /*     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 // startService(intent_service);
                 ContextCompat.startForegroundService(this, intent_service);
             } else
@@ -258,7 +257,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
 
         } else if (event.message.equals("mp3")) {
             play_mp3_click();
-            Log.i(TAG, "onMessageEvent: " + App.mLisCauhoi);
         }
     }
 
@@ -279,6 +277,9 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     public void onBackPressed() {
         if (sUserMe.equals("quochuy190")) {
             super.onBackPressed();
+            if (intent_service != null) {
+                stopService(intent_service);
+            }
         } else {
             // super.onBackPressed();
         }
@@ -311,10 +312,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                 int current = viewpager_lambai.getCurrentItem();
                 if (maxPage > 0)
                     if (current < (maxPage)) {
-                        EventBus.getDefault().post(new MessageEvent("chondapan", current, 0));
                         EventBus.getDefault().post(new MessageEvent("Audio", current, 0));
-                        EventBus.getDefault().post(new MessageEvent("docvatraloi", current, 0));
-                        EventBus.getDefault().post(new MessageEvent("batsau", current, 0));
                         viewpager_lambai.setCurrentItem((current + 1));
                     }
             }
@@ -322,14 +320,10 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 int current = viewpager_lambai.getCurrentItem();
                 if (current > 0) {
                     viewpager_lambai.setCurrentItem((current - 1));
                     EventBus.getDefault().post(new MessageEvent("Audio", current, 0));
-                    EventBus.getDefault().post(new MessageEvent("chondapan", current, 0));
-                    EventBus.getDefault().post(new MessageEvent("docvatraloi", current, 0));
-                    EventBus.getDefault().post(new MessageEvent("batsau", current, 0));
                 }
             }
         });
@@ -338,13 +332,9 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             public void onPageScrolled(int i, float v, int i1) {
 
             }
-
             @Override
             public void onPageSelected(int i) {
                 EventBus.getDefault().post(new MessageEvent("Audio", i, 0));
-                EventBus.getDefault().post(new MessageEvent("chondapan", i, 0));
-                EventBus.getDefault().post(new MessageEvent("docvatraloi", i, 0));
-                EventBus.getDefault().post(new MessageEvent("batsau", i, 0));
             }
 
             @Override
@@ -369,7 +359,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             //  viewpager_lambai = new CustomViewPager(this);
             adapterViewpager = new AdapterViewpager(getSupportFragmentManager());
             maxPage = 0;
-            boolean isStarCongchua = false;
             for (int j = 0; j < mLisCauhoi.size(); j++) {
                 Cauhoi obj = mLisCauhoi.get(j);
                 if (obj.getLisInfo() != null) {
@@ -435,22 +424,15 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             viewpager_lambai.setAdapter(adapterViewpager);
         }
     }
-
-
     @Override
     public void show_list_list_buy(List<TuanDamua> mLis) {
-
     }
-
     int maxPage = 0;
 
     @Override
     public void show_list_get_part(List<Cauhoi> mLis) {
         hideDialogLoading();
-
     }
-
-
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
 
@@ -479,13 +461,11 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(TAG, "onPause: ");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy: ");
         EventBus.getDefault().unregister(this);
         stopService(intent_service);
         App.mLisCauhoi.clear();
@@ -511,30 +491,4 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         //hiển thị lên giao diện
         return date;
     }
-
-    protected ProgressDialog dialog;
-    private Handler StopDialogLoadingHandler = new Handler();
-
-    public void showDialogLoadingLambai() {
-        StopDialogLoadingHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (dialog != null && dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-            }
-        }, 7000);
-        if (!isFinishing()) {
-            dialog = new ProgressDialog(this);
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.setMessage(getString(R.string.txt_loading_dialog));
-            dialog.setIndeterminate(true);
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
-        }
-        if (dialog != null && !dialog.isShowing()) {
-            dialog.show();
-        }
-    }
-
 }

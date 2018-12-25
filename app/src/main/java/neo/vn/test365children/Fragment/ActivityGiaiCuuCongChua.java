@@ -5,11 +5,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Html;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -84,8 +81,8 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
     @BindView(R.id.img_checkbox_D)
     ImageView img_checkbox_D;
     private String sAnwser = "";
-    /* @BindView(R.id.img_anwser_chil)
-     ImageView img_anwser_chil;*/
+    @BindView(R.id.img_reload)
+    ImageView img_reload;
     int[] arr_image = {R.drawable.bg_congchua1, R.drawable.bg_congchua2, R.drawable.bg_congchua3,
             R.drawable.bg_congchua4, R.drawable.bg_congchua6};
     int iRandom;
@@ -107,14 +104,33 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
         iRandom = ran.nextInt(arr_image.length);
         Glide.with(this).load(arr_image[iRandom]).into(img_background);
         initData();
-/*        btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);*/
+        btn_xemdiem.setEnabled(false);
+
         initEvent();
     }
 
     private boolean isClickXemdiem = false;
 
+    private void reload() {
+        webview_debai.reload();
+        webview_anwser_A.reload();
+        webview_anwser_C.reload();
+        webview_anwser_D.reload();
+        webview_anwser_B.reload();
+        webview_debai.setWebViewClient(new WebViewClient());
+        webview_anwser_A.setWebViewClient(new WebViewClient());
+        webview_anwser_B.setWebViewClient(new WebViewClient());
+        webview_anwser_C.setWebViewClient(new WebViewClient());
+        webview_anwser_D.setWebViewClient(new WebViewClient());
+    }
+
     private void initEvent() {
+        img_reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reload();
+            }
+        });
         ll_webview_A.setOnClickListener(this);
         ll_webview_B.setOnClickListener(this);
         ll_webview_C.setOnClickListener(this);
@@ -188,11 +204,6 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
         } else {
             ll_webview_D.setVisibility(View.GONE);
         }
-     /*   initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-        initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-        initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-        initWebview(webview_anwser_D, mCauhoi.getsHTML_D());*/
-
     }
 
     @Override
@@ -273,12 +284,10 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
     }
 
     boolean isAnimation = false;
-    boolean isdouble_click = false;
 
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
-/*            btn_xemdiem.setEnabled(true);
-            btn_xemdiem.getBackground().setAlpha(255);*/
+            btn_xemdiem.setEnabled(true);
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_white).into(img_checkbox_A);
@@ -318,6 +327,7 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
             } else {
                 SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, false);
                 SharedPrefs.getInstance().put(Constants.KEY_SEND_CAUHOI_CONGCHUA, sAnwser);
+
                 finish();
             }
         } else showDialogNotify("Thông báo", "Bạn chưa chọn đáp án nào");
@@ -343,9 +353,32 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
 
     int iHeightmax = 0;
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webview_anwser_A.clearHistory();
+        webview_anwser_A.clearFormData();
+        webview_anwser_A.clearCache(true);
+        webview_anwser_B.clearHistory();
+        webview_anwser_B.clearFormData();
+        webview_anwser_B.clearCache(true);
+        webview_anwser_C.clearHistory();
+        webview_anwser_C.clearFormData();
+        webview_anwser_C.clearCache(true);
+        webview_anwser_D.clearHistory();
+        webview_anwser_D.clearFormData();
+        webview_anwser_D.clearCache(true);
+        webview_debai.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
+    }
+
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
@@ -377,62 +410,19 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                         int i = 0;
                         switch (view.getId()) {
                             case R.id.webview_debai:
-                                webview_debai.reload();
-                                webview_debai.setWebViewClient(new WebViewClient());
                                 hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A:
-                                webview_anwser_A.reload();
-                                webview_anwser_A.setWebViewClient(new WebViewClient());
-                              /*  i = ll_webview_A.getHeight();
-                                Log.i(TAG, "onPageFinished: height A " + i);
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }*/
+
                                 break;
                             case R.id.webview_anwser_B:
-                                webview_anwser_B.reload();
-                                webview_anwser_B.setWebViewClient(new WebViewClient());
-                             /*   i = ll_webview_B.getHeight();
-                                Log.i(TAG, "onPageFinished: height B " + i);
-                                if (i > iHeightmax) {
-                                    iHeightmax = i;
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }*/
+
                                 break;
                             case R.id.webview_anwser_C:
-                                webview_anwser_C.reload();
-                                webview_anwser_C.setWebViewClient(new WebViewClient());
+
                                 break;
                             case R.id.webview_anwser_D:
-                               /* if (ll_webview_A.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_A.getHeight();
-                                }
-                                if (ll_webview_B.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_B.getHeight();
-                                }
-                                if (ll_webview_C.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_C.getHeight();
-                                }
-                                if (ll_webview_D.getHeight() > iHeightmax) {
-                                    iHeightmax = ll_webview_D.getHeight();
-                                }
-                                if (iHeightmax > 0) {
-                                    setHeightAll(iHeightmax, ll_webview_A);
-                                    setHeightAll(iHeightmax, ll_webview_B);
-                                    setHeightAll(iHeightmax, ll_webview_C);
-                                    setHeightAll(iHeightmax, ll_webview_D);
-                                }*/
-                                Log.i(TAG, "onFinish: Dáp an D");
-                                webview_anwser_D.reload();
-                                webview_anwser_D.setWebViewClient(new WebViewClient());
+
 
                                 break;
                         }
@@ -440,30 +430,6 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                 }.start();
             }
         });
-    }
-
-    /**
-     * WebView interface to communicate with Javascript
-     */
-    public class WebAppInterface {
-        @JavascriptInterface
-        public void resize(final float height) {
-            float webViewHeight = (height * getResources().getDisplayMetrics().density);
-            Log.i(TAG, "resize: " + webViewHeight);
-            //webViewHeight is the actual height of the WebView in pixels as per device screen density
-        }
-    }
-
-    private void setHeightAll(final int iHeight, final View view) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-                params.height = iHeight;
-                view.setLayoutParams(params);
-            }
-        });
-
     }
 
     @Override

@@ -32,7 +32,6 @@ import butterknife.BindView;
 import io.realm.Realm;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.BuildConfig;
-import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.ErrorApi;
@@ -264,9 +263,9 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
                 SharedPrefs.getInstance().put(Constants.KEY_PASSWORD, sPassWord);
                 SharedPrefs.getInstance().put(Constants.KEY_URL_MEDIA, mLis.get(0).getsMEDIA_SERVER());
                 SharedPrefs.getInstance().put(Constants.KEY_URL_BASE, mLis.get(0).getsAPI_SERVER());
-                Config.URL_IMAGE = mLis.get(0).getsMEDIA_SERVER();
+               /* Config.URL_IMAGE = mLis.get(0).getsMEDIA_SERVER();
                 Config.URL_VIDEO = mLis.get(0).getsMEDIA_SERVER();
-                Config.BASE_URL = mLis.get(0).getsAPI_SERVER();
+                Config.BASE_URL = mLis.get(0).getsAPI_SERVER();*/
                 Intent intent = new Intent(ActivityLogin.this, ActivityHome.class);
                 Intent intent_welcom = new Intent(ActivityLogin.this, Activity_Welcome.class);
                 intent_welcom.putExtra(Constants.KEY_SEND_OBJLOGIN, mLis.get(0));

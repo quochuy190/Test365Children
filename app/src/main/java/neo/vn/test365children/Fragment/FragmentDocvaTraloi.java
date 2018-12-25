@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,8 +26,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -127,37 +124,6 @@ public class FragmentDocvaTraloi extends BaseFragment
         return restaurantDetailFragment;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-        if (event.message.equals("docvatraloi")) {
-            Log.i(TAG, "onMessageEvent: docvatraloi: " + event.getPoint());
-         /*   int iPoint = (int) event.getPoint();
-            if (iPoint > 0) {
-                if (current == (iPoint + 1)) {
-                    reload();
-                }
-                if (current == (iPoint - 1)) {
-                    reload();
-                }
-            } else if (current == (iPoint + 1)) {
-                reload();
-            }*/
-            //Log.i(TAG, "onMessageEvent: " + current);
-        }
-    }
-
     private void reload() {
         webview_debai.reload();
         webview_anwser_A.reload();
@@ -190,8 +156,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                 .placeholder(R.drawable.ic_zoom)
                 .into(icon_zoom);
         // init();
-  /*      btn_xemdiem.setEnabled(false);
-        btn_xemdiem.getBackground().setAlpha(50);*/
+        btn_xemdiem.setEnabled(false);
         initLoadImage();
         initData();
         initEvent();
@@ -201,6 +166,9 @@ public class FragmentDocvaTraloi extends BaseFragment
     public void initWebview_white_text(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -222,8 +190,6 @@ public class FragmentDocvaTraloi extends BaseFragment
         webview.loadDataWithBaseURL("", text,
                 "text/html", "UTF-8", "");
 
-       /* webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
-                "text/html", "UTF-8", "");*/
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(final WebView view, String url) {
@@ -259,6 +225,9 @@ public class FragmentDocvaTraloi extends BaseFragment
     public void initWebview_center(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -315,6 +284,9 @@ public class FragmentDocvaTraloi extends BaseFragment
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
+        webview.clearHistory();
+        webview.clearFormData();
+        webview.clearCache(true);
         webview.setBackgroundColor(Color.TRANSPARENT);
         webview.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webview.getSettings();
@@ -343,20 +315,6 @@ public class FragmentDocvaTraloi extends BaseFragment
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_B);
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
-    }
-
-    int iHeightmax = 0;
-
-    private void setHeightAll(final int iHeight, final View view) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-                params.height = iHeight;
-                view.setLayoutParams(params);
-            }
-        });
-
     }
 
     private boolean isClickXemdiem = false;
@@ -394,6 +352,7 @@ public class FragmentDocvaTraloi extends BaseFragment
             @Override
             public void onClick(View v) {
                 if (!isClickXemdiem) {
+
                     isClickXemdiem = true;
                     img_anwser_chil.setVisibility(View.VISIBLE);
                     if (anwser()) {
@@ -496,7 +455,8 @@ public class FragmentDocvaTraloi extends BaseFragment
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        if (mCauhoi.getsNumberDe().equals("1")) {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
             showDialogLoading();
         }
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
@@ -659,6 +619,7 @@ public class FragmentDocvaTraloi extends BaseFragment
 
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
+            btn_xemdiem.setEnabled(true);
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);

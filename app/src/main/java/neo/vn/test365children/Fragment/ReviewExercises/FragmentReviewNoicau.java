@@ -181,7 +181,34 @@ public class FragmentReviewNoicau extends BaseFragment {
         initData();
         return view;
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        webview_dapannoicau_A_1.clearFormData();
+        webview_dapannoicau_A_1.clearCache(true);
+        webview_dapannoicau_A_1.clearHistory();
+        webview_dapannoicau_A_2.clearFormData();
+        webview_dapannoicau_A_2.clearCache(true);
+        webview_dapannoicau_A_2.clearHistory();
+        webview_dapannoicau_A_3.clearFormData();
+        webview_dapannoicau_A_3.clearCache(true);
+        webview_dapannoicau_A_3.clearHistory();
+        webview_dapannoicau_A_4.clearFormData();
+        webview_dapannoicau_A_4.clearCache(true);
+        webview_dapannoicau_A_4.clearHistory();
+        webview_dapannoicau_B_4.clearFormData();
+        webview_dapannoicau_B_4.clearCache(true);
+        webview_dapannoicau_B_4.clearHistory();
+        webview_dapannoicau_B_3.clearFormData();
+        webview_dapannoicau_B_3.clearCache(true);
+        webview_dapannoicau_B_3.clearHistory();
+        webview_dapannoicau_B_2.clearFormData();
+        webview_dapannoicau_B_2.clearCache(true);
+        webview_dapannoicau_B_2.clearHistory();
+        webview_dapannoicau_B_1.clearFormData();
+        webview_dapannoicau_B_1.clearCache(true);
+        webview_dapannoicau_B_1.clearHistory();
+    }
     List<String> mLisAnwser_A;
     List<String> mLisAnwser_B;
     List<String> mLisQuestion_A;
@@ -191,6 +218,10 @@ public class FragmentReviewNoicau extends BaseFragment {
     List<String> mLisAnwser_B_traloi;
 
     private void initData() {
+        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                != null && mCauhoi.getsSubNumberCau().equals("1")) {
+            showDialogLoading();
+        }
         Glide.with(getContext()).load(R.drawable.bg_chem_hoa_qua).into(img_background);
         if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
             if (mCauhoi.getsRESULT_CHILD().equals("0")) {
@@ -358,6 +389,9 @@ public class FragmentReviewNoicau extends BaseFragment {
 
     private void initWebview(WebView webview_debai, String link_web) {
         webview_debai.getSettings();
+        webview_debai.clearHistory();
+        webview_debai.clearFormData();
+        webview_debai.clearCache(true);
         webview_debai.setBackgroundColor(Color.TRANSPARENT);
         WebSettings webSettings = webview_debai.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
