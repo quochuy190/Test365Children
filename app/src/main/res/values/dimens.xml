@@ -186,4 +186,8 @@
     <dimen name="item_chucai_height">50dp</dimen>
     <dimen name="kow_width_logo_kow">120dp</dimen>
     <dimen name="item_back_kow">45dp</dimen>
+    <!--Sudoku-->
+    <dimen name="item_sudoku">1dp</dimen>
+    <dimen name="item_sector">5dp</dimen>
+    <dimen name="height_item_sudoku">40dp</dimen>
 </resources>

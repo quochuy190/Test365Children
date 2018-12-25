@@ -178,4 +178,8 @@
 
     <dimen name="kow_width_logo_kow">140dp</dimen>
     <dimen name="item_back_kow">50dp</dimen>
+    <!--Sudoku-->
+    <dimen name="item_sudoku">2dp</dimen>
+    <dimen name="item_sector">10dp</dimen>
+    <dimen name="height_item_sudoku">55dp</dimen>
 </resources>

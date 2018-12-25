@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import neo.vn.test365children.Activity.ActivityHome;
+import neo.vn.test365children.Activity.game.sudoku.ActivityGamePlaySudoku;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.KeyboardUtil;
@@ -79,6 +80,8 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
                 startActivity(new Intent(ActivityMenuGame.this, Activity_startgame_tptt.class));
                 break;
             case R.id.rl_sodoku:
+                KeyboardUtil.animation_click_button(ActivityMenuGame.this, img_game_sudoku);
+                startActivity(new Intent(ActivityMenuGame.this, ActivityGamePlaySudoku.class));
                // KeyboardUtil.animation_click_button(ActivityMenuGame.this, img_game_kow);
                 break;
             case R.id.rl_tinhnhanhnholau:

@@ -162,10 +162,10 @@
     <!--Game King of word-->
     <dimen name="kow_width_btn_start">300dp</dimen>
     <dimen name="kow_height_btn_start">60dp</dimen>
-    <dimen name="kow_txt_btn_start" >20sp</dimen>
-    <dimen name="kow_btnstart_margin_bottom" >35dp</dimen>
-    <dimen name="kow_width_menu_level" >140dp</dimen>
-    <dimen name="kow_height_menu_level" >160dp</dimen>
+    <dimen name="kow_txt_btn_start">20sp</dimen>
+    <dimen name="kow_btnstart_margin_bottom">35dp</dimen>
+    <dimen name="kow_width_menu_level">140dp</dimen>
+    <dimen name="kow_height_menu_level">160dp</dimen>
     <dimen name="kow_menu_level_margin_left_guild">30dp</dimen>
     <dimen name="kow_menu_level_margin_bottom_guild">50sp</dimen>
     <dimen name="kow_txt_menu_level">20sp</dimen>
@@ -180,4 +180,8 @@
 
     <dimen name="kow_width_logo_kow">180dp</dimen>
     <dimen name="item_back_kow">60dp</dimen>
+    <!--Sudoku-->
+    <dimen name="item_sudoku">2dp</dimen>
+    <dimen name="item_sector">10dp</dimen>
+    <dimen name="height_item_sudoku">70dp</dimen>
 </resources>
