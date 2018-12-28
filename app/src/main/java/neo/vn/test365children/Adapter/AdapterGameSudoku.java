@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import neo.vn.test365children.Listener.CheckGameSudoku;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.SudokuCell;
@@ -27,6 +29,7 @@ public class AdapterGameSudoku extends RecyclerView.Adapter<AdapterGameSudoku.To
     private List<SudokuCell> list;
     private Context context;
     private ItemClickListener OnIListener;
+    private CheckGameSudoku OnCheckGameSudoku;
 
     public ItemClickListener getOnIListener() {
         return OnIListener;
@@ -34,6 +37,14 @@ public class AdapterGameSudoku extends RecyclerView.Adapter<AdapterGameSudoku.To
 
     public void setOnIListener(ItemClickListener onIListener) {
         OnIListener = onIListener;
+    }
+
+    public CheckGameSudoku getOnCheckGameSudoku() {
+        return OnCheckGameSudoku;
+    }
+
+    public void setOnCheckGameSudoku(CheckGameSudoku onCheckGameSudoku) {
+        OnCheckGameSudoku = onCheckGameSudoku;
     }
 
     public AdapterGameSudoku(List<SudokuCell> list, Context context) {
@@ -49,8 +60,9 @@ public class AdapterGameSudoku extends RecyclerView.Adapter<AdapterGameSudoku.To
     }
 
     @Override
-    public void onBindViewHolder(TopicViewHoder holder, int position) {
+    public void onBindViewHolder(final TopicViewHoder holder, int position) {
         holder.bindData(list.get(position));
+
     }
 
     @Override
@@ -62,17 +74,20 @@ public class AdapterGameSudoku extends RecyclerView.Adapter<AdapterGameSudoku.To
             View.OnClickListener, View.OnLongClickListener {
         @BindView(R.id.button)
         ImageView button;
+        @BindView(R.id.txt_value)
+        TextView txt_value;
 
         public TopicViewHoder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            //  itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         void bindData(SudokuCell s) {
             RecyclerView.LayoutParams params =
                     (RecyclerView.LayoutParams) itemView.getLayoutParams();
-            if (getAdapterPosition() >= 0 && getAdapterPosition() < 3) {
+
+          /*  if (getAdapterPosition() >= 0 && getAdapterPosition() < 3) {
                 Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
             } else if (getAdapterPosition() >= 3 && getAdapterPosition() < 6) {
                 Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
@@ -126,8 +141,32 @@ public class AdapterGameSudoku extends RecyclerView.Adapter<AdapterGameSudoku.To
                 Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
             } else if (getAdapterPosition() >= 78 && getAdapterPosition() < 81) {
                 Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            }
+            }*/
+            // txt_value.setText("" + s.getValue());
+            if (!s.isHide())
+                txt_value.setText("" + s.getValue());
+            else {
+                txt_value.setText("");
+                /*txt_value.setText("" + s.getValue());
+                txt_value.setTextColor(context.getResources().getColor(R.color.blue));*/
+                if (s.getValue_click() > 0 && s.getValue_click() == s.getValue()) {
+                    txt_value.setText("" + s.getValue_click());
+                    txt_value.setTextColor(context.getResources().getColor(R.color.blue));
+                } else if (s.getValue_click() > 0) {
+                    txt_value.setText("" + s.getValue_click());
+                    txt_value.setTextColor(context.getResources().getColor(R.color.red_test365));
+                }
+                if (s.isClick()) {
+                    Glide.with(context).load(R.drawable.ic_sudoku_cell_click).into(button);
+                }
 
+            }
+            /*button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Glide.with(context).load(R.drawable.ic_sudoku_cell_click).into(button);
+                }
+            });*/
             if (getAdapterPosition() < 27 && getAdapterPosition() >= 18) {
                 params.bottomMargin = itemView.getResources().getDimensionPixelOffset(R.dimen.item_sector);
             } else if (getAdapterPosition() < 54 && getAdapterPosition() >= 45) {

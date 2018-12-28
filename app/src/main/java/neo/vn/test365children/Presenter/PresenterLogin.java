@@ -35,7 +35,6 @@ public class PresenterLogin implements ImlLogin.Presenter {
     }
 
 
-
     @Override
     public void api_login(String sUserMe, String sUserCon, String sPass, String sVersion,
                           String sDeviceModel, String sDevice_type, String sOsVersion, String sTokenKey) {
@@ -58,6 +57,7 @@ public class PresenterLogin implements ImlLogin.Presenter {
                 mView.show_error_api(null);
                 Log.i(TAG, "onGetDataErrorFault: " + e);
             }
+
             @Override
             public void onGetDataSuccess(String objT) {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
@@ -71,5 +71,40 @@ public class PresenterLogin implements ImlLogin.Presenter {
                 }
             }
         }, mMap);
+    }
+
+    public void api_login_restful(String sUserMe, String sUserCon, String sPass) {
+        Map<String, String> mMap = new LinkedHashMap<>();
+        String sService = "login_child";
+        // mMap.put("Service", "login_child");
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
+        mMap.put("PASSWORD", sPass);
+       /* mMap.put("P4", sVersion);
+        mMap.put("P5", sDeviceModel);
+        mMap.put("P6", sDevice_type);
+        mMap.put("P7", sOsVersion);
+        mMap.put("P8", sTokenKey);*/
+
+        mApiService.getApiPostResfull(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                mView.show_error_api(null);
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
+                try {
+                    List<ObjLogin> mLis = ObjLogin.getList(objT);
+                    mView.show_api_login(mLis);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    mView.show_error_api(null);
+                    Log.i(TAG, "Log_error_api_filght: " + e);
+                }
+            }
+        }, sService, mMap);
     }
 }

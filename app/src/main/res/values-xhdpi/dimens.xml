@@ -179,7 +179,10 @@
     <dimen name="kow_width_logo_kow">90dp</dimen>
     <dimen name="item_back_kow">40dp</dimen>
     <!--Sudoku-->
-    <dimen name="item_sudoku">0.8dp</dimen>
-    <dimen name="item_sector">3dp</dimen>
+    <dimen name="item_sudoku">0.5dp</dimen>
+    <dimen name="item_sector">2.5dp</dimen>
+    <dimen name="pading_sudoku">2.5dp</dimen>
+    <dimen name="txt_value_sudoku">20sp</dimen>
     <dimen name="height_item_sudoku">33dp</dimen>
+    <dimen name="height_keyboard_sudoku">38dp</dimen>
 </resources>

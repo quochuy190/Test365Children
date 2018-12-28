@@ -86,7 +86,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener, 
     private void initConfig() {
         Config.URL_IMAGE = SharedPrefs.getInstance().get(Constants.KEY_URL_MEDIA, String.class);
         Config.URL_VIDEO = SharedPrefs.getInstance().get(Constants.KEY_URL_MEDIA, String.class);
-       // Config.BASE_URL = SharedPrefs.getInstance().get(Constants.KEY_URL_BASE, String.class);
+        // Config.BASE_URL = SharedPrefs.getInstance().get(Constants.KEY_URL_BASE, String.class);
     }
 
     ExerciseAnswer objExer;
@@ -155,6 +155,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener, 
         if (chil != null) {
             if (chil.getsFULLNAME() != null)
                 txt_name_home.setText("Bé: " + chil.getsFULLNAME() + ", Lớp" + chil.getsLEVEL_ID());
+
         } else txt_name_home.setVisibility(View.INVISIBLE);
     }
 
@@ -314,7 +315,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener, 
             txt_name_home.setText("Bé: " + chil.getsFULLNAME() + ", Lớp" + chil.getsLEVEL_ID());
             if (chil.getsAVATAR() != null && chil.getsAVATAR().length() > 0) {
                 Glide.with(this).load(Config.URL_IMAGE + chil.getsAVATAR())
-                        .placeholder(R.drawable.icon_avata).into(img_avata);
+                        .into(img_avata);
             }
         }
     }

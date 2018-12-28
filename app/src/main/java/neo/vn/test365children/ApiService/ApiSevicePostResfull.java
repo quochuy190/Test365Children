@@ -14,6 +14,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by QQ on 7/4/2017.
@@ -22,9 +23,9 @@ import retrofit2.http.POST;
 public interface ApiSevicePostResfull {
     //Log info action user
     @FormUrlEncoded
-    @Headers("Content-Type: application/x-www-form-urlencoded")
-    @POST("f/submitexe.jsp")
-    Call<ResponseBody> getApiService(@FieldMap Map<String, String> data);
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("/{service}")
+    Call<ResponseBody> getApiServiceRest(@Path("service") String service, @FieldMap Map<String, String> data);
 
     final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
@@ -32,7 +33,7 @@ public interface ApiSevicePostResfull {
             .readTimeout(15, TimeUnit.SECONDS)
             .build();
 
-    Retrofit retrofit = new Retrofit.Builder()
+    Retrofit retrofit_restful = new Retrofit.Builder()
             .baseUrl(Config.URL_REST_LOGIN)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)

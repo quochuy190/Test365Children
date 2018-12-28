@@ -24,7 +24,7 @@
     <string name="txt_exer_pointmin">Điểm thấp nhất</string>
     <!--Game-->
     <string name="btn_trieuphutrithuc">TRIỆU PHÚ TRI THỨC</string>
-    <string name="btn_sodoku">SODOKU</string>
+    <string name="btn_sodoku">SUDOKU</string>
     <string name="btn_kingofword">KING OF WORD</string>
     <string name="btn_tinhnhanhnholau">TÍNH NHANH NHỚ LÂU</string>
     <string name="txt_guide_game_tptt">Cách chơi giống như gameshow Ai là Triệu phú trên Truyền hình.
@@ -45,4 +45,5 @@ Mỗi tuần chỉ chơi một lần vào bất kỳ ngày nào.
     <string name="txt_hotline">Hotline <b><u>1900561548</u></b></string>
     <string name="notification_title">Home365</string>
     <string name="notification_message">Đang làm bài tập</string>
+    <string name="txt_guilde_sudoku_title"><u>Hướng dẫn chơi</u></string>
 </resources>

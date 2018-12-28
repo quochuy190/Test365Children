@@ -26,6 +26,7 @@ public class ApiServiceIml {
     ApiSevicePost apiServicePost;
     ApiSevice apiService;
     ApiSeviceLogin apiServiceLogin;
+    ApiSevicePostResfull apiRestful;
 
     public void getApiService(final CallbackData<String> callbackData, Map<String, String> mData) {
         String sUrl = SharedPrefs.getInstance().get(Constants.KEY_URL_BASE, String.class);
@@ -114,6 +115,36 @@ public class ApiServiceIml {
                 } catch (IOException e) {
                     callbackData.onGetDataErrorFault(e);
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callbackData.onGetDataErrorFault(new Exception(t));
+            }
+        });
+    }
+
+    public void getApiPostResfull(final CallbackData<String> callbackData, String sService, Map<String, String> mData) {
+        apiRestful = ApiSevicePostResfull.retrofit_restful.create(ApiSevicePostResfull.class);
+        Call<ResponseBody> getApiservice = apiRestful.getApiServiceRest(sService, mData);
+        getApiservice.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String jsonString = null;
+                JSONObject jobj;
+                JSONArray jArray;
+                try {
+                    if (response.body() != null) {
+                        jsonString = response.body().string();
+                      /*  jobj = new JSONObject(jsonString);
+                        String c = jobj.getString("return");*/
+                        callbackData.onGetDataSuccess(jsonString);
+                    }
+                } catch (IOException e) {
+                    callbackData.onGetDataErrorFault(e);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

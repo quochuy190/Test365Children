@@ -249,7 +249,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
         mPresenter.api_login(sUserMe, sUserCon, sPassWord, BuildConfig.VERSION_NAME,
                 android.os.Build.BRAND + " " + android.os.Build.MODEL,
                 "2", android.os.Build.VERSION.RELEASE, sTokenKey);
-
+       /* mPresenter.api_login_restful(sUserMe,sUserCon, sPassWord);*/
     }
 
     @Override

@@ -95,8 +95,8 @@
 
     <ImageView
         android:id="@+id/img_mute"
-        android:layout_width="@dimen/dp45"
-        android:layout_height="@dimen/dp45"
+        android:layout_width="@dimen/height_keyboard_sudoku"
+        android:layout_height="@dimen/height_keyboard_sudoku"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
@@ -104,12 +104,12 @@
 
     <ImageView
         android:id="@+id/img_back"
-        android:layout_width="@dimen/dp45"
-        android:layout_height="@dimen/dp45"
-        android:padding="@dimen/dp3"
-        android:layout_marginTop="10dp"
+        android:layout_width="@dimen/height_keyboard_sudoku"
+        android:layout_height="@dimen/height_keyboard_sudoku"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/img_back_menu" />
+        android:layout_marginTop="10dp"
+        android:padding="@dimen/dp3"
+        android:src="@drawable/ic_back_menu" />
 
 
 </RelativeLayout>

@@ -235,6 +235,8 @@ public class ActivityKoWPlayGame extends BaseActivity {
 
     }
 
+    private boolean isClick = false;
+
     private void init() {
         mAdapter = new AdapterChucai(lisChucai, this);
         mLayoutManager = new GridLayoutManager(this, 14,
@@ -246,29 +248,33 @@ public class ActivityKoWPlayGame extends BaseActivity {
         mAdapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-                Chucai sChucai = (Chucai) item;
-                String s = txt_content.getText().toString();
-                if (mLevel.length() > 0 && mLevel.equals("1")) {
-                    txt_content.setText(s + sChucai.getsChucai());
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            check_chucai(txt_content.getText().toString().toUpperCase());
-                            //check_level_two(txt_content.getText().toString().toUpperCase());
-                        }
-                    }, 500);
-                } else if (mLevel.length() > 0 && mLevel.equals("2")) {
-                    txt_content.setText(sChucai.getsChucai() + s);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            // check_chucai(txt_content.getText().toString().toUpperCase());
-                            check_level_two(txt_content.getText().toString().toUpperCase());
-                        }
-                    }, 500);
-                } else if (mLevel.length() > 0 && mLevel.equals("3")) {
+                if (!isClick) {
+                    isClick = true;
+                    Chucai sChucai = (Chucai) item;
+                    String s = txt_content.getText().toString();
+                    if (mLevel.length() > 0 && mLevel.equals("1")) {
+                        txt_content.setText(s + sChucai.getsChucai());
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                check_chucai(txt_content.getText().toString().toUpperCase());
+                                //check_level_two(txt_content.getText().toString().toUpperCase());
+                            }
+                        }, 500);
+                    } else if (mLevel.length() > 0 && mLevel.equals("2")) {
+                        txt_content.setText(sChucai.getsChucai() + s);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // check_chucai(txt_content.getText().toString().toUpperCase());
+                                check_level_two(txt_content.getText().toString().toUpperCase());
+                            }
+                        }, 500);
+                    } else if (mLevel.length() > 0 && mLevel.equals("3")) {
 
+                    }
                 }
+
 
             }
         });
@@ -289,6 +295,7 @@ public class ActivityKoWPlayGame extends BaseActivity {
         } else {
             check_gameover(false);
         }
+        isClick = false;
         //showDialogLoading_chageturn("Lượt đi của máy");
 
 
@@ -311,6 +318,7 @@ public class ActivityKoWPlayGame extends BaseActivity {
         } else {
             check_gameover(false);
         }
+        isClick = false;
     }
 
     private void get_chart_random_level2(final String sContent) {
@@ -451,20 +459,7 @@ public class ActivityKoWPlayGame extends BaseActivity {
                     }
                 }.start();
 
-            } /*{
-                String a_letter = Character.toString(lisTeml.get(position).getsNewWord()
-                        .charAt(txt_content.getText().toString().length()));
-                txt_content.setText(sContent + a_letter.toUpperCase());
-                if (check_computer_chose(txt_content.getText().toString())) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            check_gameover(false);
-                        }
-                    }, 1000);
-                    return;
-                }
-            }*/
+            }
         }
     }
 

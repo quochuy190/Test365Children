@@ -42,21 +42,24 @@
                     android:layout_height="@dimen/dp30"
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/dp5"
-                    android:src="@drawable/img_back_menu" />
+                    android:src="@drawable/ic_back_menu" />
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/rl_title_toan"
                 android:id="@+id/recycle_toan"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_title_toan"
+                android:layout_centerHorizontal="true">
 
             </android.support.v7.widget.RecyclerView>
+
             <RelativeLayout
-                android:layout_below="@id/recycle_toan"
                 android:id="@+id/rl_title_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recycle_toan">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,20 +71,22 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_20sp" />
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/rl_title_tv"
                 android:id="@+id/recycle_tv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_title_tv"
+                android:layout_centerHorizontal="true">
 
             </android.support.v7.widget.RecyclerView>
 
             <RelativeLayout
-                android:layout_below="@id/recycle_tv"
                 android:id="@+id/rl_title_tienganh"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recycle_tv">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,12 +98,13 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_20sp" />
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/rl_title_tienganh"
                 android:id="@+id/recycle_tienganh"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_title_tienganh"
+                android:layout_centerHorizontal="true">
 
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>

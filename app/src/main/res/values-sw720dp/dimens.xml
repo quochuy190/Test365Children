@@ -102,7 +102,7 @@
     <dimen name="icon_back_exercises">50dp</dimen>
     <!--Game-->
     <dimen name="pading_button_menu">45dp</dimen>
-    <dimen name="text_menu_game">20sp</dimen>
+    <dimen name="text_menu_game">18sp</dimen>
     <dimen name="icon_center_tptt">370dp</dimen>
     <dimen name="icon_btn_play">180dp</dimen>
     <dimen name="margin_btn_play">80dp</dimen>
@@ -183,5 +183,8 @@
     <!--Sudoku-->
     <dimen name="item_sudoku">2dp</dimen>
     <dimen name="item_sector">10dp</dimen>
+    <dimen name="txt_value_sudoku">30dp</dimen>
+    <dimen name="pading_sudoku">8dp</dimen>
     <dimen name="height_item_sudoku">70dp</dimen>
+    <dimen name="height_keyboard_sudoku">80dp</dimen>
 </resources>
