@@ -1,10 +1,14 @@
 package neo.vn.test365children.Activity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -52,7 +56,7 @@ import neo.vn.test365children.Models.TuanDamua;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
-import neo.vn.test365children.Service.ServiceDownTime;
+import neo.vn.test365children.Service.BoundServiceCountTime;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 import neo.vn.test365children.Untils.TimeUtils;
@@ -88,42 +92,38 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     private long iCurrenTime = 0;
     int iTotalTime;
     private SoundPool mSoundPool;
+    private BoundServiceCountTime myService;
+    private Intent intent;
+    private boolean isBound = false;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BoundServiceCountTime.MyBinder binder = (BoundServiceCountTime.MyBinder) service;
+            myService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+   /*     intent = new Intent(ActivityLambaitap.this, BoundServiceCountTime.class);
+        intent.putExtra(Constants.KEY_SEND_TIME_SERVICE, iTotalTime);*/
         initSound();
-        Log.i(TAG, "onCreate: ");
-        EventBus.getDefault().register(this);
-        mPresenter = new PresenterBaitap(this);
         if (sTime.length() > 0) {
             iTotalTime = Integer.parseInt(sTime) * 1000;
         } else {
             iTotalTime = 30 * 60 * 1000;
         }
-        if (intent_service == null) {
-            intent_service = new Intent(ActivityLambaitap.this, ServiceDownTime.class);
-            intent_service.putExtra(Constants.KEY_SEND_TIME_SERVICE, iTotalTime);
-            startService(intent_service);
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // startService(intent_service);
-                ContextCompat.startForegroundService(this, intent_service);
-            } else
-                startService(intent_service);*/
-        } else {
-            stopService(intent_service);
-            intent_service = new Intent(ActivityLambaitap.this, ServiceDownTime.class);
-            intent_service.putExtra(Constants.KEY_SEND_TIME_SERVICE, iTotalTime);
-            startService(intent_service);
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                //startService(intent_service);
-                ContextCompat.startForegroundService(this, intent_service);
-            } else
-                startService(intent_service);*/
-        }
-        //showDialogLoadingLambai();
+        mPresenter = new PresenterBaitap(this);
         initData();
+
         initEvent();
         Animation animationRotale = AnimationUtils.loadAnimation(this, R.anim.animation_time);
         img_time.startAnimation(animationRotale);
@@ -184,8 +184,36 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "onStart: ");
+
     }
-    
+
+    private void start_service_downtime() {
+        EventBus.getDefault().register(this);
+        // Tạo đối tượng Intent cho WeatherService.
+        intent = new Intent(this, BoundServiceCountTime.class);
+        if (iTotalTime > 0)
+            intent.putExtra(Constants.KEY_SEND_TIME_SERVICE, iTotalTime);
+        else
+            intent.putExtra(Constants.KEY_SEND_TIME_SERVICE, 0);
+        // Gọi method bindService(..) để giàng buộc dịch vụ với giao diện.
+        this.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void stop_service() {
+        EventBus.getDefault().unregister(this);
+        if (isBound) {
+            // Tắt Service
+            unbindService(connection);
+            isBound = false;
+        }
+    }
+
+    @Override
+    public void onStop() {
+        Log.i(TAG, "onStop: ");
+        super.onStop();
+    }
 
   /*  @Override
     protected void onResume() {
@@ -272,7 +300,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
                 break;
         }
     }
-
     @Override
     public void onBackPressed() {
         if (sUserMe.equals("quochuy190")) {
@@ -283,7 +310,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         } else {
             // super.onBackPressed();
         }
-
     }
 
     @Override
@@ -292,11 +318,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
         Log.i(TAG, "onResume: ");
     }
 
-    @Override
-    public void onStop() {
-        Log.i(TAG, "onStop: ");
-        super.onStop();
-    }
 
     private void initEvent() {
         img_next.setOnClickListener(new View.OnClickListener() {
@@ -332,6 +353,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             public void onPageScrolled(int i, float v, int i1) {
 
             }
+
             @Override
             public void onPageSelected(int i) {
                 EventBus.getDefault().post(new MessageEvent("Audio", i, 0));
@@ -422,17 +444,21 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
             adapterViewpager.addFragment(FragmentCompleteBaitap.newInstance(new CauhoiDetail()), "");
             viewpager_lambai.setOffscreenPageLimit(maxPage);
             viewpager_lambai.setAdapter(adapterViewpager);
+            start_service_downtime();
         }
     }
+
     @Override
     public void show_list_list_buy(List<TuanDamua> mLis) {
     }
+
     int maxPage = 0;
 
     @Override
     public void show_list_get_part(List<Cauhoi> mLis) {
         hideDialogLoading();
     }
+
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
 
@@ -466,8 +492,12 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
-        stopService(intent_service);
+        stop_service();
+        if (mSoundPool != null) {
+            mSoundPool.release();
+        }
+        if (intent_service != null)
+            stopService(intent_service);
         App.mLisCauhoi.clear();
     }
 

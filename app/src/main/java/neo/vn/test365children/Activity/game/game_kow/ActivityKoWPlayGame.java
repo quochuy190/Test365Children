@@ -93,17 +93,17 @@ public class ActivityKoWPlayGame extends BaseActivity {
                 "", ""));
         lisDictionary.add(new Dictionary("American football", "Bóng đá Mỹ", "",
                 "", ""));
-        lisDictionary.add(new Dictionary("archery", "bắn cung", "",
+        /*lisDictionary.add(new Dictionary("archery", "bắn cung", "",
                 "", ""));
         lisDictionary.add(new Dictionary("athletics", "điền kinh", "",
                 "", ""));
         lisDictionary.add(new Dictionary("baseball", "Bóng chày", "",
                 "", ""));
         lisDictionary.add(new Dictionary("basketball", "Bóng rổ", "",
-                "", ""));
+                "", ""));*/
         lisDictionary.add(new Dictionary("beach volleyball", "Bóng chuyền bãi biển", "",
                 "", ""));
-        lisDictionary.add(new Dictionary("bowls", "Trò ném bóng gỗ", "",
+      /*  lisDictionary.add(new Dictionary("bowls", "Trò ném bóng gỗ", "",
                 "", ""));
         lisDictionary.add(new Dictionary("boxing", "Đấm bốc", "",
                 "", ""));
@@ -120,12 +120,12 @@ public class ActivityKoWPlayGame extends BaseActivity {
         lisDictionary.add(new Dictionary("diving", "Lặn", "",
                 "", ""));
         lisDictionary.add(new Dictionary("fishing", "Câu cá", "",
-                "", ""));
+                "", ""));*/
         lisDictionary.add(new Dictionary("football", "Bóng đá", "",
                 "", ""));
         lisDictionary.add(new Dictionary("go-karting", "Đua xe kart (ô tô nhỏ không mui)", "",
                 "", ""));
-        lisDictionary.add(new Dictionary("golf", "Đánh gôn", "",
+        /*lisDictionary.add(new Dictionary("golf", "Đánh gôn", "",
                 "", ""));
         lisDictionary.add(new Dictionary("gymnastics", "Tập thể hình", "",
                 "", ""));
@@ -138,12 +138,12 @@ public class ActivityKoWPlayGame extends BaseActivity {
         lisDictionary.add(new Dictionary("jogging", "Đi bộ", "",
                 "", ""));
         lisDictionary.add(new Dictionary("judo", "Võ Judo", "",
-                "", ""));
+                "", ""));*/
         lisDictionary.add(new Dictionary("horse racing", "Đua ngựa", "",
                 "", ""));
         lisDictionary.add(new Dictionary("motor racing", "Đua mô-tô", "",
                 "", ""));
-        lisDictionary.add(new Dictionary("mountaineering", "Leo núi", "",
+        /*lisDictionary.add(new Dictionary("mountaineering", "Leo núi", "",
                 "", ""));
         lisDictionary.add(new Dictionary("swimming", "Bơi lội", "",
                 "", ""));
@@ -170,7 +170,7 @@ public class ActivityKoWPlayGame extends BaseActivity {
         lisDictionary.add(new Dictionary("yoga", "Yoga", "",
                 "", ""));
         lisDictionary.add(new Dictionary("rugby", "Bóng bầu dục", "",
-                "", ""));
+                "", ""));*/
     }
 
     private void initData() {
@@ -201,8 +201,6 @@ public class ActivityKoWPlayGame extends BaseActivity {
         lisChucai.add(new Chucai("X", 0, "", R.drawable.x));
         lisChucai.add(new Chucai("Y", 0, "", R.drawable.y));
         lisChucai.add(new Chucai("Z", 0, "", R.drawable.z));
-        lisChucai.add(new Chucai(" ", 0, "", R.drawable.z));
-        lisChucai.add(new Chucai("-", 0, "", R.drawable.z));
         listTudien = new ArrayList<>();
         listTudien.add("White");
         listTudien.add("Blue");
@@ -239,7 +237,7 @@ public class ActivityKoWPlayGame extends BaseActivity {
 
     private void init() {
         mAdapter = new AdapterChucai(lisChucai, this);
-        mLayoutManager = new GridLayoutManager(this, 14,
+        mLayoutManager = new GridLayoutManager(this, 13,
                 GridLayoutManager.VERTICAL, false);
         //  mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
         recycle_list_chucai.setLayoutManager(mLayoutManager);
@@ -252,8 +250,10 @@ public class ActivityKoWPlayGame extends BaseActivity {
                     isClick = true;
                     Chucai sChucai = (Chucai) item;
                     String s = txt_content.getText().toString();
+
                     if (mLevel.length() > 0 && mLevel.equals("1")) {
                         txt_content.setText(s + sChucai.getsChucai());
+
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -408,7 +408,15 @@ public class ActivityKoWPlayGame extends BaseActivity {
                     public void onFinish() {
                         String a_letter = Character.toString(lisTeml.get(0).getsNewWord()
                                 .charAt(txt_content.getText().toString().length()));
-                        txt_content.setText(sContent + a_letter.toUpperCase());
+                        String a_letter_next = Character.toString(lisTeml.get(0).getsNewWord()
+                                .charAt(txt_content.getText().toString().length()+1));
+                        if (a_letter_next.equals(" ")){
+                            txt_content.setText(sContent + a_letter.toUpperCase()+" ");
+                        }else if (a_letter.equals("-")){
+                            txt_content.setText(sContent + a_letter.toUpperCase()+"-");
+                        }else {
+                            txt_content.setText(sContent + a_letter.toUpperCase());
+                        }
                         if (check_computer_chose(txt_content.getText().toString())) {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -446,7 +454,16 @@ public class ActivityKoWPlayGame extends BaseActivity {
                     public void onFinish() {
                         String a_letter = Character.toString(lisTeml.get(0).getsNewWord()
                                 .charAt(txt_content.getText().toString().length()));
-                        txt_content.setText(sContent + a_letter.toUpperCase());
+                        String a_letter_next = Character.toString(lisTeml.get(0).getsNewWord()
+                                .charAt(txt_content.getText().toString().length()+1));
+                        if (a_letter_next.equals(" ")){
+                            txt_content.setText(sContent + a_letter.toUpperCase()+" ");
+                        }else if (a_letter.equals("-")){
+                            txt_content.setText(sContent + a_letter.toUpperCase()+"-");
+                        }else {
+                            txt_content.setText(sContent + a_letter.toUpperCase());
+                        }
+
                         if (check_computer_chose(txt_content.getText().toString())) {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -494,22 +511,30 @@ public class ActivityKoWPlayGame extends BaseActivity {
         rl_show_anwser.setVisibility(View.VISIBLE);
         txt_anwser_newword.setText(mDicPlay.getsNewWord());
         txt_anwser_translate.setText(mDicPlay.getsTranslate());
-        Animation animationRotale = AnimationUtils.loadAnimation(this,
-                R.anim.animation_game_over);
-        img_title_gameover.startAnimation(animationRotale);
-/*        Animation animationRotaletxt = AnimationUtils.loadAnimation(this,
-                R.anim.animation_game_over_point);
-        txt_anwser_newword.startAnimation(animationRotaletxt);*/
-        Animation animationRotaletxt = AnimationUtils.loadAnimation(ActivityKoWPlayGame.this,
-                R.anim.animation_gameover_kow);
-        txt_anwser_newword.startAnimation(animationRotaletxt);
-        txt_anwser_translate.startAnimation(animationRotaletxt);
-
         if (isAnwser) {
-            Glide.with(this).load(R.drawable.img_winner).into(img_title_gameover);
+            Glide.with(this).load(R.drawable.icon_win).into(img_title_gameover);
         } else {
             Glide.with(this).load(R.drawable.title_game_over).into(img_title_gameover);
         }
+        new CountDownTimer(100, 10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                Animation animationRotale = AnimationUtils.loadAnimation(ActivityKoWPlayGame.this,
+                        R.anim.animation_game_over);
+                img_title_gameover.startAnimation(animationRotale);
+                Animation animationRotaletxt = AnimationUtils.loadAnimation(ActivityKoWPlayGame.this,
+                        R.anim.animation_gameover_kow);
+                txt_anwser_newword.startAnimation(animationRotaletxt);
+                txt_anwser_translate.startAnimation(animationRotaletxt);
+            }
+        }.start();
+
+
     }
 
     private void change_turn(String sContent) {

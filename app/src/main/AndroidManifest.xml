@@ -150,6 +150,7 @@
         </service>
         <service android:name=".Service.ServiceDownTime"></service>
         <service android:name=".Service.ServiceDownTimeGame"></service>
+        <service android:name=".Service.BoundServiceCountTime"></service>
     </application>
 
 </manifest>

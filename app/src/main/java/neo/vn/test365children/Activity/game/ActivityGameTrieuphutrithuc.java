@@ -537,7 +537,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             public void run() {
                 rl_point.setVisibility(View.GONE);
             }
-        }, 5000);
+        }, 4000);
     }
 
     private void initListPoint() {
@@ -1008,12 +1008,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     }
 
     public void set_point_lever(int iCurrent) {
-      /*  new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 1000);*/
         for (int i = (mLisPoint.size() - 1); i > -1; i--) {
             if (i == (mLisPoint.size() - iCurrent - 1)) {
                 mLisPoint.get(i).setPlaying(true);

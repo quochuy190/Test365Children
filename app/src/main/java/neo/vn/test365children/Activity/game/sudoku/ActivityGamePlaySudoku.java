@@ -1,5 +1,7 @@
 package neo.vn.test365children.Activity.game.sudoku;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -16,6 +18,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +32,11 @@ import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.CheckGameSudoku;
 import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
+import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.Models.SudokuCell;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Service.ServiceDownTimeGame;
+import neo.vn.test365children.Untils.TimeUtils;
 
 public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.rv_gameplay_sudoku)
@@ -68,6 +77,8 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     @BindView(R.id.img_mute)
     ImageView img_mute;
     private int MAX_FALSE = 3;
+    MediaPlayer mPlayer;
+    MediaPlayer mPlayer_Click;
 
     @Override
 
@@ -75,11 +86,71 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
         return R.layout.activity_gameplay_sudoku;
     }
 
+    public void resetTime() {
+        if (intent_service != null)
+            stopService(intent_service);
+        intent_service = new Intent(ActivityGamePlaySudoku.this, ServiceDownTimeGame.class);
+        intent_service.putExtra(Constants.KEY_SEND_TIME_SERVICE, 20*60*1000);
+        startService(intent_service);
+    }
+
+    int time = 0;
+    @BindView(R.id.txt_time)
+    TextView txt_time_game;
+    Intent intent_service;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(intent_service);
+        mPlayer.release();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.message.equals("Service_Game")) {
+            if (event.point == 0) {
+                time = (int) event.time;
+                txt_time_game.setText(TimeUtils.formatDuration((int) event.time));
+            } else {
+                time = (int) event.time;
+                show_sudoku_gameover(false);
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void play_music_bg() {
+        //mp3 = new MediaPlayer();
+        mPlayer.release();
+        mPlayer = MediaPlayer.create(ActivityGamePlaySudoku.this, R.raw.tnnl_bacground_music);
+        mPlayer.setLooping(true);
+        mPlayer.setVolume(20, 20);
+        mPlayer.start();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPlayer = new MediaPlayer();
+        mPlayer_Click = new MediaPlayer();
+        play_music_bg();
         init();
         initData();
+        resetTime();
         initEvent();
     }
 
@@ -217,7 +288,7 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
                                 hideDialogLoading();
                                 initData();
                             }
-                        }, 1000);
+                        }, 500);
                     }
 
                     @Override
@@ -227,7 +298,7 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
                 });
                 break;
             case R.id.btn_key_remove:
-
+                show_sudoku_gameover(true);
                 break;
             case R.id.btn_key_goiy:
                 click_btn_goiy();
@@ -236,6 +307,13 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.img_mute:
+                if (mPlayer.isPlaying()) {
+                    Glide.with(getApplication()).load(R.drawable.icon_tat_loa).into(img_mute);
+                    mPlayer.pause();
+                } else {
+                    Glide.with(getApplication()).load(R.drawable.img_mute).into(img_mute);
+                    mPlayer.start();
+                }
                 break;
             case R.id.btn_exit:
                 finish();
@@ -299,7 +377,7 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
             adapter.notifyDataSetChanged();
             mPositionClick = -1;
             if (isFinish) {
-                new CountDownTimer(1500, 100) {
+                new CountDownTimer(500, 100) {
                     @Override
                     public void onTick(long millisUntilFinished) {
 
@@ -325,20 +403,19 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     Button btn_exit;
 
     private void show_sudoku_gameover(boolean isGameover) {
-        rl_gameover.setVisibility(View.VISIBLE);
         if (isGameover) {
-            Glide.with(this).load(R.drawable.img_winner).into(img_sudoku_gameover);
+            Glide.with(this).load(R.drawable.icon_win).into(img_sudoku_gameover);
         } else {
             Glide.with(this).load(R.drawable.title_game_over).into(img_sudoku_gameover);
         }
-        Animation animationRotale = AnimationUtils.loadAnimation(ActivityGamePlaySudoku.this,
-                R.anim.animation_game_over);
-        img_sudoku_gameover.startAnimation(animationRotale);
+        rl_gameover.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
+                Animation animationRotale = AnimationUtils.loadAnimation(ActivityGamePlaySudoku.this,
+                        R.anim.animation_game_over);
+                img_sudoku_gameover.startAnimation(animationRotale);
             }
-        }, 500);
+        }, 50);
     }
 }

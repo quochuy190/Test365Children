@@ -44,7 +44,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
     private static final String TAG = "ActivityStartBaitap";
     @BindView(R.id.btn_start_lambai)
     Button btn_start_lambai;
-    @BindView(R.id.img_mute)
+    @BindView(R.id.img_back)
     ImageView img_mute;
     Baitap_Tuan objBaitapTuan;
     @BindView(R.id.txt_lable_mon)

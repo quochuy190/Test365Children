@@ -360,12 +360,13 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintHeight_percent="0.7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/img_winner" />
+            app:srcCompat="@drawable/icon_win" />
 
         <ImageView
+            android:padding="@dimen/dp10"
             android:id="@+id/img_reload_game"
             android:layout_width="@dimen/height_keyboard_sudoku"
             android:layout_height="@dimen/height_keyboard_sudoku"
@@ -397,7 +398,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/img_reload_game"
             app:layout_constraintTop_toBottomOf="@+id/img_sudoku_gameover" />
-
 
     </android.support.constraint.ConstraintLayout>
 
