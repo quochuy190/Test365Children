@@ -10,19 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_kow_menu_level" />
-
-    <ImageView
-        android:id="@+id/btn_level_one"
-        android:layout_width="@dimen/kow_width_menu_level"
-        android:layout_height="@dimen/kow_height_menu_level"
-        android:layout_marginLeft="@dimen/kow_menu_level_margin_left_guild"
-        android:layout_marginBottom="@dimen/kow_menu_level_margin_bottom_guild"
-        android:adjustViewBounds="true"
-        android:src="@drawable/img_kow_level_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:scaleType="fitXY" />
 
 
     <android.support.constraint.Guideline
@@ -30,14 +18,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.666" />
+        app:layout_constraintGuide_percent="0.61" />
 
     <android.support.constraint.Guideline
         android:id="@+id/gl_ver_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3333" />
+        app:layout_constraintGuide_percent="0.39" />
 
     <android.support.constraint.Guideline
         android:id="@+id/gl_hori_two"
@@ -51,76 +39,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.50" />
+        app:layout_constraintGuide_percent="0.13" />
 
-    <ImageView
-        android:id="@+id/btn_level_two"
-        android:layout_width="@dimen/kow_width_menu_level"
-        android:layout_height="@dimen/kow_height_menu_level"
-        android:layout_marginEnd="@dimen/kow_menu_level_margin_left_guild"
-        android:layout_marginBottom="4dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/img_kow_level_3"
-        app:layout_constraintBottom_toTopOf="@+id/gl_hori_two"
-        app:layout_constraintEnd_toStartOf="@+id/gl_ver_one" />
-
-    <ImageView
-        android:id="@+id/btn_level_three"
-        android:layout_width="@dimen/kow_width_menu_level"
-        android:layout_height="@dimen/kow_height_menu_level"
-        android:adjustViewBounds="true"
-        android:src="@drawable/img_kow_level_2"
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/font1"
+        android:gravity="center"
+        android:text="@string/txt_title_select_sub"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/kow_title_theme_gamekow"
         app:layout_constraintBottom_toTopOf="@+id/gl_hori_one"
-        app:layout_constraintStart_toStartOf="@+id/gl_ver_two" />
-    <Button
-        android:id="@+id/btn_start_kow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="Hướng dẫn"
-        android:textColor="@color/white"
-        android:fontFamily="@font/roboto_bold"
-        android:textSize="@dimen/kow_txt_btn_start"
-        android:background="@drawable/btn_4"
-        android:layout_marginBottom="@dimen/kow_btnstart_margin_bottom"
-        android:layout_width="@dimen/kow_width_btn_start"
-        android:layout_height="@dimen/kow_height_btn_start" />
+        app:layout_constraintEnd_toStartOf="@+id/imageView19"
+        app:layout_constraintStart_toEndOf="@+id/img_back"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txt_level_1"
-        android:layout_width="@dimen/kow_width_menu_level"
-        android:layout_height="@dimen/kow_width_menu_level"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center"
-        android:text="Level 1"
-        android:textColor="@color/white"
-        android:textSize="@dimen/kow_txt_menu_level"
-        app:layout_constraintLeft_toLeftOf="@id/btn_level_one"
-        app:layout_constraintTop_toTopOf="@id/btn_level_one" />
-
-    <TextView
-        android:id="@+id/txt_level_2"
-        android:layout_width="@dimen/kow_width_menu_level"
-        android:layout_height="@dimen/kow_width_menu_level"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center"
-        android:text="Level 2"
-        android:textColor="@color/white"
-        android:textSize="@dimen/kow_txt_menu_level"
-        app:layout_constraintStart_toStartOf="@+id/btn_level_two"
-        app:layout_constraintTop_toTopOf="@+id/btn_level_two" />
-
-    <TextView
-        android:id="@+id/txt_level_3"
-        android:layout_width="@dimen/kow_width_menu_level"
-        android:layout_height="@dimen/kow_width_menu_level"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center"
-        android:text="Level 3"
-        android:textColor="@color/white"
-        android:textSize="@dimen/kow_txt_menu_level"
-        app:layout_constraintEnd_toEndOf="@+id/btn_level_three"
-        app:layout_constraintTop_toTopOf="@+id/btn_level_three" />
 
     <ImageView
         android:id="@+id/img_back"
@@ -128,19 +64,45 @@
         android:layout_height="@dimen/item_back_kow"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/img_back_menu"
+
+        android:src="@drawable/ic_back_menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/imageView19"
         android:layout_width="@dimen/item_back_kow"
         android:layout_height="@dimen/item_back_kow"
         android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:padding="@dimen/dp5"
+
         android:src="@drawable/img_mute"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_topic_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/spr_bg_list_topic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_ver_one"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_topic_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/spr_bg_list_topic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/gl_ver_two"
+        app:layout_constraintTop_toTopOf="@+id/gl_hori_one" />
 </android.support.constraint.ConstraintLayout>

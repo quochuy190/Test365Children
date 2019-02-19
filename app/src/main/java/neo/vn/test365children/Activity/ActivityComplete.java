@@ -2,10 +2,15 @@ package neo.vn.test365children.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,7 +26,7 @@ import io.realm.RealmList;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
-import neo.vn.test365children.Models.Baitap_Tuan;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.CauhoiAnswer;
 import neo.vn.test365children.Models.CauhoiDetail;
@@ -29,16 +34,21 @@ import neo.vn.test365children.Models.CauhoiDetailAnswer;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.Models.ObjLogin;
+import neo.vn.test365children.Models.ResponDetailExer;
+import neo.vn.test365children.Models.ResponDetailTakenExercise;
+import neo.vn.test365children.Models.ResponseObjWeek;
 import neo.vn.test365children.Models.TuanDamua;
+import neo.vn.test365children.Presenter.ImlFeedback;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
+import neo.vn.test365children.Presenter.PresenterFeedback;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 import neo.vn.test365children.Untils.TimeUtils;
 
-public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
+public class ActivityComplete extends BaseActivity implements ImpBaitap.View, ImlFeedback.View {
     private static final String TAG = "ActivityComplete";
     @BindView(R.id.txt_pointlambai)
     TextView txt_pointlambai;
@@ -60,6 +70,32 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
     Button btn_guidiem;
     PresenterBaitap mPresenter;
     long durationInMillis;
+    @BindView(R.id.ll_show_ketqua)
+    LinearLayout ll_ketqua;
+    @BindView(R.id.btn_dong)
+    Button btn_dong;
+    @BindView(R.id.btn_gui)
+    Button btn_gui;
+    @BindView(R.id.rb_rate_1_1)
+    RadioButton rb_rate_1_1;
+    @BindView(R.id.rb_rate_1_2)
+    RadioButton rb_rate_1_2;
+    @BindView(R.id.rb_rate_1_3)
+    RadioButton rb_rate_1_3;
+
+    @BindView(R.id.rb_rate_2_3)
+    RadioButton rb_rate_2_3;
+
+    @BindView(R.id.rb_rate_2_1)
+    RadioButton rb_rate_2_1;
+
+    @BindView(R.id.rb_rate_2_2)
+    RadioButton rb_rate_2_2;
+    @BindView(R.id.view_danhgia)
+    ConstraintLayout view_danhgia;
+    PresenterFeedback mPresenterFeedback;
+    String rate_1 = "";
+    String rate_2 = "";
 
     @Override
     public int setContentViewId() {
@@ -71,20 +107,61 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
         super.onCreate(savedInstanceState);
         mRealm = RealmController.getInstance().getRealm();
         mPresenter = new PresenterBaitap(this);
+        mPresenterFeedback = new PresenterFeedback(this);
         btn_guidiem.setEnabled(false);
-        btn_guidiem.getBackground().setAlpha(50);
         initData();
         initEvent();
+    }
+
+    private void show_feedback() {
+        view_danhgia.setVisibility(View.VISIBLE);
+        ll_ketqua.setVisibility(View.GONE);
+        Animation animationRotale = AnimationUtils.loadAnimation(ActivityComplete.this,
+                R.anim.animation_show_question);
+        view_danhgia.startAnimation(animationRotale);
+
+
     }
 
     private void initEvent() {
         btn_guidiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                show_feedback();
+                btn_guidiem.setEnabled(false);
+            }
+        });
+        btn_dong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 setResult(RESULT_OK, new Intent());
                 finish();
-                btn_guidiem.setEnabled(false);
-                btn_guidiem.getBackground().setAlpha(50);
+            }
+        });
+        btn_gui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogLoading();
+                if (rb_rate_1_1.isChecked()) {
+                    rate_1 = "1";
+                }
+                if (rb_rate_1_2.isChecked()) {
+                    rate_1 = "2";
+                }
+                if (rb_rate_1_3.isChecked()) {
+                    rate_1 = "3";
+                }
+                if (rb_rate_2_1.isChecked()) {
+                    rate_2 = "1";
+                }
+                if (rb_rate_2_2.isChecked()) {
+                    rate_2 = "2";
+                }
+                if (rb_rate_2_3.isChecked()) {
+                    rate_2 = "3";
+                }
+                mPresenterFeedback.api_send_feetback(objExer.getsId_userMe(), objExer.getsId_userCon(), "1",
+                        rate_1, "2", rate_2, "1", objExer.getsId_exercise());
             }
         });
     }
@@ -99,11 +176,11 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
 
     private void initData() {
         ObjLogin chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
-        if (chil != null && chil.getsFULLNAME() != null) {
+        /*if (chil != null && chil.getsFULLNAME() != null) {
             txt_chucmung.setText("CHÚC MỪNG BẠN " + chil.getsFULLNAME().toUpperCase() +
                     "\n ĐÃ HOÀN THÀNH BÀI TẬP HÔM NAY");
-        }
-        Glide.with(this).load(R.drawable.bg_lambai).into(img_background);
+        }*/
+        Glide.with(this).load(R.drawable.bg_doc_hieu).into(img_background);
         Glide.with(this).load(R.drawable.bg_complete_1).into(img_bg_complete1);
         Glide.with(this).load(R.drawable.bg_complete_2).into(img_bg_complete2);
         Glide.with(this).load(R.drawable.bg_complete_3).into(img_bg_complete3);
@@ -168,16 +245,17 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
             txt_timelambai.setText("Thời gian làm bài không xác định");
         }
         int iTime = (int) (durationInMillis / 1000);
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        String sDanhsachcau = gson.toJson(mListCauhoiAnswer);
+        objExer.setsDetailExercise(sDanhsachcau);
         objExer.setsThoiluonglambai("" + iTime);
         mRealm.beginTransaction();
         mRealm.copyToRealmOrUpdate(objExer);
         mRealm.commitTransaction();
-        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String sDanhsachcau = gson.toJson(mListCauhoiAnswer);
         showDialogLoading();
-        mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise(),
-                objExer.getsTimebatdaulambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
-                "" + (durationInMillis / 1000), objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
+        mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise()
+                , objExer.getsThoiluonglambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
+                objExer.getsTimequydinh(), objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
 
     }
 
@@ -195,38 +273,100 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
     }
 
     @Override
-    public void show_list_get_part(List<Cauhoi> mLis) {
+    public void show_list_get_part(ResponDetailExer objDetailExer) {
 
     }
+
+    /*@Override
+    public void show_list_get_part(List<Cauhoi> mLis) {
+
+    }*/
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
         hideDialogLoading();
         btn_guidiem.setEnabled(true);
-        btn_guidiem.getBackground().setAlpha(255);
     }
 
     @Override
-    public void show_get_excercise_needed(List<Baitap_Tuan> mLis) {
-
-    }
-
-    @Override
-    public void show_get_excercise_expired(List<Baitap_Tuan> mLis) {
+    public void show_get_excercise_needed(ResponseObjWeek objResponWeek) {
 
     }
 
     @Override
-    public void show_start_taken(List<ErrorApi> mLis) {
+    public void show_get_excercise_expired(ResponseObjWeek objResponWeek) {
 
     }
 
     @Override
+    public void show_start_taken(ErrorApi mLis) {
+
+    }
+
+    @Override
+    public void show_submit_execercise(ErrorApi mLis) {
+        hideDialogLoading();
+        if (mLis.getsERROR().equals("0000")) {
+            btn_guidiem.setEnabled(true);
+            Log.i(TAG, "show_submit_execercise: success");
+            objExer.setIsTrangthailambai("3");
+            mRealm.beginTransaction();
+            mRealm.copyToRealmOrUpdate(objExer);
+            mRealm.commitTransaction();
+            /*new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    show_feedback();
+                }
+            }, 4000);*/
+
+            // showDialogNotify("Thông báo", "Nộp bài thành công");
+        } else {
+            showDialogNotify("Thông báo", "Bài làm chưa được gửi cho mẹ," +
+                    " con có vào phần Bài tập đã làm và gửi lại sau");
+            btn_guidiem.setEnabled(true);
+            Log.i(TAG, "show_submit_execercise: " + mLis.getsRESULT());
+        }
+    }
+
+    @Override
+    public void show_detail_taken(ResponDetailTakenExercise obj) {
+
+    }
+
+    @Override
+    public void show_error_api(ErrorApi mLis) {
+        hideDialogLoading();
+    }
+
+    @Override
+    public void show_send_feedback(ErrorApi objError) {
+        hideDialogLoading();
+        if (objError.getsERROR().equals("0000")) {
+            showDialogComfirm("Thông báo", "Đánh giá đã được gửi đi. Cảm ơn con đã đóng góp xây dựng Home365.",
+                    false, new ClickDialog() {
+                        @Override
+                        public void onClickYesDialog() {
+                            setResult(RESULT_OK, new Intent());
+                            finish();
+                        }
+
+                        @Override
+                        public void onClickNoDialog() {
+
+                        }
+                    });
+
+        } else {
+            showDialogNotify(objError.getMESSGE(), objError.getsRESULT());
+        }
+    }
+
+ /*   @Override
     public void show_submit_execercise(List<ErrorApi> mLis) {
         hideDialogLoading();
         if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
             btn_guidiem.setEnabled(true);
-            btn_guidiem.getBackground().setAlpha(255);
             Log.i(TAG, "show_submit_execercise: success");
             objExer.setIsTrangthailambai("3");
             mRealm.beginTransaction();
@@ -235,8 +375,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View {
         } else {
             showDialogNotify("Lỗi", mLis.get(0).getsRESULT());
             btn_guidiem.setEnabled(true);
-            btn_guidiem.getBackground().setAlpha(255);
             Log.i(TAG, "show_submit_execercise: " + mLis.get(0).getsRESULT());
         }
-    }
+    }*/
 }

@@ -8,22 +8,21 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.List;
-
 import butterknife.BindView;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.ErrorApi;
-import neo.vn.test365children.Models.GameTNNL;
-import neo.vn.test365children.Models.GameTrieuPhuTriThuc;
+import neo.vn.test365children.Models.ResponGameTNNL;
+import neo.vn.test365children.Models.ResponGetGameTPTT;
 import neo.vn.test365children.Presenter.ImlGetGameTptt;
 import neo.vn.test365children.Presenter.PresenterGame;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
-public class ActivityStartGameTNNL extends BaseActivity implements ImlGetGameTptt.View, View.OnClickListener {
+public class ActivityStartGameTNNL extends BaseActivity implements
+        ImlGetGameTptt.View, View.OnClickListener {
     private static final String TAG = "ActivityStartGameTNNL";
     @BindView(R.id.img_background)
     ImageView imgBackground;
@@ -50,11 +49,8 @@ public class ActivityStartGameTNNL extends BaseActivity implements ImlGetGameTpt
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterGame(this);
         btn_easy.setEnabled(false);
-        btn_easy.getBackground().setAlpha(50);
         btn_normal.setEnabled(false);
-        btn_normal.getBackground().setAlpha(50);
         btn_hard.setEnabled(false);
-        btn_hard.getBackground().setAlpha(50);
         Glide.with(this).load(R.drawable.bg_game_tnnl).into(imgBackground);
         initData();
         initEvent();
@@ -90,39 +86,43 @@ public class ActivityStartGameTNNL extends BaseActivity implements ImlGetGameTpt
     }
 
     @Override
-    public void show_get_game_tptt(List<GameTrieuPhuTriThuc> mLis) {
+    public void show_get_game_tptt(ResponGetGameTPTT mLis) {
 
     }
 
     @Override
-    public void show_error_api(List<ErrorApi> mLis) {
+    public void show_error_api(ErrorApi mLis) {
 
     }
 
     @Override
-    public void show_start_tptt(List<ErrorApi> mLis) {
+    public void show_start_tptt(ErrorApi mLis) {
 
     }
 
     @Override
-    public void show_submit_tptt(List<ErrorApi> mLis) {
+    public void show_submit_tptt(ErrorApi mLis) {
 
     }
 
     @Override
-    public void show_get_game_tnnl(List<GameTNNL> mLis) {
+    public void show_get_game_tnnl(ResponGameTNNL mLis) {
         hideDialogLoading();
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
-            App.mLisGameTNNL.clear();
-            App.mLisGameTNNL.addAll(mLis);
-            KeyboardUtil.button_enable(btn_hard);
-            KeyboardUtil.button_enable(btn_easy);
-            KeyboardUtil.button_enable(btn_normal);
+        if (mLis != null && mLis.getsERROR().equals("0000")) {
+            if (mLis.getLisInfo() != null) {
+                App.mLisGameTNNL.clear();
+                App.mLisGameTNNL.addAll(mLis.getLisInfo());
+                KeyboardUtil.button_enable(btn_hard);
+                KeyboardUtil.button_enable(btn_easy);
+                KeyboardUtil.button_enable(btn_normal);
+            }
+        } else {
+            showAlertDialog("Lỗi", mLis.getsRESULT());
         }
     }
 
     @Override
-    public void show_submit_game_tnnl(List<ErrorApi> mLis) {
+    public void show_submit_game_tnnl(ErrorApi mLis) {
 
     }
 

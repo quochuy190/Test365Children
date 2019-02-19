@@ -7,6 +7,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -54,7 +56,7 @@ public class FragmentXemanhtraloi extends BaseFragment {
     @BindView(R.id.txt_lable)
     TextView txt_lable;
     @BindView(R.id.txt_question)
-    TextView txt_question;
+    WebView txt_question;
     RecyclerView.LayoutManager mLayoutManager;
     AdapterDapanXemanh adapter_xemanh;
     List<DapAn> mLis;
@@ -65,6 +67,7 @@ public class FragmentXemanhtraloi extends BaseFragment {
     ImageView img_background;
     @BindView(R.id.img_anwser_chil)
     ImageView img_anwser_chil;
+
     public static FragmentXemanhtraloi newInstance(CauhoiDetail restaurant) {
         FragmentXemanhtraloi restaurantDetailFragment = new FragmentXemanhtraloi();
         Bundle args = new Bundle();
@@ -87,19 +90,21 @@ public class FragmentXemanhtraloi extends BaseFragment {
         ButterKnife.bind(this, view);
         init();
         btn_xemdiem.setEnabled(false);
+        btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
  /*       btn_xemdiem.setEnabled(false);
         btn_xemdiem.getBackground().setAlpha(50);*/
         initData();
         initEvent();
         return view;
     }
-    private boolean isClickXemdiem = false;
-    private void initEvent() {
 
+    private boolean isClickXemdiem = false;
+
+    private void initEvent() {
         btn_xemdiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isClickXemdiem){
+                if (!isClickXemdiem) {
                     img_anwser_chil.setVisibility(View.VISIBLE);
                     boolean isTrue = false;
                     if (mLis != null && isTraloi) {
@@ -110,11 +115,10 @@ public class FragmentXemanhtraloi extends BaseFragment {
                             }
                         }
                         adapter.notifyDataSetChanged();
-                        if (isTrue){
+                        if (isTrue) {
                             Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
                             EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                        }
-                        else{
+                        } else {
                             Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
                             EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
                         }
@@ -138,27 +142,28 @@ public class FragmentXemanhtraloi extends BaseFragment {
             @Override
             public void onClickItem(int position, Object item) {
                 btn_xemdiem.setEnabled(true);
+                btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
               /*  btn_xemdiem.setEnabled(true);
                 btn_xemdiem.getBackground().setAlpha(255);*/
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setDalam(true);
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
                 if (!mLis.get(position).isClick()) {
                     for (DapAn obj : mLis) {
                         //obj.setClick(true);
                         if (obj.getsName().equals(mLis.get(position).getsName())) {
                             if (obj.getsDapan_Dung().equals(obj.getsName())) {
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setAnserTrue(true);
+                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                            }else{
-                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setAnserTrue(false);
+                            } else {
+                                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
                                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                                         .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
                             }
-                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsName());
+                            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(obj.getsName());
                             obj.setsDapan_Traloi(obj.getsName());
                         } else {
                             obj.setsDapan_Traloi("");
@@ -178,11 +183,13 @@ public class FragmentXemanhtraloi extends BaseFragment {
         if (mCauhoi != null && mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null) {
             if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
                 txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                        + mCauhoi.getsSubNumberCau()+ ": " + mCauhoi.getsCauhoi_huongdan())
-                        +" ("+Float.parseFloat(mCauhoi.getsPOINT())+" đ)");
-            txt_question.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsQUESTION()));
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+         /*   txt_question.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": "
+                    + mCauhoi.getsHTML_CONTENT()));*/
+            StringUtil.initWebview_Batsau(txt_question, mCauhoi.getsHTML_CONTENT());
         }
-        String s = Config.URL_IMAGE+mCauhoi.getsImagePath();
+        String s = Config.URL_IMAGE + mCauhoi.getsImagePath();
         Glide.with(getContext()).load(s).into(img_question);
         if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
             mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));

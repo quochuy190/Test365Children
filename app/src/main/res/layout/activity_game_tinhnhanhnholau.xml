@@ -25,14 +25,15 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:src="@drawable/icon_game_time" />
+
         <TextView
-            android:padding="@dimen/dp5"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:id="@+id/txt_time_game"
             android:layout_width="@dimen/icon_time_game_tnnl"
             android:layout_height="@dimen/icon_time_game_tnnl"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:gravity="center"
+            android:padding="@dimen/dp5"
             android:text="30:00"
             android:textColor="@color/white"
             android:textSize="@dimen/text_time_game_tptt" />
@@ -42,17 +43,17 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp5"
             android:layout_marginTop="@dimen/dp5"
-            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp5"
             android:layout_marginBottom="@dimen/dp5"
             android:layout_toLeftOf="@id/img_time">
 
             <ImageView
                 android:id="@+id/img_back"
-                android:layout_width="@dimen/image_next"
-                android:layout_height="@dimen/image_next"
+                android:layout_width="@dimen/item_back_kow"
+                android:layout_height="@dimen/item_back_kow"
                 android:layout_centerVertical="true"
-                android:padding="@dimen/dp5"
-                android:src="@drawable/img_back_menu" />
+                android:layout_marginRight="@dimen/dp3"
+                android:src="@drawable/ic_back_menu" />
 
             <ImageView
                 android:id="@+id/img_bg_player_one"
@@ -69,7 +70,7 @@
                 android:layout_width="@dimen/icon_time_game_tnnl"
                 android:layout_height="@dimen/icon_time_game_tnnl"
                 android:layout_toRightOf="@+id/img_back"
-                android:src="@drawable/avatar_default"
+                android:src="@drawable/icon_avata"
                 app:civ_border_color="@color/green"
                 app:civ_border_width="@dimen/dp3" />
 
@@ -106,9 +107,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp5"
             android:layout_marginTop="@dimen/dp5"
-            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp5"
             android:layout_marginBottom="@dimen/dp5"
             android:layout_toRightOf="@id/img_time">
 
@@ -128,7 +129,7 @@
                 android:layout_height="@dimen/icon_time_game_tnnl"
                 android:layout_toLeftOf="@id/img_mute"
 
-                android:src="@drawable/avatar_default"
+                android:src="@drawable/icon_avata"
                 app:civ_border_color="@color/blue_tnnl"
                 app:civ_border_width="@dimen/dp3" />
 
@@ -153,8 +154,6 @@
                 android:layout_width="@dimen/icon_point_tnnl"
                 android:layout_height="@dimen/icon_point_tnnl"
                 android:layout_centerVertical="true"
-
-
                 android:background="@drawable/exer_icon_diem"
                 android:fontFamily="@font/font1"
                 android:gravity="center"
@@ -165,11 +164,11 @@
 
             <ImageView
                 android:id="@+id/img_mute"
-                android:layout_width="@dimen/image_next"
-                android:layout_height="@dimen/image_next"
+                android:layout_width="@dimen/item_back_kow"
+                android:layout_height="@dimen/item_back_kow"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:padding="@dimen/dp5"
+                android:layout_marginLeft="@dimen/dp3"
                 android:src="@drawable/img_mute" />
         </RelativeLayout>
     </RelativeLayout>
@@ -224,6 +223,7 @@
                     android:contentDescription="TODO"
                     android:gravity="center"
                     app:cardCornerRadius="@dimen/dp5">
+
                     <ImageView
                         android:id="@+id/img_front_side_0"
                         android:layout_width="match_parent"
@@ -231,8 +231,8 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                    />
+                        android:scaleType="fitXY" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -288,8 +288,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                        />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -345,8 +344,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                   />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -402,8 +400,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                       />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -459,8 +456,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                     />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -516,8 +512,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                   />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -582,8 +577,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                       />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -638,8 +632,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                   />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -695,8 +688,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                      />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -752,8 +744,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                      />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -809,8 +800,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                 />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -867,8 +857,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                  />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -934,8 +923,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                      />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -991,8 +979,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                 />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1049,8 +1036,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                    />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1107,8 +1093,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                 />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1165,8 +1150,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                      />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1223,8 +1207,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                        />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1286,8 +1269,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-      />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1341,8 +1323,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                 />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1397,8 +1378,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                      />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1453,8 +1433,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-        />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1511,8 +1490,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-                     />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1571,8 +1549,7 @@
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO"
                         android:gravity="center"
-                        android:scaleType="fitXY"
-        />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1629,7 +1606,6 @@
                 android:layout_marginTop="@dimen/margin_content_broad"
                 android:gravity="center"
                 android:padding="@dimen/dp5"
-
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_17sp"
                 android:textStyle="bold" />
@@ -1643,6 +1619,7 @@
                 android:layout_marginLeft="@dimen/margin_content_broad"
                 android:layout_marginRight="@dimen/margin_content_broad"
                 android:layout_marginBottom="@dimen/margin_content_broad"></WebView>
+
 
         </RelativeLayout>
 
@@ -1682,6 +1659,7 @@
                 android:layout_marginRight="@dimen/margin_content_broad"
                 android:layout_marginBottom="@dimen/margin_content_broad"></WebView>
 
+
         </RelativeLayout>
 
         <Button
@@ -1708,11 +1686,12 @@
         android:visibility="gone">
 
         <ImageView
-            android:padding="@dimen/dp10"
-            android:src="@drawable/title_game_over"
+            android:id="@+id/img_gameover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/center" />
+            android:layout_above="@id/center"
+            android:padding="@dimen/dp10"
+            android:src="@drawable/title_game_over" />
 
         <View
             android:id="@+id/center"
@@ -1721,12 +1700,13 @@
             android:layout_centerVertical="true" />
 
         <TextView
+            android:id="@+id/txt_bonus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/center"
             android:fontFamily="@font/font1"
             android:gravity="center"
-            android:text="Thưởng: 1000đ"
+            android:text="Thưởng: 0 đ"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_stt_item" />
 

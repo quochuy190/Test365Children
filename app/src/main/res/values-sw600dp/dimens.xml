@@ -39,6 +39,7 @@
     <dimen name="margin_edt_login">115dp</dimen>
     <dimen name="margin_top_login">40dp</dimen>
     <dimen name="login_width">650dp</dimen>
+    <dimen name="text_login">20sp</dimen>
     <!--<layout menu làm bài tập-->
     <dimen name="margin_mute_lambai">70dp</dimen>
     <dimen name="width_item_menu">130dp</dimen>
@@ -171,7 +172,7 @@
     <dimen name="kow_height_theme_title">80dp</dimen>
     <dimen name="kow_margin_top_playgame">10dp</dimen>
     <dimen name="kow_height_text_theme">60dp</dimen>
-    <dimen name="kow_title_theme_gamekow">25sp</dimen>
+    <dimen name="kow_title_theme_gamekow">20sp</dimen>
     <dimen name="margin_kow_chucai">15dp</dimen>
     <dimen name="item_chucai_height">70dp</dimen>
     <dimen name="kow_width_logo_kow">140dp</dimen>
@@ -181,6 +182,17 @@
     <dimen name="item_sector">7dp</dimen>
     <dimen name="pading_sudoku">5dp</dimen>
     <dimen name="txt_value_sudoku">25sp</dimen>
+    <dimen name="txt_sudoku_goiy">22sp</dimen>
     <dimen name="height_item_sudoku">55dp</dimen>
     <dimen name="height_keyboard_sudoku">63dp</dimen>
+    <!--Chọn lớp dùng thử-->
+    <dimen name="txt_title_try">26sp</dimen>
+    <dimen name="txt_size_level">22sp</dimen>
+    <!--Hướng dẫn đăng nhập-->
+    <dimen name="size_pading_content_guild_login">12dp</dimen>
+    <dimen name="size_txt_content_guild_login">20sp</dimen>
+    <dimen name="txt_title_webview_doctruyen">18sp</dimen>
+    <!--Start làm bài tập-->
+    <dimen name="txt_app">19sp</dimen>
+    <dimen name="txt_name_subject">22sp</dimen>
 </resources>

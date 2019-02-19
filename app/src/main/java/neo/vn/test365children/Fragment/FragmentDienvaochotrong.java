@@ -67,6 +67,8 @@ public class FragmentDienvaochotrong extends BaseFragment {
     @BindView(R.id.img_anwser_chil)
     ImageView img_anwser_chil;
     String sHtlml = "";
+    @BindView(R.id.img_reload)
+    ImageView img_reload;
 
     public static FragmentDienvaochotrong newInstance(CauhoiDetail restaurant) {
         FragmentDienvaochotrong restaurantDetailFragment = new FragmentDienvaochotrong();
@@ -120,7 +122,6 @@ public class FragmentDienvaochotrong extends BaseFragment {
         webview_dapan.clearHistory();
         webview_dapan.clearFormData();
         webview_dapan.clearCache(true);
-
         browser.clearHistory();
         browser.clearFormData();
         browser.clearCache(true);
@@ -223,6 +224,13 @@ public class FragmentDienvaochotrong extends BaseFragment {
             }
         });
         return view;
+    }
+
+    private void reload() {
+        browser.reload();
+        webview_dapan.reload();
+        browser.setWebViewClient(new WebViewClient());
+        webview_dapan.setWebViewClient(new WebViewClient());
     }
 
     String sAnwserChil;
@@ -407,6 +415,12 @@ public class FragmentDienvaochotrong extends BaseFragment {
     boolean isClickShowpoint = false;
 
     private void initEvent() {
+        img_reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reload();
+            }
+        });
         btn_xemdiem_dientu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

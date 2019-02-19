@@ -3,9 +3,11 @@ package neo.vn.test365children.Activity.ReviewExercises;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -13,26 +15,34 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import butterknife.BindView;
+import io.realm.Realm;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.DesExercises;
+import neo.vn.test365children.Models.DetailExercise;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.ExerciseAnswer;
+import neo.vn.test365children.Models.ResponDetailExer;
+import neo.vn.test365children.Models.ResponDetailTakenExercise;
+import neo.vn.test365children.Models.ResponseObjWeek;
+import neo.vn.test365children.Models.StatisticDetailExer;
 import neo.vn.test365children.Models.Sticker;
+import neo.vn.test365children.Models.TuanDamua;
 import neo.vn.test365children.Presenter.ImlExerDetail;
-import neo.vn.test365children.Presenter.PresenterExeDetail;
+import neo.vn.test365children.Presenter.ImpBaitap;
+import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
+import neo.vn.test365children.RealmController.RealmController;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 import neo.vn.test365children.Untils.TimeUtils;
 
-public class ActivityExercisesDetail extends BaseActivity implements ImlExerDetail.View {
+public class ActivityExercisesDetail extends BaseActivity implements ImlExerDetail.View, ImpBaitap.View {
     private static final String TAG = "ActivityExercisesDetail";
     private ExerciseAnswer objExercises;
     String sIdDe;
-    PresenterExeDetail mPresenter;
     /*  @BindView(R.id.lable_nhanxet_content)
       TextView txt_nhanxet;
       @BindView(R.id.txt_exer_point)
@@ -83,7 +93,15 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     TextView txt_lable_nhanxet;
     @BindView(R.id.img_sticker)
     ImageView img_sticker;
-
+    private String sStatus;
+    @BindView(R.id.rl_guilaibai)
+    RelativeLayout rl_guilaibai;
+    @BindView(R.id.rl_xembaitap)
+    RelativeLayout rl_xembaitap;
+    @BindView(R.id.btn_guilai)
+    Button btn_guilai;
+    ExerciseAnswer objExer;
+    private PresenterBaitap mPresenterBaitap;
 
     @Override
     public int setContentViewId() {
@@ -93,12 +111,46 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new PresenterExeDetail(this);
+        mPresenterBaitap = new PresenterBaitap(this);
+        mRealm = RealmController.getInstance().getRealm();
         initData();
         initEvent();
     }
 
     private void initEvent() {
+        btn_guilai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (objExer != null) {
+                    if (objExer.getsId_userMe() == null)
+                        return;
+                    if (objExer.getsId_userCon() == null)
+                        return;
+                    if (objExer.getsId_exercise() == null)
+                        return;
+                    if (objExer.getsTimebatdaulambai() == null)
+                        return;
+                    if (objExer.getsTimebatdaulambai() == null)
+                        return;
+                    if (objExer.getsTimeketthuclambai() == null)
+                        return;
+                    if (objExer.getsThoiluonglambai() == null)
+                        return;
+                    if (objExer.getsKieunopbai() == null)
+                        return;
+                    if (objExer.getsPoint() == null)
+                        return;
+                    if (objExer.getsDetailExercise() == null)
+                        return;
+                    showDialogLoading();
+                    mPresenterBaitap.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise(),
+                            objExer.getsTimebatdaulambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
+                            objExer.getsThoiluonglambai(), objExer.getsKieunopbai(), objExer.getsPoint(),
+                            objExer.getsDetailExercise());
+                }
+
+            }
+        });
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,18 +184,178 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(imageView10);
         Glide.with(this).load(R.drawable.bg_exer_nhatxet).into(img_title_exe_detail);
         Glide.with(this).load(R.drawable.exer_bg_ketqua2).into(imageView11);
-
+        if (App.mExerciseReview != null) {
+            objExer = App.mExerciseReview;
+        }
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         sIdDe = getIntent().getStringExtra(Constants.KEY_SEND_EXERCISES_DETAIL);
-        showDialogLoading();
-        mPresenter.api_get_des_exercises(sUserMe, sUserCon, sIdDe);
-        mPresenter.api_get_report_exercises(sUserMe, sUserCon, sIdDe);
+        sStatus = getIntent().getStringExtra(Constants.KEY_SEND_EXERCISES_DETAIL_STATUS);
+        if (sIdDe != null) {
+            showDialogLoading();
+          /*  mPresenter.api_get_des_exercises(sUserMe, sUserCon, sIdDe);
+            mPresenter.api_get_report_exercises(sUserMe, sUserCon, sIdDe);*/
+            mPresenterBaitap.get_exe_detail_taken(sUserMe, sUserCon, sIdDe);
+        }
+        if (sStatus != null) {
+            if (sStatus.equals("2")) {
+                rl_guilaibai.setVisibility(View.VISIBLE);
+            } else if (sStatus.equals("3"))
+                rl_guilaibai.setVisibility(View.GONE);
+        }
+
+    }
+
+    @Override
+    public void show_list_list_buy(List<TuanDamua> mLis) {
+
+    }
+
+    @Override
+    public void show_list_get_part(ResponDetailExer objDetailExer) {
+
     }
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
         hideDialogLoading();
+    }
+
+    @Override
+    public void show_get_excercise_needed(ResponseObjWeek objResponWeek) {
+
+    }
+
+    @Override
+    public void show_get_excercise_expired(ResponseObjWeek objResponWeek) {
+
+    }
+
+    @Override
+    public void show_start_taken(ErrorApi mLis) {
+
+    }
+
+    Realm mRealm;
+
+    @Override
+    public void show_submit_execercise(ErrorApi mLis) {
+        hideDialogLoading();
+        if (mLis.getsERROR().equals("0000")) {
+            Log.i(TAG, "show_submit_execercise: success");
+            objExer.setIsTrangthailambai("3");
+            mRealm.beginTransaction();
+            mRealm.copyToRealmOrUpdate(objExer);
+            mRealm.commitTransaction();
+            rl_guilaibai.setVisibility(View.GONE);
+            showDialogNotify("Thông báo", mLis.getsRESULT());
+        } else {
+            showDialogNotify("Lỗi", mLis.getsRESULT());
+        }
+    }
+
+    String sBaseUrl = "https://content1.home365.online/upload///image/sticker/sticker1//";
+
+    @Override
+    public void show_detail_taken(ResponDetailTakenExercise objRes) {
+        hideDialogLoading();
+        if (objRes != null && objRes.getDETAILS() != null) {
+            DetailExercise obj = objRes.getDETAILS();
+            txt_debai.setText(Html.fromHtml(obj.getsNAME()));
+            if (obj.getSTICKER() != null) {
+                String sUrlImager = sBaseUrl + obj.getSTICKER();
+                Glide.with(this).load(sUrlImager)
+                        // .placeholder(R.drawable.sticker)
+                        .into(img_sticker);
+            }
+            if (objExer.getsTimebatdaulambai() != null) {
+                txt_start_time.setText("Thời gian bắt đầu: " + objExer.getsTimebatdaulambai());
+            }
+            if (obj.getsPOINT() != null && obj.getsPOINT().length() > 0) {
+                String s = StringUtil.format_point(Float.parseFloat(obj.getsPOINT()));
+                txt_point.setText(s + " ĐIỂM");
+            }
+            if (objExer.getsTimeketthuclambai() != null && objExer.getsTimeketthuclambai().length() > 0) {
+                txt_duration_time.setText("Thời gian kết thúc: " + objExer.getsTimeketthuclambai());
+
+              /*  txt_duration_time.setText("Thời gian làm bài: "
+                        + TimeUtils.formatTime_Complete(iDuration));*/
+            }
+            if (obj.getRECOMMENT_MOTHER() != null) {
+                txt_exer_comment_mother.setText(obj.getRECOMMENT_MOTHER());
+            }
+           /* if (obj.getsDURATION() != null && obj.getsDURATION().length() > 0) {
+                int iDuration = Integer.parseInt(obj.getsDURATION()) * 1000;
+                txt_duration_time.setText("Thời gian làm bài: "
+                        + TimeUtils.formatTime_Complete(iDuration));
+            }
+            if (obj.getsRECOMMENT_MOTHER() != null) {
+                txt_exer_comment_mother.setText(obj.getsRECOMMENT_MOTHER());
+            }
+            if (obj.getsSTICKER_ID() != null && obj.getsSTICKER_ID().length() > 0) {
+                Sticker objSticker = new Sticker();
+                for (Sticker objs : App.mListSticker) {
+                    if (objs.getsID().equals(obj.getsSTICKER_ID()))
+                        objSticker = objs;
+                }
+                Glide.with(this).load(Config.URL_IMAGE + objSticker.getsPATH())
+                        .placeholder(R.drawable.sticker)
+                        .into(img_sticker);
+            }*/
+            switch (obj.getsSUBJECT_ID()) {
+                case "1":
+                    // txt_monhoc.setText("Môn học: Toán");
+                    txt_lable_exer.setText("Môn Toán - Lớp " + obj.getsLEVEL_ID() + " - Tuần " + obj.getsWEEK_ID());
+                    break;
+                case "2":
+                    // txt_monhoc.setText("Môn học: Tiếng Việt");
+                    txt_lable_exer.setText("Môn Tiếng Việt - Lớp " + obj.getsLEVEL_ID() + " - Tuần " + obj.getsWEEK_ID());
+                    break;
+                case "3":
+                    // txt_monhoc.setText("Môn học: Tiếng Anh");
+                    txt_lable_exer.setText("Môn Tiếng Anh - Lớp " + obj.getsLEVEL_ID() + " - Tuần " + obj.getsWEEK_ID());
+                    break;
+            }
+            StatisticDetailExer objStatis = obj.getObjStatistic();
+            if (objStatis.getsCUNGLAM() != null) {
+                int cuglam = Integer.parseInt(objStatis.getsCUNGLAM());
+                if (cuglam > 0)
+                    txt_bancunglam.setText("Có " + objStatis.getsCUNGLAM() + " bạn cùng làm bài thi này");
+                else
+                    txt_bancunglam.setText("Có 0 bạn cùng làm bài thi này");
+            } else
+                txt_bancunglam.setText("Có 0 bạn cùng làm bài thi này");
+            if (objStatis.getsCUNGTRUONG() != null && objStatis.getsCUNGTRUONG().length() > 0) {
+                int cugtruong = Integer.parseInt(objStatis.getsCUNGTRUONG());
+                if (cugtruong > 0)
+                    txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia: " + objStatis.getsCUNGTRUONG());
+                else
+                    txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia: 0");
+            } else
+                txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia: 0");
+            if (objStatis.getsCUNGLOP() != null && objStatis.getsCUNGLOP().length() > 0) {
+                int cugtruong = Integer.parseInt(objStatis.getsCUNGLOP());
+                if (cugtruong > 0)
+                    txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: " + objStatis.getsCUNGLOP());
+                else
+                    txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: 0");
+            } else
+                txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: 0");
+            if (objStatis.getsCAONHAT() != null) {
+                txt_caonhat.setText(StringUtil.format_point(Float.parseFloat(objStatis.getsCAONHAT())) + " ĐIỂM");
+            } else {
+                txt_caonhat.setText("0 ĐIỂM");
+            }
+            if (objStatis.getsTRUNGBINH() != null)
+                txt_trungbinh.setText(StringUtil.format_point(Float.parseFloat(objStatis.getsTRUNGBINH())) + " ĐIỂM");
+            else
+                txt_trungbinh.setText("0 ĐIỂM");
+            if (objStatis.getsTHAPNHAT() != null) {
+                txt_thapnhat.setText(StringUtil.format_point(Float.parseFloat(objStatis.getsTHAPNHAT())) + " ĐIỂM");
+            } else {
+                txt_thapnhat.setText("0 ĐIỂM");
+            }
+        } else showAlertDialog("Lỗi", objRes.getsRESULT());
     }
 
     @Override

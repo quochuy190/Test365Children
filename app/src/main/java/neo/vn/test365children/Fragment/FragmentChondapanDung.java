@@ -156,6 +156,7 @@ public class FragmentChondapanDung extends BaseFragment
         initLoadImage();
         initData();
         btn_xemdiem.setEnabled(false);
+        btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
         initEvent();
         return view;
     }
@@ -512,6 +513,7 @@ public class FragmentChondapanDung extends BaseFragment
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
             btn_xemdiem.setEnabled(true);
+            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);

@@ -1,10 +1,8 @@
 package neo.vn.test365children.Presenter;
 
-import java.util.List;
-
 import neo.vn.test365children.Models.ErrorApi;
-import neo.vn.test365children.Models.GameTNNL;
-import neo.vn.test365children.Models.GameTrieuPhuTriThuc;
+import neo.vn.test365children.Models.ResponGameTNNL;
+import neo.vn.test365children.Models.ResponGetGameTPTT;
 
 public interface ImlGetGameTptt {
     interface Presenter {
@@ -21,17 +19,17 @@ public interface ImlGetGameTptt {
     }
 
     interface View {
-        void show_get_game_tptt(List<GameTrieuPhuTriThuc> mLis);
+        void show_get_game_tptt(ResponGetGameTPTT objGameTPTT);
 
-        void show_error_api(List<ErrorApi> mLis);
+        void show_error_api(ErrorApi mLis);
 
-        void show_start_tptt(List<ErrorApi> mLis);
+        void show_start_tptt(ErrorApi mLis);
 
-        void show_submit_tptt(List<ErrorApi> mLis);
+        void show_submit_tptt(ErrorApi mLis);
 
-        void show_get_game_tnnl(List<GameTNNL> mLis);
+        void show_get_game_tnnl(ResponGameTNNL mLis);
 
-        void show_submit_game_tnnl(List<ErrorApi> mLis);
+        void show_submit_game_tnnl(ErrorApi mLis);
 
 
     }

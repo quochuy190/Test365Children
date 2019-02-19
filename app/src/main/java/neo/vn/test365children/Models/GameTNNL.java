@@ -12,19 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameTNNL {
-    @SerializedName("ERROR")
-    String sERROR;
-    @SerializedName("MESSAGE")
-    String sMESSAGE;
-    @SerializedName("RESULT")
-    String sRESULT;
-
     @SerializedName("EXCERCISE_ID")
     String sEXCERCISE_ID;
     @SerializedName("ID")
     String sID;
     @SerializedName("PART_ID")
     String sPART_ID;
+    @SerializedName("LEVEL_ID")
+    String sLEVEL_ID;
     @SerializedName("HTML_A")
     String sHTML_A;
     @SerializedName("HTML_B")
@@ -107,28 +102,12 @@ public class GameTNNL {
         this.sHTML_D = sHTML_D;
     }
 
-    public String getsERROR() {
-        return sERROR;
+    public String getsLEVEL_ID() {
+        return sLEVEL_ID;
     }
 
-    public void setsERROR(String sERROR) {
-        this.sERROR = sERROR;
-    }
-
-    public String getsMESSAGE() {
-        return sMESSAGE;
-    }
-
-    public void setsMESSAGE(String sMESSAGE) {
-        this.sMESSAGE = sMESSAGE;
-    }
-
-    public String getsRESULT() {
-        return sRESULT;
-    }
-
-    public void setsRESULT(String sRESULT) {
-        this.sRESULT = sRESULT;
+    public void setsLEVEL_ID(String sLEVEL_ID) {
+        this.sLEVEL_ID = sLEVEL_ID;
     }
 }
 

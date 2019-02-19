@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,21 +21,28 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import neo.vn.test365children.Activity.ReviewExercises.ActivityBaitapdalam;
 import neo.vn.test365children.Adapter.AdapterBaitapQuahan;
 import neo.vn.test365children.Adapter.AdapterItemMenuLambaitap;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.Baitap_Tuan;
-import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.ErrorApi;
+import neo.vn.test365children.Models.ObjLogin;
+import neo.vn.test365children.Models.ResponDetailExer;
+import neo.vn.test365children.Models.ResponDetailTakenExercise;
+import neo.vn.test365children.Models.ResponseObjWeek;
 import neo.vn.test365children.Models.TuanDamua;
+import neo.vn.test365children.Presenter.ImlLogin;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
+import neo.vn.test365children.Presenter.PresenterLogin;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
 
-public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
+public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, ImlLogin.View {
     @BindView(R.id.recycle_menu_baitap)
     RecyclerView recycleBaitap;
     @BindView(R.id.recycle_baitap_tuan)
@@ -54,16 +62,21 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
     TextView txt_notify_quahan;
     @BindView(R.id.img_back)
     ImageView img_back;
+    @BindView(R.id.btn_baitapdalam)
+    Button btn_baitapdalam;
+    PresenterLogin mPresenterLogin;
 
     @Override
     public int setContentViewId() {
-        return R.layout.activity_menu_baitap;
+        return R.layout.activity_menu_lambaitap;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterBaitap(this);
+        mPresenterLogin = new PresenterLogin(this);
+        Glide.with(this).load(R.drawable.background_baitaptuan).into(img_background);
         initbaitaptuan();
         init_baitap_quahan();
         initEvent();
@@ -84,6 +97,12 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
     }
 
     private void initEvent() {
+        btn_baitapdalam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ActivityMenuBaitap.this, ActivityBaitapdalam.class));
+            }
+        });
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,18 +126,21 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
     }
 
     PresenterBaitap mPresenter;
-    String sUserMe, sUserCon, sMon;
+    String sUserMe = "", sUserCon = "", sMon, sPassWord = "";
 
     private void initData() {
-        Glide.with(this).load(R.drawable.background_baitaptuan).into(img_background);
         if (isNetwork()) {
             sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
             sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
             showDialogLoading();
             mPresenter.get_api_get_excercise_needed(sUserMe, sUserCon, get_current_time());
-            mPresenter.get_api_get_excercise_expired(sUserMe, sUserCon);
-        } else
-            showDialogNotify(getString(R.string.error_network), getString(R.string.error_network_message));
+            if (sUserMe.equals(Constants.KEY_SAVE_USER_MOTHER_TRY)) {
+                recycleBaitap.setVisibility(View.INVISIBLE);
+                txt_notify_quahan.setVisibility(View.VISIBLE);
+                txt_notify_quahan.setText("Con đã hoàn thành hết bài tập các tuần trước");
+            } else
+                mPresenter.get_api_get_excercise_expired(sUserMe, sUserCon);
+        }
     }
 
     private void init_baitap_quahan() {
@@ -185,52 +207,94 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
     }
 
     @Override
-    public void show_list_get_part(List<Cauhoi> mLis) {
+    public void show_list_get_part(ResponDetailExer objDetailExer) {
         hideDialogLoading();
     }
+
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
         //showDialogNotify("Lỗi", "Lỗi kết nối, kiểm tra lại kết nối mạng hoặc wifi của bạn");
         hideDialogLoading();
+        //showAlertErrorNetwork();
     }
 
     @Override
-    public void show_get_excercise_needed(List<Baitap_Tuan> mLis) {
+    public void show_get_excercise_needed(ResponseObjWeek obj) {
         hideDialogLoading();
         lisBaitap.clear();
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
-            if (sUserMe.equals("quochuy190") || sUserMe.equals("maitham123")) {
-                lisBaitap.addAll(mLis);
-            } else {
-                boolean isMuabai = false;
-                for (Baitap_Tuan obj : mLis) {
-                    if (obj.getsSTATE_BUY().equals("1") && obj.getsSTATUS_TAKEN().equals("0")) {
-                        lisBaitap.add(obj);
-                    }
-                    if (obj.getsSTATUS_TAKEN().equals("0") && obj.getsSTATE_BUY().equals("0")) {
-                        isMuabai = true;
-                    }
+        if (obj.getsERROR().equals("0000") && obj.getsINFO() != null) {
+            boolean isMuabai = false;
+            for (Baitap_Tuan objWeek : obj.getsINFO()) {
+                if (objWeek.getsSTATE_BUY().equals("1")) {
+                    lisBaitap.add(objWeek);
                 }
-                if (lisBaitap.size() > 0) {
-                    recycle_baitap_tuan.setVisibility(View.VISIBLE);
-                    txt_notify_need.setVisibility(View.GONE);
+            }
+            if (lisBaitap.size() > 0) {
+                recycle_baitap_tuan.setVisibility(View.VISIBLE);
+                txt_notify_need.setVisibility(View.GONE);
+            } else {
+                txt_notify_need.setVisibility(View.VISIBLE);
+                recycle_baitap_tuan.setVisibility(View.INVISIBLE);
+                if (obj.getsINFO().size() > 0) {
+                    txt_notify_need.setText("Mẹ chưa tải bài tập tuần này, con nhắc mẹ tải nhé.");
                 } else {
-                    txt_notify_need.setVisibility(View.VISIBLE);
-                    recycle_baitap_tuan.setVisibility(View.INVISIBLE);
-                    if (!isMuabai) {
-                        txt_notify_need.setText("Con đã làm hết bài tập tuần này rồi");
-                    } else {
-                        txt_notify_need.setText("Mẹ chưa tải bài tập tuần này, con nhắc mẹ tải nhé.");
-                    }
+                    txt_notify_need.setText("Con đã làm hết bài tập tuần này rồi");
+                }
+                if (sUserMe.equals(Constants.KEY_SAVE_USER_MOTHER_TRY)) {
+                    showDialogComfirm_two_button("Thông báo",
+                            "Bài tập làm thử đã hết, con cần đăng nhập để làm bài tập tiếp nhé.",
+                            false, new ClickDialog() {
+                                @Override
+                                public void onClickYesDialog() {
+                                    Intent intent = new Intent(ActivityMenuBaitap.this,
+                                            ActivityLogin.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onClickNoDialog() {
+
+                                }
+                            }, "Đăng nhập", "Đóng");
                 }
             }
             adapter_baitaptuan.notifyDataSetChanged();
             recycleBaitap.scrollToPosition(0);
+        } else if (obj.getsERROR().equals("0002")) {
+            sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+            sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+            sPassWord = SharedPrefs.getInstance().get(Constants.KEY_PASSWORD, String.class);
+            showDialogLoading();
+            mPresenterLogin.api_login_restful(sUserMe, sUserCon, sPassWord);
+        } else {
+            showDialogNotify("Thông báo", obj.getsRESULT());
         }
     }
 
     @Override
+    public void show_get_excercise_expired(ResponseObjWeek objResponWeek) {
+        hideDialogLoading();
+        lisBaitap_quanhan.clear();
+        if (objResponWeek.getsERROR().equals("0000")) {
+            if (objResponWeek.getsINFO() != null) {
+                lisBaitap_quanhan.addAll(objResponWeek.getsINFO());
+            }
+            if (lisBaitap_quanhan.size() > 0) {
+                recycleBaitap.setVisibility(View.VISIBLE);
+                txt_notify_quahan.setVisibility(View.GONE);
+            } else {
+                recycleBaitap.setVisibility(View.INVISIBLE);
+                txt_notify_quahan.setVisibility(View.VISIBLE);
+                txt_notify_quahan.setText("Con đã hoàn thành hết bài tập các tuần trước");
+            }
+            adapter.notifyDataSetChanged();
+            recycleBaitap.scrollToPosition(0);
+        }
+    }
+
+ /*   @Override
     public void show_get_excercise_expired(List<Baitap_Tuan> mLis) {
         hideDialogLoading();
         lisBaitap_quanhan.clear();
@@ -257,16 +321,51 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View {
             recycleBaitap.scrollToPosition(0);
 
         }
-    }
+    }*/
 
     @Override
-    public void show_start_taken(List<ErrorApi> mLis) {
+    public void show_start_taken(ErrorApi mLis) {
         hideDialogLoading();
     }
 
     @Override
+    public void show_submit_execercise(ErrorApi mLis) {
+
+    }
+
+    @Override
+    public void show_detail_taken(ResponDetailTakenExercise obj) {
+
+    }
+
+    @Override
+    public void show_api_login(ObjLogin mLis) {
+        hideDialogLoading();
+        if (mLis != null) {
+            if (mLis.getsERROR().equals("0000")) {
+                SharedPrefs.getInstance().put(Constants.KEY_SAVE_CHIL, mLis);
+                initData();
+                //start_home_activity();
+            } else {
+                //  DialogUtil.dontDialog(this, "Lỗi", mLis.getsRESULT());
+                showDialogNotify("Lỗi", mLis.getsRESULT());
+            }
+        }
+    }
+
+    @Override
+    public void show_update_infochil(ErrorApi obj) {
+        hideDialogLoading();
+    }
+
+    @Override
+    public void show_error_api(ErrorApi mLis) {
+        hideDialogLoading();
+    }
+
+   /* @Override
     public void show_submit_execercise(List<ErrorApi> mLis) {
         hideDialogLoading();
 
-    }
+    }*/
 }

@@ -118,7 +118,9 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
+
     private int current;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +139,7 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
         initImage(arrayImage[iRandom]);
         initData();
         btn_xemdiem.setEnabled(false);
+        btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
         initEvent();
         return view;
     }
@@ -224,6 +227,7 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
             }
         });
     }
+
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
                 != null && mCauhoi.getsSubNumberCau().equals("1")) {
@@ -342,15 +346,19 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
         }, 2000);
 
     }
+
     private void animation_anwsertrue(ImageView img) {
         Animation animationRotale = AnimationUtils.loadAnimation(getContext(), R.anim.animation_image_batsau_dung);
         img.startAnimation(animationRotale);
     }
+
     boolean isdouble_click = false;
+
     private void anwser() {
         if (!isdouble_click) {
             isdouble_click = true;
             btn_xemdiem.setEnabled(true);
+            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
             if (sAnwser.length() > 0) {

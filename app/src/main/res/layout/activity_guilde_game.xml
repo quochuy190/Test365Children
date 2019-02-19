@@ -45,8 +45,7 @@
             android:id="@+id/img_bang_guide_game"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-         />
+            android:scaleType="fitXY" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -54,9 +53,9 @@
             android:layout_margin="@dimen/margin_top_baidoc">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -66,14 +65,15 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_18sp"
                     android:textStyle="bold" />
+
                 <TextView
-                    android:text="@string/txt_guide_game_tptt"
-                    android:textSize="@dimen/text_17sp"
-                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp5"
                     android:padding="@dimen/dp5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:text="@string/txt_guide_game_tptt"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_17sp" />
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
@@ -84,7 +84,7 @@
         android:layout_width="@dimen/dp250"
         android:layout_height="@dimen/btn_start_game"
         android:layout_marginBottom="@dimen/dp10"
-        android:background="@drawable/btn_2"
+        android:background="@drawable/spr_orange_click"
         android:fontFamily="@font/font1"
         android:text="Bắt đầu"
         android:textColor="@color/white"

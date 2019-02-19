@@ -8,8 +8,7 @@
         android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_game_tnnl" />
+        android:scaleType="fitXY" />
 
     <ImageView
         android:layout_width="@dimen/width_txt_tnnl"
@@ -52,27 +51,28 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:padding="@dimen/dp5"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="6">
+                android:layout_weight="6"
+                android:padding="@dimen/dp5">
+
                 <ImageView
-                    android:src="@drawable/tnnh_broad"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:src="@drawable/tnnh_broad" />
 
                 <Button
                     android:id="@+id/btn_easy"
-                    android:fontFamily="@font/font1"
-                    android:textSize="@dimen/btn_level_font"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:text="Dễ"
+                    android:layout_width="@dimen/btn_level_game_width"
+                    android:layout_height="@dimen/btn_level_game_height"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/btn_level_game_margin_top"
-                    android:background="@drawable/btn_3"
-                    android:layout_width="@dimen/btn_level_game_width"
-                    android:layout_height="@dimen/btn_level_game_height" />
+                    android:background="@drawable/spr_button_green_click"
+                    android:fontFamily="@font/font1"
+                    android:text="Dễ"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/btn_level_font"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -94,27 +94,28 @@
                 android:layout_weight="1"></LinearLayout>
 
             <RelativeLayout
-                android:padding="@dimen/dp5"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="6">
+                android:layout_weight="6"
+                android:padding="@dimen/dp5">
+
                 <ImageView
-                    android:src="@drawable/tnnh_broad"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:src="@drawable/tnnh_broad" />
 
                 <Button
                     android:id="@+id/btn_normal"
-                    android:fontFamily="@font/font1"
-                    android:textSize="@dimen/btn_level_font"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:text="Trung bình"
+                    android:layout_width="@dimen/btn_level_game_width"
+                    android:layout_height="@dimen/btn_level_game_height"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/btn_level_game_margin_top"
-                    android:background="@drawable/btn_2"
-                    android:layout_width="@dimen/btn_level_game_width"
-                    android:layout_height="@dimen/btn_level_game_height" />
+                    android:background="@drawable/spr_button_oragen_click"
+                    android:fontFamily="@font/font1"
+                    android:text="Trung bình"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/btn_level_font"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -126,27 +127,28 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:padding="@dimen/dp5"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="6">
+                android:layout_weight="6"
+                android:padding="@dimen/dp5">
+
                 <ImageView
-                    android:src="@drawable/tnnh_broad"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:src="@drawable/tnnh_broad" />
 
                 <Button
                     android:id="@+id/btn_hard"
-                    android:fontFamily="@font/font1"
-                    android:textSize="@dimen/btn_level_font"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:text="Khó"
+                    android:layout_width="@dimen/btn_level_game_width"
+                    android:layout_height="@dimen/btn_level_game_height"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/btn_level_game_margin_top"
-                    android:background="@drawable/btn_1"
-                    android:layout_width="@dimen/btn_level_game_width"
-                    android:layout_height="@dimen/btn_level_game_height" />
+                    android:background="@drawable/spr_button_red_click"
+                    android:fontFamily="@font/font1"
+                    android:text="Khó"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/btn_level_font"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -160,12 +162,12 @@
 
     <ImageView
         android:id="@+id/img_back"
-        android:layout_width="@dimen/dp40"
-        android:layout_height="@dimen/dp40"
+        android:layout_width="@dimen/height_keyboard_sudoku"
+        android:layout_height="@dimen/height_keyboard_sudoku"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/img_back_menu"
+        android:src="@drawable/ic_back_menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

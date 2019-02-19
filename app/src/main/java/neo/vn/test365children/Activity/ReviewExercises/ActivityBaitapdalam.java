@@ -85,7 +85,7 @@ public class ActivityBaitapdalam extends BaseActivity {
         mLisTToan = new ArrayList<>();
         mLisTV = new ArrayList<>();
         mLisTAnh = new ArrayList<>();
-        Glide.with(this).load(R.drawable.bg_lambai).into(imageView5);
+        Glide.with(this).load(R.drawable.bg_doc_hieu).into(imageView5);
         lisExercise = RealmController.getInstance().getExercises();
         if (lisExercise != null)
             Log.i(TAG, "initData: " + lisExercise.size());
@@ -181,6 +181,8 @@ public class ActivityBaitapdalam extends BaseActivity {
             public void OnItemClickListener(int position) {
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTToan.get(position).getsId_exercise());
+                intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_STATUS, mLisTToan.get(position).getIsTrangthailambai());
+                set_obj_realm(mLisTToan.get(position));
                 App.mLisCauhoi.addAll(mLisTToan.get(position).getmLisCauhoi());
                 startActivity(intent);
             }
@@ -195,6 +197,8 @@ public class ActivityBaitapdalam extends BaseActivity {
             public void OnItemClickListener(int position) {
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTV.get(position).getsId_exercise());
+                intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_STATUS, mLisTV.get(position).getIsTrangthailambai());
+                set_obj_realm(mLisTV.get(position));
                 App.mLisCauhoi.addAll(mLisTV.get(position).getmLisCauhoi());
                 startActivity(intent);
             }
@@ -209,6 +213,9 @@ public class ActivityBaitapdalam extends BaseActivity {
             public void OnItemClickListener(int position) {
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTAnh.get(position).getsId_exercise());
+                intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_STATUS, mLisTAnh.get(position).getIsTrangthailambai());
+                //intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_CONTENT, mLisTAnh.get(position).getsDetailExercise());
+                set_obj_realm(mLisTAnh.get(position));
                 App.mLisCauhoi.addAll(mLisTAnh.get(position).getmLisCauhoi());
                 startActivity(intent);
             }
@@ -219,4 +226,26 @@ public class ActivityBaitapdalam extends BaseActivity {
             }
         });
     }
+
+    private void set_obj_realm(ExerciseAnswer exerciseAnswer) {
+        ExerciseAnswer obj = new ExerciseAnswer();
+        obj.setsDetailExercise(exerciseAnswer.getsDetailExercise());
+        obj.setIsTrangthailambai(exerciseAnswer.getIsTrangthailambai());
+        obj.setsThoiluonglambai(exerciseAnswer.getsThoiluonglambai());
+        obj.setsId_userMe(exerciseAnswer.getsId_userMe());
+        obj.setsId_userCon(exerciseAnswer.getsId_userCon());
+        obj.setsPoint(exerciseAnswer.getsPoint());
+        obj.setsMonhoc(exerciseAnswer.getsMonhoc());
+        obj.setmLisCauhoi(exerciseAnswer.getmLisCauhoi());
+        obj.setsId_exercise(exerciseAnswer.getsId_exercise());
+        obj.setsIdTuan(exerciseAnswer.getsIdTuan());
+        obj.setsKieunopbai(exerciseAnswer.getsKieunopbai());
+        obj.setsTimebatdaulambai(exerciseAnswer.getsTimebatdaulambai());
+        obj.setsThoiluonglambai(exerciseAnswer.getsThoiluonglambai());
+        obj.setsTimequydinh(exerciseAnswer.getsTimequydinh());
+        obj.setsTimeketthuclambai(exerciseAnswer.getsTimeketthuclambai());
+        obj.setsTrangthainopbai(exerciseAnswer.getsTrangthainopbai());
+        App.mExerciseReview = obj;
+    }
+
 }

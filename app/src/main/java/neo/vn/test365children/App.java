@@ -30,11 +30,13 @@ public class App extends Application {
     public static List<Cauhoi> mLisCauhoi;
     public static List<GameTrieuPhuTriThuc> mLisGameTPTT;
     public static ExerciseAnswer mExercise;
+    public static ExerciseAnswer mExerciseReview;
     public static List<GameTNNL> mLisGameTNNL;
     public static String sTime = "";
     public static List<Sticker> mListSticker;
     public static ObjLogin sObjLogin;
     public static final String CHANNEL_ID = "home365kid";
+
     @Override
     public void onCreate() {
         super.onCreate();

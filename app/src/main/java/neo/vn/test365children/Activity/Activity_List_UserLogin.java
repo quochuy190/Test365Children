@@ -2,8 +2,6 @@ package neo.vn.test365children.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,21 +9,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import io.realm.Realm;
-import io.realm.RealmResults;
 import neo.vn.test365children.Adapter.AdapterLisUserLogin;
 import neo.vn.test365children.Base.BaseActivity;
-import neo.vn.test365children.Config.Constants;
-import neo.vn.test365children.Listener.ItemClickListener;
-import neo.vn.test365children.Listener.ListenerDeleteItem;
 import neo.vn.test365children.Models.ObjLogin;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
-import neo.vn.test365children.Untils.SharedPrefs;
 
 public class Activity_List_UserLogin extends BaseActivity {
     List<ObjLogin> mLis;
@@ -78,8 +70,8 @@ public class Activity_List_UserLogin extends BaseActivity {
     }
 
     private void init() {
-        mLis = new ArrayList<>();
-        mLis = mRealm.where(ObjLogin.class).findAll();
+       /* mLis = new ArrayList<>();
+     *//*   mLis = mRealm.where(ObjLogin.class).findAll();*//*
         if (mLis.size() > 0) {
             adapter = new AdapterLisUserLogin(mLis, this);
             mLayoutManager = new GridLayoutManager(this,
@@ -133,6 +125,6 @@ public class Activity_List_UserLogin extends BaseActivity {
                     adapter.notifyDataSetChanged();
                 }
             });
-        }
+        }*/
     }
 }

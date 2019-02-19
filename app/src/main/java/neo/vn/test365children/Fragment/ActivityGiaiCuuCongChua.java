@@ -17,6 +17,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.Random;
 
 import butterknife.BindView;
@@ -24,6 +28,7 @@ import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
+import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
@@ -105,11 +110,38 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
         Glide.with(this).load(arr_image[iRandom]).into(img_background);
         initData();
         btn_xemdiem.setEnabled(false);
-
+        btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
         initEvent();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     private boolean isClickXemdiem = false;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.message.equals("close_princess")) {
+            if (sAnwser != null && sAnwser.equals(mCauhoi.getsANSWER())) {
+                SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, true);
+                SharedPrefs.getInstance().put(Constants.KEY_SEND_CAUHOI_CONGCHUA, sAnwser);
+                finish();
+            } else {
+                SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, false);
+                SharedPrefs.getInstance().put(Constants.KEY_SEND_CAUHOI_CONGCHUA, sAnwser);
+                finish();
+            }
+        }
+    }
 
     private void reload() {
         webview_debai.reload();
@@ -288,6 +320,7 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
             btn_xemdiem.setEnabled(true);
+            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_white).into(img_checkbox_A);
@@ -327,7 +360,6 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
             } else {
                 SharedPrefs.getInstance().put(Constants.KEY_SEND_TRALOI, false);
                 SharedPrefs.getInstance().put(Constants.KEY_SEND_CAUHOI_CONGCHUA, sAnwser);
-
                 finish();
             }
         } else showDialogNotify("Thông báo", "Bạn chưa chọn đáp án nào");

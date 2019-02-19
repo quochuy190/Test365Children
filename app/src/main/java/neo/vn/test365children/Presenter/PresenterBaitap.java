@@ -2,19 +2,21 @@ package neo.vn.test365children.Presenter;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import neo.vn.test365children.ApiService.ApiServiceIml;
 import neo.vn.test365children.Listener.CallbackData;
-import neo.vn.test365children.Models.Baitap_Tuan;
-import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.ErrorApi;
+import neo.vn.test365children.Models.ResponDetailExer;
+import neo.vn.test365children.Models.ResponDetailTakenExercise;
+import neo.vn.test365children.Models.ResponseObjWeek;
 
 public class PresenterBaitap implements ImpBaitap.Presenter {
     private static final String TAG = "PresenterBaitap";
@@ -63,46 +65,42 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
     @Override
     public void get_api_get_part(String sUserMe, String sUserCon, String sIdDebai) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "get_part");
-        mMap.put("Provider", "default");
-        mMap.put("ParamSize", "3");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
-        mMap.put("P3", sIdDebai);
-        mApiService.getApiService(new CallbackData<String>() {
+        String sService = "get_exe_detail";
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
+        mMap.put("ID_EXCERCISE", sIdDebai);
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
                 Log.i(TAG, "onGetDataErrorFault: " + e);
             }
+
             @Override
             public void onGetDataSuccess(String objT) {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<Cauhoi> mLis = Cauhoi.getList(objT);
-                    mView.show_list_get_part(mLis);
+                    ResponDetailExer obj = new Gson().fromJson(objT, ResponDetailExer.class);
+                    Log.i(TAG, "onGetDataSuccess: " + obj);
+                    //   List<Baitap_Tuan> mLis = Baitap_Tuan.getList(objT);
+                    mView.show_list_get_part(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    mView.show_error_api(null);
-                    Log.i(TAG, "Log_error_api_filght: " + e);
+                    // mView.show_error_api(null);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
     }
 
     @Override
     public void get_api_get_excercise_needed(String sUserMe, String sUserCon, String sDay) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "get_excercise_needed");
-        mMap.put("Provider", "default");
-        mMap.put("ParamSize", "3");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
-        mMap.put("P3", sDay);
+        String sService = "get_excercise_needed";
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
 
-        mApiService.getApiService(new CallbackData<String>() {
-
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
@@ -114,28 +112,25 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<Baitap_Tuan> mLis = Baitap_Tuan.getList(objT);
-                    mView.show_get_excercise_needed(mLis);
+                    ResponseObjWeek obj = new Gson().fromJson(objT, ResponseObjWeek.class);
+                    //   List<Baitap_Tuan> mLis = Baitap_Tuan.getList(objT);
+                    mView.show_get_excercise_needed(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    mView.show_error_api(null);
-                    Log.i(TAG, "Log_error_api_filght: " + e);
+                    // mView.show_error_api(null);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
     }
 
     @Override
     public void get_api_get_excercise_expired(String sUserMe, String sUserCon) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "get_excercise_expired");
-        mMap.put("Provider", "default");
-        mMap.put("ParamSize", "2");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
+        String sService = "get_excercise_expired";
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
 
-        mApiService.getApiService(new CallbackData<String>() {
-
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
@@ -147,31 +142,63 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<Baitap_Tuan> mLis = Baitap_Tuan.getList(objT);
-                    mView.show_get_excercise_expired(mLis);
+                    ResponseObjWeek obj = new Gson().fromJson(objT, ResponseObjWeek.class);
+                    //   List<Baitap_Tuan> mLis = Baitap_Tuan.getList(objT);
+                    mView.show_get_excercise_expired(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
-                    Log.i(TAG, "Log_error_api_filght: " + e);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
+    }
+
+    @Override
+    public void get_exe_detail_taken(String USER_MOTHER, String USER_CHILD, String ID_EXCERCISE) {
+        Map<String, String> mMap = new LinkedHashMap<>();
+        String sService = "get_exe_detail_taken";
+        mMap.put("USER_MOTHER", USER_MOTHER);
+        mMap.put("USER_CHILD", USER_CHILD);
+        mMap.put("ID_EXCERCISE", ID_EXCERCISE);
+
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                mView.show_error_api(null);
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
+                try {
+                    //jArray = new JSONArray(c);
+                    ResponDetailTakenExercise obj = new Gson().fromJson(objT, ResponDetailTakenExercise.class);
+                    //   List<Baitap_Tuan> mLis = Baitap_Tuan.getList(objT);
+                    mView.show_detail_taken(obj);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mView.show_error_api(null);
+                }
+            }
+        }, sService, mMap);
     }
 
     @Override
     public void get_api_start_taken(String sUserMe, String sUserCon, String sId_baitap,
                                     String time_lambai, String thoiluonglambai) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "start_taken");
+        /*mMap.put("Service", "start_taken");
         mMap.put("Provider", "default");
-        mMap.put("ParamSize", "5");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
-        mMap.put("P3", sId_baitap);
-        mMap.put("P4", time_lambai);
-        mMap.put("P5", thoiluonglambai);
+        mMap.put("ParamSize", "5");*/
+        String sService = "start_taken";
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
+        mMap.put("ID_EXCERCISE", sId_baitap);
+        mMap.put("START_TIME", time_lambai);
+        mMap.put("DURATION", thoiluonglambai);
 
-        mApiService.getApiService(new CallbackData<String>() {
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
 
             @Override
             public void onGetDataErrorFault(Exception e) {
@@ -183,16 +210,16 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
             public void onGetDataSuccess(String objT) {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
-                    //jArray = new JSONArray(c);
-                    List<ErrorApi> mLis = ErrorApi.getList(objT);
-                    mView.show_start_taken(mLis);
+                    ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
+                    //   List<Baitap_Tuan> mLis = Baitap_Tuan.getList(objT);
+                    mView.show_start_taken(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
                     Log.i(TAG, "Log_error_api_filght: " + e);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
 
     }
 
@@ -201,18 +228,19 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
                                           String time_bdlambai, String time_ktlambai, String tong_time_lambai, String sKieunop,
                                           String sDiem, String sDanhsachcau) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
-        mMap.put("P3", sId_baitap);
-        mMap.put("P4", time_giaobai);
-        mMap.put("P5", time_bdlambai);
-        mMap.put("P6", time_ktlambai);
-        mMap.put("P7", tong_time_lambai);
-        mMap.put("P8", sKieunop);
-        mMap.put("P9", sDiem);
-        mMap.put("P10", sDanhsachcau);
-        mApiService.getApiServicePost(new CallbackData<String>() {
+        String sService = "submit_execercise";
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
+        mMap.put("ID_EXCERCISE", sId_baitap);
+        mMap.put("DELIVERY_TIME", time_giaobai);
+        mMap.put("START_TAKE_TIME", time_bdlambai);
+        mMap.put("END_TAKE_TIME", time_ktlambai);
+        mMap.put("DURATION", tong_time_lambai);
+        mMap.put("SUBMIT_TYPE", sKieunop);
+        mMap.put("POINT", sDiem);
+        mMap.put("DETAIL", sDanhsachcau);
 
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
@@ -224,14 +252,14 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<ErrorApi> mLis = ErrorApi.getList(objT);
-                    mView.show_submit_execercise(mLis);
+                    ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
+                    //   List<Baitap_Tuan> mLis = Baitap_Tuan.getList(objT);
+                    mView.show_submit_execercise(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
-                    Log.i(TAG, "Log_error_api_filght: " + e);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
     }
 }

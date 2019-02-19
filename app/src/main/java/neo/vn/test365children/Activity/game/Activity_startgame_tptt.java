@@ -12,15 +12,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.List;
-
 import butterknife.BindView;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.ErrorApi;
-import neo.vn.test365children.Models.GameTNNL;
-import neo.vn.test365children.Models.GameTrieuPhuTriThuc;
+import neo.vn.test365children.Models.ResponGameTNNL;
+import neo.vn.test365children.Models.ResponGetGameTPTT;
 import neo.vn.test365children.Presenter.ImlGetGameTptt;
 import neo.vn.test365children.Presenter.PresenterGame;
 import neo.vn.test365children.R;
@@ -28,7 +26,8 @@ import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 
-public class Activity_startgame_tptt extends BaseActivity implements View.OnClickListener, ImlGetGameTptt.View {
+public class Activity_startgame_tptt extends BaseActivity
+        implements View.OnClickListener, ImlGetGameTptt.View {
     private static final String TAG = "Activity_startgame_tptt";
     @BindView(R.id.relativeLayout5)
     RelativeLayout rl_startgame;
@@ -79,6 +78,22 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
         }, 5000);*/
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            mPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mPlayer != null && !mPlayer.isPlaying()) {
+            mPlayer.start();
+        }
+    }
+
     private void initData() {
         Glide.with(this).load(R.drawable.bg_start_game).into(imageView13);
         //  Glide.with(this).load(R.drawable.icon_trieuphutrithuc_centrer).into(img_stargame);
@@ -106,12 +121,11 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_exit:
-                mPlayer.release();
                 KeyboardUtil.animation_click_button(Activity_startgame_tptt.this, img_btn_exit);
                 finish();
                 break;
             case R.id.btn_play_game:
-                mPlayer.release();
+
                 KeyboardUtil.animation_click_button(Activity_startgame_tptt.this, img_btn_play);
                 /*test */
                 if (sPartId.length() > 0)
@@ -131,53 +145,52 @@ public class Activity_startgame_tptt extends BaseActivity implements View.OnClic
     }
 
     @Override
-    public void show_get_game_tptt(List<GameTrieuPhuTriThuc> mLis) {
+    public void show_get_game_tptt(ResponGetGameTPTT objGetGame) {
         hideDialogLoading();
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+        if (objGetGame != null && objGetGame.getsERROR().equals("0000")) {
             btn_play_game.setEnabled(true);
             App.mLisGameTPTT.clear();
-            App.mLisGameTPTT.addAll(mLis);
-            sPartId = mLis.get(0).getsPART_ID();
+            App.mLisGameTPTT.addAll(objGetGame.getLisInfo());
+            sPartId = objGetGame.getLisInfo().get(0).getsPART_ID();
         } else {
             btn_play_game.setEnabled(true);
-            showAlertDialog("Thông báo", mLis.get(0).getsRESULT());
+            showAlertDialog("Thông báo", objGetGame.getsRESULT());
         }
     }
 
     @Override
-    public void show_error_api(List<ErrorApi> mLis) {
+    public void show_error_api(ErrorApi mLis) {
         btn_play_game.setEnabled(false);
         hideDialogLoading();
         showAlertDialog("Thông báo", "Lỗi hệ thống, mời bạn thử lại sau");
     }
 
     @Override
-    public void show_start_tptt(List<ErrorApi> mLis) {
+    public void show_start_tptt(ErrorApi mLis) {
         hideDialogLoading();
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+        if (mLis != null && mLis.getsERROR().equals("0000")) {
             btn_play_game.setEnabled(true);
             Intent intent = new Intent(Activity_startgame_tptt.this, ActivityGameTrieuphutrithuc.class);
             startActivity(intent);
             finish();
         } else {
             btn_play_game.setEnabled(true);
-            showAlertDialog("Thông báo", mLis.get(0).getsRESULT());
+            showAlertDialog("Thông báo", mLis.getsRESULT());
         }
-
     }
 
     @Override
-    public void show_submit_tptt(List<ErrorApi> mLis) {
+    public void show_submit_tptt(ErrorApi mLis) {
         hideDialogLoading();
     }
 
     @Override
-    public void show_get_game_tnnl(List<GameTNNL> mLis) {
+    public void show_get_game_tnnl(ResponGameTNNL mLis) {
 
     }
 
     @Override
-    public void show_submit_game_tnnl(List<ErrorApi> mLis) {
+    public void show_submit_game_tnnl(ErrorApi mLis) {
 
     }
 

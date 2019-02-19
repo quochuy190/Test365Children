@@ -1,30 +1,36 @@
 package neo.vn.test365children.Activity.game;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-
-import java.util.List;
 
 import butterknife.BindView;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.ErrorApi;
-import neo.vn.test365children.Models.GameTNNL;
-import neo.vn.test365children.Models.GameTrieuPhuTriThuc;
+import neo.vn.test365children.Models.ResponGameTNNL;
+import neo.vn.test365children.Models.ResponGetGameTPTT;
+import neo.vn.test365children.Presenter.ImlFeedback;
 import neo.vn.test365children.Presenter.ImlGetGameTptt;
+import neo.vn.test365children.Presenter.PresenterFeedback;
 import neo.vn.test365children.Presenter.PresenterGame;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 
-public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt.View {
+public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt.View, ImlFeedback.View {
     int iLever;
     @BindView(R.id.txt_bonus)
     TextView txt_bonus;
@@ -35,6 +41,32 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
     @BindView(R.id.img_background)
     ImageView img_background;
     PresenterGame mPresenter;
+    @BindView(R.id.btn_dong)
+    Button btn_dong;
+    @BindView(R.id.btn_gui)
+    Button btn_gui;
+    @BindView(R.id.rb_rate_1_1)
+    RadioButton rb_rate_1_1;
+    @BindView(R.id.rb_rate_1_2)
+    RadioButton rb_rate_1_2;
+    @BindView(R.id.rb_rate_1_3)
+    RadioButton rb_rate_1_3;
+    @BindView(R.id.ll_ketqua)
+    LinearLayout ll_ketqua;
+
+    @BindView(R.id.rb_rate_2_3)
+    RadioButton rb_rate_2_3;
+
+    @BindView(R.id.rb_rate_2_1)
+    RadioButton rb_rate_2_1;
+
+    @BindView(R.id.rb_rate_2_2)
+    RadioButton rb_rate_2_2;
+    @BindView(R.id.view_danhgia)
+    ConstraintLayout view_danhgia;
+    PresenterFeedback mPresenterFeedback;
+    String rate_1 = "";
+    String rate_2 = "";
 
     @Override
     public int setContentViewId() {
@@ -45,6 +77,7 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterGame(this);
+        mPresenterFeedback = new PresenterFeedback(this);
         initData();
         initEvent();
     }
@@ -53,9 +86,54 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /* finish();*/
+                show_feedback();
+            }
+        });
+        btn_dong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK, new Intent());
                 finish();
             }
         });
+        btn_gui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogLoading();
+                if (rb_rate_1_1.isChecked()) {
+                    rate_1 = "1";
+                }
+                if (rb_rate_1_2.isChecked()) {
+                    rate_1 = "2";
+                }
+                if (rb_rate_1_3.isChecked()) {
+                    rate_1 = "3";
+                }
+                if (rb_rate_2_1.isChecked()) {
+                    rate_2 = "1";
+                }
+                if (rb_rate_2_2.isChecked()) {
+                    rate_2 = "2";
+                }
+                if (rb_rate_2_3.isChecked()) {
+                    rate_2 = "3";
+                }
+                String sPart_id = App.mLisGameTPTT.get(0).getsPART_ID();
+                mPresenterFeedback.api_send_feetback(sUserMe, sUserCon, "1",
+                        rate_1, "2", rate_2, "1", sPart_id);
+            }
+        });
+    }
+
+    private void show_feedback() {
+        view_danhgia.setVisibility(View.VISIBLE);
+        ll_ketqua.setVisibility(View.GONE);
+        Animation animationRotale = AnimationUtils.loadAnimation(ActivityGameOverTPTT.this,
+                R.anim.animation_show_question);
+        view_danhgia.startAnimation(animationRotale);
+
+
     }
 
     String sUserMe, sUserCon;
@@ -63,6 +141,7 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
     private boolean isSPMinusMonney = false;
 
     private void initData() {
+        btn_exit.setEnabled(false);
         isSPMinusMonney = getIntent().getBooleanExtra(Constants.KEY_SEND_SP_MINUS_MONNEY, false);
         iLever = getIntent().getIntExtra(Constants.KEY_SEND_LEVER_GAME_TPTT, -1);
         Glide.with(this).load(R.drawable.bg_start_game).into(img_background);
@@ -80,8 +159,9 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
             set_bonus(iLever);
         } else txt_bonus.setText("0 điểm");
         if (sValueMonney.length() > 0)
-            mPresenter.api_submit_tptt(sUserMe, sUserCon, sPart_id, StringUtil.get_current_time(),
-                    "" + iLever, sValueMonney);
+            showDialogLoading();
+        mPresenter.api_submit_tptt(sUserMe, sUserCon, sPart_id, StringUtil.get_current_time(),
+                "" + iLever, sValueMonney);
     }
 
     private void set_bonus(int iLever) {
@@ -212,35 +292,61 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
     }
 
     @Override
-    public void show_get_game_tptt(List<GameTrieuPhuTriThuc> mLis) {
+    public void show_get_game_tptt(ResponGetGameTPTT objGameTPTT) {
         hideDialogLoading();
     }
 
     @Override
-    public void show_error_api(List<ErrorApi> mLis) {
+    public void show_error_api(ErrorApi mLis) {
         hideDialogLoading();
     }
 
     @Override
-    public void show_start_tptt(List<ErrorApi> mLis) {
+    public void show_send_feedback(ErrorApi objError) {
+        hideDialogLoading();
+        if (objError.getsERROR().equals("0000")) {
+            showDialogComfirm("Thông báo",
+                    "Đánh giá đã được gửi đi. Cảm ơn con đã đóng góp xây dựng Home365.",
+                    false, new ClickDialog() {
+                        @Override
+                        public void onClickYesDialog() {
+                            finish();
+                        }
+
+                        @Override
+                        public void onClickNoDialog() {
+
+                        }
+                    });
+            //  showDialogNotify("Thông báo", objError.getsRESULT());
+        } else {
+            showDialogNotify(objError.getMESSGE(), objError.getsRESULT());
+        }
+    }
+
+    @Override
+    public void show_start_tptt(ErrorApi mLis) {
         hideDialogLoading();
     }
 
     @Override
-    public void show_submit_tptt(List<ErrorApi> mLis) {
+    public void show_submit_tptt(ErrorApi mLis) {
         hideDialogLoading();
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+        btn_exit.setEnabled(true);
+        if (mLis != null && mLis.getsERROR().equals("0000")) {
+
+        } else {
 
         }
     }
 
     @Override
-    public void show_get_game_tnnl(List<GameTNNL> mLis) {
+    public void show_get_game_tnnl(ResponGameTNNL mLis) {
 
     }
 
     @Override
-    public void show_submit_game_tnnl(List<ErrorApi> mLis) {
+    public void show_submit_game_tnnl(ErrorApi mLis) {
 
     }
 }

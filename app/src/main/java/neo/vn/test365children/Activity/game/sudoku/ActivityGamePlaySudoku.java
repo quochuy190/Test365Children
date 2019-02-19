@@ -1,8 +1,14 @@
 package neo.vn.test365children.Activity.game.sudoku;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +22,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +36,19 @@ import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.CheckGameSudoku;
 import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
+import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.Models.SudokuCell;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Service.BoundServiceCountTime;
+import neo.vn.test365children.Untils.TimeUtils;
 
 public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.rv_gameplay_sudoku)
     RecyclerView rv_gameplay_sudoku;
+    @BindView(R.id.img_background)
+    ImageView img_background;
+    @BindView(R.id.txt_time)
+    TextView txt_time;
 
     List<SudokuCell> mLis;
     AdapterGameSudoku adapter;
@@ -61,16 +78,39 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     Button btn_key_reload;
     @BindView(R.id.btn_key_goiy)
     Button btn_key_goiy;
+    @BindView(R.id.txt_count_goiy)
+    TextView txt_count_goiy;
     @BindView(R.id.txt_count_check)
     TextView txt_count_check;
     @BindView(R.id.btn_back)
     ImageView btn_back;
+    @BindView(R.id.imageView20)
+    ImageView imageView20;
     @BindView(R.id.img_mute)
     ImageView img_mute;
     private int MAX_FALSE = 3;
+    private int MAX_SUGGUST = 3;
+    MediaPlayer mPlayer;
+    private int iCountSeggust = 0;
+    private Intent intent;
+    private boolean isBound = false;
+    private BoundServiceCountTime myService;
+    private int TOTAL_TIME = 20 * 60 * 1000;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BoundServiceCountTime.MyBinder binder = (BoundServiceCountTime.MyBinder) service;
+            myService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
 
     @Override
-
     public int setContentViewId() {
         return R.layout.activity_gameplay_sudoku;
     }
@@ -78,9 +118,111 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        play_music_bg();
+        Glide.with(this).load(R.drawable.bg_game_sudoku).into(img_background);
+        Glide.with(this).load(R.drawable.icon_boy_sudoku).into(imageView20);
+        start_service_downtime();
         init();
         initData();
         initEvent();
+    }
+
+    boolean isMute = false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mPlayer != null && !mPlayer.isPlaying() && !isMute) {
+            mPlayer.start();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            mPlayer.pause();
+        }
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        mPlayer.release();
+        stop_service();
+    }
+
+    private void stop_service() {
+        EventBus.getDefault().unregister(this);
+        if (isBound) {
+            // Tắt Service
+            unbindService(connection);
+            isBound = false;
+        }
+    }
+
+    private long iCurrenTime = 0;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.message.equals("Service")) {
+            iCurrenTime = TOTAL_TIME - event.time;
+            if (event.point == 0) {
+                txt_time.setText(TimeUtils.formatDuration((int) event.time));
+            } else {
+                show_sudoku_gameover(false);
+               /* showDialogLoading();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideDialogLoading();
+                        startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
+                        finish();
+                    }
+                }, 2000);
+                put_api_nopbai("1");*/
+            }
+        }
+    }
+
+    private void start_service_downtime() {
+        EventBus.getDefault().register(this);
+        // Tạo đối tượng Intent cho WeatherService.
+        intent = new Intent(this, BoundServiceCountTime.class);
+        intent.putExtra(Constants.KEY_SEND_TIME_SERVICE, TOTAL_TIME);
+        // Gọi method bindService(..) để giàng buộc dịch vụ với giao diện.
+        this.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    public void play_music_bg() {
+        //mp3 = new MediaPlayer();
+        mPlayer = new MediaPlayer();
+        mPlayer.release();
+        mPlayer = MediaPlayer.create(this, R.raw.home365);
+        mPlayer.setLooping(true);
+        mPlayer.setVolume(20, 20);
+        mPlayer.start();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        initBack();
+    }
+
+    private void initBack() {
+        showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn thoát khỏi trò chơi",
+                true, new ClickDialog() {
+                    @Override
+                    public void onClickYesDialog() {
+                        finish();
+                    }
+
+                    @Override
+                    public void onClickNoDialog() {
+
+                    }
+                });
     }
 
     private void initEvent() {
@@ -104,18 +246,25 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     }
 
     private void initData() {
+        if (myService != null)
+            myService.reststart_time();
         int iLevel = getIntent().getIntExtra(Constants.KEY_SEND_LEVEL_SUDOKU, 0);
         if (iLevel > 0) {
-            if (iLevel == 20) {
+            if (iLevel == 30) {
                 MAX_FALSE = 5;
+                MAX_SUGGUST = 5;
             } else if (iLevel == 40) {
                 MAX_FALSE = 5;
-            } else if (iLevel == 50) {
+                MAX_SUGGUST = 5;
+            } else if (iLevel == 45) {
                 MAX_FALSE = 3;
+                MAX_SUGGUST = 3;
             }
         }
+        iCountSeggust = 0;
         mCountFalse = 0;
         txt_count_check.setText("" + mCountFalse + "/" + MAX_FALSE);
+        txt_count_goiy.setText("" + iCountSeggust + "/" + MAX_SUGGUST);
         mLis.clear();
         mSudoku = SudokuGenerator.getInstance().generateGrid();
         for (int x = 0; x < 9; x++) {
@@ -207,35 +356,49 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
                 insert_value(9);
                 break;
             case R.id.btn_key_reload:
-                showDialogComfirm("Thông báo", "Bạn có muốn chơi lại từ đầu", false, new ClickDialog() {
-                    @Override
-                    public void onClickYesDialog() {
-                        showDialogLoading();
-                        new Handler().postDelayed(new Runnable() {
+                showDialogComfirm("Thông báo", "Bạn có muốn chơi lại từ đầu", true,
+                        new ClickDialog() {
                             @Override
-                            public void run() {
-                                hideDialogLoading();
-                                initData();
+                            public void onClickYesDialog() {
+                                showDialogLoading();
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        hideDialogLoading();
+
+                                        initData();
+                                    }
+                                }, 1000);
                             }
-                        }, 1000);
-                    }
 
-                    @Override
-                    public void onClickNoDialog() {
+                            @Override
+                            public void onClickNoDialog() {
 
-                    }
-                });
+                            }
+                        });
                 break;
             case R.id.btn_key_remove:
-
+                remove_posision();
                 break;
             case R.id.btn_key_goiy:
                 click_btn_goiy();
+                /* Glide.with(getApplication()).load(R.drawable.icon_tat_loa).into(btn_key_goiy);*/
                 break;
             case R.id.btn_back:
-                finish();
+                initBack();
                 break;
             case R.id.img_mute:
+                if (mPlayer != null) {
+                    if (mPlayer.isPlaying()) {
+                        isMute = true;
+                        Glide.with(getApplication()).load(R.drawable.icon_tat_loa).into(img_mute);
+                        mPlayer.pause();
+                    } else {
+                        isMute = false;
+                        Glide.with(getApplication()).load(R.drawable.img_mute).into(img_mute);
+                        mPlayer.start();
+                    }
+                }
                 break;
             case R.id.btn_exit:
                 finish();
@@ -255,11 +418,26 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
         }
     }
 
+    private void remove_posision() {
+        if (mPositionClick > 0) {
+            SudokuCell obj = mLis.get(mPositionClick);
+            if (obj.getValue_click() > 0 && obj.getValue() != obj.getValue_click()) {
+                mLis.get(mPositionClick).setValue_click(0);
+                adapter.notifyDataSetChanged();
+            }
+
+          /*  insert_value(mLis.get(mPositionClick).getValue());
+            iCountSeggust++;
+            txt_count_goiy.setText("" + iCountSeggust + "/" + MAX_SUGGUST);*/
+        }
+    }
+
     private void click_btn_goiy() {
-        if (!isGoiy) {
+        if (iCountSeggust < MAX_SUGGUST) {
             if (mPositionClick > 0) {
                 insert_value(mLis.get(mPositionClick).getValue());
-                isGoiy = true;
+                iCountSeggust++;
+                txt_count_goiy.setText("" + iCountSeggust + "/" + MAX_SUGGUST);
             }
         }
 
@@ -299,7 +477,7 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
             adapter.notifyDataSetChanged();
             mPositionClick = -1;
             if (isFinish) {
-                new CountDownTimer(1500, 100) {
+                new CountDownTimer(500, 100) {
                     @Override
                     public void onTick(long millisUntilFinished) {
 
@@ -325,6 +503,8 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     Button btn_exit;
 
     private void show_sudoku_gameover(boolean isGameover) {
+        //stop_service();
+        myService.stop_time();
         rl_gameover.setVisibility(View.VISIBLE);
         if (isGameover) {
             Glide.with(this).load(R.drawable.img_winner).into(img_sudoku_gameover);
@@ -334,11 +514,5 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
         Animation animationRotale = AnimationUtils.loadAnimation(ActivityGamePlaySudoku.this,
                 R.anim.animation_game_over);
         img_sudoku_gameover.startAnimation(animationRotale);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 500);
     }
 }

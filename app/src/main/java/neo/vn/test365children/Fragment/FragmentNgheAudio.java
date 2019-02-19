@@ -205,6 +205,7 @@ public class FragmentNgheAudio extends BaseFragment implements
         mLis = new ArrayList<>();
         ButterKnife.bind(this, view);
         btn_xemdiem.setEnabled(false);
+        btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
         initLoadImage();
         initData();
         initEvent();
@@ -669,6 +670,7 @@ public class FragmentNgheAudio extends BaseFragment implements
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
             btn_xemdiem.setEnabled(true);
+            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);

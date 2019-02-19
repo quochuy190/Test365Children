@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -34,17 +33,18 @@
         android:src="@drawable/img_back_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/btn_exit"
-        android:textSize="@dimen/text_17sp"
-        android:textColor="@color/white"
-        android:text="Đóng"
-        android:fontFamily="@font/roboto_bold"
-        android:background="@drawable/btn_2"
+        android:layout_width="@dimen/dp150"
+        android:layout_height="@dimen/btn_showpoint_hight"
         android:layout_margin="@dimen/dp5"
+        android:background="@drawable/spr_orange_click"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Đóng"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="@dimen/dp150"
-        android:layout_height="@dimen/btn_showpoint_hight" />
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>

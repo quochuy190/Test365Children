@@ -2,15 +2,16 @@ package neo.vn.test365children.Presenter;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import neo.vn.test365children.ApiService.ApiServiceIml;
 import neo.vn.test365children.Listener.CallbackData;
 import neo.vn.test365children.Models.ErrorApi;
-import neo.vn.test365children.Models.GameTNNL;
-import neo.vn.test365children.Models.GameTrieuPhuTriThuc;
+import neo.vn.test365children.Models.ResponGameTNNL;
+import neo.vn.test365children.Models.ResponGetGameTPTT;
 
 public class PresenterGame implements ImlGetGameTptt.Presenter {
     private static final String TAG = "PresenterBaitap";
@@ -25,14 +26,10 @@ public class PresenterGame implements ImlGetGameTptt.Presenter {
     @Override
     public void api_get_game_tptt(String sUserMe, String sUserCon, String sDate) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "get_tptt");
-        mMap.put("Provider", "default");
-        mMap.put("ParamSize", "3");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
-        mMap.put("P3", sDate);
-
-        mApiService.getApiService(new CallbackData<String>() {
+        String sService = "get_tptt";
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
@@ -44,28 +41,29 @@ public class PresenterGame implements ImlGetGameTptt.Presenter {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<GameTrieuPhuTriThuc> mLis = GameTrieuPhuTriThuc.getList(objT);
-                    mView.show_get_game_tptt(mLis);
+                    ResponGetGameTPTT obj = new Gson().fromJson(objT, ResponGetGameTPTT.class);
+                    //List<GameTrieuPhuTriThuc> mLis = GameTrieuPhuTriThuc.getList(objT);
+                    mView.show_get_game_tptt(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
                     Log.i(TAG, "Log_error_api_filght: " + e);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
     }
 
     @Override
     public void api_start_tptt(String sUserMe, String sUserCon, String id_part) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "start_tptt");
+        String sService = "start_tptt";
+     /*   mMap.put("Service", "start_tptt");
         mMap.put("Provider", "default");
-        mMap.put("ParamSize", "3");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
-        mMap.put("P3", id_part);
-
-        mApiService.getApiService(new CallbackData<String>() {
+        mMap.put("ParamSize", "3");*/
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
+        mMap.put("PART", id_part);
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
@@ -77,30 +75,33 @@ public class PresenterGame implements ImlGetGameTptt.Presenter {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<ErrorApi> mLis = ErrorApi.getList(objT);
-                    mView.show_start_tptt(mLis);
+                    //  List<ErrorApi> mLis = ErrorApi.getList(objT);
+                    ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
+                    mView.show_start_tptt(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
     }
 
     @Override
-    public void api_submit_tptt(String sUserMe, String sUserCon, String sId_part, String sTime, String sAward, String sMonney) {
+    public void api_submit_tptt(String sUserMe, String sUserCon, String sId_part, String sTime, String sAward,
+                                String sMonney) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "submit_tptt");
+        String sService = "submit_tptt";
+      /*  mMap.put("Service", "submit_tptt");
         mMap.put("Provider", "default");
-        mMap.put("ParamSize", "6");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
-        mMap.put("P3", sId_part);
-        mMap.put("P4", sTime);
-        mMap.put("P5", sAward);
-        mMap.put("P6", sMonney);
+        mMap.put("ParamSize", "6");*/
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
+        mMap.put("PART", sId_part);
+        mMap.put("TIME", sTime);
+        mMap.put("AWARD", sAward);
+        mMap.put("WON", sMonney);
 
-        mApiService.getApiService(new CallbackData<String>() {
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
@@ -112,27 +113,29 @@ public class PresenterGame implements ImlGetGameTptt.Presenter {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<ErrorApi> mLis = ErrorApi.getList(objT);
-                    mView.show_submit_tptt(mLis);
+                    // List<ErrorApi> mLis = ErrorApi.getList(objT);
+                    ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
+                    mView.show_submit_tptt(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
                     Log.i(TAG, "Log_error_api_filght: " + e);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
     }
 
     @Override
     public void api_get_game_tnll(String sUserMe, String sUserCon) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "get_game_tnnl");
+        String sService = "get_tnnl";
+      /*  mMap.put("Service", "get_game_tnnl");
         mMap.put("Provider", "default");
-        mMap.put("ParamSize", "2");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
+        mMap.put("ParamSize", "2");*/
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
 
-        mApiService.getApiService(new CallbackData<String>() {
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
@@ -141,33 +144,36 @@ public class PresenterGame implements ImlGetGameTptt.Presenter {
 
             @Override
             public void onGetDataSuccess(String objT) {
-                String sDemo = "[{\"ERROR\":\"0000\",\"MESSAGE\":\"SUCCESS\",\"RESULT\":\"Lấy game Tính Nhanh Nhớ Lâu thành công\",\"EXCERCISE_ID\":\"441\",\"ID\":\"329\",\"PART_ID\":\"935\",\"HTML_A\":\"4 + 1::5\",\"HTML_B\":\"1 + 2::3\",\"HTML_C\":\"0 + 4::4\",\"HTML_D\":\"1 + 1::2\"},{\"ERROR\":\"0000\",\"MESSAGE\":\"SUCCESS\",\"RESULT\":\"Lấy game Tính Nhanh Nhớ Lâu thành công\",\"EXCERCISE_ID\":\"442\",\"ID\":\"339\",\"PART_ID\":\"939\",\"HTML_A\":\"2 + 1::3\",\"HTML_B\":\"3 + 2::5\",\"HTML_C\":\"1 + 3:: 4\",\"HTML_D\":\"2 + 0::2\"},{\"ERROR\":\"0000\",\"MESSAGE\":\"SUCCESS\",\"RESULT\":\"Lấy game Tính Nhanh Nhớ Lâu thành công\",\"EXCERCISE_ID\":\"286\",\"ID\":\"229\",\"PART_ID\":\"775\",\"HTML_A\":\"3, 2, ......::1\",\"HTML_B\":\"4, ......, 2, 1::3\",\"HTML_C\":\"4, 3, ......, 1::2\",\"HTML_D\":\"5,....., 3::4\"}]";
+                /*String sDemo = "[{\"ERROR\":\"0000\",\"MESSAGE\":\"SUCCESS\",\"RESULT\":\"Lấy game Tính Nhanh Nhớ Lâu thành công\",\"EXCERCISE_ID\":\"441\",\"ID\":\"329\",\"PART_ID\":\"935\",\"HTML_A\":\"4 + 1::5\",\"HTML_B\":\"1 + 2::3\",\"HTML_C\":\"0 + 4::4\",\"HTML_D\":\"1 + 1::2\"},{\"ERROR\":\"0000\",\"MESSAGE\":\"SUCCESS\",\"RESULT\":\"Lấy game Tính Nhanh Nhớ Lâu thành công\",\"EXCERCISE_ID\":\"442\",\"ID\":\"339\",\"PART_ID\":\"939\",\"HTML_A\":\"2 + 1::3\",\"HTML_B\":\"3 + 2::5\",\"HTML_C\":\"1 + 3:: 4\",\"HTML_D\":\"2 + 0::2\"},{\"ERROR\":\"0000\",\"MESSAGE\":\"SUCCESS\",\"RESULT\":\"Lấy game Tính Nhanh Nhớ Lâu thành công\",\"EXCERCISE_ID\":\"286\",\"ID\":\"229\",\"PART_ID\":\"775\",\"HTML_A\":\"3, 2, ......::1\",\"HTML_B\":\"4, ......, 2, 1::3\",\"HTML_C\":\"4, 3, ......, 1::2\",\"HTML_D\":\"5,....., 3::4\"}]";
+                Log.i(TAG, "onGetDataSuccess: " + objT);*/
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<GameTNNL> mLis = GameTNNL.getList(objT);
-                    mView.show_get_game_tnnl(mLis);
+                    //List<GameTNNL> mLis = GameTNNL.getList(objT);
+                    ResponGameTNNL obj = new Gson().fromJson(objT, ResponGameTNNL.class);
+                    mView.show_get_game_tnnl(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
                     Log.i(TAG, "Log_error_api_filght: " + e);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
     }
 
     @Override
     public void api_submit_game_tnnl(String sUserMe, String sUserCon, String sMonney) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        mMap.put("Service", "submit_game_tnnl");
+        String sService = "submit_tnnl";
+      /*  mMap.put("Service", "submit_game_tnnl");
         mMap.put("Provider", "default");
-        mMap.put("ParamSize", "3");
-        mMap.put("P1", sUserMe);
-        mMap.put("P2", sUserCon);
-        mMap.put("P3", sMonney);
+        mMap.put("ParamSize", "3");*/
+        mMap.put("USER_MOTHER", sUserMe);
+        mMap.put("USER_CHILD", sUserCon);
+        mMap.put("MONEY", sMonney);
 
 
-        mApiService.getApiService(new CallbackData<String>() {
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
@@ -179,14 +185,14 @@ public class PresenterGame implements ImlGetGameTptt.Presenter {
                 Log.i(TAG, "onGetDataSuccess: " + objT);
                 try {
                     //jArray = new JSONArray(c);
-                    List<ErrorApi> mLis = ErrorApi.getList(objT);
-                    mView.show_submit_game_tnnl(mLis);
+                    ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
+                     mView.show_submit_game_tnnl(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                     mView.show_error_api(null);
                     Log.i(TAG, "Log_error_api_filght: " + e);
                 }
             }
-        }, mMap);
+        }, sService, mMap);
     }
 }

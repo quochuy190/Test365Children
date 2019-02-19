@@ -18,7 +18,6 @@ import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import neo.vn.test365children.Adapter.AdapterBangxephang;
 import neo.vn.test365children.Base.BaseActivity;
-import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.Chart_To_Subject;
 import neo.vn.test365children.Models.ErrorApi;
@@ -228,11 +227,11 @@ public class ActivityBXH extends BaseActivity implements ImlThongke.View {
     }
 
     public void set_name(Item_BXH obj) {
-        if (sChil != null && sChil.getsAVATAR() != null && sChil.getsAVATAR().length() > 0) {
+       /* if (sChil != null && sChil.getsAVATAR() != null && sChil.getsAVATAR().length() > 0) {
             Glide.with(this).load(Config.URL_IMAGE + sChil.getsAVATAR())
                     .placeholder(R.drawable.icon_avata)
                     .into(img_avata);
-        }
+        }*/
 
         if (obj.getsFULLNAME() != null)
             txt_name.setText(obj.getsFULLNAME());

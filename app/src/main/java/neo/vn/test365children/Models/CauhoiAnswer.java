@@ -7,66 +7,73 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class CauhoiAnswer extends RealmObject {
-  @SerializedName("INFO")
-  RealmList<CauhoiDetailAnswer> lisInfo;
-  @PrimaryKey
-  @SerializedName("ID")
-  String sID;
-  @SerializedName("EXCERCISE_ID")
-  String sEXCERCISE_ID;
-  @SerializedName("KIEU")
-  String sKIEU;
-  @SerializedName("UPDATETIME")
-  String sUPDATETIME;
+    @SerializedName("INFO")
+    RealmList<CauhoiDetailAnswer> lisInfo;
+    @PrimaryKey
+    @SerializedName("ID")
+    String sID;
+    @SerializedName("EXCERCISE_ID")
+    String sEXCERCISE_ID;
+    @SerializedName("KIEU")
+    String sKIEU;
+    @SerializedName("UPDATETIME")
+    String sUPDATETIME;
+    @SerializedName("QUESTION_NUMBER")
+    String QUESTION_NUMBER;
+    @SerializedName("TEXT")
+    String TEXT;
+    @SerializedName("HUONGDAN")
+    String HUONGDAN;
 
-  public CauhoiAnswer() {
-  }
 
-  public CauhoiAnswer(RealmList<CauhoiDetailAnswer> lisInfo, String sID, String sEXCERCISE_ID, String sKIEU, String sUPDATETIME) {
-    this.lisInfo = lisInfo;
-    this.sID = sID;
-    this.sEXCERCISE_ID = sEXCERCISE_ID;
-    this.sKIEU = sKIEU;
-    this.sUPDATETIME = sUPDATETIME;
-  }
+    public CauhoiAnswer() {
+    }
 
-  public RealmList<CauhoiDetailAnswer> getLisInfo() {
-    return lisInfo;
-  }
+    public CauhoiAnswer(RealmList<CauhoiDetailAnswer> lisInfo, String sID, String sEXCERCISE_ID, String sKIEU, String sUPDATETIME) {
+        this.lisInfo = lisInfo;
+        this.sID = sID;
+        this.sEXCERCISE_ID = sEXCERCISE_ID;
+        this.sKIEU = sKIEU;
+        this.sUPDATETIME = sUPDATETIME;
+    }
 
-  public void setLisInfo(RealmList<CauhoiDetailAnswer> lisInfo) {
-    this.lisInfo = lisInfo;
-  }
+    public RealmList<CauhoiDetailAnswer> getLisInfo() {
+        return lisInfo;
+    }
 
-  public String getsID() {
-    return sID;
-  }
+    public void setLisInfo(RealmList<CauhoiDetailAnswer> lisInfo) {
+        this.lisInfo = lisInfo;
+    }
 
-  public void setsID(String sID) {
-    this.sID = sID;
-  }
+    public String getsID() {
+        return sID;
+    }
 
-  public String getsEXCERCISE_ID() {
-    return sEXCERCISE_ID;
-  }
+    public void setsID(String sID) {
+        this.sID = sID;
+    }
 
-  public void setsEXCERCISE_ID(String sEXCERCISE_ID) {
-    this.sEXCERCISE_ID = sEXCERCISE_ID;
-  }
+    public String getsEXCERCISE_ID() {
+        return sEXCERCISE_ID;
+    }
 
-  public String getsKIEU() {
-    return sKIEU;
-  }
+    public void setsEXCERCISE_ID(String sEXCERCISE_ID) {
+        this.sEXCERCISE_ID = sEXCERCISE_ID;
+    }
 
-  public void setsKIEU(String sKIEU) {
-    this.sKIEU = sKIEU;
-  }
+    public String getsKIEU() {
+        return sKIEU;
+    }
 
-  public String getsUPDATETIME() {
-    return sUPDATETIME;
-  }
+    public void setsKIEU(String sKIEU) {
+        this.sKIEU = sKIEU;
+    }
 
-  public void setsUPDATETIME(String sUPDATETIME) {
-    this.sUPDATETIME = sUPDATETIME;
-  }
+    public String getsUPDATETIME() {
+        return sUPDATETIME;
+    }
+
+    public void setsUPDATETIME(String sUPDATETIME) {
+        this.sUPDATETIME = sUPDATETIME;
+    }
 }

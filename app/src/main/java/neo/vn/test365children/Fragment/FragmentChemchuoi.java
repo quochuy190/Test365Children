@@ -142,6 +142,7 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
         initImage();
         initData();
         btn_xemdiem.setEnabled(false);
+        btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
         initEvent();
         return view;
     }
@@ -343,6 +344,7 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
         if (!isdouble_click) {
             isdouble_click = true;
             btn_xemdiem.setEnabled(true);
+            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
             if (sAnwser.length() > 0) {

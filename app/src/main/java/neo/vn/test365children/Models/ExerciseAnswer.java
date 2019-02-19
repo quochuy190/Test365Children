@@ -16,12 +16,13 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     private String isTrangthailambai;
     private RealmList<Cauhoi> mLisCauhoi;
     private String sTimebatdaulambai;
-    private String sTimegiaobai;
+    private String sTimequydinh;
     private String sTimeketthuclambai;
     private String sThoiluonglambai;
     private String sKieunopbai;
     private String sIdTuan;
     private String sTrangthainopbai;
+    private String sDetailExercise;
 
     public ExerciseAnswer(String sId_exercise, String sId_userMe, String sId_userCon, String sPoint, String sMonhoc,
                           String isTrangthailambai, RealmList<Cauhoi> mLisCauhoi) {
@@ -35,6 +36,22 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     }
 
     public ExerciseAnswer() {
+    }
+
+    public String getsTrangthainopbai() {
+        return sTrangthainopbai;
+    }
+
+    public void setsTrangthainopbai(String sTrangthainopbai) {
+        this.sTrangthainopbai = sTrangthainopbai;
+    }
+
+    public String getsDetailExercise() {
+        return sDetailExercise;
+    }
+
+    public void setsDetailExercise(String sDetailExercise) {
+        this.sDetailExercise = sDetailExercise;
     }
 
     public String getsIdTuan() {
@@ -53,12 +70,12 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
         this.sTimebatdaulambai = sTimebatdaulambai;
     }
 
-    public String getsTimegiaobai() {
-        return sTimegiaobai;
+    public String getsTimequydinh() {
+        return sTimequydinh;
     }
 
-    public void setsTimegiaobai(String sTimegiaobai) {
-        this.sTimegiaobai = sTimegiaobai;
+    public void setsTimequydinh(String sTimequydinh) {
+        this.sTimequydinh = sTimequydinh;
     }
 
     public String getsTimeketthuclambai() {

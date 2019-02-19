@@ -48,7 +48,8 @@ import neo.vn.test365children.R;
  * @updated on 8/6/2018
  * @since 1.0
  */
-public class FragmentSapxep extends BaseFragment implements OnStartDragListener, RecyclerViewItemClickInterface {
+public class FragmentSapxep extends BaseFragment implements
+        OnStartDragListener, RecyclerViewItemClickInterface {
     private static final String TAG = "FragmentSapxep";
     private CauhoiDetail mCauhoi;
     @BindView(R.id.txt_lable)
@@ -94,7 +95,6 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
         View view = inflater.inflate(R.layout.fragment_sapxep, container, false);
         ButterKnife.bind(this, view);
         mLisStart = new ArrayList<>();
-
         initData();
         initViews(true);
         initEvent();
@@ -139,7 +139,7 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
                     initViews(false);
                     adapterSapxep.notifyDataSetChanged();
                 }
-
+                save_anwser_chil();
             }
         });
     }
@@ -220,6 +220,10 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
 
     @Override
     public void onEndDrag() {
+        save_anwser_chil();
+    }
+
+    private void save_anwser_chil() {
         App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
         String answer_chil = "";
@@ -247,11 +251,10 @@ public class FragmentSapxep extends BaseFragment implements OnStartDragListener,
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
         }
-
         App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(answer_chil);
-
     }
+
 
     @Override
     public void onItemClicked(String name) {

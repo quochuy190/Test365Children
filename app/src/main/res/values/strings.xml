@@ -46,4 +46,12 @@ Mỗi tuần chỉ chơi một lần vào bất kỳ ngày nào.
     <string name="notification_title">Home365</string>
     <string name="notification_message">Đang làm bài tập</string>
     <string name="txt_guilde_sudoku_title"><u>Hướng dẫn chơi</u></string>
+    <string name="txt_title_select_sub">SELECT TOPIC</string>
+    <string name="txt_quenmatkhau">Quên mật khẩu</string>
+    <string name="txt_dangky">Đăng ký tài khoản</string>
+    <string name="txt_content_feedback">Cảm ơn con, hãy giữ kiên trì rèn luyện hàng ngày  cùng Home365 để đạt được thành công nhé.
+</string>
+    <string name="txt_guild_login_content">Việc đăng ký tài khoản con được thực hiện trên app mẹ có tên là Home365. Mẹ tải app Home365 về máy để tạo tài khoản và tải bài tập cho con nhé.</string>
+    <string name="txt_title_guild">Tài khoản con được tạo trên app mẹ Home365.</string>
+
 </resources>

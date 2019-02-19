@@ -56,7 +56,7 @@ public class ActivityStartSudoku extends BaseActivity {
             @Override
             public void onClick(View v) {
                 KeyboardUtil.animation_click_button(ActivityStartSudoku.this, btn_level_1);
-                intent.putExtra(Constants.KEY_SEND_LEVEL_SUDOKU, 20);
+                intent.putExtra(Constants.KEY_SEND_LEVEL_SUDOKU, 30);
                 startActivity(intent);
             }
         });
@@ -72,7 +72,7 @@ public class ActivityStartSudoku extends BaseActivity {
             @Override
             public void onClick(View v) {
                 KeyboardUtil.animation_click_button(ActivityStartSudoku.this, btn_level_3);
-                intent.putExtra(Constants.KEY_SEND_LEVEL_SUDOKU, 50);
+                intent.putExtra(Constants.KEY_SEND_LEVEL_SUDOKU, 45);
                 startActivity(intent);
             }
         });

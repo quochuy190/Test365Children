@@ -61,7 +61,6 @@
         android:id="@+id/main"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
         app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
         app:layout_constraintEnd_toEndOf="@+id/img_background"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,24 +68,25 @@
 
 
         <ImageView
-            android:layout_marginBottom="@dimen/dp5"
             android:id="@+id/img_rotrung_1"
             android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
+            android:layout_marginBottom="@dimen/dp5"
             android:padding="@dimen/dp3"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_rotrung_1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/txt_rotrung_1"
-            android:layout_width="@dimen/width_egg"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:src="@drawable/icon_ro_trung"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_xeptrung"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="@id/img_rotrung_1"
+            app:layout_constraintRight_toRightOf="@+id/img_rotrung_1" />
 
         <ImageView
             android:id="@+id/img_rotrung_2"
@@ -94,39 +94,38 @@
             android:layout_height="@dimen/hight_egg"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/margin_egg_2"
-            android:padding="@dimen/dp3"
             android:layout_marginBottom="@dimen/dp5"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_rotrung_2"
+            android:padding="@dimen/dp3"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/txt_rotrung_2"
-            android:layout_width="@dimen/width_egg"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_egg_2"
             android:gravity="center"
             android:src="@drawable/icon_ro_trung"
 
             android:textColor="@color/white"
             android:textSize="@dimen/txt_xeptrung"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="@id/img_rotrung_2"
+            app:layout_constraintRight_toRightOf="@id/img_rotrung_2" />
 
         <ImageView
             android:id="@+id/img_rotrung_3"
             android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
             android:layout_marginLeft="@dimen/margin_egg_3"
-            android:padding="@dimen/dp3"
             android:layout_marginBottom="@dimen/dp5"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_rotrung_3"
+            android:padding="@dimen/dp3"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/txt_rotrung_3"
-            android:layout_width="@dimen/width_egg"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_egg_3"
             android:gravity="center"
             android:src="@drawable/icon_ro_trung"
 
@@ -134,30 +133,31 @@
 
             android:textSize="@dimen/txt_xeptrung"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="@id/img_rotrung_3"
+            app:layout_constraintRight_toRightOf="@id/img_rotrung_3" />
 
         <ImageView
-            android:layout_marginBottom="@dimen/dp5"
             android:id="@+id/img_rotrung_4"
             android:layout_width="@dimen/width_egg"
             android:layout_height="@dimen/hight_egg"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/margin_egg_4"
+            android:layout_marginBottom="@dimen/dp5"
             android:padding="@dimen/dp3"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_rotrung_4"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/txt_rotrung_4"
-            android:layout_width="@dimen/width_egg"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_egg_4"
             android:gravity="center"
             android:src="@drawable/icon_ro_trung"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_xeptrung"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="@id/img_rotrung_4"
+            app:layout_constraintRight_toRightOf="@id/img_rotrung_4" />
 
         <RelativeLayout
             android:id="@+id/rl_trung1"
@@ -168,8 +168,8 @@
 
             <ImageView
                 android:id="@+id/img_trung1"
-                android:layout_width="@dimen/width_egg"
-                android:layout_height="@dimen/hight_egg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/dp15" />
 
             <TextView
@@ -177,7 +177,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-
                 android:textColor="@color/app_bar"
                 android:textSize="@dimen/txt_xeptrung" />
 
@@ -193,8 +192,8 @@
 
             <ImageView
                 android:id="@+id/img_trung2"
-                android:layout_width="@dimen/width_egg"
-                android:layout_height="@dimen/hight_egg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/dp15" />
 
             <TextView
@@ -218,8 +217,8 @@
 
             <ImageView
                 android:id="@+id/img_trung3"
-                android:layout_width="@dimen/width_egg"
-                android:layout_height="@dimen/hight_egg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/dp15" />
 
             <TextView
@@ -242,8 +241,8 @@
 
             <ImageView
                 android:id="@+id/img_trung4"
-                android:layout_width="@dimen/width_egg"
-                android:layout_height="@dimen/hight_egg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/dp15" />
 
             <TextView

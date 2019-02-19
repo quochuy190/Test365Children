@@ -18,12 +18,19 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize">
         <activity
+            android:launchMode="singleTask"
             android:name=".Activity.ActivityHome"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
 
         <activity
             android:name=".Activity.ReviewExercises.ActivityBaitapdalam"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.guild_show_user_kid.Activity_Guild_Show_UserKid"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
@@ -35,7 +42,7 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:name=".Activity.game.ActivityMenuGame"
+            android:name=".Activity.game.menu_game.ActivityMenuGame"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
@@ -60,10 +67,6 @@
             android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.game.ActivityGameTrieuphutrithuc"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape"></activity>
-        <activity
-            android:name=".Activity.game.ActivityGameTNNL"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
@@ -103,6 +106,22 @@
         </activity>
         <activity
             android:name=".Activity.ActivityLogin"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.login.ActivitySelectLevelTry"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.doctruyen.Activity_menu_doctruyen"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.doctruyen.Activity_webview_doctruyen"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.login.ActivityGuildLogin"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
@@ -149,6 +168,7 @@
             </intent-filter>
         </service>
         <service android:name=".Service.ServiceDownTime"></service>
+        <service android:name=".Service.BoundServiceCountTime"></service>
         <service android:name=".Service.ServiceDownTimeGame"></service>
     </application>
 

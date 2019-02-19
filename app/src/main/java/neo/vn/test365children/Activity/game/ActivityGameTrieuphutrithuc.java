@@ -134,7 +134,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Glide.with(this).load(R.drawable.bg_start_game).into(imageView16);
         Glide.with(this).load(R.drawable.ic_5050).into(img_sp_5050);
         Glide.with(this).load(R.drawable.ic_add_60).into(img_sp_khangia);
@@ -179,6 +178,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+
     }
 
     @Override
@@ -311,18 +311,19 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             public void onClick(View v) {
                 KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_stop_game);
                 if (!isAnwserIng) {
-                    showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn dừng cuộc chơi tại đây", false, new ClickDialog() {
-                        @Override
-                        public void onClickYesDialog() {
-                            stopService(intent_service);
-                            initAnwserFalse(iCurrentQuestion, true);
-                        }
+                    showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn dừng cuộc chơi tại đây",
+                            true, new ClickDialog() {
+                                @Override
+                                public void onClickYesDialog() {
+                                    stopService(intent_service);
+                                    initAnwserFalse(iCurrentQuestion, true);
+                                }
 
-                        @Override
-                        public void onClickNoDialog() {
+                                @Override
+                                public void onClickNoDialog() {
 
-                        }
-                    });
+                                }
+                            });
 
                 }
             }
@@ -331,11 +332,12 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         btn_traloi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_button_confirm);
                 if (!isAnwserIng) {
-                    if (sAnwserChil.length() > 0)
+                    if (sAnwserChil.length() > 0) {
+                        Glide.with(ActivityGameTrieuphutrithuc.this)
+                                .load(R.drawable.btn_gray_black).into(img_button_confirm);
                         initChamdiem();
-                    else
+                    } else
                         Toast.makeText(ActivityGameTrieuphutrithuc.this, "Bạn chưa chọn đáp án nào", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -526,7 +528,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                     }, 4000);
                 }
             }
-        }, 5000);
+        }, 2500);
 
     }
 
@@ -537,7 +539,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
             public void run() {
                 rl_point.setVisibility(View.GONE);
             }
-        }, 5000);
+        }, 3000);
     }
 
     private void initListPoint() {
@@ -620,6 +622,8 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     private GameTrieuPhuTriThuc mObjGame;
 
     public void getData(GameTrieuPhuTriThuc obj) {
+        Glide.with(ActivityGameTrieuphutrithuc.this)
+                .load(R.drawable.btn_3).into(img_button_confirm);
         iHeightmax = 0;
         mObjGame = obj;
         webview_anwser_B.clearView();

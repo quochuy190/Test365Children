@@ -181,10 +181,14 @@ public class FragmentCuuCongchua extends BaseFragment {
                 boolean isTraloi = SharedPrefs.getInstance().get(Constants.KEY_SEND_TRALOI, Boolean.class);
                 sDapan = SharedPrefs.getInstance().get(Constants.KEY_SEND_CAUHOI_CONGCHUA, String.class);
                 if (isTraloi) {
-                    EventBus.getDefault().post(new MessageEvent("Point_true",
-                            Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));
+                   /* EventBus.getDefault().post(new MessageEvent("Point_true",
+                            Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));*/
+
                     iCauhoiStart++;
+
                     if (iCauhoiStart < mCauhoi.getLisInfo().size()) {
+                        EventBus.getDefault().post(new MessageEvent("pr_win1",
+                                Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));
                         img_done.setVisibility(View.GONE);
                         int value = getRandom(iStart);
                         iStart.add(value);
@@ -199,6 +203,8 @@ public class FragmentCuuCongchua extends BaseFragment {
                         }
                         adapter.notifyDataSetChanged();
                     } else {
+                        EventBus.getDefault().post(new MessageEvent("pr_win2",
+                                Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart-1).getsPOINT()), 0));
                         txt_lable.setText("Chúc mừng công chúa đã được giải cứu");
                         img_done.setVisibility(View.VISIBLE);
                         recycle_dapan.setVisibility(View.GONE);
@@ -222,6 +228,7 @@ public class FragmentCuuCongchua extends BaseFragment {
                         obj.setClick(false);
                     }
                     img_done.setVisibility(View.VISIBLE);
+                    EventBus.getDefault().post(new MessageEvent("pr_lost", 0, 0));
                     txt_lable.setText("Giải cứu thất bại");
                     Glide.with(getContext()).load(R.drawable.icon_congchua_lost)
                             .placeholder(R.drawable.icon_congchua_lost).into(img_done);
@@ -238,7 +245,7 @@ public class FragmentCuuCongchua extends BaseFragment {
                         }
                     }
                     adapter.notifyDataSetChanged();
-                    EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                  //  EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                 }
                 break;
         }

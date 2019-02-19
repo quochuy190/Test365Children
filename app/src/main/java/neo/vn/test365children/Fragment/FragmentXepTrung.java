@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -52,7 +53,7 @@ import neo.vn.test365children.R;
  * @since 1.0
  */
 public class FragmentXepTrung extends BaseFragment {
-    private static final String TAG = "FragmentCauhoi";
+    private static final String TAG = "FragmentXepTrung";
     private CauhoiDetail mCauhoi;
     @BindView(R.id.rl_trung1)
     RelativeLayout rl_trung1;
@@ -157,6 +158,7 @@ public class FragmentXepTrung extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trung_ro, container, false);
         ButterKnife.bind(this, view);
+        initsetSizeEgg();
 /*        btn_xemdiem.setEnabled(true);
         btn_xemdiem.getBackground().setAlpha(255);*/
         insertImage();
@@ -179,6 +181,59 @@ public class FragmentXepTrung extends BaseFragment {
         initData();
         initEvent();
         return view;
+    }
+
+    int iHightScreen, iWidthScreen;
+
+    private void initsetSizeEgg() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        float widthDpi = metrics.xdpi;
+        float heightDpi = metrics.ydpi;
+        iHightScreen = (int) heightDpi;
+        iWidthScreen = (int) widthDpi;
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+        int margin = (int) getResources().getDimension(R.dimen.margin_egg);
+        int height = (int) getResources().getDimension(R.dimen.hight_egg_dapan);
+        int width_egg_1 = (widthPixels / 4);
+        Log.i(TAG, "initsetSizeEgg: " + iHightScreen + " width: " + iWidthScreen);
+        Log.i(TAG, "height: " + heightPixels + " width: " + widthPixels);
+        set_size_egg(height, width_egg_1, rl_trung1);
+        set_size__rotrung(height, width_egg_1, 0, img_rotrung1);
+        int margin_egg_2 = width_egg_1;
+        set_size_egg_2(height, width_egg_1, margin_egg_2, rl_trung2);
+        int margin_egg_3 = (width_egg_1 * 2);
+        int margin_egg_4 = (width_egg_1 * 3);
+        set_size_egg_2(height, width_egg_1, margin_egg_3, rl_trung3);
+        set_size_egg_2(height, width_egg_1, margin_egg_4, rl_trung4);
+        set_size__rotrung(height, width_egg_1, margin_egg_2, img_rotrung2);
+        set_size__rotrung(height, width_egg_1, margin_egg_3, img_rotrung3);
+        set_size__rotrung(height, width_egg_1, margin_egg_4, img_rotrung4);
+    }
+
+    private void set_size_egg(final int iHeight, final int iWidht, final RelativeLayout view) {
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+        params.height = iHeight;
+        params.width = iWidht;
+        params.setMargins(0, 0, 0, 0);
+        view.setLayoutParams(params);
+    }
+
+    private void set_size__rotrung(final int iHeight, final int iWidht, int margin_left, final ImageView view) {
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+        params.height = iHeight;
+        params.width = iWidht;
+        params.setMargins(margin_left, 0, 0, 0);
+        view.setLayoutParams(params);
+    }
+
+    private void set_size_egg_2(final int iHeight, final int iWidht, int margin_left, final RelativeLayout view) {
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+        params.height = iHeight;
+        params.width = iWidht;
+        params.setMargins(margin_left, 0, 0, 0);
+        view.setLayoutParams(params);
     }
 
     private void insertImage() {
@@ -488,19 +543,15 @@ public class FragmentXepTrung extends BaseFragment {
 
                                 switch (view.getId()) {
                                     case R.id.rl_trung1:
-
                                         map_answer_chil.put("egg_1", mLisTrung.get(0) + "::" + mLisRoTrung.get(3));
                                         break;
                                     case R.id.rl_trung2:
-
                                         map_answer_chil.put("egg_2", mLisTrung.get(1) + "::" + mLisRoTrung.get(3));
                                         break;
                                     case R.id.rl_trung3:
-
                                         map_answer_chil.put("egg_3", mLisTrung.get(2) + "::" + mLisRoTrung.get(3));
                                         break;
                                     case R.id.rl_trung4:
-
                                         map_answer_chil.put("egg_4", mLisTrung.get(3) + "::" + mLisRoTrung.get(3));
                                         break;
                                 }

@@ -101,6 +101,7 @@ public class BaseFragment extends Fragment {
         }, 35000);
         if (!getActivity().isFinishing()) {
             dialog = new ProgressDialog(getActivity());
+            dialog.setCancelable(false);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage("Loading. Please wait...");
             dialog.setIndeterminate(true);
@@ -145,6 +146,7 @@ public class BaseFragment extends Fragment {
         }, 35000);
         if (dialog == null) {
             dialog = new ProgressDialog(getActivity());
+            dialog.setCancelable(false);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage(message);
             dialog.setIndeterminate(true);

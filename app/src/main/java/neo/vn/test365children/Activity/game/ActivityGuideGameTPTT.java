@@ -49,6 +49,22 @@ public class ActivityGuideGameTPTT extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mPlayer != null && !mPlayer.isPlaying()) {
+            mPlayer.start();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            mPlayer.pause();
+        }
+    }
+
     public void play_start_game() {
         //mp3 = new MediaPlayer();
         mPlayer.release();

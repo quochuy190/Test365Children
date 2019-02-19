@@ -157,6 +157,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                 .into(icon_zoom);
         // init();
         btn_xemdiem.setEnabled(false);
+        btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
         initLoadImage();
         initData();
         initEvent();
@@ -352,7 +353,7 @@ public class FragmentDocvaTraloi extends BaseFragment
             @Override
             public void onClick(View v) {
                 if (!isClickXemdiem) {
-
+                    btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
                     isClickXemdiem = true;
                     img_anwser_chil.setVisibility(View.VISIBLE);
                     if (anwser()) {
@@ -620,6 +621,7 @@ public class FragmentDocvaTraloi extends BaseFragment
     private void click_anwser(String sClick) {
         if (!isClickXemdiem) {
             btn_xemdiem.setEnabled(true);
+            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
             switch (sClick) {
                 case "A":
                     Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);

@@ -15,33 +15,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <RelativeLayout
                 android:id="@+id/rl_title_toan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:background="@color/orange"
                     android:id="@+id/txt_montoan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/orange"
+                    android:layout_height="@dimen/icon_back_exercises"
+                    android:layout_centerVertical="true"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
-                    android:padding="@dimen/dp3"
                     android:text="Môn Toán - Đã làm"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_20sp" />
+                    android:textSize="@dimen/text_18sp" />
 
                 <ImageView
+                    android:padding="@dimen/dp3"
                     android:id="@+id/btn_back"
-                    android:layout_width="@dimen/dp30"
-                    android:layout_height="@dimen/dp30"
+                    android:layout_width="@dimen/icon_back_exercises"
+                    android:layout_height="@dimen/icon_back_exercises"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/dp5"
                     android:src="@drawable/ic_back_menu" />
             </RelativeLayout>
 
@@ -50,7 +55,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rl_title_toan"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rl_title_toan">
 
             </android.support.v7.widget.RecyclerView>
 
@@ -58,18 +66,31 @@
                 android:id="@+id/rl_title_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recycle_toan">
+                android:layout_below="@id/recycle_toan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycle_toan">
 
                 <TextView
+                    android:padding="@dimen/dp7"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/icon_back_exercises"
+                    android:layout_centerVertical="true"
                     android:background="@color/title_dalam"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
-                    android:padding="@dimen/dp3"
+
                     android:text="Tiếng Việt - Đã làm"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_20sp" />
+                    android:textSize="@dimen/text_18sp" />
+                <ImageView
+                    android:padding="@dimen/dp3"
+
+                    android:layout_width="@dimen/icon_back_exercises"
+                    android:layout_height="@dimen/icon_back_exercises"
+                    android:layout_centerVertical="true"
+                    />
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -77,26 +98,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rl_title_tv"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rl_title_tv">
 
             </android.support.v7.widget.RecyclerView>
 
             <RelativeLayout
                 android:id="@+id/rl_title_tienganh"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recycle_tv">
+                android:layout_height="@dimen/icon_back_exercises"
+                android:layout_below="@id/recycle_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycle_tv">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/icon_back_exercises"
                     android:background="@color/title_chualam"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
-                    android:padding="@dimen/dp3"
+                    android:padding="@dimen/dp7"
                     android:text="Tiếng Anh - Đã làm"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_20sp" />
+                    android:textSize="@dimen/text_18sp" />
+                <ImageView
+                    android:padding="@dimen/dp3"
+
+                    android:layout_width="@dimen/icon_back_exercises"
+                    android:layout_height="@dimen/icon_back_exercises"
+                    android:layout_centerVertical="true"
+                   />
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -104,10 +139,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rl_title_tienganh"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rl_title_tienganh">
 
             </android.support.v7.widget.RecyclerView>
-        </RelativeLayout>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout

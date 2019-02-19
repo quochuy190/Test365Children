@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/img_background"
@@ -11,6 +12,8 @@
         android:scaleType="fitXY" />
 
     <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/ll_ketqua"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -78,4 +81,230 @@
 
         </LinearLayout>
     </LinearLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/view_danhgia"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.85">
+
+        <ImageView
+            android:id="@+id/imageView27"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_bang"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/gl_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/gl_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/font1"
+            android:text="Đánh giá góp ý"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_lable_exer"
+            app:layout_constraintEnd_toEndOf="@+id/imageView27"
+            app:layout_constraintStart_toStartOf="@+id/imageView27"
+            app:layout_constraintTop_toTopOf="@+id/gl_1" />
+
+        <Button
+            android:id="@+id/btn_gui"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btn_4"
+            android:fontFamily="@font/font1"
+            android:text="Gửi"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/gl_2"
+            app:layout_constraintEnd_toEndOf="@+id/imageView27"
+
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintStart_toEndOf="@+id/btn_dong"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <Button
+            android:id="@+id/btn_dong"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btn_2"
+            android:fontFamily="@font/font1"
+            android:text="Đóng"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/gl_2"
+            app:layout_constraintEnd_toStartOf="@id/btn_gui"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintStart_toStartOf="@+id/imageView27"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_baidoc"
+
+            android:layout_marginRight="@dimen/margin_left_baidoc"
+            android:gravity="center"
+            android:padding="@dimen/dp5"
+            android:text="@string/txt_content_feedback"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_title_webview_doctruyen"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/imageView27"
+            app:layout_constraintStart_toStartOf="@+id/imageView27"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left_baidoc"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="@dimen/margin_left_baidoc"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_gui"
+            app:layout_constraintEnd_toEndOf="@+id/imageView27"
+            app:layout_constraintStart_toStartOf="@+id/imageView27"
+            app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Con có thích trò chơi này không?"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_title_webview_doctruyen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/group_thich"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+                <RadioButton
+                    android:checked="true"
+                    android:id="@+id/rb_rate_1_1"
+                    android:buttonTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:text="Thích"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_title_webview_doctruyen" />
+
+                <RadioButton
+                    android:id="@+id/rb_rate_1_2"
+                    android:buttonTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:text="Bình thường"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_title_webview_doctruyen" />
+
+                <RadioButton
+                    android:id="@+id/rb_rate_1_3"
+                    android:buttonTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:text="Không thích"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_title_webview_doctruyen" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Ở trên lớp con đã học những kiến thức này chưa?"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_title_webview_doctruyen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/group_thich" />
+
+            <RadioGroup
+                android:id="@+id/group_tientrinh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+                <RadioButton
+                    android:checked="true"
+                    android:id="@+id/rb_rate_2_1"
+                    android:buttonTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:text="Đã học lâu rồi"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_title_webview_doctruyen" />
+
+                <RadioButton
+                    android:id="@+id/rb_rate_2_2"
+                    android:buttonTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:text="Vừa học xong"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_title_webview_doctruyen" />
+
+                <RadioButton
+                    android:id="@+id/rb_rate_2_3"
+                    android:buttonTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:text="Chưa học"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_title_webview_doctruyen" />
+            </RadioGroup>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

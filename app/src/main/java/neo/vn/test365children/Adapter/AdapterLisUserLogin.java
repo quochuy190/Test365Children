@@ -7,14 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Listener.ListenerDeleteItem;
 import neo.vn.test365children.Models.DapAn;
@@ -63,7 +60,7 @@ public class AdapterLisUserLogin extends RecyclerView.Adapter<AdapterLisUserLogi
     @Override
     public void onBindViewHolder(TopicViewHoder holder, final int position) {
         ObjLogin obj = list.get(position);
-        if (obj.getsUSERNAME() != null)
+        /*if (obj.getsUSERNAME() != null)
             holder.txt_username.setText(obj.getsUSERNAME());
         if (obj.getsFULLNAME() != null)
             holder.txt_fullname.setText(obj.getsFULLNAME());
@@ -79,7 +76,7 @@ public class AdapterLisUserLogin extends RecyclerView.Adapter<AdapterLisUserLogi
             public void onClick(View v) {
                 OnItemRemove.OnItemRemove(position);
             }
-        });
+        });*/
 
     }
 

@@ -29,6 +29,9 @@ import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.ConfigChildren;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.ExerciseAnswer;
+import neo.vn.test365children.Models.ResponDetailExer;
+import neo.vn.test365children.Models.ResponDetailTakenExercise;
+import neo.vn.test365children.Models.ResponseObjWeek;
 import neo.vn.test365children.Models.TuanDamua;
 import neo.vn.test365children.Presenter.ImlConfigChil;
 import neo.vn.test365children.Presenter.ImpBaitap;
@@ -36,7 +39,6 @@ import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.Presenter.PresenterConfigChil;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
-import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View, ImlConfigChil.View {
@@ -49,6 +51,10 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
     Baitap_Tuan objBaitapTuan;
     @BindView(R.id.txt_lable_mon)
     TextView txt_lable_mon;
+    @BindView(R.id.txt_noidung)
+    TextView txt_noidung;
+    @BindView(R.id.txt_muctieu)
+    TextView txt_muctieu;
     @BindView(R.id.txt_tuan)
     TextView txt_tuan;
     PresenterBaitap mPresenter;
@@ -76,9 +82,10 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         mRealm = RealmController.with(this).getRealm();
         mPresenter = new PresenterBaitap(this);
         mPresenterConfig = new PresenterConfigChil(this);
-        btn_start_lambai.getBackground().setAlpha(50);
         btn_start_lambai.setEnabled(false);
         // KeyboardUtil.button_disable(btn_start_lambai);
+        // btn_start_lambai.getBackground().setAlpha(50);
+        btn_start_lambai.getBackground().setAlpha(70);
         initData();
         initEvent();
         //  play_mp3();
@@ -87,25 +94,33 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
     ExerciseAnswer obj_answer;
 
     private void initData() {
-        Glide.with(this).load(R.drawable.background_start_lambai).into(img_background);
+        Glide.with(this).load(R.drawable.bg_start_exercises).into(img_background);
         mLisCauhoi = new ArrayList<>();
         objBaitapTuan = getIntent().getParcelableExtra(Constants.KEY_SEND_BAITAPTUAN);
-        ExerciseAnswer obj = mRealm.where(ExerciseAnswer.class).equalTo("sId_exercise", objBaitapTuan.getsID()).findFirst();
+        show_time_lambai(objBaitapTuan);
+        ExerciseAnswer obj = mRealm.where(ExerciseAnswer.class)
+                .equalTo("sId_exercise",
+                        objBaitapTuan.getsID()).findFirst();
+        if (objBaitapTuan != null && objBaitapTuan.getsREQUIREMENT() != null)
+            txt_muctieu.setText("MỤC TIÊU: " + objBaitapTuan.getsREQUIREMENT());
+        if (objBaitapTuan != null && objBaitapTuan.getsNAME() != null)
+            txt_noidung.setText("NỘI DUNG: " + objBaitapTuan.getsNAME());
         switch (objBaitapTuan.getsSUBJECT_ID()) {
             case "1":
                 txt_lable_mon.setText("BÀI TẬP TOÁN");
-                txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
                 break;
             case "2":
                 txt_lable_mon.setText("BÀI TẬP TIẾNG VIỆT");
-                txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                // txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
                 break;
             case "3":
                 txt_lable_mon.setText("BÀI TẬP TIẾNG ANH");
-                txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                // txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
                 break;
         }
-
         obj_answer = new ExerciseAnswer();
         obj_answer.setsIdTuan(objBaitapTuan.getsWEEK_ID());
         obj_answer.setsId_exercise(objBaitapTuan.getsID());
@@ -118,11 +133,15 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         mRealm.copyToRealmOrUpdate(obj_answer);
         mRealm.commitTransaction();
         App.mExercise = obj_answer;
+        get_api();
+    }
+
+    private void get_api() {
         if (isNetwork()) {
             showDialogLoading();
             sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
             sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-            mPresenterConfig.api_get_config_children(sUserMe, sUserCon);
+            // mPresenterConfig.api_get_config_children(sUserMe, sUserCon);
             mPresenter.get_api_get_part(sUserMe, sUserCon, objBaitapTuan.getsID());
         }
     }
@@ -139,9 +158,14 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
             @Override
             public void onClick(View v) {
                 if (!isClickStart) {
-                    KeyboardUtil.animation_click_button(ActivityStartBaitap.this, btn_start_lambai);
-                    mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(), get_current_time(),
-                            "30");
+                    btn_start_lambai.getBackground().setAlpha(70);
+                    //  btn_start_lambai.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
+                    if (sUserMe.equals("quochuy190")) {
+
+                    } else {
+                        mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(),
+                                get_current_time(), "30");
+                    }
                     obj_answer.setsTimebatdaulambai(get_current_time());
                     // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
                     obj_answer.setIsTrangthailambai("1");
@@ -151,7 +175,6 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
                     startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
                     isClickStart = true;
                 }
-
                 //   startActivity(intent);
                 // startActivity(new Intent(ActivityStartBaitap.this, ActivityLambaitap.class));
             }
@@ -173,6 +196,11 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
                     finish();
                 }
                 break;
+            case Constants.RequestCode.LOGIN_RESTART_SESSION:
+                if (resultCode == RESULT_OK) {
+                    get_api();
+                }
+                break;
         }
     }
 
@@ -184,29 +212,59 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
     }
 
     @Override
-    public void show_list_get_part(List<Cauhoi> mLis) {
+    public void show_list_get_part(ResponDetailExer objDetailExer) {
         hideDialogLoading();
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
-            btn_start_lambai.getBackground().setAlpha(255);
+        if (objDetailExer.getsERROR().equals("0000")) {
             btn_start_lambai.setEnabled(true);
+            btn_start_lambai.getBackground().setAlpha(255);
             //   KeyboardUtil.button_enable(btn_start_lambai);
-            txt_soluongcauhoi.setText("Số lượng câu hỏi: " + mLis.size());
-            mLisCauhoi.addAll(mLis);
+            //  txt_soluongcauhoi.setText("Số lượng câu hỏi: " + mLis.size());
+            List<Cauhoi> lisCauhoi = objDetailExer.getDETAILS().getLisPARTS();
+            txt_soluongcauhoi.setText("Số lượng câu hỏi: " + objDetailExer.getDETAILS().getLisPARTS().size());
+            mLisCauhoi.addAll(lisCauhoi);
+        } else if (objDetailExer.getsERROR().equals("0002")) {
+            Intent intent = new Intent(ActivityStartBaitap.this, ActivityLogin.class);
+            startActivityForResult(intent, Constants.RequestCode.LOGIN_RESTART_SESSION);
         } else {
-            showDialogNotify("Lỗi", mLis.get(0).getsRESULT());
-            btn_start_lambai.getBackground().setAlpha(50);
+            showDialogNotify("Lỗi", objDetailExer.getsRESULT());
             btn_start_lambai.setEnabled(false);
         }
+    }
+
+    /*  @Override
+      public void show_list_get_part(List<Cauhoi> mLis) {
+          hideDialogLoading();
+          if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
+              btn_start_lambai.getBackground().setAlpha(255);
+              btn_start_lambai.setEnabled(true);
+              //   KeyboardUtil.button_enable(btn_start_lambai);
+              txt_soluongcauhoi.setText("Số lượng câu hỏi: " + mLis.size());
+              mLisCauhoi.addAll(mLis);
+          } else {
+              showDialogNotify("Lỗi", mLis.get(0).getsRESULT());
+              btn_start_lambai.getBackground().setAlpha(50);
+              btn_start_lambai.setEnabled(false);
+          }
+
+      }
+  */
+    @Override
+    public void show_error_api(List<ErrorApi> mLis) {
+        hideDialogLoading();
+        btn_start_lambai.setEnabled(false);
+        btn_start_lambai.getBackground().setAlpha(70);
+        //  showDialogNotify("Lỗi", "Có thể mẹ chưa mua bài tập này cho con, con kiểm tra và thử lại sau nhé.");
+        //KeyboardUtil.button_disable(btn_start_lambai);
+    }
+
+    @Override
+    public void show_get_excercise_needed(ResponseObjWeek objResponWeek) {
 
     }
 
     @Override
-    public void show_error_api(List<ErrorApi> mLis) {
-        hideDialogLoading();
-        btn_start_lambai.getBackground().setAlpha(50);
-        btn_start_lambai.setEnabled(false);
-        showDialogNotify("Lỗi", "Có thể mẹ chưa mua bài tập này cho con, con kiểm tra và thử lại sau nhé.");
-        //KeyboardUtil.button_disable(btn_start_lambai);
+    public void show_get_excercise_expired(ResponseObjWeek objResponWeek) {
+
     }
 
     @Override
@@ -215,7 +273,6 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
             ConfigChildren obj = mLis.get(0);
             switch (objBaitapTuan.getsSUBJECT_ID()) {
-
                 case "1":
                     txt_thoigianlambai.setText("Thời gian làm bài: "
                             + (Integer.parseInt(obj.getsMATH_TAKEN_DURATION()) / 60) + " phút");
@@ -235,26 +292,61 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         }
     }
 
-    @Override
-    public void show_get_excercise_needed(List<Baitap_Tuan> mLis) {
-
+    public void show_time_lambai(Baitap_Tuan obj) {
+        switch (objBaitapTuan.getsSUBJECT_ID()) {
+            case "1":
+                if (obj.getsVIETNAMESE_TAKEN_DURATION() != null && obj.getsVIETNAMESE_TAKEN_DURATION().length() > 0) {
+                    txt_thoigianlambai.setText("Thời gian làm bài: "
+                            + (Integer.parseInt(obj.getsMATH_TAKEN_DURATION()) / 60) + " phút");
+                    App.sTime = obj.getsMATH_TAKEN_DURATION();
+                } else {
+                    txt_thoigianlambai.setText("Thời gian làm bài: " + "30 phút");
+                    App.sTime = "" + 1800;
+                }
+                break;
+            case "2":
+                if (obj.getsVIETNAMESE_TAKEN_DURATION() != null && obj.getsVIETNAMESE_TAKEN_DURATION().length() > 0) {
+                    txt_thoigianlambai.setText("Thời gian làm bài: "
+                            + (Integer.parseInt(obj.getsVIETNAMESE_TAKEN_DURATION()) / 60) + " phút");
+                    App.sTime = obj.getsVIETNAMESE_TAKEN_DURATION();
+                } else {
+                    txt_thoigianlambai.setText("Thời gian làm bài: " + "30 phút");
+                    App.sTime = "" + 1800;
+                }
+                break;
+            case "3":
+                if (obj.getsENGLISH_TAKEN_DURATION() != null && obj.getsENGLISH_TAKEN_DURATION().length() > 0) {
+                    txt_thoigianlambai.setText("Thời gian làm bài: "
+                            + (Integer.parseInt(obj.getsENGLISH_TAKEN_DURATION()) / 60) + " phút");
+                    App.sTime = obj.getsENGLISH_TAKEN_DURATION();
+                } else {
+                    txt_thoigianlambai.setText("Thời gian làm bài: " + "30 phút");
+                    App.sTime = "" + 1800;
+                }
+                break;
+        }
     }
 
     @Override
-    public void show_get_excercise_expired(List<Baitap_Tuan> mLis) {
-
-    }
-
-    @Override
-    public void show_start_taken(List<ErrorApi> mLis) {
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000"))
+    public void show_start_taken(ErrorApi mLis) {
+        if (mLis != null && mLis.getsERROR().equals("0000"))
             Log.i(TAG, "show_start_taken: success");
     }
 
     @Override
-    public void show_submit_execercise(List<ErrorApi> mLis) {
+    public void show_submit_execercise(ErrorApi mLis) {
 
     }
+
+    @Override
+    public void show_detail_taken(ResponDetailTakenExercise obj) {
+
+    }
+
+  /*  @Override
+    public void show_submit_execercise(List<ErrorApi> mLis) {
+
+    }*/
 
     Calendar cal;
     Date date;

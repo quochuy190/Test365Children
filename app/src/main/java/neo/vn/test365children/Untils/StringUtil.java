@@ -1,6 +1,9 @@
 package neo.vn.test365children.Untils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -25,7 +28,40 @@ public class StringUtil {
     public static String ConvertFraction(String a, String b, String c) {
         return "\\(" + a + "\\dfrac{" + b + "} {" + c + "} \\)";
     }
+    public static void onLunchAnotherApp(Context context) {
 
+        final String appPackageName = "neo.vn.test365home";
+
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(appPackageName);
+        if (intent != null) {
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
+        } else {
+
+            onGoToAnotherInAppStore(intent, appPackageName, context);
+
+        }
+
+    }
+
+    public static void onGoToAnotherInAppStore(Intent intent, String appPackageName, Context context) {
+        try {
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("market://details?id=" + appPackageName));
+            context.startActivity(intent);
+
+        } catch (android.content.ActivityNotFoundException anfe) {
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName));
+            context.startActivity(intent);
+
+        }
+
+    }
     public static List<Integer> check_random(List<Integer> mLisInput) {
         List<Integer> mLisOutput = new ArrayList<>();
         boolean iCheck = false;

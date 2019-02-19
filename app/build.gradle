@@ -6,7 +6,7 @@ android {
         applicationId "neo.vn.test365children"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 13
+        versionCode 18
         versionName "1.1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

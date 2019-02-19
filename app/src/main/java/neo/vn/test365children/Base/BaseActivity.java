@@ -103,9 +103,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             }
-        }, 35000);
+        }, 30000);
         if (!isFinishing()) {
             dialog = new ProgressDialog(this);
+            dialog.setCancelable(false);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage(getString(R.string.txt_loading_dialog));
             dialog.setIndeterminate(true);
@@ -169,14 +170,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         isWifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
                 .isConnectedOrConnecting();
         if (!is3g && !isWifi) {
+            showAlertErrorNetwork();
             return false;
         } else return true;
     }
 
 
     public void showDialogComfirm(String title, String message, boolean is_hide_cancel,
-                                  final ClickDialog clickDialog){
-        final Dialog dialog_yes = new Dialog(this);
+                                  final ClickDialog clickDialog) {
+        /*final Dialog dialog_yes = new Dialog(this);
         dialog_yes.setCancelable(false);
         dialog_yes.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog_yes.setContentView(R.layout.dialog_warning);
@@ -205,19 +207,58 @@ public abstract class BaseActivity extends AppCompatActivity {
                 clickDialog.onClickNoDialog();
             }
         });
-        if (is_hide_cancel){
+        if (is_hide_cancel) {
             view_warning.setVisibility(View.GONE);
             btn_cancel.setVisibility(View.GONE);
-        }else{
+        } else {
             view_warning.setVisibility(View.VISIBLE);
             btn_cancel.setVisibility(View.VISIBLE);
         }
-        dialog_yes.show();
+        dialog_yes.show();*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+        } else
+            builder = new AlertDialog.Builder(this);
+        if (is_hide_cancel) {
+            builder.setTitle(title)
+                    .setCancelable(false)
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            clickDialog.onClickYesDialog();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            clickDialog.onClickNoDialog();
+                        }
+                    })
+                    .show();
+        } else {
+            builder.setTitle(title)
+                    .setCancelable(false)
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            clickDialog.onClickYesDialog();
+                        }
+                    })
+                    /*  .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                          @Override
+                          public void onClick(DialogInterface dialog, int which) {
+
+                          }
+                      })*/
+                    .show();
+        }
 
     }
 
-    public void showDialogNotify(String title, String message){
-        final Dialog dialog_yes = new Dialog(this);
+    public void showDialogNotify(String title, String message) {
+        /*final Dialog dialog_yes = new Dialog(this);
         dialog_yes.setCancelable(false);
         dialog_yes.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog_yes.setContentView(R.layout.dialog_warning);
@@ -247,6 +288,63 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             }
         });
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        Window windowAlDl = dialog_yes.getWindow();
+
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        windowAlDl.setAttributes(layoutParams);
+        dialog_yes.show();*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+        } else
+            builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setCancelable(false)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+    }
+
+    public void showDialogComfirm_two_button(String title, String message, boolean is_hide_cancel,
+                                             final ClickDialog clickDialog, String btn_yes, String btn_cancels) {
+        final Dialog dialog_yes = new Dialog(this);
+        dialog_yes.setCancelable(false);
+        dialog_yes.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_yes.setContentView(R.layout.dialog_warning);
+        dialog_yes.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView txt_title = (TextView) dialog_yes.findViewById(R.id.txt_warning_title);
+        TextView txt_message = (TextView) dialog_yes.findViewById(R.id.txt_warning_message);
+        TextView btn_ok = (TextView) dialog_yes.findViewById(R.id.btn_warning_ok);
+        TextView btn_cancel = (TextView) dialog_yes.findViewById(R.id.btn_warning_cancel);
+        View view_warning = (View) dialog_yes.findViewById(R.id.view_warning);
+        txt_title.setText(title);
+        txt_message.setText(message);
+        btn_ok.setText(btn_yes);
+        btn_cancel.setText(btn_cancels);
+        // txt_buysongs.setText(Html.fromHtml("Để hoàn tất đăng ký dịch vụ RingTunes, Quý khách vui lòng thực hiện thao tác soạn tin nhắn <font color='#060606'>\"Y2 gửi 9194\"</font> từ số điện thoại giá cước: 3.000Đ/7 ngày. Cảm ơn Quý khách!"));
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickDialog.onClickYesDialog();
+                dialog_yes.dismiss();
+            }
+        });
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickDialog.onClickNoDialog();
+                dialog_yes.dismiss();
+            }
+        });
+        view_warning.setVisibility(View.VISIBLE);
+        btn_cancel.setVisibility(View.VISIBLE);
         dialog_yes.show();
+
     }
 }

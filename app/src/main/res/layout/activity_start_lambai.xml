@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
+
         android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,94 +16,149 @@
     <ImageView
         android:visibility="visible"
         android:id="@+id/img_mute"
-        android:layout_width="@dimen/dp35"
-        android:layout_height="@dimen/dp35"
+        android:layout_width="@dimen/height_keyboard_sudoku"
+        android:layout_height="@dimen/height_keyboard_sudoku"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_back_menu"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_lable_mon"
+        app:layout_constraintEnd_toStartOf="@id/txt_lable_mon"
+        app:layout_constraintTop_toTopOf="@id/txt_lable_mon" />
+
+    <ImageView
+        android:visibility="visible"
+        android:id="@+id/img_mute_all"
+        android:layout_width="@dimen/height_keyboard_sudoku"
+        android:layout_height="@dimen/height_keyboard_sudoku"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/img_back_menu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
+        android:src="@drawable/img_mute"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_lable_mon"
+        app:layout_constraintStart_toEndOf="@id/txt_lable_mon"
+        app:layout_constraintTop_toTopOf="@id/txt_lable_mon"  />
+    <TextView
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintTop_toTopOf="@+id/gl_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/txt_lable_mon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linear_text_center"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        android:padding="@dimen/dp2"
+        android:text="BÀI TẬP TOÁN"
+        android:textColor="@color/white"
+        android:textSize="@dimen/kow_title_theme_gamekow"
+        android:textStyle="bold" />
 
-        <TextView
-
-            android:id="@+id/txt_lable_mon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp2"
-            android:text="BÀI TẬP TOÁN"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_25sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_tuan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tuần 3"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_15sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_text_center"
+    <TextView
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_lable_mon"
+        android:id="@+id/txt_tuan"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tuần 3"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt_app" />
+    <LinearLayout
+
+        android:id="@+id/linear_text_center"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintBottom_toTopOf="@id/btn_start_lambai"
+        app:layout_constraintLeft_toLeftOf="@id/gl_3"
+        app:layout_constraintRight_toRightOf="@id/gl_4"
+        app:layout_constraintTop_toTopOf="@id/txt_tuan">
         <TextView
+            android:maxLines="2"
+            android:gravity="center"
+            android:id="@+id/txt_noidung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_app" />
+        <TextView
+            android:maxLines="3"
+            android:gravity="center"
+            android:id="@+id/txt_muctieu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_app" />
+        <TextView
+            android:visibility="gone"
+            android:gravity="center"
             android:id="@+id/txt_soluongcauhoi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp10"
+            android:padding="@dimen/dp5"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="@dimen/text_17sp" />
+            android:textSize="@dimen/txt_app" />
 
         <TextView
+            android:gravity="center"
             android:id="@+id/txt_thoigianlambai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp10"
+            android:padding="@dimen/dp5"
             android:text="Thời gian làm bài: 30 phút"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_17sp" />
+            android:textSize="@dimen/txt_app" />
 
     </LinearLayout>
 
     <Button
+        android:textSize="@dimen/txt_app"
+        app:layout_constraintHeight_percent="0.1"
         android:textColor="@color/white"
-        android:fontFamily="@font/font1"
+        android:fontFamily="@font/roboto_bold"
         android:text="Bắt đầu làm bài"
         android:id="@+id/btn_start_lambai"
-        android:layout_width="@dimen/dp250"
-        android:layout_height="@dimen/dp40"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_below="@id/linear_text_center"
         android:layout_marginTop="@dimen/dp20"
-        android:background="@drawable/btn_2"
+        android:background="@drawable/spr_orange_click"
         android:visibility="visible"
+        app:layout_constraintWidth_percent="0.33"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linear_text_center" />
+        app:layout_constraintBottom_toBottomOf="@id/gl_2" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.88" />
 </android.support.constraint.ConstraintLayout>

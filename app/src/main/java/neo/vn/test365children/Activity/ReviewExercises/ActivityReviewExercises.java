@@ -30,10 +30,12 @@ import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewChemchuoi;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewNoicau;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewSapxep;
 import neo.vn.test365children.Fragment.ReviewExercises.FragmentReviewTrungRo;
-import neo.vn.test365children.Models.Baitap_Tuan;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.ErrorApi;
+import neo.vn.test365children.Models.ResponDetailExer;
+import neo.vn.test365children.Models.ResponDetailTakenExercise;
+import neo.vn.test365children.Models.ResponseObjWeek;
 import neo.vn.test365children.Models.TuanDamua;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
@@ -43,7 +45,6 @@ import neo.vn.test365children.Untils.SharedPrefs;
 public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.View {
     private static final String TAG = "ActivityLambaitap";
     private MediaPlayer mPlayer;
-
     @Override
     public int setContentViewId() {
         return R.layout.activity_review_exercises;
@@ -72,18 +73,12 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
         initEvent();
         // initViewPager(mCauhoi);
     }
-
-
     @Override
     protected void onStart() {
         super.onStart();
 
     }
-
-
     private float fPoint = 0;
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -200,7 +195,6 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                         mCauhoiDetail.setsHTML_C(obj.getLisInfo().get(i).getsHTML_C());
                         mCauhoiDetail.setsHTML_D(obj.getLisInfo().get(i).getsHTML_D());
                         if (obj.getsKIEU().equals("1")) {
-                            if (obj.getsERROR().equals("0000"))
                                 adapterViewpager.addFragment(FragmentChondapanDungReview.newInstance(mCauhoiDetail, 0),
                                         obj.getsERROR());
                         } else if (obj.getsKIEU().equals("2")) {
@@ -247,13 +241,18 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
 
     }
 
+    @Override
+    public void show_list_get_part(ResponDetailExer objDetailExer) {
+
+    }
+
     int maxPage = 0;
 
-    @Override
+    /*@Override
     public void show_list_get_part(List<Cauhoi> mLis) {
         hideDialogLoading();
 
-    }
+    }*/
 
 
     @Override
@@ -262,24 +261,30 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
     }
 
     @Override
-    public void show_get_excercise_needed(List<Baitap_Tuan> mLis) {
+    public void show_get_excercise_needed(ResponseObjWeek objResponWeek) {
 
     }
 
     @Override
-    public void show_get_excercise_expired(List<Baitap_Tuan> mLis) {
+    public void show_get_excercise_expired(ResponseObjWeek objResponWeek) {
 
     }
 
     @Override
-    public void show_start_taken(List<ErrorApi> mLis) {
+    public void show_start_taken(ErrorApi mLis) {
 
     }
 
     @Override
-    public void show_submit_execercise(List<ErrorApi> mLis) {
+    public void show_submit_execercise(ErrorApi mLis) {
 
     }
+
+    @Override
+    public void show_detail_taken(ResponDetailTakenExercise obj) {
+
+    }
+
 
     @Override
     protected void onPause() {

@@ -24,7 +24,6 @@ public class PresenterConfigChil implements ImlConfigChil.Presenter {
 
     @Override
     public void api_get_config_children(String sUserMe, String sUserCon) {
-
         Map<String, String> mMap = new LinkedHashMap<>();
         mMap.put("Service", "get_config_children");
         mMap.put("Provider", "default");

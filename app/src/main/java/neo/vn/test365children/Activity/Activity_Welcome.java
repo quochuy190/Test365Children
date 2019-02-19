@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
+import neo.vn.test365children.Models.InfoKids;
 import neo.vn.test365children.Models.ObjLogin;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
@@ -51,13 +52,21 @@ public class Activity_Welcome extends BaseActivity {
     }
 
     private void initData() {
-        ObjLogin objLogin = (ObjLogin) getIntent().getSerializableExtra(Constants.KEY_SEND_OBJLOGIN);
-        txt_name.setText("Bé " + objLogin.getsFULLNAME());
-        txt_content.setText("Học sinh lớp " + objLogin.getsLEVEL_ID() + ", " + objLogin.getsSCHOOL_NAME()
-                + ", " + objLogin.getsDISTRICT_NAME()
-                + ", " + objLogin.getsPROVINCE_NAME()
-                + " gia nhập vào ngôi nhà chung Home365\n" +
-                "Chúng ta sẽ cùng làm bài tập thật là vui và chơi các trò chơi bổ ích mỗi ngày nhé"
-        );
+        // ObjLogin objLogin = (ObjLogin) getIntent().getSerializableExtra(Constants.KEY_SEND_OBJLOGIN);
+        ObjLogin objLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
+        if (objLogin.getsObjInfoKid() != null) {
+            InfoKids obj = objLogin.getsObjInfoKid();
+            if (obj.getsFULLNAME() != null) {
+                txt_name.setText("Bé " + objLogin.getsObjInfoKid().getsFULLNAME());
+            }
+            if (obj.getsLEVEL_ID() != null && obj.getsSCHOOL() != null && obj.getsDISTRICT() != null && obj.getsPROVINCE() != null) {
+                txt_content.setText("Học sinh lớp " + obj.getsLEVEL_ID() + ", " + obj.getsSCHOOL()
+                        + ", " + obj.getsDISTRICT()
+                        + ", " + obj.getsPROVINCE()
+                        + " gia nhập vào ngôi nhà chung Home365\n" +
+                        "Chúng ta sẽ cùng làm bài tập thật là vui và chơi các trò chơi bổ ích mỗi ngày nhé"
+                );
+            }
+        }
     }
 }

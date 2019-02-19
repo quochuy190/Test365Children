@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +57,8 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
     ImageView img_anwser_chil;
     @BindView(R.id.btn_xemdiem_dientu)
     Button btn_xemdiem;
+    @BindView(R.id.img_reload)
+    ImageView img_reload;
 
     public static FragmentDienvaochotrongReview newInstance(CauhoiDetail restaurant) {
         FragmentDienvaochotrongReview restaurantDetailFragment = new FragmentDienvaochotrongReview();
@@ -70,6 +73,23 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCauhoi = Parcels.unwrap(getArguments().getParcelable("cauhoi"));
+
+    }
+
+    private void reload() {
+        browser.reload();
+        webview_dapan.reload();
+        browser.setWebViewClient(new WebViewClient());
+        webview_dapan.setWebViewClient(new WebViewClient());
+    }
+
+    private void initEvent() {
+        img_reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reload();
+            }
+        });
     }
 
     @Override
@@ -92,6 +112,7 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dienvaochotrong, container, false);
         ButterKnife.bind(this, view);
+        initEvent();
         btn_xemdiem.setVisibility(View.GONE);
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "

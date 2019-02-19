@@ -35,8 +35,8 @@
             android:layout_height="@dimen/icon_back_exercises"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp10"
-            android:padding="@dimen/dp5"
-            android:src="@drawable/img_back_menu" />
+            android:padding="@dimen/dp3"
+            android:src="@drawable/ic_back_menu" />
 
         <ImageView
             android:id="@+id/img_back_right"
@@ -58,7 +58,6 @@
             android:layout_toRightOf="@id/img_back"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
-            android:text="Toán tuần 1"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/txt_lable_exer" />
@@ -295,20 +294,49 @@
                     </LinearLayout>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:padding="@dimen/dp5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:id="@+id/rl_guilaibai"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/btn_guilai"
+                            android:layout_width="@dimen/btn_review_exer"
+                            android:layout_height="@dimen/exercises_icon_point"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:background="@drawable/btn_3"
+                            android:text="Gửi lại bài"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_16sp" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rl_xembaitap"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/btn_xemlaibai"
+                            android:layout_width="@dimen/btn_review_exer"
+                            android:layout_height="@dimen/exercises_icon_point"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:background="@drawable/btn_1"
+                            android:text="Xem lại bài đã làm"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_16sp" />
+                    </RelativeLayout>
 
-                <Button
-                    android:id="@+id/btn_xemlaibai"
-                    android:layout_width="@dimen/dp250"
-                    android:layout_height="@dimen/exercises_icon_point"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:background="@drawable/btn_1"
-                    android:paddingLeft="@dimen/dp30"
-                    android:paddingRight="@dimen/dp30"
-                    android:text="Xem lại bài đã làm"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_16sp" />
+                </LinearLayout>
+
 
                 <RelativeLayout
                     android:layout_marginBottom="@dimen/dp5"

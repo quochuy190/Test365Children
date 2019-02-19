@@ -32,12 +32,15 @@ import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
+import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.GameTNNL;
-import neo.vn.test365children.Models.GameTrieuPhuTriThuc;
+import neo.vn.test365children.Models.InfoKids;
 import neo.vn.test365children.Models.ItemGameTNNL;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.Models.ObjLogin;
+import neo.vn.test365children.Models.ResponGameTNNL;
+import neo.vn.test365children.Models.ResponGetGameTPTT;
 import neo.vn.test365children.Presenter.ImlGetGameTptt;
 import neo.vn.test365children.Presenter.PresenterGame;
 import neo.vn.test365children.R;
@@ -148,6 +151,10 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     ImageView img_back;
     @BindView(R.id.img_mute)
     ImageView img_mute;
+    @BindView(R.id.img_gameover)
+    ImageView img_gameover;
+    @BindView(R.id.txt_bonus)
+    TextView txt_bonus;
 
     @Override
     public int setContentViewId() {
@@ -170,6 +177,19 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
         initEventFlipComplete();
     }
 
+    static boolean active = false;
+
+    /* @Override
+     public void onStart() {
+         super.onStart();
+         active = true;
+     }
+
+     @Override
+     public void onStop() {
+         super.onStop();
+         active = false;
+     }*/
     public void resetTime() {
         if (intent_service != null)
             stopService(intent_service);
@@ -190,11 +210,14 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
                 time = (int) event.time;
                 txt_time_game.setText(TimeUtils.formatDuration((int) event.time));
             } else {
-                time = (int) event.time;
-                Log.i(TAG, "onMessageEvent: hết time" + time);
-                stopService(intent_service);
-                isPlayerOne = !isPlayerOne;
-                change_color(isPlayerOne);
+                if (active) {
+                    time = (int) event.time;
+                    Log.i(TAG, "onMessageEvent: hết time" + time);
+                    stopService(intent_service);
+                    isPlayerOne = !isPlayerOne;
+                    change_color(isPlayerOne);
+                }
+
             }
         }
     }
@@ -202,6 +225,10 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     @Override
     protected void onStart() {
         super.onStart();
+        active = true;
+        if (mPlayer != null && !mPlayer.isPlaying() && !isMute) {
+            mPlayer.start();
+        }
         EventBus.getDefault().register(this);
     }
 
@@ -209,6 +236,10 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     @Override
     protected void onStop() {
         super.onStop();
+        active = false;
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            mPlayer.pause();
+        }
         EventBus.getDefault().unregister(this);
     }
 
@@ -220,15 +251,17 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
         Glide.with(this).load(R.drawable.icon_broad).into(img_broad_question_1);
         Glide.with(this).load(R.drawable.icon_broad).into(img_broad_question_2);
         Glide.with(this).load(R.drawable.bg_game_tnnl).into(imgBackground);
-        img_bg_player_two.getBackground().setAlpha(50);
-        img_bg_player_one.getBackground().setAlpha(255);
+       /* img_bg_player_two.getBackground().setAlpha(50);
+        img_bg_player_one.getBackground().setAlpha(255);*/
+        Glide.with(this).load(R.drawable.btn_gray_black).into(img_bg_player_two);
+        Glide.with(this).load(R.drawable.btn_3).into(img_bg_player_one);
         if (chil != null) {
-            if (chil.getsUSERNAME() != null) {
-                txt_name_player_one.setText(chil.getsUSERNAME());
+            InfoKids objKid = chil.getsObjInfoKid();
+            if (objKid.getsUSERNAME() != null) {
+                txt_name_player_one.setText(objKid.getsUSERNAME());
             }
-            if (chil.getsAVATAR() != null && chil.getsAVATAR().length() > 0) {
-                Glide.with(this).load(Config.URL_IMAGE + chil.getsAVARTAR())
-                        .placeholder(R.drawable.icon_avata)
+            if (objKid.getsAVATAR() != null && objKid.getsAVATAR().length() > 0) {
+                Glide.with(this).load(Config.URL_IMAGE + objKid.getsAVATAR())
                         .into(img_avata_player1);
             } else {
                 Glide.with(this).load(R.drawable.icon_avata).into(img_avata_player1);
@@ -406,20 +439,24 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
         show_image();
     }
 
+    boolean isMute = false;
+
     private void initEvent() {
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                back_btn();
             }
         });
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mPlayer.isPlaying()) {
+                    isMute = true;
                     Glide.with(getApplication()).load(R.drawable.icon_tat_loa).into(img_mute);
                     mPlayer.pause();
                 } else {
+                    isMute = false;
                     Glide.with(getApplication()).load(R.drawable.img_mute).into(img_mute);
                     mPlayer.start();
                 }
@@ -429,15 +466,8 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
             @Override
             public void onClick(View v) {
                 if (isNetwork()) {
-                    if (sLevel.equals("2")) {
-                        String sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
-                        String sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-                        showDialogLoading();
-                        mPresenter.api_submit_game_tnnl(sUserMe, sUserCon, "1000");
-                        finish();
-                    } else {
-                        finish();
-                    }
+                    finish();
+
                 } else {
                     finish();
                 }
@@ -453,28 +483,33 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPlayerOne && !isFirstClick && !isAnwser) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            isPlayerOne = !isPlayerOne;
-                            change_color(isPlayerOne);
-                        }
-                    }, 0);
-                } else gone_question_view(true);
-               /* Animation animationRotale = AnimationUtils.loadAnimation(ActivityGameTinhnhanhNholau.this,
-                        R.anim.animation_show_question_close);
-                rl_show_question.startAnimation(animationRotale);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        rl_show_question.setVisibility(View.GONE);
-                    }
-                }, 1000);*/
+                if (active) {
+                    if (isPlayerOne && !isFirstClick && !isAnwser) {
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                isPlayerOne = !isPlayerOne;
+                                change_color(isPlayerOne);
+                            }
+                        }, 0);
+                    } else gone_question_view(true);
+                }
 
             }
         });
 
+    }
+
+    private void get_api_bonus() {
+        if (sLevel.equals("3")) {
+            String sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+            String sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+            mPresenter.api_submit_game_tnnl(sUserMe, sUserCon, "1000");
+            // finish();
+        } else {
+
+        }
     }
 
     private boolean isFirstClick = false;
@@ -489,71 +524,65 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     boolean isPlayerOne = true;
 
     private void check_click(EasyFlipView flipView, final int possition) {
+        if (active) {
+            if (!isFirstClick && !isWating) {
+                play_lathinh();
+                isAnwser = false;
+                clear_webview();
+                isWating = true;
+                isFirstClick = true;
+                iPositionOne = possition;
+                boolean flipStatus = flipView.isFlipEnabled();
+                flipView.setFlipDuration(1000);
+                flipView.flipTheView();
+                new CountDownTimer(500, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
 
-        Log.i(TAG, "check_click possition: " + possition);
-        Log.i(TAG, "check_click isWating: " + isWating);
-        Log.i(TAG, "check_click isFirstClick: " + isFirstClick);
-        Log.i(TAG, "check_click isTwoClick: " + isTwoClick);
-        if (!isFirstClick && !isWating) {
-            play_lathinh();
-            isAnwser = false;
-            Log.i(TAG, "check_click: " + possition);
-            clear_webview();
-            isWating = true;
-            isFirstClick = true;
-            iPositionOne = possition;
-            Log.i(TAG, "check_click: click 1 " + flipView);
-            boolean flipStatus = flipView.isFlipEnabled();
-            Log.i(TAG, "check_click: " + flipStatus);
-            flipView.setFlipDuration(1000);
-            flipView.flipTheView();
-            new CountDownTimer(500, 100) {
-                @Override
-                public void onTick(long millisUntilFinished) {
+                    @Override
+                    public void onFinish() {
+                        String s = mLisData.get(possition).getsContent();
+                        txt_title_broad_1.setText("Ô số " + (iPositionOne + 1));
+                        txt_title_broad_2.setText("");
+                        StringUtil.initWebview_Whitetext(webview_question_1, s);
+                        StringUtil.initWebview_Whitetext(webview_question_2, "");
+                        rl_show_question.setVisibility(View.VISIBLE);
+                        Animation animationRotale = AnimationUtils.loadAnimation(ActivityGameTinhnhanhNholau.this,
+                                R.anim.animation_show_question);
+                        rl_show_question.startAnimation(animationRotale);
+                    }
+                }.start();
+            } else if (!isTwoClick && !isWating && possition != iPositionOne) {
+                //KeyboardUtil.button_disable(btn_exit);
+                //btn_exit.getBackground().setAlpha(50);
+                btn_exit.setEnabled(false);
+                if (isPlayerOne) {
+                    isComputerPlay = true;
+                } else {
+                    isComputerPlay = true;
                 }
-
-                @Override
-                public void onFinish() {
-                    String s = mLisData.get(possition).getsContent();
-                    txt_title_broad_1.setText("Ô số " + (iPositionOne + 1));
-                    txt_title_broad_2.setText("");
-                    StringUtil.initWebview_Whitetext(webview_question_1, s);
-                    StringUtil.initWebview_Whitetext(webview_question_2, "");
-                    rl_show_question.setVisibility(View.VISIBLE);
-                    Animation animationRotale = AnimationUtils.loadAnimation(ActivityGameTinhnhanhNholau.this,
-                            R.anim.animation_show_question);
-                    rl_show_question.startAnimation(animationRotale);
-                }
-            }.start();
-        } else if (!isTwoClick && !isWating && possition != iPositionOne) {
-            //KeyboardUtil.button_disable(btn_exit);
-            btn_exit.getBackground().setAlpha(50);
-            btn_exit.setEnabled(false);
-            if (isPlayerOne) {
-                isComputerPlay = true;
-            } else {
-                isComputerPlay = true;
+                isWating = true;
+                play_lathinh();
+                String s = mLisData.get(possition).getsContent();
+                StringUtil.initWebview_Whitetext(webview_question_2, s);
+                txt_title_broad_1.setText("Ô số " + (iPositionOne + 1));
+                txt_title_broad_2.setText("Ô số " + (possition + 1));
+                isTwoClick = true;
+                iPositionTwo = possition;
+                boolean flipStatus = flipView.isFlipEnabled();
+                flipView.setFlipDuration(1000);
+                flipView.flipTheView();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rl_show_question.setVisibility(View.VISIBLE);
+                        Animation animationRotale = AnimationUtils.loadAnimation(ActivityGameTinhnhanhNholau.this,
+                                R.anim.animation_show_question);
+                        rl_show_question.startAnimation(animationRotale);
+                    }
+                }, 500);
             }
-            isWating = true;
-            play_lathinh();
-            String s = mLisData.get(possition).getsContent();
-            StringUtil.initWebview_Whitetext(webview_question_2, s);
-            txt_title_broad_1.setText("Ô số " + (iPositionOne + 1));
-            txt_title_broad_2.setText("Ô số " + (possition + 1));
-            isTwoClick = true;
-            iPositionTwo = possition;
-            boolean flipStatus = flipView.isFlipEnabled();
-            flipView.setFlipDuration(1000);
-            flipView.flipTheView();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    rl_show_question.setVisibility(View.VISIBLE);
-                    Animation animationRotale = AnimationUtils.loadAnimation(ActivityGameTinhnhanhNholau.this,
-                            R.anim.animation_show_question);
-                    rl_show_question.startAnimation(animationRotale);
-                }
-            }, 500);
         }
     }
 
@@ -570,93 +599,118 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
 
                 @Override
                 public void onFinish() {
-                    if (linkedBoxOpen.size() > 0) {
-                        if (!StringUtil.check_list_true(iPositionOne, linkedBoxOpen)) {
+                    if (active) {
+                        if (linkedBoxOpen.size() > 0) {
+                            if (!StringUtil.check_list_true(iPositionOne, linkedBoxOpen)) {
+                                linkedBoxOpen.add(iPositionOne);
+                            }
+                            if (!StringUtil.check_list_true(iPositionTwo, linkedBoxOpen)) {
+                                linkedBoxOpen.add(iPositionTwo);
+                            }
+                        } else {
                             linkedBoxOpen.add(iPositionOne);
-                        }
-                        if (!StringUtil.check_list_true(iPositionTwo, linkedBoxOpen)) {
                             linkedBoxOpen.add(iPositionTwo);
                         }
-                    } else {
-                        linkedBoxOpen.add(iPositionOne);
-                        linkedBoxOpen.add(iPositionTwo);
-                    }
-                    isTwoClick = false;
-                    isFirstClick = false;
+                        isTwoClick = false;
+                        isFirstClick = false;
 
-                    if (mLisData.get(iPositionOne).getsId().equals(mLisData.get(iPositionTwo).getsId())) {
-                        play_anwser_true();
-                        isAnwser = true;
-                        mListBoxShow.add(iPositionOne);
-                        mListBoxShow.add(iPositionTwo);
-                        if (isPlayerOne) {
-                            isComputerPlay = false;
-                            iPointPlayer_One = iPointPlayer_One + 1;
-                            txt_tnnl_point_one.setText("" + iPointPlayer_One);
-                        } else {
-                            isComputerPlay = true;
-                            iPointPlayer_Two = iPointPlayer_Two + 1;
-                            txt_tnnl_point_two.setText("" + iPointPlayer_Two);
-                            new CountDownTimer(5000, 100) {
+                        if (mLisData.get(iPositionOne).getsId().equals(mLisData.get(iPositionTwo).getsId())) {
+                            play_anwser_true();
+                            isAnwser = true;
+                            mListBoxShow.add(iPositionOne);
+                            mListBoxShow.add(iPositionTwo);
+                            if (isPlayerOne) {
+                                isComputerPlay = false;
+                                iPointPlayer_One = iPointPlayer_One + 1;
+                                txt_tnnl_point_one.setText("" + iPointPlayer_One);
+                            } else {
+                                isComputerPlay = true;
+                                iPointPlayer_Two = iPointPlayer_Two + 1;
+                                txt_tnnl_point_two.setText("" + iPointPlayer_Two);
+                                new CountDownTimer(5000, 100) {
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        gone_question_view(true);
+                                        ai_lever_1();
+                                    }
+                                }.start();
+
+                            }
+                            new CountDownTimer(1500, 100) {
                                 @Override
                                 public void onTick(long millisUntilFinished) {
+
                                 }
 
                                 @Override
                                 public void onFinish() {
-                                    gone_question_view(true);
-                                    ai_lever_1();
+                                    if (iPointPlayer_One >= iPointPlayer_Two) {
+                                        play_gameover_win();
+                                        Glide.with(ActivityGameTinhnhanhNholau.this).load(R.drawable.img_winner)
+                                                .into(img_gameover);
+                                        txt_bonus.setText("Thưởng: 1.000đ");
+                                    } else {
+                                        play_gameover_lost();
+                                        Glide.with(ActivityGameTinhnhanhNholau.this).load(R.drawable.title_game_over)
+                                                .into(img_gameover);
+                                        txt_bonus.setText("Thưởng: 0đ");
+                                    }
+                                    int iTotalPoint = iPointPlayer_One + iPointPlayer_Two;
+                                    if (iTotalPoint == 12) {
+                                        stopService(intent_service);
+                                        if (iPointPlayer_One >= iPointPlayer_Two) {
+                                            rl_show_gameover.setVisibility(View.VISIBLE);
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    get_api_bonus();
+                                                }
+                                            }, 700);
+
+                                        }
+                                    }
                                 }
                             }.start();
+                        } else {
+                            play_anwser_false();
+                            if (!isPlayerOne) {
+                                new CountDownTimer(1100, 100) {
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
 
-                        }
-                        new CountDownTimer(1500, 100) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        isPlayerOne = !isPlayerOne;
+                                        change_color(isPlayerOne);
+                                    }
+                                }.start();
 
                             }
-
-                            @Override
-                            public void onFinish() {
-                                if (iPointPlayer_One >= iPointPlayer_Two) {
-                                    play_gameover_win();
-                                } else
-                                    play_gameover_lost();
-                                int iTotalPoint = iPointPlayer_One + iPointPlayer_Two;
-                                if (iTotalPoint == 12) {
-                                    rl_show_gameover.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        }.start();
-                    } else {
-                        play_anwser_false();
-                        if (!isPlayerOne) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    isPlayerOne = !isPlayerOne;
-                                    change_color(isPlayerOne);
-                                }
-                            }, 1100);
+                            isAnwser = false;
                         }
-                        isAnwser = false;
+                        //   btn_exit.getBackground().setAlpha(255);
+                        btn_exit.setEnabled(true);
+                        //KeyboardUtil.button_enable(btn_exit);
+                        final boolean finalIsAnwser = isAnwser;
+                        new Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                reload_flip_one(finalIsAnwser);
+                            }
+                        });
+                        new Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                reload_flip_two(finalIsAnwser);
+                            }
+                        });
                     }
-                    btn_exit.getBackground().setAlpha(255);
-                    btn_exit.setEnabled(true);
-                    //KeyboardUtil.button_enable(btn_exit);
-                    final boolean finalIsAnwser = isAnwser;
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            reload_flip_one(finalIsAnwser);
-                        }
-                    });
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            reload_flip_two(finalIsAnwser);
-                        }
-                    });
                 }
             }.start();
 
@@ -696,26 +750,39 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
 
     private void change_color(final boolean isPlayerOne) {
         gone_question_view(true);
-        new Handler().postDelayed(new Runnable() {
+        new CountDownTimer(100, 10) {
             @Override
-            public void run() {
-                play_doiluot();
-                resetTime();
-                if (isPlayerOne) {
-                    isComputerPlay = false;
+            public void onTick(long millisUntilFinished) {
 
-                    btn_exit.setVisibility(View.VISIBLE);
-                    img_bg_player_two.getBackground().setAlpha(50);
-                    img_bg_player_one.getBackground().setAlpha(255);
-                } else {
-                    btn_exit.setVisibility(View.INVISIBLE);
-                    img_bg_player_one.getBackground().setAlpha(50);
-                    img_bg_player_two.getBackground().setAlpha(255);
-                    ai_lever_1();
+            }
+
+            @Override
+            public void onFinish() {
+                if (active) {
+                    play_doiluot();
+                    resetTime();
+                    if (isPlayerOne) {
+                        isComputerPlay = false;
+                        btn_exit.setVisibility(View.VISIBLE);
+                 /*   img_bg_player_two.getBackground().setAlpha(50);
+                    img_bg_player_one.getBackground().setAlpha(255);*/
+                        if (active) {
+                            Glide.with(ActivityGameTinhnhanhNholau.this).load(R.drawable.btn_gray_black).into(img_bg_player_two);
+                            Glide.with(ActivityGameTinhnhanhNholau.this).load(R.drawable.btn_3).into(img_bg_player_one);
+                        }
+                    } else {
+                        btn_exit.setVisibility(View.INVISIBLE);
+                   /* img_bg_player_one.getBackground().setAlpha(50);
+                    img_bg_player_two.getBackground().setAlpha(255);*/
+                        if (active) {
+                            Glide.with(ActivityGameTinhnhanhNholau.this).load(R.drawable.btn_gray_black).into(img_bg_player_one);
+                            Glide.with(ActivityGameTinhnhanhNholau.this).load(R.drawable.btn_4).into(img_bg_player_two);
+                            ai_lever_1();
+                        }
+                    }
                 }
             }
-        }, 100);
-
+        }.start();
     }
 
     public List<Integer> get_ai_level_2(List<Integer> mListBoxShow, List<Integer> linkedBoxOpen) {
@@ -841,24 +908,12 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
             }, 8000);
         }
 
-       /* final int position_two = mLisClick.get(1);
-        new CountDownTimer(1500, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                ai_click(position_two);
-            }
-        }.start();*/
 
     }
 
     @Override
     public void onBackPressed() {
-        finish();
+        back_btn();
     }
 
     @Override
@@ -1544,34 +1599,48 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     }
 
     @Override
-    public void show_get_game_tptt(List<GameTrieuPhuTriThuc> mLis) {
+    public void show_get_game_tptt(ResponGetGameTPTT objGetGameTPTT) {
         hideDialogLoading();
     }
 
     @Override
-    public void show_error_api(List<ErrorApi> mLis) {
+    public void show_error_api(ErrorApi mLis) {
         hideDialogLoading();
     }
 
     @Override
-    public void show_start_tptt(List<ErrorApi> mLis) {
+    public void show_start_tptt(ErrorApi mLis) {
         hideDialogLoading();
     }
 
     @Override
-    public void show_submit_tptt(List<ErrorApi> mLis) {
+    public void show_submit_tptt(ErrorApi mLis) {
         hideDialogLoading();
 
     }
 
     @Override
-    public void show_get_game_tnnl(List<GameTNNL> mLis) {
+    public void show_get_game_tnnl(ResponGameTNNL mLis) {
 
     }
 
     @Override
-    public void show_submit_game_tnnl(List<ErrorApi> mLis) {
+    public void show_submit_game_tnnl(ErrorApi mLis) {
         hideDialogLoading();
+        if (mLis.getsERROR().equals("0000")) {
+            showDialogComfirm("Thông báo", "Chúc mừng con đã chiến thắng," +
+                    " con được thưởng 1000đ cộng vào tài khoản mẹ!", false, new ClickDialog() {
+                @Override
+                public void onClickYesDialog() {
+                    finish();
+                }
+
+                @Override
+                public void onClickNoDialog() {
+
+                }
+            });
+        }
     }
 
     @BindView(R.id.img_front_side_0)
@@ -1796,7 +1865,7 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
         //mp3 = new MediaPlayer();
         mPlayer.release();
 
-        mPlayer = MediaPlayer.create(ActivityGameTinhnhanhNholau.this, R.raw.tnnl_bacground_music);
+        mPlayer = MediaPlayer.create(ActivityGameTinhnhanhNholau.this, R.raw.home365);
         mPlayer.setLooping(true);
         mPlayer.setVolume(20, 20);
         mPlayer.start();
@@ -1849,5 +1918,20 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
         mPlayer_Click = MediaPlayer.create(ActivityGameTinhnhanhNholau.this, R.raw.tnnl_boo3);
         mPlayer_Click.start();
 
+    }
+
+    private void back_btn() {
+        showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn thoát khỏi trò chơi không?",
+                true, new ClickDialog() {
+                    @Override
+                    public void onClickYesDialog() {
+                        finish();
+                    }
+
+                    @Override
+                    public void onClickNoDialog() {
+
+                    }
+                });
     }
 }

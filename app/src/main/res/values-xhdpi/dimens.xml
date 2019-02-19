@@ -36,7 +36,7 @@
     <dimen name="margin_edt_login">75dp</dimen>
     <dimen name="margin_top_login">30dp</dimen>
     <dimen name="login_width">400dp</dimen>
-
+    <dimen name="text_login">16sp</dimen>
     <!--<layout menu làm bài tập-->
     <dimen name="hight_btn_login">40dp</dimen>
     <dimen name="margin_btn_bottom_login">10dp</dimen>
@@ -114,7 +114,7 @@
     <dimen name="icon_time">50dp</dimen>
     <dimen name="margin_question">50dp</dimen>
     <dimen name="margin_anwser_game">25dp</dimen>
-    <dimen name="text_time_game_tptt">15sp</dimen>
+    <dimen name="text_time_game_tptt">14sp</dimen>
     <!--  Biểu đồ-->
     <dimen name="margin_bottom_bieudo">70dp</dimen>
     <dimen name="margin_right_bieudo">60dp</dimen>
@@ -173,7 +173,7 @@
     <dimen name="kow_height_theme_title">45dp</dimen>
     <dimen name="kow_margin_top_playgame">8dp</dimen>
     <dimen name="kow_height_text_theme">30dp</dimen>
-    <dimen name="kow_title_theme_gamekow">22sp</dimen>
+    <dimen name="kow_title_theme_gamekow">17sp</dimen>
     <dimen name="margin_kow_chucai">10dp</dimen>
     <dimen name="item_chucai_height">45dp</dimen>
     <dimen name="kow_width_logo_kow">90dp</dimen>
@@ -182,7 +182,19 @@
     <dimen name="item_sudoku">0.5dp</dimen>
     <dimen name="item_sector">2.5dp</dimen>
     <dimen name="pading_sudoku">2.5dp</dimen>
-    <dimen name="txt_value_sudoku">20sp</dimen>
+    <dimen name="txt_value_sudoku">19sp</dimen>
+    <dimen name="txt_sudoku_goiy">17sp</dimen>
     <dimen name="height_item_sudoku">33dp</dimen>
     <dimen name="height_keyboard_sudoku">38dp</dimen>
+    <!--Chọn lớp dùng thử-->
+    <dimen name="txt_title_try">21sp</dimen>
+    <dimen name="txt_size_level">17sp</dimen>
+    <!--Hướng dẫn đăng nhập-->
+    <dimen name="size_pading_content_guild_login">7dp</dimen>
+    <dimen name="size_txt_content_guild_login">15sp</dimen>
+    <!--Webview đọc truyện-->
+    <dimen name="txt_title_webview_doctruyen">15sp</dimen>
+    <!--Start làm bài tập-->
+    <dimen name="txt_app">16sp</dimen>
+    <dimen name="txt_name_subject">19sp</dimen>
 </resources>

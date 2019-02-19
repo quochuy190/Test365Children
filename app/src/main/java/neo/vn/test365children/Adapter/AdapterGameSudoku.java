@@ -86,87 +86,26 @@ public class AdapterGameSudoku extends RecyclerView.Adapter<AdapterGameSudoku.To
         void bindData(SudokuCell s) {
             RecyclerView.LayoutParams params =
                     (RecyclerView.LayoutParams) itemView.getLayoutParams();
-
-          /*  if (getAdapterPosition() >= 0 && getAdapterPosition() < 3) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 3 && getAdapterPosition() < 6) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 6 && getAdapterPosition() < 9) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 9 && getAdapterPosition() < 12) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 12 && getAdapterPosition() < 15) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 15 && getAdapterPosition() < 18) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 18 && getAdapterPosition() < 21) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 21 && getAdapterPosition() < 24) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 24 && getAdapterPosition() < 27) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 27 && getAdapterPosition() < 30) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 30 && getAdapterPosition() < 33) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 33 && getAdapterPosition() < 36) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 36 && getAdapterPosition() < 39) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 39 && getAdapterPosition() < 42) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 42 && getAdapterPosition() < 45) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 45 && getAdapterPosition() < 48) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 48 && getAdapterPosition() < 51) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 51 && getAdapterPosition() < 54) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 54 && getAdapterPosition() < 57) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 57 && getAdapterPosition() < 60) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 60 && getAdapterPosition() < 63) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 63 && getAdapterPosition() < 66) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 66 && getAdapterPosition() < 69) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 69 && getAdapterPosition() < 72) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 72 && getAdapterPosition() < 75) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            } else if (getAdapterPosition() >= 75 && getAdapterPosition() < 78) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
-            } else if (getAdapterPosition() >= 78 && getAdapterPosition() < 81) {
-                Glide.with(context).load(R.drawable.ic_sudoku_cell).into(button);
-            }*/
-            // txt_value.setText("" + s.getValue());
-            if (!s.isHide())
+            if (!s.isHide()) {
+                txt_value.setTextColor(context.getResources().getColor(R.color.black));
                 txt_value.setText("" + s.getValue());
-            else {
+            } else {
                 txt_value.setText("");
                 /*txt_value.setText("" + s.getValue());
                 txt_value.setTextColor(context.getResources().getColor(R.color.blue));*/
                 if (s.getValue_click() > 0 && s.getValue_click() == s.getValue()) {
                     txt_value.setText("" + s.getValue_click());
-                    txt_value.setTextColor(context.getResources().getColor(R.color.blue));
+                    txt_value.setTextColor(context.getResources().getColor(R.color.blue_theme_game_kow));
                 } else if (s.getValue_click() > 0) {
                     txt_value.setText("" + s.getValue_click());
                     txt_value.setTextColor(context.getResources().getColor(R.color.red_test365));
                 }
                 if (s.isClick()) {
                     Glide.with(context).load(R.drawable.ic_sudoku_cell_click).into(button);
-                }
-
+                }/* else {
+                    Glide.with(context).load(R.drawable.ic_sudoku_cell_2).into(button);
+                }*/
             }
-            /*button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Glide.with(context).load(R.drawable.ic_sudoku_cell_click).into(button);
-                }
-            });*/
             if (getAdapterPosition() < 27 && getAdapterPosition() >= 18) {
                 params.bottomMargin = itemView.getResources().getDimensionPixelOffset(R.dimen.item_sector);
             } else if (getAdapterPosition() < 54 && getAdapterPosition() >= 45) {
