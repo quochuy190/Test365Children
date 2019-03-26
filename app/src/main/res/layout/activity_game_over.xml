@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/img_background"
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
 
     <LinearLayout
-        android:visibility="visible"
         android:id="@+id/ll_ketqua"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/img_gameover"
@@ -81,11 +80,12 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/view_danhgia"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.85"
@@ -218,32 +218,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView10">
 
                 <RadioButton
-                    android:checked="true"
                     android:id="@+id/rb_rate_1_1"
-                    android:buttonTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/dp5"
+                    android:buttonTint="@color/white"
+                    android:checked="true"
                     android:text="Thích"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_title_webview_doctruyen" />
 
                 <RadioButton
                     android:id="@+id/rb_rate_1_2"
-                    android:buttonTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/dp5"
+                    android:buttonTint="@color/white"
                     android:text="Bình thường"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_title_webview_doctruyen" />
 
                 <RadioButton
                     android:id="@+id/rb_rate_1_3"
-                    android:buttonTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/dp5"
+                    android:buttonTint="@color/white"
                     android:text="Không thích"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_title_webview_doctruyen" />
@@ -275,32 +275,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView11">
 
                 <RadioButton
-                    android:checked="true"
                     android:id="@+id/rb_rate_2_1"
-                    android:buttonTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/dp5"
+                    android:buttonTint="@color/white"
+                    android:checked="true"
                     android:text="Đã học lâu rồi"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_title_webview_doctruyen" />
 
                 <RadioButton
                     android:id="@+id/rb_rate_2_2"
-                    android:buttonTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/dp5"
+                    android:buttonTint="@color/white"
                     android:text="Vừa học xong"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_title_webview_doctruyen" />
 
                 <RadioButton
                     android:id="@+id/rb_rate_2_3"
-                    android:buttonTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/dp5"
+                    android:buttonTint="@color/white"
                     android:text="Chưa học"
                     android:textColor="@color/white"
                     android:textSize="@dimen/txt_title_webview_doctruyen" />

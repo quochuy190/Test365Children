@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -22,7 +23,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -82,7 +82,7 @@ public class FragmentDocvaTraloiReview extends BaseFragment
     @BindView(R.id.img_broad_question)
     ImageView img_broad_question;
     @BindView(R.id.rl_show_doanvan)
-    RelativeLayout rl_show_doanvan;
+    ConstraintLayout rl_show_doanvan;
 
     @BindView(R.id.webview_anwser_A)
     WebView webview_anwser_A;
@@ -123,6 +123,7 @@ public class FragmentDocvaTraloiReview extends BaseFragment
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
+
     private void reload() {
         webview_debai.reload();
         webview_anwser_A.reload();

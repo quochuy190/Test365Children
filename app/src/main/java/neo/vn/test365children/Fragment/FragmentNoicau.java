@@ -35,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAnNoicau;
 import neo.vn.test365children.Models.MessageEvent;
@@ -192,6 +193,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         ButterKnife.bind(this, view);
         //   Log.i(TAG, "onCreateView: " + mCauhoi.getsQUESTION());
         Glide.with(getContext()).load(R.drawable.bg_chem_hoa_qua).into(img_background);
+
         initData();
         initEvent();
         return view;
@@ -278,6 +280,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                             EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                     }
                     isClickXemdiem = true;
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                 }
             }
         });
@@ -371,9 +374,11 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnswerChil);
         }
     }
+
     List<String> mLisAnwser_A;
     List<String> mLisAnwser_B;
     List<String> mLisAnwser_B_traloi;
+    List<String> mLisAnwser_A_traloi;
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
@@ -386,42 +391,102 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
         mLisDapanA = new ArrayList<>();
         mLisAnwser_A = new ArrayList<>();
         mLisAnwser_B = new ArrayList<>();
+        mLisAnwser_A_traloi = new ArrayList<>();
         mLisAnwser_B_traloi = new ArrayList<>();
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        String[] egg1 = mCauhoi.getsHTML_A().split("::");
-        String[] egg2 = mCauhoi.getsHTML_B().split("::");
-        String[] egg3 = mCauhoi.getsHTML_C().split("::");
-        String[] egg4 = mCauhoi.getsHTML_D().split("::");
-        map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
-        map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
-        map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
-        map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
-        mLisAnwser_A.add(egg1[0]);
-        mLisAnwser_A.add(egg2[0]);
-        mLisAnwser_A.add(egg3[0]);
-        mLisAnwser_A.add(egg4[0]);
+        if (!mCauhoi.isDalam()) {
+            String[] egg1 = mCauhoi.getsHTML_A().split("::");
+            String[] egg2 = mCauhoi.getsHTML_B().split("::");
+            String[] egg3 = mCauhoi.getsHTML_C().split("::");
+            String[] egg4 = mCauhoi.getsHTML_D().split("::");
+            map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
+            map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
+            map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
+            map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
+            mLisAnwser_A.add(egg1[0]);
+            mLisAnwser_A.add(egg2[0]);
+            mLisAnwser_A.add(egg3[0]);
+            mLisAnwser_A.add(egg4[0]);
 
-        mLisAnwser_B.add(egg1[1]);
-        mLisAnwser_B.add(egg2[1]);
-        mLisAnwser_B.add(egg3[1]);
-        mLisAnwser_B.add(egg4[1]);
+            mLisAnwser_B.add(egg1[1]);
+            mLisAnwser_B.add(egg2[1]);
+            mLisAnwser_B.add(egg3[1]);
+            mLisAnwser_B.add(egg4[1]);
 
-        mLisAnwser_B_traloi.add(egg1[1]);
-        mLisAnwser_B_traloi.add(egg2[1]);
-        mLisAnwser_B_traloi.add(egg3[1]);
-        mLisAnwser_B_traloi.add(egg4[1]);
+            mLisAnwser_B_traloi.add(egg1[1]);
+            mLisAnwser_B_traloi.add(egg2[1]);
+            mLisAnwser_B_traloi.add(egg3[1]);
+            mLisAnwser_B_traloi.add(egg4[1]);
 
-        //  initTraloi();
-        Collections.shuffle(mLisAnwser_B);
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+            //  initTraloi();
+            Collections.shuffle(mLisAnwser_B);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+                }
+            });
+        } else {
+            String[] egg1 = mCauhoi.getsHTML_A().split("::");
+            String[] egg2 = mCauhoi.getsHTML_B().split("::");
+            String[] egg3 = mCauhoi.getsHTML_C().split("::");
+            String[] egg4 = mCauhoi.getsHTML_D().split("::");
+
+            String[] egg1_chil = mCauhoi.getsEGG_1_RESULT().split("::");
+            String[] egg2_chil = mCauhoi.getsEGG_2_RESULT().split("::");
+            String[] egg3_chil = mCauhoi.getsEGG_3_RESULT().split("::");
+            String[] egg4_chil = mCauhoi.getsEGG_4_RESULT().split("::");
+            mLisAnwser_A.add(egg1_chil[0]);
+            mLisAnwser_A.add(egg2_chil[0]);
+            mLisAnwser_A.add(egg3_chil[0]);
+            mLisAnwser_A.add(egg4_chil[0]);
+
+            mLisAnwser_B.add(egg1_chil[1]);
+            mLisAnwser_B.add(egg2_chil[1]);
+            mLisAnwser_B.add(egg3_chil[1]);
+            mLisAnwser_B.add(egg4_chil[1]);
+
+            mLisAnwser_A_traloi.add(egg1[0]);
+            mLisAnwser_A_traloi.add(egg2[0]);
+            mLisAnwser_A_traloi.add(egg3[0]);
+            mLisAnwser_A_traloi.add(egg4[0]);
+
+            mLisAnwser_B_traloi.add(egg1[1]);
+            mLisAnwser_B_traloi.add(egg2[1]);
+            mLisAnwser_B_traloi.add(egg3[1]);
+            mLisAnwser_B_traloi.add(egg4[1]);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+                }
+            });
+            rl_dapanA_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+            rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+
+            rl_dapanA_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+            rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+
+            rl_dapanA_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+            rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+
+            rl_dapanA_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+            rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+        }
+        if (mCauhoi.isDalam()) {
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (mCauhoi.isAnserTrue()) {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            } else {
+                initTraloi_chil();
+                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                text_lable_dapan.setVisibility(View.VISIBLE);
+                ll_dapan_traloi.setVisibility(View.VISIBLE);
             }
-        });
+        }
     }
 
     int iHeightmax = 0;
@@ -436,6 +501,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
             }
         });
     }
+
     private void initWebview(WebView webview_debai, String link_web) {
         webview_debai.getSettings();
         webview_debai.clearHistory();
@@ -611,6 +677,69 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
             @Override
             public void run() {
                 initWebview(webview_dapannoicau_A_traloi_4, StringUtil.convert_html(mLisAnwser_A.get(3)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_traloi_1, StringUtil.convert_html(mLisAnwser_B_traloi.get(0)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+
+                initWebview(webview_dapannoicau_B_traloi_2, StringUtil.convert_html(mLisAnwser_B_traloi.get(1)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_traloi_3, StringUtil.convert_html(mLisAnwser_B_traloi.get(2)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_B_traloi_4, StringUtil.convert_html(mLisAnwser_B_traloi.get(3)));
+            }
+        });
+        rl_dapanA_traloi_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+        rl_dapanB_traloi_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+
+        rl_dapanA_traloi_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+        rl_dapanB_traloi_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+
+        rl_dapanA_traloi_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+        rl_dapanB_traloi_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+
+        rl_dapanA_traloi_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+        rl_dapanB_traloi_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+    }
+
+    private void initTraloi_chil() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_traloi_1, StringUtil.convert_html(mLisAnwser_A_traloi.get(0)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_traloi_2, StringUtil.convert_html(mLisAnwser_A_traloi.get(1)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_traloi_3, StringUtil.convert_html(mLisAnwser_A_traloi.get(2)));
+            }
+        });
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initWebview(webview_dapannoicau_A_traloi_4, StringUtil.convert_html(mLisAnwser_A_traloi.get(3)));
             }
         });
         new Handler().post(new Runnable() {

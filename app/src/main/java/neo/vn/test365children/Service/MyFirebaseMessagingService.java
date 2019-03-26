@@ -94,7 +94,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentText(body)
                 .setAutoCancel(true)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(title))
+                        .bigText(body))
 
 
                 /* .setSound(Uri.parse("android.resource://"
@@ -133,15 +133,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 notifManager.createNotificationChannel(mChannel);
             }
             builder = new NotificationCompat.Builder(this, "0");
-
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                    Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, 1251, intent, PendingIntent.FLAG_ONE_SHOT);
             builder.setContentTitle(title)
                     .setSmallIcon(R.mipmap.ic_launcher_round) // required
                     .setContentText(description)  // required
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
                     /*.setLargeIcon(BitmapFactory.decodeResource
                             (getResources(), R.mipmap.logo))
                     .setBadgeIconType(R.mipmap.logo)*/

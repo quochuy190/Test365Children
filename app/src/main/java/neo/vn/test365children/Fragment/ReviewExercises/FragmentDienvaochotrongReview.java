@@ -3,7 +3,6 @@ package neo.vn.test365children.Fragment.ReviewExercises;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,8 +103,8 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
 
     }
 
-
     String sHtml;
+    String sHtml_anwser_true;
 
     @SuppressLint("JavascriptInterface")
     @Override
@@ -114,10 +113,12 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
         ButterKnife.bind(this, view);
         initEvent();
         btn_xemdiem.setVisibility(View.GONE);
+
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+            txt_lable.setText(("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+
         Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         //  browser.setInitialScale(220);
         //   webview_dapan.setInitialScale(220);
@@ -144,11 +145,15 @@ public class FragmentDienvaochotrongReview extends BaseFragment {
         settings.setTextZoom((int) (settings.getTextZoom() * 1.2));
         settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.2));
         String sHtml_dapan;
+        sHtml_anwser_true = mCauhoi.getsHTML_CONTENT().replaceAll("<<<>>",
+                "<< < >>");
+        sHtml_anwser_true = mCauhoi.getsHTML_CONTENT().replaceAll(">>>",
+                " > >>");
+        Log.i(TAG, "onCreateView: " + sHtml_anwser_true);
         sHtml_dapan = "<br /> <div  style='text-align:center;'>" +
                 "<b>Đáp án </b></div><br />" +
-                mCauhoi.getsHTML_CONTENT().replaceAll("<<", "<u><b><font color='blue'>")
-                        .replaceAll(">>", "</font>" +
-                                "</b></u>");
+                sHtml_anwser_true.replaceAll("<<", "<u><b><font color='blue'>")
+                        .replaceAll(">>", "</font>" + "</b></u>");
         webview_dapan.loadDataWithBaseURL("", sHtml_dapan, "text/html",
                 "UTF-8", "");
         webview_dapan.setVisibility(View.VISIBLE);

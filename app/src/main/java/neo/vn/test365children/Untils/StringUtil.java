@@ -1,13 +1,19 @@
 package neo.vn.test365children.Untils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.Normalizer;
@@ -28,6 +34,7 @@ public class StringUtil {
     public static String ConvertFraction(String a, String b, String c) {
         return "\\(" + a + "\\dfrac{" + b + "} {" + c + "} \\)";
     }
+
     public static void onLunchAnotherApp(Context context) {
 
         final String appPackageName = "neo.vn.test365home";
@@ -62,6 +69,7 @@ public class StringUtil {
         }
 
     }
+
     public static List<Integer> check_random(List<Integer> mLisInput) {
         List<Integer> mLisOutput = new ArrayList<>();
         boolean iCheck = false;
@@ -207,7 +215,7 @@ public class StringUtil {
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
-      //  settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.1));
+        //  settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.1));
         /* <html><body  align='center'>You scored <b>192</b> points.</body></html>*/
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
@@ -368,6 +376,34 @@ public class StringUtil {
 
         return sMonney;
     }
+    public static void call_phone(Context mContext, String phone) {
+        sPhone = phone;
+        if (Build.VERSION.SDK_INT < 23) {
+            phoneCall(mContext, phone);
+        } else {
+            if (ActivityCompat.checkSelfPermission(mContext,
+                    Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                phoneCall(mContext, phone);
+            } else {
+                final String[] PERMISSIONS_STORAGE = {Manifest.permission.CALL_PHONE};
+                //Asking request Permissions
+                ActivityCompat.requestPermissions((Activity) mContext, PERMISSIONS_STORAGE, 9);
+            }
+        }
+    }
+
+    public static String sPhone;
+
+    private static void phoneCall(Context mContext, String phone) {
+        if (ActivityCompat.checkSelfPermission(mContext,
+                Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + phone));
+            mContext.startActivity(callIntent);
+        } else {
+            Toast.makeText(mContext, "You don't assign permission.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public static String removeAccent(String s) {
 
@@ -378,6 +414,15 @@ public class StringUtil {
 
     public static String formatDate(int year, int monthOfYear, int dayOfMonth) {
         return year + "/" + monthOfYear + "/" + dayOfMonth;
+    }
+
+    public static void open_browser_android(Activity activity, String sUrl) {
+        if (sUrl != null) {
+            String url = sUrl;
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            activity.startActivity(i);
+        } else return;
     }
 
     public static String formatDateJP(int year, int monthOfYear, int dayOfMonth) {

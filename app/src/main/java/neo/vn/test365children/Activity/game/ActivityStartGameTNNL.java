@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -36,6 +37,8 @@ public class ActivityStartGameTNNL extends BaseActivity implements
     Button btn_normal;
     @BindView(R.id.btn_hard)
     Button btn_hard;
+    @BindView(R.id.txt_guilde)
+    TextView txt_guilde;
     PresenterGame mPresenter;
     String sUserMe, sUserCon;
 
@@ -63,15 +66,27 @@ public class ActivityStartGameTNNL extends BaseActivity implements
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityStartGameTNNL.this);
                 finish();
             }
         });
         btn_play_tnnl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityStartGameTNNL.this);
                 Intent intent = new Intent(ActivityStartGameTNNL.this,
                         ActivityGameTinhnhanhNholau.class);
                 startActivityForResult(intent, Constants.RequestCode.START_GAME_TNNL);
+            }
+        });
+        txt_guilde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityStartGameTNNL.this);
+                Intent intent = new Intent(ActivityStartGameTNNL.this,
+                        Activity_Guild_Game.class);
+                intent.putExtra(Constants.KEY_SEND_GUILD_GAME, "TNNL");
+                startActivity(intent);
             }
         });
     }

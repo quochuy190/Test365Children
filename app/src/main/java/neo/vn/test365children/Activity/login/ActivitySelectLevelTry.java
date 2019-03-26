@@ -22,6 +22,8 @@ public class ActivitySelectLevelTry extends BaseActivity
         implements View.OnClickListener, ImgGetUserTry.View {
     @BindView(R.id.img_back)
     ImageView img_back;
+    @BindView(R.id.img_logo)
+    ImageView img_logo;
     @BindView(R.id.img_background)
     ImageView img_background;
     @BindView(R.id.btn_level_1)
@@ -49,6 +51,9 @@ public class ActivitySelectLevelTry extends BaseActivity
         sUUID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         initImage();
         initEvent();
+       /* Glide.with(this).load(urlImage)
+                .apply(bitmapTransform(new BlurTransformation(10)))
+                .into(img_buysong_detail_nen);*/
     }
 
 
@@ -67,7 +72,8 @@ public class ActivitySelectLevelTry extends BaseActivity
     }
 
     private void initImage() {
-        Glide.with(this).load(R.drawable.background_baitaptuan).into(img_background);
+        Glide.with(this).load(R.drawable.bg_select_class).into(img_background);
+        Glide.with(this).load(R.drawable.ic_home365chil).into(img_logo);
     }
 
     @Override
@@ -96,10 +102,9 @@ public class ActivitySelectLevelTry extends BaseActivity
     }
 
     private void get_user_try(String sLevel) {
-        if (sUUID != null) {
-            showDialogLoading();
-            mPresenter.api_create_user_try(sLevel, sUUID);
-        }
+        setResult(RESULT_OK, new Intent());
+        App.sLevel = sLevel;
+        finish();
     }
 
     @Override

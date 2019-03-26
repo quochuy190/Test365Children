@@ -84,6 +84,7 @@
     <dimen name="txt_xeptrung">17sp</dimen>
     <dimen name="hight_egg_dapan">150dp</dimen>
     <dimen name="margin_egg">5dp</dimen>
+    <dimen name="pading_egg">20dp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
     <dimen name="margin_top_chaomung">10dp</dimen>
@@ -99,7 +100,7 @@
     <dimen name="exercises_icon_point">50dp</dimen>
     <dimen name="exercises_icon_point_width">70dp</dimen>
     <dimen name="exer_hight_debai">40dp</dimen>
-    <dimen name="exer_margin_top">10dp</dimen>
+    <dimen name="exer_margin_top">5dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
     <dimen name="exer_width_sticker">70dp</dimen>
     <dimen name="icon_back_exercises">45dp</dimen>
@@ -165,7 +166,7 @@
     <dimen name="width_logo">250dp</dimen>
     <dimen name="height_logo">90dp</dimen>
     <dimen name="margin_list_user">100dp</dimen>
-    <dimen name="text_lable_lambai">18sp</dimen>
+    <dimen name="text_lable_lambai">20sp</dimen>
     <!--Xem lại bài tập-->
     <dimen name="txt_lable_exer">21sp</dimen>
     <dimen name="img_avata_home">60dp</dimen>
@@ -174,10 +175,10 @@
     <!--Game King of word-->
     <dimen name="kow_width_btn_start">220dp</dimen>
     <dimen name="kow_height_btn_start">40dp</dimen>
-    <dimen name="kow_txt_btn_start" >18sp</dimen>
-    <dimen name="kow_btnstart_margin_bottom" >20dp</dimen>
-    <dimen name="kow_width_menu_level" >90dp</dimen>
-    <dimen name="kow_height_menu_level" >120dp</dimen>
+    <dimen name="kow_txt_btn_start">18sp</dimen>
+    <dimen name="kow_btnstart_margin_bottom">20dp</dimen>
+    <dimen name="kow_width_menu_level">90dp</dimen>
+    <dimen name="kow_height_menu_level">120dp</dimen>
     <dimen name="kow_menu_level_margin_left_guild">10dp</dimen>
     <dimen name="kow_menu_level_margin_bottom_guild">20sp</dimen>
     <dimen name="kow_txt_menu_level">17sp</dimen>
@@ -217,4 +218,21 @@
     <!--Start làm bài tập-->
     <dimen name="txt_app">17sp</dimen>
     <dimen name="txt_name_subject">20sp</dimen>
+    <!--  kow easy game play-->
+    <dimen name="width_item_easy">65dp</dimen>
+    <dimen name="margin_item_kow_easy">2dp</dimen>
+    <dimen name="txt_kow_easy">25sp</dimen>
+    <dimen name="margin_kow_level_two">5dp</dimen>
+
+    <dimen name="margin_item_menu_untility">10dp</dimen>
+    <dimen name="txt_menu_utility_name">13sp</dimen>
+    <dimen name="txt_title_menu_exer">16sp</dimen>
+    <dimen name="txt_detail_untilities">16sp</dimen>
+
+    <dimen name="margin_top_update_infor_child">10dp</dimen>
+    <dimen name="text_size_update_infor_child">16sp</dimen>
+
+    <dimen name="txt_name_exer">19sp</dimen>
+    <dimen name="txt_exer_content">17sp</dimen>
+    <dimen name="txt_name_home">14sp</dimen>
 </resources>

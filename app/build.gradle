@@ -6,8 +6,8 @@ android {
         applicationId "neo.vn.test365children"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 18
-        versionName "1.1.8"
+        versionCode 21
+        versionName "1.4.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
@@ -82,5 +82,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     //EasyFlipView
     implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:2.1.1'
+    // discrete-scrollview (menu kow)
+    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 }
 apply plugin: 'com.google.gms.google-services'

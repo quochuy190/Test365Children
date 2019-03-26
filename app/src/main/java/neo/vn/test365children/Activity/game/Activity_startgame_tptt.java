@@ -125,7 +125,6 @@ public class Activity_startgame_tptt extends BaseActivity
                 finish();
                 break;
             case R.id.btn_play_game:
-
                 KeyboardUtil.animation_click_button(Activity_startgame_tptt.this, img_btn_play);
                 /*test */
                 if (sPartId.length() > 0)

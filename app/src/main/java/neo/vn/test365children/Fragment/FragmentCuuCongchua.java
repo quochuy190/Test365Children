@@ -26,7 +26,6 @@ import neo.vn.test365children.Adapter.AdapterCongchua;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Config.Constants;
-import neo.vn.test365children.Listener.ClickDialog;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.CauhoiDetail;
@@ -58,8 +57,6 @@ public class FragmentCuuCongchua extends BaseFragment {
     TextView txt_lable;
     @BindView(R.id.img_background)
     ImageView img_background;
-    @BindView(R.id.btn_nopbai)
-    ImageView btn_nopbai;
     @BindView(R.id.img_anwser_chil)
     ImageView img_anwser_chil;
 
@@ -100,7 +97,7 @@ public class FragmentCuuCongchua extends BaseFragment {
     }
 
     private void initData() {
-        btn_nopbai.setOnClickListener(new View.OnClickListener() {
+/*        btn_nopbai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
@@ -117,7 +114,7 @@ public class FragmentCuuCongchua extends BaseFragment {
                         });
 
             }
-        });
+        });*/
         txt_lable.setText("Bài " + mCauhoi.getmNumber() + ": " + mCauhoi.getsHUONGDAN());
         Glide.with(this).load(R.drawable.bg_congchua).into(img_background);
         // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
@@ -135,7 +132,38 @@ public class FragmentCuuCongchua extends BaseFragment {
         mLis.add(new DapAn("9", "", "", "0", false, ""));
         mLis.add(new DapAn("10", "", "", "0", false, ""));
         mLis.add(new DapAn("11", "", "", "0", false, ""));
+        if (mCauhoi.isDalam()) {
+            if (mCauhoi.isEndGame()) {
+                if (mCauhoi.isResul_chil()) {
+                    txt_lable.setText("Chúc mừng công chúa đã được giải cứu");
+                    img_done.setVisibility(View.VISIBLE);
+                    Glide.with(getContext()).load(R.drawable.done).into(img_done);
+                    recycle_dapan.setVisibility(View.GONE);
+                } else {
+                    txt_lable.setText("Giải cứu công chúa thất bại");
+                    Glide.with(getContext()).load(R.drawable.icon_congchua_lost)
+                            .placeholder(R.drawable.icon_congchua_lost).into(img_done);
+                    img_done.setVisibility(View.VISIBLE);
+                    recycle_dapan.setVisibility(View.GONE);
+                }
+            } else {
+                iCauhoiStart = mCauhoi.getiCount_Princess();
+                for (int i = 0; i < mCauhoi.getiCount_Princess(); i++) {
+                    iStart.add(getRandom(iStart));
+                }
+                for (int j = 0; j < mLis.size(); j++) {
+                    for (int k = 0; k < iStart.size(); k++) {
+                        if (Integer.parseInt(mLis.get(j).getsName()) == iStart.get(k)) {
+                            mLis.get(j).setsDapan_Dung("1");
+                            mLis.get(j).setClick(true);
+                        } else {
+                            mLis.get(j).setClick(false);
+                        }
+                    }
+                }
+            }
 
+        }
         adapter.notifyDataSetChanged();
     }
 
@@ -183,9 +211,7 @@ public class FragmentCuuCongchua extends BaseFragment {
                 if (isTraloi) {
                    /* EventBus.getDefault().post(new MessageEvent("Point_true",
                             Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));*/
-
                     iCauhoiStart++;
-
                     if (iCauhoiStart < mCauhoi.getLisInfo().size()) {
                         EventBus.getDefault().post(new MessageEvent("pr_win1",
                                 Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));
@@ -201,10 +227,22 @@ public class FragmentCuuCongchua extends BaseFragment {
                                 obj.setClick(true);
                             } else obj.setClick(false);
                         }
+                        for (int i = 0; i < App.mLisCauhoi.size(); i++) {
+                            Cauhoi obj = App.mLisCauhoi.get(i);
+                            if (obj.getsID().equals(mCauhoi.getsID())) {
+                                App.mLisCauhoi.get(i).setiCount_Princess(iCauhoiStart);
+                                App.mLisCauhoi.get(i).setDalam(true);
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(true);
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
+                            }
+                        }
+                        EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                         adapter.notifyDataSetChanged();
                     } else {
                         EventBus.getDefault().post(new MessageEvent("pr_win2",
-                                Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart-1).getsPOINT()), 0));
+                                Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart - 1).getsPOINT()), 0));
                         txt_lable.setText("Chúc mừng công chúa đã được giải cứu");
                         img_done.setVisibility(View.VISIBLE);
                         recycle_dapan.setVisibility(View.GONE);
@@ -212,15 +250,20 @@ public class FragmentCuuCongchua extends BaseFragment {
                             obj.setClick(false);
                         }
                         adapter.notifyDataSetChanged();
-                    }
-                    for (int i = 0; i < App.mLisCauhoi.size(); i++) {
-                        Cauhoi obj = App.mLisCauhoi.get(i);
-                        if (obj.getsID().equals(mCauhoi.getsID())) {
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
+                        for (int i = 0; i < App.mLisCauhoi.size(); i++) {
+                            Cauhoi obj = App.mLisCauhoi.get(i);
+                            if (obj.getsID().equals(mCauhoi.getsID())) {
+                                App.mLisCauhoi.get(i).setiCount_Princess(iCauhoiStart);
+                                App.mLisCauhoi.get(i).setDalam(true);
+                                App.mLisCauhoi.get(i).setResul_chil(true);
+                                App.mLisCauhoi.get(i).setEndGame(true);
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(true);
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
+                            }
                         }
+                        EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                     }
                 } else {
                     iCauhoiStart++;
@@ -229,13 +272,17 @@ public class FragmentCuuCongchua extends BaseFragment {
                     }
                     img_done.setVisibility(View.VISIBLE);
                     EventBus.getDefault().post(new MessageEvent("pr_lost", 0, 0));
-                    txt_lable.setText("Giải cứu thất bại");
+                    txt_lable.setText("Giải cứu công chúa thất bại");
                     Glide.with(getContext()).load(R.drawable.icon_congchua_lost)
                             .placeholder(R.drawable.icon_congchua_lost).into(img_done);
                     recycle_dapan.setVisibility(View.GONE);
                     for (int i = 0; i < App.mLisCauhoi.size(); i++) {
                         Cauhoi obj = App.mLisCauhoi.get(i);
-                        if (obj.getsKIEU().equals("10")) {
+                        if (obj.getsID().equals(mCauhoi.getsID())) {
+                            App.mLisCauhoi.get(i).setiCount_Princess(iCauhoiStart);
+                            App.mLisCauhoi.get(i).setDalam(true);
+                            App.mLisCauhoi.get(i).setResul_chil(false);
+                            App.mLisCauhoi.get(i).setEndGame(true);
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(false);
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
                             App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("0");
@@ -244,8 +291,9 @@ public class FragmentCuuCongchua extends BaseFragment {
                                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
                         }
                     }
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                     adapter.notifyDataSetChanged();
-                  //  EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                    //  EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                 }
                 break;
         }

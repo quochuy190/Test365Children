@@ -66,54 +66,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
 
-    <ImageView
-        android:id="@+id/btn_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_3"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <TextView
-        android:id="@+id/txt_xemdiem"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/font1"
-        android:gravity="center"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_1"
-        android:text="@string/btn_chamdiem"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_13sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_nopbai" />
-
-    <ImageView
-        android:id="@+id/btn_nopbai"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/image_next"
-        android:padding="@dimen/dp5"
-        android:src="@drawable/btn_nopbai"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"
-        app:layout_constraintRight_toRightOf="parent" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_dapan"
         android:layout_width="wrap_content"
@@ -121,7 +73,7 @@
         android:layout_marginLeft="@dimen/dp50"
         android:layout_marginRight="@dimen/dp50"
         android:padding="@dimen/dp5"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_cauhoi">
@@ -129,17 +81,19 @@
     </android.support.v7.widget.RecyclerView>
 
     <ImageView
-
         android:id="@+id/img_done"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dp10"
         android:padding="@dimen/dp5"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_cauhoi"></ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/txt_cauhoi">
+
+    </ImageView>
+
     <ImageView
         android:id="@+id/img_done_gif"
         android:layout_width="0dp"
@@ -147,10 +101,12 @@
         android:layout_margin="@dimen/dp10"
         android:padding="@dimen/dp5"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_nopbai"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_cauhoi"></ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/txt_cauhoi">
+
+    </ImageView>
     <ImageView
         android:visibility="gone"
         android:id="@+id/img_anwser_chil"

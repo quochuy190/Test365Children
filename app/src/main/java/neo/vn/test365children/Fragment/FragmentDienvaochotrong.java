@@ -33,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
@@ -162,13 +163,15 @@ public class FragmentDienvaochotrong extends BaseFragment {
         browser.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
         browser.getSettings().setJavaScriptEnabled(true);
         browser.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
-        sHtml = replaceXML("<<", ">>", mCauhoi.getsHTML_CONTENT().replace(">>>", "> >>"));
-        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD
-                (replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT()));
-        String sAnwser = replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT());
-        sHtlml = "<html>\n" +
-                "<head>\n" +
+        if (!mCauhoi.isDalam()) {
+            sHtml = replaceXML("<<", ">>", mCauhoi.getsHTML_CONTENT().replace(">>>",
+                    "> >>"));
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD
+                    (replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT()));
+            String sAnwser = replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT());
+            sHtlml = "<html>\n" +
+                    "<head>\n" +
  /*               "<style>\n" +
                 ".Large\n" +
                 "{\n" +
@@ -176,39 +179,40 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 "    height: 50px;\n" +
                 "}\n" +
                 "</style>" +*/
-                "<body>\n" +
-                "<div  style='text-align:center;'>" +
-                sHtml +
-                "</div>" +
-                "    <script>\n" +
-                "    function loadChartData() {\n" +
-                "       var x1 = document.getElementById(\"txt_input1\").value;\n" +
-                "       Android.sendData(x1);" +
-                "       var x2 = document.getElementById(\"txt_input2\").value;\n" +
-                "       Android.sendData2(x2);" +
-                "       var x3 = document.getElementById(\"txt_input3\").value;\n" +
-                "       Android.sendData3(x3);" +
-                "       var x4 = document.getElementById(\"txt_input4\").value;\n" +
-                "       Android.sendData4(x4);" +
-                "       var x5 = document.getElementById(\"txt_input5\").value;\n" +
-                "       Android.sendData5(x5);" +
-                "       var x6 = document.getElementById(\"txt_input6\").value;\n" +
-                "       Android.sendData6(x6);" +
-                "       var x7 = document.getElementById(\"txt_input7\").value;\n" +
-                "       Android.sendData7(x7);" +
-                "       var x8 = document.getElementById(\"txt_input8\").value;\n" +
-                "       Android.sendData8(x8);" +
-                "       var x9 = document.getElementById(\"txt_input9\").value;\n" +
-                "       Android.sendData9(x9);" +
-                "       var x10 = document.getElementById(\"txt_input10\").value;\n" +
-                "       Android.sendData10(x10);" +
-                "    }\n" +
-                "    </script>\n" +
-                "\n" +
-                "    </body>" +
-                "</html>";
-        browser.loadDataWithBaseURL("", StringUtil.convert_html(sHtlml),
-                "text/html", "UTF-8", "");
+                    "<body>\n" +
+                    "<div  style='text-align:center;'>" +
+                    sHtml +
+                    "</div>" +
+                    "    <script>\n" +
+                    "    function loadChartData() {\n" +
+                    "       var x1 = document.getElementById(\"txt_input1\").value;\n" +
+                    "       Android.sendData(x1);" +
+                    "       var x2 = document.getElementById(\"txt_input2\").value;\n" +
+                    "       Android.sendData2(x2);" +
+                    "       var x3 = document.getElementById(\"txt_input3\").value;\n" +
+                    "       Android.sendData3(x3);" +
+                    "       var x4 = document.getElementById(\"txt_input4\").value;\n" +
+                    "       Android.sendData4(x4);" +
+                    "       var x5 = document.getElementById(\"txt_input5\").value;\n" +
+                    "       Android.sendData5(x5);" +
+                    "       var x6 = document.getElementById(\"txt_input6\").value;\n" +
+                    "       Android.sendData6(x6);" +
+                    "       var x7 = document.getElementById(\"txt_input7\").value;\n" +
+                    "       Android.sendData7(x7);" +
+                    "       var x8 = document.getElementById(\"txt_input8\").value;\n" +
+                    "       Android.sendData8(x8);" +
+                    "       var x9 = document.getElementById(\"txt_input9\").value;\n" +
+                    "       Android.sendData9(x9);" +
+                    "       var x10 = document.getElementById(\"txt_input10\").value;\n" +
+                    "       Android.sendData10(x10);" +
+                    "    }\n" +
+                    "    </script>\n" +
+                    "\n" +
+                    "    </body>" +
+                    "</html>";
+
+
+        }
         WebSettings settings = browser.getSettings();
         WebSettings settings_dapan = webview_dapan.getSettings();
         settings.setTextZoom((int) (settings.getTextZoom() * 1.2));
@@ -223,6 +227,30 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 }
             }
         });
+        if (!mCauhoi.isDalam()) {
+            browser.loadDataWithBaseURL("", StringUtil.convert_html(sHtlml),
+                    "text/html", "UTF-8", "");
+        } else {
+            isGetpoint = true;
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (mCauhoi.getsRESULT_CHILD().equals("1")) {
+                img_anwser_chil.setImageResource(R.drawable.icon_anwser_true);
+            } else
+                img_anwser_chil.setImageResource(R.drawable.icon_anwser_false);
+            btn_xemdiem_dientu.setEnabled(false);
+            btn_xemdiem_dientu.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
+            String sHtml_dapan = "";
+            sHtml_dapan = mCauhoi.getsHTML_CONTENT().replaceAll(">>>", " > >>");
+            sHtml_dapan = "<br /><br /> <b>Đáp án </b><br /><br />" +
+                    sHtml_dapan.replaceAll("<<", "<u><b><font color='blue'>")
+                            .replaceAll(">>", "</font></b></u>");
+            browser.setVisibility(View.GONE);
+            webview_dapan.loadDataWithBaseURL("",
+                    "<div style='text-align:center;'><b>Bé trả lời </b><br/><br/>"
+                            + mCauhoi.getsANSWER_CHILD() + sHtml_dapan + "</div>", "text/html",
+                    "UTF-8", "");
+            webview_dapan.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 
@@ -321,7 +349,7 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 return;
             }
             isGetpoint = true;
-
+            EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
         }
     }
 

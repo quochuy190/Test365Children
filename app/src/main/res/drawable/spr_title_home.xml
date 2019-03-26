@@ -3,9 +3,9 @@
     <item>
         <shape>
             <!-- View background color -->
-            <solid android:color="@color/bg_cauhoi_congchua"></solid>
+            <solid android:color="@color/mau_title_home"></solid>
             <!-- The radius makes the corners rounded -->
-            <corners android:radius="20dp"></corners>
+            <corners android:radius="10dp"></corners>
 
         </shape>
     </item>

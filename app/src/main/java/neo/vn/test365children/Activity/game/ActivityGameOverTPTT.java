@@ -30,7 +30,8 @@ import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 
-public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt.View, ImlFeedback.View {
+public class ActivityGameOverTPTT extends BaseActivity
+        implements ImlGetGameTptt.View, ImlFeedback.View {
     int iLever;
     @BindView(R.id.txt_bonus)
     TextView txt_bonus;
@@ -53,13 +54,10 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
     RadioButton rb_rate_1_3;
     @BindView(R.id.ll_ketqua)
     LinearLayout ll_ketqua;
-
     @BindView(R.id.rb_rate_2_3)
     RadioButton rb_rate_2_3;
-
     @BindView(R.id.rb_rate_2_1)
     RadioButton rb_rate_2_1;
-
     @BindView(R.id.rb_rate_2_2)
     RadioButton rb_rate_2_2;
     @BindView(R.id.view_danhgia)
@@ -145,7 +143,7 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
         isSPMinusMonney = getIntent().getBooleanExtra(Constants.KEY_SEND_SP_MINUS_MONNEY, false);
         iLever = getIntent().getIntExtra(Constants.KEY_SEND_LEVER_GAME_TPTT, -1);
         Glide.with(this).load(R.drawable.bg_start_game).into(img_background);
-        Glide.with(this).load(R.drawable.title_game_over).into(img_gameover);
+
         Animation animationRotale = AnimationUtils.loadAnimation(ActivityGameOverTPTT.this,
                 R.anim.animation_game_over);
         img_gameover.startAnimation(animationRotale);
@@ -156,12 +154,22 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         String sPart_id = App.mLisGameTPTT.get(0).getsPART_ID();
         if (iLever > -1) {
+            if (iLever == 15) {
+                Glide.with(this).load(R.drawable.img_winner).into(img_gameover);
+            } else {
+                Glide.with(this).load(R.drawable.title_game_over).into(img_gameover);
+            }
             set_bonus(iLever);
-        } else txt_bonus.setText("0 điểm");
-        if (sValueMonney.length() > 0)
+        } else {
+            Glide.with(this).load(R.drawable.title_game_over).into(img_gameover);
+            txt_bonus.setText("0 điểm");
+        }
+        if (sValueMonney.length() > 0) {
             showDialogLoading();
-        mPresenter.api_submit_tptt(sUserMe, sUserCon, sPart_id, StringUtil.get_current_time(),
-                "" + iLever, sValueMonney);
+            mPresenter.api_submit_tptt(sUserMe, sUserCon, sPart_id, StringUtil.get_current_time(),
+                    "" + iLever, sValueMonney);
+        }
+
     }
 
     private void set_bonus(int iLever) {
@@ -286,7 +294,6 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
                     txt_bonus.setText("10.000 đ");
                     sValueMonney = "10000";
                 }
-
                 break;
         }
     }
@@ -299,6 +306,11 @@ public class ActivityGameOverTPTT extends BaseActivity implements ImlGetGameTptt
     @Override
     public void show_error_api(ErrorApi mLis) {
         hideDialogLoading();
+        if (mLis.getsERROR().equals("submit_tnnl")) {
+            btn_exit.setEnabled(true);
+        } else {
+
+        }
     }
 
     @Override

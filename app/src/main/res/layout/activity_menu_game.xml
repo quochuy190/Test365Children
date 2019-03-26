@@ -189,6 +189,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/img_mute"
         android:layout_width="@dimen/height_keyboard_sudoku"
         android:layout_height="@dimen/height_keyboard_sudoku"

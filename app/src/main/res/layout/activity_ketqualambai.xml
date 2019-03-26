@@ -16,10 +16,10 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_title_toan"
@@ -30,11 +30,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:background="@color/orange"
                     android:id="@+id/txt_montoan"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/icon_back_exercises"
                     android:layout_centerVertical="true"
+                    android:background="@color/orange"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
                     android:text="Môn Toán - Đã làm"
@@ -42,11 +42,11 @@
                     android:textSize="@dimen/text_18sp" />
 
                 <ImageView
-                    android:padding="@dimen/dp3"
                     android:id="@+id/btn_back"
                     android:layout_width="@dimen/icon_back_exercises"
                     android:layout_height="@dimen/icon_back_exercises"
                     android:layout_centerVertical="true"
+                    android:padding="@dimen/dp3"
                     android:src="@drawable/ic_back_menu" />
             </RelativeLayout>
 
@@ -73,24 +73,24 @@
                 app:layout_constraintTop_toBottomOf="@id/recycle_toan">
 
                 <TextView
-                    android:padding="@dimen/dp7"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/icon_back_exercises"
                     android:layout_centerVertical="true"
                     android:background="@color/title_dalam"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
+                    android:padding="@dimen/dp7"
 
                     android:text="Tiếng Việt - Đã làm"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_18sp" />
-                <ImageView
-                    android:padding="@dimen/dp3"
 
+                <ImageView
                     android:layout_width="@dimen/icon_back_exercises"
+
                     android:layout_height="@dimen/icon_back_exercises"
                     android:layout_centerVertical="true"
-                    />
+                    android:padding="@dimen/dp3" />
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -125,13 +125,13 @@
                     android:text="Tiếng Anh - Đã làm"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_18sp" />
-                <ImageView
-                    android:padding="@dimen/dp3"
 
+                <ImageView
                     android:layout_width="@dimen/icon_back_exercises"
+
                     android:layout_height="@dimen/icon_back_exercises"
                     android:layout_centerVertical="true"
-                   />
+                    android:padding="@dimen/dp3" />
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -147,49 +147,4 @@
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp35"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/bg_title_baitapdalam" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/font1"
-            android:gravity="center"
-            android:text="BÀI TẬP ĐÃ LÀM"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_18sp" />
-
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_baitapdalam"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="@dimen/dp5"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
-
-    </android.support.v7.widget.RecyclerView>
-
-
 </android.support.constraint.ConstraintLayout>

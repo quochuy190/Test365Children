@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -20,7 +21,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
@@ -82,7 +83,7 @@ public class FragmentDocvaTraloi extends BaseFragment
     @BindView(R.id.img_broad_question)
     ImageView img_broad_question;
     @BindView(R.id.rl_show_doanvan)
-    RelativeLayout rl_show_doanvan;
+    ConstraintLayout rl_show_doanvan;
 
     @BindView(R.id.webview_anwser_A)
     WebView webview_anwser_A;
@@ -364,6 +365,7 @@ public class FragmentDocvaTraloi extends BaseFragment
                         EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
                         setImageFalse(sAnwser);
                     }
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                 }
             }
         });
@@ -467,6 +469,47 @@ public class FragmentDocvaTraloi extends BaseFragment
                 initWebview_white_text(txt_cauhoi, mCauhoi.getsTextDebai());
             }
         });
+        if (mCauhoi.isDalam()) {
+            isClickXemdiem = true;
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (mCauhoi.isAnserTrue()) {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            } else {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+            }
+            check_anwser_chil();
+        }
+    }
+
+    private void check_anwser_chil() {
+        switch (mCauhoi.getsANSWER_CHILD()) {
+            case "A":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_A);
+                break;
+            case "B":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_B);
+                break;
+            case "C":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_C);
+                break;
+            case "D":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_D);
+                break;
+        }
+        switch (mCauhoi.getsANSWER()) {
+            case "A":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_A);
+                break;
+            case "B":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_B);
+                break;
+            case "C":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_C);
+                break;
+            case "D":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_D);
+                break;
+        }
     }
 
     private boolean anwser() {

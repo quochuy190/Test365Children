@@ -11,15 +11,30 @@
         android:scaleType="fitXY" />
 
     <ImageView
-        android:layout_width="@dimen/width_txt_tnnl"
-        android:layout_height="@dimen/height_txt_tnnl"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintHeight_percent="0.27"
+        android:id="@+id/img_logo_tnnl"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/dp20"
-        android:scaleType="fitXY"
+
         android:src="@drawable/txt_tinhnhanhnholau"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <TextView
+        android:fontFamily="@font/roboto_bold"
+        android:id="@+id/txt_guilde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spr_click_textview"
+        android:padding="@dimen/dp5"
+        android:text="@string/txt_guilde_sudoku_title"
+        android:textColor="@color/txt_point"
+        android:textSize="@dimen/txt_xeptrung"
+        app:layout_constraintTop_toBottomOf="@id/img_logo_tnnl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
     <Button
         android:id="@+id/btn_play_tnnl"
         android:layout_width="@dimen/dp200"

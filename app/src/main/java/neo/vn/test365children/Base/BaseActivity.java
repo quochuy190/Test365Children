@@ -105,7 +105,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }, 30000);
         if (!isFinishing()) {
-            dialog = new ProgressDialog(this);
+            dialog = new ProgressDialog(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+           // dialog = new ProgressDialog(this);
             dialog.setCancelable(false);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage(getString(R.string.txt_loading_dialog));

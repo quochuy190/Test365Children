@@ -26,6 +26,7 @@ import neo.vn.test365children.Listener.setOnItemClickListener;
 import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityBaitapdalam extends BaseActivity {
@@ -70,6 +71,7 @@ public class ActivityBaitapdalam extends BaseActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityBaitapdalam.this);
                 finish();
             }
         });
@@ -78,10 +80,11 @@ public class ActivityBaitapdalam extends BaseActivity {
 
     }
 
-    String sUserCon;
+    String sUserCon, sUserMother;
 
     private void initData() {
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+        sUserMother = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         mLisTToan = new ArrayList<>();
         mLisTV = new ArrayList<>();
         mLisTAnh = new ArrayList<>();
@@ -91,26 +94,32 @@ public class ActivityBaitapdalam extends BaseActivity {
             Log.i(TAG, "initData: " + lisExercise.size());
         List<ExerciseAnswer> lisEx = new ArrayList<>();
         lisEx = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "1")
+                .equalTo("sId_userMe", sUserMother)
                 .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisEx2 = new ArrayList<>();
         lisEx2 = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "1")
+                .equalTo("sId_userMe", sUserMother)
                 .equalTo("isTrangthailambai", "2")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTV = new ArrayList<>();
         lisExTV = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "2")
+                .equalTo("sId_userMe", sUserMother)
                 .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTV2 = new ArrayList<>();
         lisExTV2 = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "2")
+                .equalTo("sId_userMe", sUserMother)
                 .equalTo("isTrangthailambai", "2")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTA = new ArrayList<>();
         lisExTA = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "3")
+                .equalTo("sId_userMe", sUserMother)
                 .equalTo("isTrangthailambai", "3")
                 .equalTo("sId_userCon", sUserCon).findAll();
         List<ExerciseAnswer> lisExTA2 = new ArrayList<>();
         lisExTA2 = mRealm.where(ExerciseAnswer.class).equalTo("sMonhoc", "3")
+                .equalTo("sId_userMe", sUserMother)
                 .equalTo("isTrangthailambai", "2")
                 .equalTo("sId_userCon", sUserCon).findAll();
         if (lisEx.size() > 0) {
@@ -179,6 +188,7 @@ public class ActivityBaitapdalam extends BaseActivity {
         adapter.setOnIListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
+                KeyboardUtil.play_click_button(ActivityBaitapdalam.this);
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTToan.get(position).getsId_exercise());
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_STATUS, mLisTToan.get(position).getIsTrangthailambai());
@@ -195,6 +205,7 @@ public class ActivityBaitapdalam extends BaseActivity {
         adapter_TV.setOnIListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
+                KeyboardUtil.play_click_button(ActivityBaitapdalam.this);
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTV.get(position).getsId_exercise());
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_STATUS, mLisTV.get(position).getIsTrangthailambai());
@@ -211,6 +222,7 @@ public class ActivityBaitapdalam extends BaseActivity {
         adapter_TA.setOnIListener(new setOnItemClickListener() {
             @Override
             public void OnItemClickListener(int position) {
+                KeyboardUtil.play_click_button(ActivityBaitapdalam.this);
                 Intent intent = new Intent(ActivityBaitapdalam.this, ActivityExercisesDetail.class);
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL, mLisTAnh.get(position).getsId_exercise());
                 intent.putExtra(Constants.KEY_SEND_EXERCISES_DETAIL_STATUS, mLisTAnh.get(position).getIsTrangthailambai());

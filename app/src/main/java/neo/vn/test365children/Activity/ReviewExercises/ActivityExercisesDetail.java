@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +34,7 @@ import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 import neo.vn.test365children.Untils.TimeUtils;
@@ -43,18 +43,6 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     private static final String TAG = "ActivityExercisesDetail";
     private ExerciseAnswer objExercises;
     String sIdDe;
-    /*  @BindView(R.id.lable_nhanxet_content)
-      TextView txt_nhanxet;
-      @BindView(R.id.txt_exer_point)
-      TextView txt_point;*/
-    /*@BindView(R.id.txt_exer_namhoc)
-    TextView txt_namhoc;
-    @BindView(R.id.txt_exer_khoihoc)
-    TextView txt_khoihoc;
-    @BindView(R.id.txt_exer_monhoc)
-    TextView txt_monhoc;
-    @BindView(R.id.txt_exer_tuan)
-    TextView txt_tuan;*/
     @BindView(R.id.txt_exer_bancunglam)
     TextView txt_bancunglam;
     @BindView(R.id.txt_start_time)
@@ -75,9 +63,9 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     TextView txt_trungbinh;
     @BindView(R.id.txt_exer_point_min)
     TextView txt_thapnhat;
-    @BindView(R.id.txt_exer_comment_mother)
-    TextView txt_exer_comment_mother;
-    @BindView(R.id.imageView10)
+    /*    @BindView(R.id.txt_exer_comment_mother)
+        TextView txt_exer_comment_mother;*/
+    @BindView(R.id.img_background)
     ImageView imageView10;
     @BindView(R.id.img_title_exe_detail)
     ImageView img_title_exe_detail;
@@ -89,15 +77,15 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     TextView txt_lable_exer;
     @BindView(R.id.txt_point)
     TextView txt_point;
-    @BindView(R.id.txt_lable_nhanxet)
-    TextView txt_lable_nhanxet;
+    /*    @BindView(R.id.txt_lable_nhanxet)
+        TextView txt_lable_nhanxet;*/
     @BindView(R.id.img_sticker)
     ImageView img_sticker;
     private String sStatus;
-    @BindView(R.id.rl_guilaibai)
-    RelativeLayout rl_guilaibai;
-    @BindView(R.id.rl_xembaitap)
-    RelativeLayout rl_xembaitap;
+    /*    @BindView(R.id.rl_guilaibai)
+        RelativeLayout rl_guilaibai;
+        @BindView(R.id.rl_xembaitap)
+        RelativeLayout rl_xembaitap;*/
     @BindView(R.id.btn_guilai)
     Button btn_guilai;
     ExerciseAnswer objExer;
@@ -105,7 +93,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
 
     @Override
     public int setContentViewId() {
-        return R.layout.activity_exercise_detail;
+        return R.layout.activity_review_exer_detail;
     }
 
     @Override
@@ -121,6 +109,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         btn_guilai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityExercisesDetail.this);
                 if (objExer != null) {
                     if (objExer.getsId_userMe() == null)
                         return;
@@ -154,12 +143,14 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityExercisesDetail.this);
                 finish();
             }
         });
         btn_xemlaibai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityExercisesDetail.this);
                 Intent intent = new Intent(ActivityExercisesDetail.this,
                         ActivityReviewExercises.class);
                 startActivity(intent);
@@ -199,9 +190,9 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         }
         if (sStatus != null) {
             if (sStatus.equals("2")) {
-                rl_guilaibai.setVisibility(View.VISIBLE);
+                btn_guilai.setVisibility(View.VISIBLE);
             } else if (sStatus.equals("3"))
-                rl_guilaibai.setVisibility(View.GONE);
+                btn_guilai.setVisibility(View.GONE);
         }
 
     }
@@ -218,7 +209,9 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
+        showAlertErrorNetwork();
         hideDialogLoading();
+        btn_xemlaibai.setEnabled(false);
     }
 
     @Override
@@ -247,7 +240,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
             mRealm.beginTransaction();
             mRealm.copyToRealmOrUpdate(objExer);
             mRealm.commitTransaction();
-            rl_guilaibai.setVisibility(View.GONE);
+            btn_guilai.setVisibility(View.GONE);
             showDialogNotify("Thông báo", mLis.getsRESULT());
         } else {
             showDialogNotify("Lỗi", mLis.getsRESULT());
@@ -260,6 +253,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     public void show_detail_taken(ResponDetailTakenExercise objRes) {
         hideDialogLoading();
         if (objRes != null && objRes.getDETAILS() != null) {
+            btn_xemlaibai.setEnabled(true);
             DetailExercise obj = objRes.getDETAILS();
             txt_debai.setText(Html.fromHtml(obj.getsNAME()));
             if (obj.getSTICKER() != null) {
@@ -269,21 +263,21 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
                         .into(img_sticker);
             }
             if (objExer.getsTimebatdaulambai() != null) {
-                txt_start_time.setText("Thời gian bắt đầu: " + objExer.getsTimebatdaulambai());
+                txt_start_time.setText(objExer.getsTimebatdaulambai());
             }
             if (obj.getsPOINT() != null && obj.getsPOINT().length() > 0) {
                 String s = StringUtil.format_point(Float.parseFloat(obj.getsPOINT()));
                 txt_point.setText(s + " ĐIỂM");
             }
             if (objExer.getsTimeketthuclambai() != null && objExer.getsTimeketthuclambai().length() > 0) {
-                txt_duration_time.setText("Thời gian kết thúc: " + objExer.getsTimeketthuclambai());
+                txt_duration_time.setText(objExer.getsTimeketthuclambai());
 
               /*  txt_duration_time.setText("Thời gian làm bài: "
                         + TimeUtils.formatTime_Complete(iDuration));*/
             }
-            if (obj.getRECOMMENT_MOTHER() != null) {
+          /*  if (obj.getRECOMMENT_MOTHER() != null) {
                 txt_exer_comment_mother.setText(obj.getRECOMMENT_MOTHER());
-            }
+            }*/
            /* if (obj.getsDURATION() != null && obj.getsDURATION().length() > 0) {
                 int iDuration = Integer.parseInt(obj.getsDURATION()) * 1000;
                 txt_duration_time.setText("Thời gian làm bài: "
@@ -320,27 +314,27 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
             if (objStatis.getsCUNGLAM() != null) {
                 int cuglam = Integer.parseInt(objStatis.getsCUNGLAM());
                 if (cuglam > 0)
-                    txt_bancunglam.setText("Có " + objStatis.getsCUNGLAM() + " bạn cùng làm bài thi này");
+                    txt_bancunglam.setText(objStatis.getsCUNGLAM());
                 else
-                    txt_bancunglam.setText("Có 0 bạn cùng làm bài thi này");
+                    txt_bancunglam.setText("0");
             } else
-                txt_bancunglam.setText("Có 0 bạn cùng làm bài thi này");
+                txt_bancunglam.setText("0");
             if (objStatis.getsCUNGTRUONG() != null && objStatis.getsCUNGTRUONG().length() > 0) {
                 int cugtruong = Integer.parseInt(objStatis.getsCUNGTRUONG());
                 if (cugtruong > 0)
-                    txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia: " + objStatis.getsCUNGTRUONG());
+                    txt_bancungtruong.setText(objStatis.getsCUNGTRUONG());
                 else
-                    txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia: 0");
+                    txt_bancungtruong.setText("0");
             } else
-                txt_bancungtruong.setText("Số lượng bạn cùng trường tham gia: 0");
+                txt_bancungtruong.setText("0");
             if (objStatis.getsCUNGLOP() != null && objStatis.getsCUNGLOP().length() > 0) {
                 int cugtruong = Integer.parseInt(objStatis.getsCUNGLOP());
                 if (cugtruong > 0)
-                    txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: " + objStatis.getsCUNGLOP());
+                    txt_bancunglop.setText(objStatis.getsCUNGLOP());
                 else
-                    txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: 0");
+                    txt_bancunglop.setText("0");
             } else
-                txt_bancunglop.setText("Số lượng bạn cùng lớp tham gia: 0");
+                txt_bancunglop.setText("0");
             if (objStatis.getsCAONHAT() != null) {
                 txt_caonhat.setText(StringUtil.format_point(Float.parseFloat(objStatis.getsCAONHAT())) + " ĐIỂM");
             } else {
@@ -377,9 +371,9 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
                 txt_duration_time.setText("Thời gian làm bài: "
                         + TimeUtils.formatTime_Complete(iDuration));
             }
-            if (obj.getsRECOMMENT_MOTHER() != null) {
+           /* if (obj.getsRECOMMENT_MOTHER() != null) {
                 txt_exer_comment_mother.setText(obj.getsRECOMMENT_MOTHER());
-            }
+            }*/
             if (obj.getsSTICKER_ID() != null && obj.getsSTICKER_ID().length() > 0) {
                 Sticker objSticker = new Sticker();
                 for (Sticker objs : App.mListSticker) {

@@ -27,6 +27,7 @@ import neo.vn.test365children.Adapter.AdapterDapanXemanh;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Config.Config;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
@@ -124,7 +125,9 @@ public class FragmentXemanhtraloi extends BaseFragment {
                         }
                     }
                     isClickXemdiem = true;
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                 }
+
             }
         });
     }
@@ -191,15 +194,35 @@ public class FragmentXemanhtraloi extends BaseFragment {
         }
         String s = Config.URL_IMAGE + mCauhoi.getsImagePath();
         Glide.with(getContext()).load(s).into(img_question);
-        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
-            mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
-            mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
-            mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(), false, ""));
-        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
-            mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
+        if (mCauhoi.isDalam()) {
+            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (mCauhoi.isAnserTrue()) {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            } else {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+            }
+            isClickXemdiem = true;
+            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
+                mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), mCauhoi.getsANSWER_CHILD(),
+                        mCauhoi.getsANSWER(), true, ""));
+            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
+                mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
+                mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
+                mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
 
+        } else {
+            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
+                mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
+            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
+                mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(), false, ""));
+            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
+                mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(), false, ""));
+            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
+                mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
+        }
         adapter.notifyDataSetChanged();
     }
 

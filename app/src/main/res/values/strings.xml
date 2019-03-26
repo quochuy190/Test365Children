@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Home365Kid</string>
+    <string name="app_name">Home365</string>
     <string name="btn_chamdiem">Chấm điểm</string>
     <string name="txt_loading_dialog">Đang tải. Vui lòng đợi...</string>
     <!--error-->
@@ -14,6 +14,7 @@
     <string name="btn_yes">Đồng ý</string>
     <string name="masseger_edt_null">Vui lòng nhập vào đầy đủ thông tin và tiếp tục!</string>
     <string name="notify_city_null">Bạn vui lòng chọn tỉnh/thành phố</string>
+    <string name="notify_school_null">Bạn vui lòng chọn trường cho bé</string>
     <string name="txt_web"> <i><u>https://home365.online</u></i></string>
     <string name="txt_lable_nhanxet">NHẬN XÉT CỦA HỆ THỐNG</string>
     <string name="txt_exer_point">Điểm hệ thống</string>
@@ -53,5 +54,24 @@ Mỗi tuần chỉ chơi một lần vào bất kỳ ngày nào.
 </string>
     <string name="txt_guild_login_content">Việc đăng ký tài khoản con được thực hiện trên app mẹ có tên là Home365. Mẹ tải app Home365 về máy để tạo tài khoản và tải bài tập cho con nhé.</string>
     <string name="txt_title_guild">Tài khoản con được tạo trên app mẹ Home365.</string>
-
+    <string name="txt_content_information">Một sản phẩm tâm huyết được phát triển bởi\n
+Công ty Cổ phần Đầu tư Phát triển Công nghệ và Truyền thông\n(được sáng lập bởi VNPT).</string>
+    <string name="txt_policy"><b><u>Chính sách bảo mật</u></b></string>
+    <string name="txt_web_home">Website: <i><u> https://home365.online.</u></i></string>
+    <string name="txt_guild_sudoku">Đăng ký tài khoản</string>
+    <string name="detail_game_tnnl">Các cặp câu hỏi - câu trả lời được trộn lẫn với nhau và dấu trong các ô cửa bí mật. Nhiệm vụ của các con là chơi với Home365 để lần lượt tìm và ghép đôi chính xác câu hỏi với câu trả lời.
+\nAi ghép sai sẽ mất lượt và đến người khác. Các con phải tính thật nhanh và nhớ thật kỹ vị trí các ô đã mở để nhanh tay ghép được nhiều cặp hỏi - đáp.
+\nKết thúc game, ai ghép được nhiều đôi hơn sẽ dành chiến thắng, chỉ số phụ là bên nào ghép nhanh hơn.
+</string>
+    <string name="detail_game_sudoku">Trò chơi rèn luyện khả năng tính toán và tư duy có độ sâu nhiều “nước" của người Nhật phổ biến trên toàn thế giới.
+\nNhiệm vụ của các con là điền các con số từ 1 đến 9 vào một bảng gồm 9x9 ô vuông sao cho mỗi số chỉ xuất hiện một lần trong một hàng, một cột và một bảng con 3x3.
+\nCẩn thận nhé, trò chơi này đã “gây nghiện" cho rất nhiều bạn và trở thành “siêu nhân"
+</string>
+    <string name="detail_game_kow">Trò chơi dân gian ghép các ký tự để thành một từ có nghĩa trong tiếng Anh.
+\nCó thể ghép từ trái sang phải hoặc từ phải sang trái. Bên nào ghép ký tự cuối cùng để hoàn thành một từ sẽ dành chiến thắng.
+\nTrò chơi này giúp các con nâng cao vốn từ tiếng Anh một cách nhanh chóng.
+</string>
+    <string name="txt_read_story">Nghe truyện rất tốt, giúp tăng trí tưởng tượng và ngôn ngữ.
+        Home365 dành tặng kho truyện được tuyển chọn từ các nguồn trên Internet.
+        Con có thể nghe ngay cả khi tắt màn hình.</string>
 </resources>

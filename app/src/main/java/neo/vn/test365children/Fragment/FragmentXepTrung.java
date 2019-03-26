@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterTrungRo;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.Item_Xeptrung;
 import neo.vn.test365children.Models.MessageEvent;
@@ -89,7 +90,6 @@ public class FragmentXepTrung extends BaseFragment {
     ImageView img_trung3;
     @BindView(R.id.img_trung4)
     ImageView img_trung4;
-
     private ViewGroup mainLayout;
     @BindView(R.id.img_rotrung_1)
     ImageView img_rotrung1;
@@ -115,10 +115,22 @@ public class FragmentXepTrung extends BaseFragment {
     TextView txt_lable;
     @BindView(R.id.img_background)
     ImageView img_background;
+    @BindView(R.id.bg_dapan_again)
+    ImageView bg_dapan_again;
     @BindView(R.id.txt_cauhoi)
     TextView txt_cauhoi;
     @BindView(R.id.img_anwser_chil)
     ImageView img_anwser_chil;
+    @BindView(R.id.ll_player_again)
+    ConstraintLayout ll_player_again;
+    @BindView(R.id.txt_title_dapan_again)
+    TextView txt_title_dapan_again;
+    @BindView(R.id.txt_title_anwser_chil)
+    TextView txt_title_anwser_chil;
+    @BindView(R.id.recycle_dapan)
+    RecyclerView recycle_dapan;
+    @BindView(R.id.recycle_anwser_chil)
+    RecyclerView recycle_anwser_chil;
 
     public static FragmentXepTrung newInstance(CauhoiDetail restaurant) {
         FragmentXepTrung restaurantDetailFragment = new FragmentXepTrung();
@@ -137,14 +149,16 @@ public class FragmentXepTrung extends BaseFragment {
         map_answer_true = new LinkedHashMap<>();
     }
 
-    RecyclerView.LayoutManager mLayoutManager;
-    AdapterTrungRo adapterDapan;
+    RecyclerView.LayoutManager mLayoutManager, mLayoutManager_again, mLayoutManager_anwser_chil;
+    AdapterTrungRo adapterDapan, adapter_Dapan_again, adapter_anwser_chil;
     @BindView(R.id.recycle_dapan_xeptrung)
     RecyclerView recycle_egg_anwser;
     List<Item_Xeptrung> mLisDapan;
+    List<Item_Xeptrung> mLisAnwserChil;
 
     private void init() {
         mLisDapan = new ArrayList<>();
+        mLisAnwserChil = new ArrayList<>();
         adapterDapan = new AdapterTrungRo(mLisDapan, getContext());
         mLayoutManager = new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false);
         recycle_egg_anwser.setNestedScrollingEnabled(false);
@@ -178,9 +192,30 @@ public class FragmentXepTrung extends BaseFragment {
         x_start_trung4 = rl_trung4.getLeft();
         y_start_trung4 = rl_trung4.getTop();
         init();
+        if (mCauhoi.isDalam()) {
+            init_anwser_chil();
+        }
         initData();
         initEvent();
         return view;
+    }
+
+    private void init_anwser_chil() {
+        adapter_Dapan_again = new AdapterTrungRo(mLisDapan, getContext());
+        mLayoutManager_again = new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false);
+        recycle_dapan.setNestedScrollingEnabled(false);
+        recycle_dapan.setHasFixedSize(true);
+        recycle_dapan.setLayoutManager(mLayoutManager_again);
+        recycle_dapan.setItemAnimator(new DefaultItemAnimator());
+        recycle_dapan.setAdapter(adapter_Dapan_again);
+
+        adapter_anwser_chil = new AdapterTrungRo(mLisAnwserChil, getContext());
+        mLayoutManager_anwser_chil = new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false);
+        recycle_anwser_chil.setNestedScrollingEnabled(false);
+        recycle_anwser_chil.setHasFixedSize(true);
+        recycle_anwser_chil.setLayoutManager(mLayoutManager_anwser_chil);
+        recycle_anwser_chil.setItemAnimator(new DefaultItemAnimator());
+        recycle_anwser_chil.setAdapter(adapter_anwser_chil);
     }
 
     int iHightScreen, iWidthScreen;
@@ -249,6 +284,9 @@ public class FragmentXepTrung extends BaseFragment {
         Glide.with(this).load(R.drawable.bg_xep_trung)
                 .placeholder(R.drawable.bg_xep_trung)
                 .into(bg_dapan);
+        Glide.with(this).load(R.drawable.bg_xep_trung)
+                .placeholder(R.drawable.bg_xep_trung)
+                .into(bg_dapan_again);
     }
 
     private void initData() {
@@ -305,6 +343,7 @@ public class FragmentXepTrung extends BaseFragment {
 
         // Collections.shuffle(mLisTrung);
         Collections.shuffle(mLisRoTrung);
+
         if (mLisTrung.get(0) != null)
             txt_trung1.setText(mLisTrung.get(0));
         if (mLisTrung.get(1) != null)
@@ -321,8 +360,44 @@ public class FragmentXepTrung extends BaseFragment {
             txt_rotrung_3.setText(mLisRoTrung.get(2));
         if (mLisRoTrung.get(3) != null)
             txt_rotrung_4.setText(mLisRoTrung.get(3));
-
         adapterDapan.notifyDataSetChanged();
+        if (mCauhoi.isDalam()) {
+            btn_xemdiem.setVisibility(View.GONE);
+            ll_player_again.setVisibility(View.VISIBLE);
+            String[] egg1_chil = mCauhoi.getsEGG_1_RESULT().split("::");
+            String[] egg2_chil = mCauhoi.getsEGG_2_RESULT().split("::");
+            String[] egg3_chil = mCauhoi.getsEGG_3_RESULT().split("::");
+            String[] egg4_chil = mCauhoi.getsEGG_4_RESULT().split("::");
+            if (egg1_chil[0] != null) {
+                mLisAnwserChil.add(new Item_Xeptrung(egg1_chil[1], R.drawable.egg_blue, egg1_chil[0]));
+            }
+            if (egg2_chil[0] != null) {
+                mLisAnwserChil.add(new Item_Xeptrung(egg2_chil[1], R.drawable.egg_red, egg2_chil[0]));
+            }
+            if (egg3_chil[0] != null) {
+                mLisAnwserChil.add(new Item_Xeptrung(egg3_chil[1], R.drawable.egg_yellow, egg3_chil[0]));
+            }
+            if (egg4_chil[0] != null) {
+                mLisAnwserChil.add(new Item_Xeptrung(egg4_chil[1], R.drawable.egg_pink, egg4_chil[0]));
+            }
+            adapter_anwser_chil.notifyDataSetChanged();
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (mCauhoi.isAnserTrue()) {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                recycle_anwser_chil.setVisibility(View.INVISIBLE);
+                txt_title_anwser_chil.setVisibility(View.INVISIBLE);
+            } else {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                recycle_anwser_chil.setVisibility(View.VISIBLE);
+                txt_title_anwser_chil.setVisibility(View.VISIBLE);
+            }
+
+
+        } else {
+            ll_player_again.setVisibility(View.GONE);
+            btn_xemdiem.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
@@ -347,7 +422,6 @@ public class FragmentXepTrung extends BaseFragment {
                 Log.i(TAG, "trả lời: " + map_answer_chil);
                 if (!isClickXemdiem) {
                     img_anwser_chil.setVisibility(View.VISIBLE);
-
                     if (App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                             .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).isAnserTrue()) {
                         Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
@@ -381,6 +455,7 @@ public class FragmentXepTrung extends BaseFragment {
                         //  EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                     }
                     isClickXemdiem = true;
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                 }
                 is_not_click();
             }

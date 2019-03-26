@@ -16,21 +16,51 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize">
         <activity
-            android:launchMode="singleTask"
             android:name=".Activity.ActivityHome"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
-
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:name=".Activity.ReviewExercises.ActivityBaitapdalam"
+            android:name=".Activity.login.ActivityUpdateInforChil"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:name=".Activity.guild_show_user_kid.Activity_Guild_Show_UserKid"
+            android:name=".MenuSearch.ActivityDanhsachKhoihoc"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".MenuSearch.ActivityListCity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".MenuSearch.ActivityListDistrict"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".MenuSearch.ActivityListSchools"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.game.Activity_Guild_Game"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.untility_menu.Activity_Information"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.untility_menu.Activity_Menu_Untility"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.untility_menu.ActivityUntitiliesDetail"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.ReviewExercises.ActivityBaitapdalam"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
@@ -82,20 +112,6 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:name=".Activity.bangxephang.ActivityBieuDo"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape"></activity>
-        <activity
-            android:name=".Activity.bangxephang.ActivityBXH"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape"></activity>
-        <activity
-            android:name=".Activity.Activity_List_UserLogin"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
-        <activity
             android:name=".Activity.SplashScreen"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape">
@@ -118,11 +134,8 @@
             android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.doctruyen.Activity_webview_doctruyen"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape"></activity>
-        <activity
-            android:name=".Activity.login.ActivityGuildLogin"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode
+            |screenSize|smallestScreenSize|mcc|mnc"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.ActivityComplete"
@@ -134,6 +147,18 @@
             android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.game.game_kow.ActivityKoWMenuGame"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.game.game_kow.ActivityKoWMenuLevel"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.game.game_kow.ActivityKowPlayEasyGame"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.game.game_kow.ActivityKowPlay_Level_Two"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
         <activity

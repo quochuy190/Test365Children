@@ -12,7 +12,6 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY" />
 
-
     <android.support.constraint.Guideline
         android:id="@+id/gl_ver_two"
         android:layout_width="wrap_content"

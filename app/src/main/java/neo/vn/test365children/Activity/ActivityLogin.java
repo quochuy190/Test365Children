@@ -26,8 +26,6 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import io.realm.Realm;
-import neo.vn.test365children.Activity.guild_show_user_kid.Activity_Guild_Show_UserKid;
-import neo.vn.test365children.Activity.login.ActivityGuildLogin;
 import neo.vn.test365children.Activity.login.ActivitySelectLevelTry;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
@@ -169,13 +167,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
     }
 
     private void initEvent() {
-        txt_dangky.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ActivityLogin.this, ActivityGuildLogin.class);
-                startActivity(intent);
-            }
-        });
+
         btn_try.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,7 +185,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
 
             }
         });
-        txt_hotline.setOnClickListener(new View.OnClickListener() {
+     /*   txt_hotline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // call_phone(ActivityLogin.this, "1900561548");
@@ -201,7 +193,7 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
                 startActivity(intent);
 
             }
-        });
+        });*/
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,7 +284,6 @@ public class ActivityLogin extends BaseActivity implements View.OnClickListener,
             if (mLis.getsERROR().equals("0000")) {
                 SharedPrefs.getInstance().put(Constants.KEY_ISLOGIN, true);
                 SharedPrefs.getInstance().put(Constants.KEY_SAVE_CHIL, mLis);
-                SharedPrefs.getInstance().put(Constants.KEY_ISLOGIN, true);
                 SharedPrefs.getInstance().put(Constants.KEY_USER_ME, sUserMe);
                 SharedPrefs.getInstance().put(Constants.KEY_USER_CON, sUserCon);
                 SharedPrefs.getInstance().put(Constants.KEY_PASSWORD, sPassWord);

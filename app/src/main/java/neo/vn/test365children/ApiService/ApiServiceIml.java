@@ -29,6 +29,7 @@ public class ApiServiceIml {
     ApiSeviceLogin apiServiceLogin;
     ApiSevicePostResfull apiRestful;
     ApiSevicePostResfullAll apiRestFul_All;
+    ApiSevice_Init api_init;
 
     public void getApiService(final CallbackData<String> callbackData, Map<String, String> mData) {
         String sUrl = SharedPrefs.getInstance().get(Constants.KEY_URL_BASE, String.class);
@@ -169,6 +170,38 @@ public class ApiServiceIml {
         }
         apiRestFul_All = ApiSevicePostResfullAll.retrofit_restful_all.create(ApiSevicePostResfullAll.class);
         Call<ResponseBody> getApiservice = apiRestFul_All.getApiServiceRest("Bearer " + sToken, sService, mData);
+        getApiservice.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String jsonString = null;
+                JSONObject jobj;
+                JSONArray jArray;
+                try {
+                    if (response.body() != null) {
+                        jsonString = response.body().string();
+                      /*  jobj = new JSONObject(jsonString);
+                        String c = jobj.getString("return");*/
+                        callbackData.onGetDataSuccess(jsonString);
+                    }
+                } catch (IOException e) {
+                    callbackData.onGetDataErrorFault(e);
+                } catch (Exception e) {
+                    callbackData.onGetDataErrorFault(e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callbackData.onGetDataErrorFault(new Exception(t));
+            }
+        });
+    }
+
+    public void getApi_Init(final CallbackData<String> callbackData, String sService,
+                                  Map<String, String> mData) {
+        api_init = ApiSevice_Init.retrofit_restful.create(ApiSevice_Init.class);
+        Call<ResponseBody> getApiservice = api_init.getApiServiceRest(sService, mData);
         getApiservice.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

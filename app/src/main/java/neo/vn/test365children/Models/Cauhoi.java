@@ -19,7 +19,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Cauhoi extends RealmObject implements Parcelable , Serializable {
+public class Cauhoi extends RealmObject implements Parcelable, Serializable {
     @SerializedName("ERROR")
     String sERROR;
     @SerializedName("MESSAGE")
@@ -53,6 +53,10 @@ public class Cauhoi extends RealmObject implements Parcelable , Serializable {
     String sUPDATETIME;
     String mOption;
     String mNumber;
+    int iCount_Princess;
+    boolean isDalam;
+    boolean isResul_chil;
+    boolean isEndGame;
 
     public Cauhoi(String sERROR, String sMESSAGE, String sRESULT, String mOption) {
         this.sERROR = sERROR;
@@ -87,7 +91,7 @@ public class Cauhoi extends RealmObject implements Parcelable , Serializable {
         sERROR = in.readString();
         sMESSAGE = in.readString();
         sRESULT = in.readString();
-       // lisInfo = in.createTypedArrayList(CauhoiDetail.CREATOR);
+        // lisInfo = in.createTypedArrayList(CauhoiDetail.CREATOR);
         sID = in.readString();
         sEXCERCISE_ID = in.readString();
         sQUESTION_NUMBER = in.readString();
@@ -125,6 +129,38 @@ public class Cauhoi extends RealmObject implements Parcelable , Serializable {
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public boolean isEndGame() {
+        return isEndGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        isEndGame = endGame;
+    }
+
+    public int getiCount_Princess() {
+        return iCount_Princess;
+    }
+
+    public void setiCount_Princess(int iCount_Princess) {
+        this.iCount_Princess = iCount_Princess;
+    }
+
+    public boolean isDalam() {
+        return isDalam;
+    }
+
+    public void setDalam(boolean dalam) {
+        isDalam = dalam;
+    }
+
+    public boolean isResul_chil() {
+        return isResul_chil;
+    }
+
+    public void setResul_chil(boolean resul_chil) {
+        isResul_chil = resul_chil;
     }
 
     public String getmNumber() {

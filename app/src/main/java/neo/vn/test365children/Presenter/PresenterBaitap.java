@@ -232,7 +232,7 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
         mMap.put("USER_MOTHER", sUserMe);
         mMap.put("USER_CHILD", sUserCon);
         mMap.put("ID_EXCERCISE", sId_baitap);
-        mMap.put("DELIVERY_TIME", time_giaobai);
+        mMap.put("DELIVERY_TIME", time_bdlambai);
         mMap.put("START_TAKE_TIME", time_bdlambai);
         mMap.put("END_TAKE_TIME", time_ktlambai);
         mMap.put("DURATION", tong_time_lambai);

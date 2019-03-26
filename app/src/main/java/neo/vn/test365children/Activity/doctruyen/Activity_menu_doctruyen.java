@@ -12,6 +12,7 @@ import butterknife.BindView;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.KeyboardUtil;
 
 public class Activity_menu_doctruyen extends BaseActivity {
     @BindView(R.id.btn_eng)
@@ -39,12 +40,14 @@ public class Activity_menu_doctruyen extends BaseActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(Activity_menu_doctruyen.this);
                 finish();
             }
         });
         btn_eng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(Activity_menu_doctruyen.this);
                 Intent intent = new Intent(Activity_menu_doctruyen.this, Activity_webview_doctruyen.class);
                 intent.putExtra(Constants.KEY_SEND_LANGUAGE, "eng");
                 startActivity(intent);
@@ -53,6 +56,7 @@ public class Activity_menu_doctruyen extends BaseActivity {
         btn_vie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(Activity_menu_doctruyen.this);
                 Intent intent = new Intent(Activity_menu_doctruyen.this, Activity_webview_doctruyen.class);
                 intent.putExtra(Constants.KEY_SEND_LANGUAGE, "vie");
                 startActivity(intent);

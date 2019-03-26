@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterSapxep;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.OnStartDragListener;
 import neo.vn.test365children.Listener.RecyclerViewItemClickInterface;
 import neo.vn.test365children.Listener.RecyclerViewItemTouchHelperCallback;
@@ -96,7 +97,24 @@ public class FragmentSapxep extends BaseFragment implements
         ButterKnife.bind(this, view);
         mLisStart = new ArrayList<>();
         initData();
-        initViews(true);
+        if (mCauhoi.isDalam()) {
+            isClickXemdiem = true;
+            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
+            initViews(false);
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (mCauhoi.isAnserTrue()) {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                recycle_ketqua.setVisibility(View.GONE);
+            } else {
+                txt_title_traloi.setVisibility(View.VISIBLE);
+                txt_title_dapan.setVisibility(View.VISIBLE);
+                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                recycle_ketqua.setVisibility(View.VISIBLE);
+                initDapan();
+            }
+        } else {
+            initViews(true);
+        }
         initEvent();
         return view;
     }
@@ -140,6 +158,7 @@ public class FragmentSapxep extends BaseFragment implements
                     adapterSapxep.notifyDataSetChanged();
                 }
                 save_anwser_chil();
+                EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
             }
         });
     }
@@ -147,6 +166,7 @@ public class FragmentSapxep extends BaseFragment implements
     int[] arrBgItem = new int[]{R.drawable.img_menu_toan, R.drawable.img_menu_blue, R.drawable.img_menu_tim,
             R.drawable.img_menu_green, R.drawable.img_menu_red,};
     List<String> mLiDapan;
+    List<String> mLiDapan_chil;
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
@@ -158,22 +178,40 @@ public class FragmentSapxep extends BaseFragment implements
         // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
         if (mCauhoi.getsHTML_CONTENT() != null)
             txt_cauhoi.setText("Đáp án: " + mCauhoi.getsHTML_CONTENT().replace("::", " "));
+
         txt_cauhoi.setVisibility(View.INVISIBLE);
         mLis = new ArrayList<>();
         if (mCauhoi.getsHTML_CONTENT() != null) {
             String[] dapan = mCauhoi.getsHTML_CONTENT().split("::");
             mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
         }
+        if (mCauhoi.getsANSWER_CHILD() != null) {
+            String[] dapan_chil = mCauhoi.getsANSWER_CHILD().split("::");
+            mLiDapan_chil = new ArrayList<String>(Arrays.asList(dapan_chil));
+        }
         if (mLiDapan != null && mLiDapan.size() > 0) {
             for (int i = 0; i < mLiDapan.size(); i++) {
                 String s = mLiDapan.get(i);
                 mLisStart.add(new DapAn("1", s, "",
                         "agcbd", false, "" + i));
+                if (!mCauhoi.isDalam()) {
+                    mLis.add(new DapAn("1", s, "",
+                            "agcbd", false, "" + i));
+                }
+
+            }
+            if (!mCauhoi.isDalam()) {
+                Collections.shuffle(mLis);
+            }
+        }
+        if (mCauhoi.isDalam() && mLiDapan_chil != null && mLiDapan_chil.size() > 0) {
+            for (int i = 0; i < mLiDapan_chil.size(); i++) {
+                String s = mLiDapan_chil.get(i);
                 mLis.add(new DapAn("1", s, "",
                         "agcbd", false, "" + i));
             }
-            Collections.shuffle(mLis);
         }
+
     }
 
     AdapterSapxep adapterSapxep;
@@ -192,8 +230,6 @@ public class FragmentSapxep extends BaseFragment implements
         mItemTouchHelper.attachToRecyclerView(recycle_dapan);
         adapterSapxep.delegate = this;
         recycle_dapan.setAdapter(adapterSapxep);
-
-
     }
 
     private void initDapan() {

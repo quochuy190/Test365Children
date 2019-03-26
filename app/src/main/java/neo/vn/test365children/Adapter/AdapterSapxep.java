@@ -40,7 +40,6 @@ public class AdapterSapxep extends RecyclerView.Adapter<AdapterSapxep.MyViewHold
     public AdapterSapxep.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_sapxep, parent, false);
-
         return new AdapterSapxep.MyViewHolder(itemView);
     }
 

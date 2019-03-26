@@ -84,7 +84,7 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
     RelativeLayout ll_goiy;
     @BindView(R.id.txt_goiy_number)
     TextView txt_goiy_number;
-    MediaPlayer mPlayer;
+    MediaPlayer mPlayer, mPlayer_Anwser;
 
 
     @Override
@@ -96,6 +96,7 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
     protected void onDestroy() {
         super.onDestroy();
         mPlayer.release();
+        mPlayer_Anwser.release();
         stopService(intent_service);
     }
 
@@ -106,7 +107,25 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
         mPlayer.setLooping(true);
         mPlayer.setVolume(20, 20);
         mPlayer.start();
+    }
 
+    public void play_true() {
+        //mp3 = new MediaPlayer();
+        mPlayer_Anwser.release();
+        mPlayer_Anwser = MediaPlayer.create(this, R.raw.yeah_mp3);
+        mPlayer_Anwser.setLooping(false);
+        mPlayer_Anwser.setVolume(20, 20);
+        mPlayer_Anwser.start();
+
+    }
+
+    public void play_false() {
+        //mp3 = new MediaPlayer();
+        mPlayer_Anwser.release();
+        mPlayer_Anwser = MediaPlayer.create(this, R.raw.sau_laughing_cut);
+        mPlayer_Anwser.setLooping(false);
+        mPlayer_Anwser.setVolume(20, 20);
+        mPlayer_Anwser.start();
     }
 
     Intent intent_service;
@@ -144,6 +163,7 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterGameKoW(this);
         mPlayer = new MediaPlayer();
+        mPlayer_Anwser = new MediaPlayer();
         Glide.with(this).load(R.drawable.bg_kow_playgame).into(img_background);
         play_music_bg();
         objTopic = (TopicKoW) getIntent().getSerializableExtra(Constants.KEY_SEND_LEVEL_KOW);
@@ -541,6 +561,11 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
     TextView txt_anwser_translate;
 
     private void check_gameover(boolean isAnwser) {
+        if (isAnwser) {
+            play_true();
+        } else {
+            play_false();
+        }
         rl_show_anwser.setVisibility(View.VISIBLE);
         txt_anwser_newword.setText(mDicPlay.getsNewWord());
         txt_anwser_translate.setText(mDicPlay.getsTranslate());

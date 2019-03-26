@@ -23,6 +23,8 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     private String sIdTuan;
     private String sTrangthainopbai;
     private String sDetailExercise;
+    private String sStatus_Play;//1 đang làm , 0 đã làm xong nộp bài
+
 
     public ExerciseAnswer(String sId_exercise, String sId_userMe, String sId_userCon, String sPoint, String sMonhoc,
                           String isTrangthailambai, RealmList<Cauhoi> mLisCauhoi) {
@@ -36,6 +38,14 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     }
 
     public ExerciseAnswer() {
+    }
+
+    public String getsStatus_Play() {
+        return sStatus_Play;
+    }
+
+    public void setsStatus_Play(String sStatus_Play) {
+        this.sStatus_Play = sStatus_Play;
     }
 
     public String getsTrangthainopbai() {

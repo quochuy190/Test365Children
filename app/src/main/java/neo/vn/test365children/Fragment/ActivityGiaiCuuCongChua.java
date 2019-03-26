@@ -24,7 +24,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Random;
 
 import butterknife.BindView;
-import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
@@ -350,7 +349,6 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
 
         }
     }
-
     private void anwser() {
         if (sAnwser.length() > 0) {
             if (sAnwser.equals(mCauhoi.getsANSWER())) {
@@ -365,26 +363,6 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
         } else showDialogNotify("Thông báo", "Bạn chưa chọn đáp án nào");
         isClickXemdiem = true;
     }
-
-
-    private void set_anwser(String sAnwser, boolean isAnwser) {
-        if (isAnwser) {
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-        } else {
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-        }
-        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
-    }
-
-    int iHeightmax = 0;
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

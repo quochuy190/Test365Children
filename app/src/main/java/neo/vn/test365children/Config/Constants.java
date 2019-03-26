@@ -12,16 +12,18 @@ public class Constants {
     }
 
     public class RequestCode {
-        public static final int GET_DISTRICT = 10000;
-        public static final int GET_CITY = 10001;
-        public static final int GET_CONGCHUA = 10002;
-        public static final int GET_KHOIHOC = 10003;
+        public static final int GET_DISTRICT = 1000;
+        public static final int GET_CITY = 1001;
+        public static final int GET_CONGCHUA = 1002;
+        public static final int GET_KHOIHOC = 1003;
         public static final int GET_KHO_BAITAP = 1004;
         public static final int GET_IMAGE = 1005;
         public static final int GET_START_LAMBAI = 1006;
         public static final int START_GAME_TNNL = 1007;
         public static final int LOGIN_RESTART_SESSION = 1008;
         public static final int START_USER_TRY = 1009;
+        public static final int GET_SCHOOLS = 1010;
+        public static final int START_UPDATE_INFOR_CHILD = 1011;
     }
 
     public static final String KEY_TOKEN = "KEY_TOKEN";
@@ -59,5 +61,15 @@ public class Constants {
     public static final String KEY_SEND_LANGUAGE = "KEY_SEND_LANGUAGE";
     public static final String KEY_SAVE_LOGIN_TRY_FIRST = "KEY_SAVE_LOGIN_TRY_FIRST";
     public static final String KEY_SAVE_USER_MOTHER_TRY = "mothertrial";
-
+    public static final String KEY_SAVE_LIST_EXER_PLAYING = "KEY_SAVE_LIST_EXER_PLAYING";
+    public static final String KEY_SAVE_PLAYING_EXER = "KEY_SAVE_PLAYING_EXER";
+    public static final String KEY_SEND_EXER_AGAIN = "KEY_SEND_EXER_AGAIN";
+    public static final String KEY_SEND_GUILD_GAME = "KEY_SEND_GUILD_GAME";
+    public static final String KEY_SEND_DETAIL_UNTILITIES = "KEY_SEND_DETAIL_UNTILITIES";
+    public static final String KEY_SEND_CITY_ID = "KEY_SEND_CITY_ID";
+    public static final String KEY_SEND_DISTRICT_ID = "KEY_SEND_DISTRICT_ID";
+    public static final String KEY_SAVE_COUNT_START_EXER = "KEY_SAVE_COUNT_START_EXER";
+    public static final String KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS = "KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS";
+    public static final String KEY_SAVE_TIME_INIT = "KEY_SAVE_TIME_INIT";
+    public static final String KEY_SAVE_UPDATE_LEVEL_ID_SUCCESS = "KEY_SAVE_UPDATE_LEVEL_ID_SUCCESS";
 }

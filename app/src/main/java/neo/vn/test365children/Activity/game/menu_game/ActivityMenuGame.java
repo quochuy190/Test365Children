@@ -31,6 +31,7 @@ import neo.vn.test365children.Models.ConfigGame;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.respon_api.ResponConfigGame;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityMenuGame extends BaseActivity implements View.OnClickListener, ImlConfigGameRest.View {
@@ -59,7 +60,7 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
     ImageView img_title_menugame;
     PresenterConfigGameRest mPresenter;
     String sUserMother, sUserKid;
-    private boolean isPlaySudoku = false, isPlayKow = false, isPlayTPTT = false, isPlayTNNL = false;
+    private boolean isPlaySudoku = true, isPlayKow = true, isPlayTPTT = true, isPlayTNNL = true;
 
     @Override
     public int setContentViewId() {
@@ -71,7 +72,7 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         initEvent();
         mPresenter = new PresenterConfigGameRest(this);
-        initData();
+       // initData();
         Glide.with(this).load(R.drawable.bg_menu_game).into(imageView12);
         Glide.with(this).load(R.drawable.title_game).into(img_title_menugame);
     }
@@ -96,6 +97,7 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        KeyboardUtil.play_click_button(ActivityMenuGame.this);
         switch (v.getId()) {
             case R.id.rl_trieuphutrithuc:
                 if (isPlayTPTT) {

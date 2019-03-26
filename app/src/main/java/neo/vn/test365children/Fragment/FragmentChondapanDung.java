@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
@@ -128,6 +129,7 @@ public class FragmentChondapanDung extends BaseFragment
         webview_debai.clearCache(true);
         webview_debai.clearHistory();
     }
+
     private void reload() {
         webview_debai.reload();
         webview_anwser_A.reload();
@@ -196,6 +198,7 @@ public class FragmentChondapanDung extends BaseFragment
                         EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
                         setImageFalse(sAnwser);
                     }
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                 }
             }
         });
@@ -207,6 +210,7 @@ public class FragmentChondapanDung extends BaseFragment
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
     }
+
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
                 != null && mCauhoi.getsSubNumberCau().equals("1")) {
@@ -247,7 +251,50 @@ public class FragmentChondapanDung extends BaseFragment
         } else {
             ll_webview_D.setVisibility(View.GONE);
         }
+        if (mCauhoi.isDalam()) {
+            isClickXemdiem = true;
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (mCauhoi.isAnserTrue()) {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            } else {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+
+            }
+            check_anwser_chil();
+        }
     }
+
+    private void check_anwser_chil() {
+        switch (mCauhoi.getsANSWER_CHILD()) {
+            case "A":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_A);
+                break;
+            case "B":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_B);
+                break;
+            case "C":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_C);
+                break;
+            case "D":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_D);
+                break;
+        }
+        switch (mCauhoi.getsANSWER()) {
+            case "A":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_A);
+                break;
+            case "B":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_B);
+                break;
+            case "C":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_C);
+                break;
+            case "D":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_D);
+                break;
+        }
+    }
+
     public void initWebview_center(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
@@ -283,6 +330,7 @@ public class FragmentChondapanDung extends BaseFragment
                                     public void onTick(long millisUntilFinished) {
 
                                     }
+
                                     @Override
                                     public void onFinish() {
                                         hideDialogLoading();
@@ -295,6 +343,7 @@ public class FragmentChondapanDung extends BaseFragment
             }
         });
     }
+
     public void initWebview(final WebView webview, String link_web) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings();
@@ -346,6 +395,7 @@ public class FragmentChondapanDung extends BaseFragment
             }
         });
     }
+
     int iHeightmax = 0;
 
     private boolean anwser() {
@@ -445,6 +495,7 @@ public class FragmentChondapanDung extends BaseFragment
         }
         return false;
     }
+
     private String sAnwser = "";
 
     @Override

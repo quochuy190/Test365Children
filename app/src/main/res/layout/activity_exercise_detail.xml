@@ -46,7 +46,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp10"
             android:padding="@dimen/dp3"
-            android:src="@drawable/img_back_menu"
+
             android:visibility="invisible" />
 
         <TextView

@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.MessageEvent;
 import neo.vn.test365children.R;
@@ -223,6 +224,7 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                         }
                     }
                     isClickXemdiem = true;
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                 }
             }
         });
@@ -264,6 +266,11 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
             ll_anwser_D.setVisibility(View.VISIBLE);
         } else {
             ll_anwser_D.setVisibility(View.GONE);
+        }
+        if (mCauhoi.isDalam()) {
+            isClickXemdiem = true;
+            sAnwser = mCauhoi.getsANSWER_CHILD();
+            anwser();
         }
     }
 
@@ -528,6 +535,9 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                                         }
                                     }
                                 }.start();
+                                if (mCauhoi.isDalam()) {
+                                    set_anwser_playing();
+                                }
                                 hideDialogLoading();
                                 break;
                         }
@@ -535,6 +545,59 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
                 }.start();
             }
         });
+    }
+
+    private void set_anwser_playing() {
+        sAnwser = mCauhoi.getsANSWER_CHILD();
+        img_anwser_chil.setVisibility(View.VISIBLE);
+        if (sAnwser.equals(mCauhoi.getsANSWER())) {
+            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            switch (mCauhoi.getsANSWER()) {
+                case "A":
+                    animation_anwsertrue(img_saucon_A);
+                    break;
+                case "B":
+                    animation_anwsertrue(img_saucon_B);
+                    break;
+                case "C":
+                    animation_anwsertrue(img_saucon_C);
+                    break;
+                case "D":
+                    animation_anwsertrue(img_saucon_D);
+                    break;
+            }
+
+        } else {
+            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+            switch (mCauhoi.getsANSWER()) {
+                case "A":
+                    animation_anwsertrue(img_saucon_A);
+                    break;
+                case "B":
+                    animation_anwsertrue(img_saucon_B);
+                    break;
+                case "C":
+                    animation_anwsertrue(img_saucon_C);
+                    break;
+                case "D":
+                    animation_anwsertrue(img_saucon_D);
+                    break;
+            }
+            switch (mCauhoi.getsANSWER_CHILD()) {
+                case "A":
+                    img_saucon_A.setVisibility(View.GONE);
+                    break;
+                case "B":
+                    img_saucon_B.setVisibility(View.GONE);
+                    break;
+                case "C":
+                    img_saucon_C.setVisibility(View.GONE);
+                    break;
+                case "D":
+                    img_saucon_D.setVisibility(View.GONE);
+                    break;
+            }
+        }
     }
 
     private void reload() {

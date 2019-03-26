@@ -39,6 +39,7 @@ import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.Presenter.PresenterConfigChil;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View, ImlConfigChil.View {
@@ -69,6 +70,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
     Realm mRealm;
     @BindView(R.id.img_background)
     ImageView img_background;
+    String sCount_Start_Exer;
 
     @Override
     public int setContentViewId() {
@@ -94,6 +96,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
     ExerciseAnswer obj_answer;
 
     private void initData() {
+        sCount_Start_Exer = SharedPrefs.getInstance().get(Constants.KEY_SAVE_COUNT_START_EXER, String.class);
         Glide.with(this).load(R.drawable.bg_start_exercises).into(img_background);
         mLisCauhoi = new ArrayList<>();
         objBaitapTuan = getIntent().getParcelableExtra(Constants.KEY_SEND_BAITAPTUAN);
@@ -157,8 +160,16 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         btn_start_lambai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityStartBaitap.this);
                 if (!isClickStart) {
                     btn_start_lambai.getBackground().setAlpha(70);
+                    if (sCount_Start_Exer != null && sCount_Start_Exer.length() > 0) {
+                        int count = Integer.parseInt(sCount_Start_Exer);
+                        count++;
+                        SharedPrefs.getInstance().put(Constants.KEY_SAVE_COUNT_START_EXER, "" + count);
+                    } else {
+                        SharedPrefs.getInstance().put(Constants.KEY_SAVE_COUNT_START_EXER, "" + 1);
+                    }
                     //  btn_start_lambai.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
                     if (sUserMe.equals("quochuy190")) {
 
@@ -169,6 +180,10 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
                     obj_answer.setsTimebatdaulambai(get_current_time());
                     // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
                     obj_answer.setIsTrangthailambai("1");
+                    obj_answer.setsStatus_Play("1");
+                    mRealm.beginTransaction();
+                    mRealm.copyToRealmOrUpdate(obj_answer);
+                    mRealm.commitTransaction();
                     Intent intent = new Intent(ActivityStartBaitap.this, ActivityLambaitap.class);
                     App.mLisCauhoi.addAll(mLisCauhoi);
                     intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, obj_answer);
@@ -182,6 +197,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityStartBaitap.this);
                 finish();
             }
         });

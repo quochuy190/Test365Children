@@ -116,8 +116,8 @@ public class PresenterLogin implements ImlLogin.Presenter {
 
             @Override
             public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
                 ObjLogin objLogin = new Gson().fromJson(objT, ObjLogin.class);
-                Log.i(TAG, "onGetDataSuccess: " + objLogin);
                 mView.show_api_login(objLogin);
             }
         }, sService, mMap);

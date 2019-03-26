@@ -43,6 +43,7 @@ import neo.vn.test365children.Adapter.AdapterDapan;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
 import neo.vn.test365children.Config.Config;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
@@ -143,6 +144,7 @@ public class FragmentNgheAudio extends BaseFragment implements
         EventBus.getDefault().unregister(this);
 
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -162,6 +164,7 @@ public class FragmentNgheAudio extends BaseFragment implements
         webview_debai.clearCache(true);
         webview_debai.clearHistory();
     }
+
     private int current;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -267,6 +270,7 @@ public class FragmentNgheAudio extends BaseFragment implements
                         EventBus.getDefault().post(new MessageEvent("Point_false_sau", 0, 0));
                         setImageFalse(sAnwser);
                     }
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                 }
             }
         });
@@ -330,6 +334,7 @@ public class FragmentNgheAudio extends BaseFragment implements
         txtDuration.setText(TimeUtils.formatDuration(duration));
 
     }
+
     private void initData() {
         if (mCauhoi != null) {
             if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
@@ -385,6 +390,17 @@ public class FragmentNgheAudio extends BaseFragment implements
             ll_webview_D.setVisibility(View.VISIBLE);
         } else {
             ll_webview_D.setVisibility(View.GONE);
+        }
+        if (mCauhoi.isDalam()) {
+            isClickXemdiem = true;
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (mCauhoi.isAnserTrue()) {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            } else {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+
+            }
+            check_anwser_chil();
         }
     }
 
@@ -589,6 +605,7 @@ public class FragmentNgheAudio extends BaseFragment implements
         Log.i(TAG, "onError: mp3");
         return false;
     }
+
     private String sAnwser = "";
 
     @Override
@@ -698,6 +715,37 @@ public class FragmentNgheAudio extends BaseFragment implements
                     break;
             }
             anwser();
+        }
+    }
+
+    private void check_anwser_chil() {
+        switch (mCauhoi.getsANSWER_CHILD()) {
+            case "A":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_A);
+                break;
+            case "B":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_B);
+                break;
+            case "C":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_C);
+                break;
+            case "D":
+                Glide.with(getActivity()).load(R.drawable.ic_checked).into(img_checkbox_D);
+                break;
+        }
+        switch (mCauhoi.getsANSWER()) {
+            case "A":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_A);
+                break;
+            case "B":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_B);
+                break;
+            case "C":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_C);
+                break;
+            case "D":
+                Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_D);
+                break;
         }
     }
 

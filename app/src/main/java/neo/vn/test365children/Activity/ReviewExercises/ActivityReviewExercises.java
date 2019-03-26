@@ -40,6 +40,7 @@ import neo.vn.test365children.Models.TuanDamua;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.View {
@@ -106,6 +107,7 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
         btn_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityReviewExercises.this);
                 finish();
             }
         });

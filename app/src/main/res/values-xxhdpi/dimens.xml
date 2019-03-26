@@ -74,11 +74,12 @@
     <dimen name="margin_flight">5dp</dimen>
     <!--xếp trứng margin-->
     <dimen name="width_egg">150dp</dimen>
-    <dimen name="hight_egg">110dp</dimen>
+    <dimen name="hight_egg">105dp</dimen>
     <dimen name="margin_egg_2">160dp</dimen>
     <dimen name="margin_egg_3">320dp</dimen>
     <dimen name="margin_egg_4">480dp</dimen>
     <dimen name="hight_egg_dapan">130dp</dimen>
+    <dimen name="pading_egg">20dp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
     <dimen name="margin_top_chaomung">10dp</dimen>
@@ -154,6 +155,7 @@
     <dimen name="width_logo">250dp</dimen>
     <dimen name="height_logo">100dp</dimen>
     <dimen name="margin_list_user">100dp</dimen>
+    <dimen name="text_lable_lambai">20sp</dimen>
     <!--Xem lại bài tập-->
     <dimen name="txt_lable_exer">22sp</dimen>
     <dimen name="img_avata_home">50dp</dimen>
@@ -197,4 +199,16 @@
     <!--Start làm bài tập-->
     <dimen name="txt_app">17sp</dimen>
     <dimen name="txt_name_subject">20sp</dimen>
+    <!--  kow easy game play-->
+    <dimen name="width_item_easy">65dp</dimen>
+    <dimen name="margin_item_kow_easy">2dp</dimen>
+    <dimen name="txt_kow_easy">25sp</dimen>
+    <dimen name="margin_item_menu_untility">10dp</dimen>
+    <dimen name="txt_menu_utility_name">13sp</dimen>
+    <dimen name="txt_title_menu_exer">16sp</dimen>
+    <dimen name="txt_detail_untilities">16sp</dimen>
+
+    <dimen name="txt_name_exer">19sp</dimen>
+    <dimen name="txt_exer_content">17sp</dimen>
+    <dimen name="txt_name_home">14sp</dimen>
 </resources>

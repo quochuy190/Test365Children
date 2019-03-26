@@ -24,6 +24,7 @@ import neo.vn.test365children.Models.TopicKoW;
 import neo.vn.test365children.Presenter.ImlGameKoW;
 import neo.vn.test365children.Presenter.PresenterGameKoW;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityKoWMenuGame extends BaseActivity
@@ -96,13 +97,15 @@ public class ActivityKoWMenuGame extends BaseActivity
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityKoWMenuGame.this);
                 finish();
             }
         });
         adapter_left.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-                Intent intent = new Intent(ActivityKoWMenuGame.this, ActivityKoWPlayGame.class);
+                KeyboardUtil.play_click_button(ActivityKoWMenuGame.this);
+                Intent intent = new Intent(ActivityKoWMenuGame.this, ActivityKoWMenuLevel.class);
                 intent.putExtra(Constants.KEY_SEND_LEVEL_KOW, mLisLeft.get(position));
                 startActivity(intent);
             }
@@ -110,7 +113,8 @@ public class ActivityKoWMenuGame extends BaseActivity
         adapter_right.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-                Intent intent = new Intent(ActivityKoWMenuGame.this, ActivityKoWPlayGame.class);
+                KeyboardUtil.play_click_button(ActivityKoWMenuGame.this);
+                Intent intent = new Intent(ActivityKoWMenuGame.this, ActivityKoWMenuLevel.class);
                 intent.putExtra(Constants.KEY_SEND_LEVEL_KOW, mLisRight.get(position));
                 startActivity(intent);
             }

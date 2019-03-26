@@ -40,6 +40,7 @@ import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.Presenter.PresenterLogin;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, ImlLogin.View {
@@ -100,12 +101,14 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, 
         btn_baitapdalam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityMenuBaitap.this);
                 startActivity(new Intent(ActivityMenuBaitap.this, ActivityBaitapdalam.class));
             }
         });
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityMenuBaitap.this);
                 finish();
             }
         });
@@ -156,6 +159,7 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, 
         adapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
+                KeyboardUtil.play_click_button(ActivityMenuBaitap.this);
                 Baitap_Tuan obj = (Baitap_Tuan) item;
                 Intent intent = new Intent(ActivityMenuBaitap.this, ActivityStartBaitap.class);
                 intent.putExtra(Constants.KEY_SEND_BAITAPTUAN, obj);
@@ -176,6 +180,7 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, 
         adapter_baitaptuan.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
+                KeyboardUtil.play_click_button(ActivityMenuBaitap.this);
                 Baitap_Tuan obj = (Baitap_Tuan) item;
                 Intent intent = new Intent(ActivityMenuBaitap.this, ActivityStartBaitap.class);
                 intent.putExtra(Constants.KEY_SEND_BAITAPTUAN, obj);
@@ -237,9 +242,9 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, 
                 txt_notify_need.setVisibility(View.VISIBLE);
                 recycle_baitap_tuan.setVisibility(View.INVISIBLE);
                 if (obj.getsINFO().size() > 0) {
-                    txt_notify_need.setText("Mẹ chưa tải bài tập tuần này, con nhắc mẹ tải nhé.");
+                    txt_notify_need.setText("Không có bài tập");
                 } else {
-                    txt_notify_need.setText("Con đã làm hết bài tập tuần này rồi");
+                    txt_notify_need.setText("Không có bài tập");
                 }
                 if (sUserMe.equals(Constants.KEY_SAVE_USER_MOTHER_TRY)) {
                     showDialogComfirm_two_button("Thông báo",

@@ -90,7 +90,7 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     ImageView img_mute;
     private int MAX_FALSE = 3;
     private int MAX_SUGGUST = 3;
-    MediaPlayer mPlayer;
+    MediaPlayer mPlayer, mPlayer_Anwser;
     private int iCountSeggust = 0;
     private Intent intent;
     private boolean isBound = false;
@@ -118,6 +118,7 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPlayer_Anwser = new MediaPlayer();
         play_music_bg();
         Glide.with(this).load(R.drawable.bg_game_sudoku).into(img_background);
         Glide.with(this).load(R.drawable.icon_boy_sudoku).into(imageView20);
@@ -148,6 +149,7 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     protected void onDestroy() {
         super.onDestroy();
         mPlayer.release();
+        mPlayer_Anwser.release();
         stop_service();
     }
 
@@ -493,6 +495,26 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
         }
     }
 
+    public void play_true() {
+        //mp3 = new MediaPlayer();
+        mPlayer_Anwser.release();
+        mPlayer_Anwser = MediaPlayer.create(this, R.raw.yeah_mp3);
+        mPlayer_Anwser.setLooping(false);
+        mPlayer_Anwser.setVolume(20, 20);
+        mPlayer_Anwser.start();
+
+    }
+
+    public void play_false() {
+        //mp3 = new MediaPlayer();
+        mPlayer_Anwser.release();
+        mPlayer_Anwser = MediaPlayer.create(this, R.raw.sau_laughing_cut);
+        mPlayer_Anwser.setLooping(false);
+        mPlayer_Anwser.setVolume(20, 20);
+        mPlayer_Anwser.start();
+
+    }
+
     @BindView(R.id.rl_gameover)
     ConstraintLayout rl_gameover;
     @BindView(R.id.img_sudoku_gameover)
@@ -503,6 +525,11 @@ public class ActivityGamePlaySudoku extends BaseActivity implements View.OnClick
     Button btn_exit;
 
     private void show_sudoku_gameover(boolean isGameover) {
+        if (isGameover) {
+            play_true();
+        } else {
+            play_false();
+        }
         //stop_service();
         myService.stop_time();
         rl_gameover.setVisibility(View.VISIBLE);

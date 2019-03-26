@@ -66,7 +66,6 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/image_next"
         android:padding="@dimen/dp5"
-        android:src="@drawable/btn_nopbai"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/btn_xemdiem"

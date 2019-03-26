@@ -23,6 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import io.realm.Realm;
 import io.realm.RealmList;
+import neo.vn.test365children.Activity.untility_menu.ActivityUntitiliesDetail;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
@@ -44,6 +45,7 @@ import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.Presenter.PresenterFeedback;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 import neo.vn.test365children.Untils.TimeUtils;
@@ -88,6 +90,8 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
 
     @BindView(R.id.rb_rate_2_1)
     RadioButton rb_rate_2_1;
+    @BindView(R.id.imageView27)
+    ImageView imageView27;
 
     @BindView(R.id.rb_rate_2_2)
     RadioButton rb_rate_2_2;
@@ -134,6 +138,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         btn_dong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityComplete.this);
                 setResult(RESULT_OK, new Intent());
                 finish();
             }
@@ -141,6 +146,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         btn_gui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityComplete.this);
                 showDialogLoading();
                 if (rb_rate_1_1.isChecked()) {
                     rate_1 = "1";
@@ -173,6 +179,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
 
     private float fPoint = 0;
     private RealmList<Cauhoi> mRealmList = new RealmList<>();
+    private boolean isPlay_Again;
 
     private void initData() {
         ObjLogin chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
@@ -181,12 +188,18 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
                     "\n ĐÃ HOÀN THÀNH BÀI TẬP HÔM NAY");
         }*/
         Glide.with(this).load(R.drawable.bg_doc_hieu).into(img_background);
+        Glide.with(this).load(R.drawable.icon_bang).into(imageView27);
         Glide.with(this).load(R.drawable.bg_complete_1).into(img_bg_complete1);
         Glide.with(this).load(R.drawable.bg_complete_2).into(img_bg_complete2);
         Glide.with(this).load(R.drawable.bg_complete_3).into(img_bg_complete3);
-        objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);
-        nopbai();
+        isPlay_Again = getIntent().getBooleanExtra(Constants.KEY_SEND_EXER_AGAIN, false);
+      /*  if (isPlay_Again) {
 
+        } else
+            objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);*/
+        objExer = App.mExercise;
+        nopbai();
+        SharedPrefs.getInstance().put(Constants.KEY_SAVE_PLAYING_EXER, false);
 
     }
 
@@ -233,14 +246,26 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         }
         // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
         objExer.setIsTrangthailambai("2");
+        objExer.setsStatus_Play("0");
         objExer.setsPoint("" + fPoint);
         mRealmList.addAll(App.mLisCauhoi);
         objExer.setmLisCauhoi(mRealmList);
         txt_pointlambai.setText("Điểm con đạt được: " + StringUtil.format_point(fPoint) + " điểm");
         if (objExer.getsThoiluonglambai() != null && objExer.getsThoiluonglambai().length() > 0) {
-            durationInMillis = Long.parseLong(objExer.getsThoiluonglambai());
-            txt_timelambai.setText("Thời gian làm bài: "
-                    + TimeUtils.formatTime_Complete((int) durationInMillis));
+            if (objExer.getsTimequydinh() != null && objExer.getsTimequydinh().length() > 0) {
+                durationInMillis = Long.parseLong(objExer.getsThoiluonglambai());
+                long timeTotal = Long.parseLong(objExer.getsTimequydinh());
+                long time = (timeTotal / 1000) - durationInMillis;
+                txt_timelambai.setText("Thời gian làm bài: "
+                        + TimeUtils.formatTime_Complete((int) (time * 1000)));
+            } else {
+                durationInMillis = Long.parseLong(objExer.getsThoiluonglambai());
+                long timeTotal = 30 * 60;
+                long time = timeTotal - durationInMillis;
+                txt_timelambai.setText("Thời gian làm bài: "
+                        + TimeUtils.formatTime_Complete((int) (time * 1000)));
+            }
+
         } else {
             txt_timelambai.setText("Thời gian làm bài không xác định");
         }
@@ -248,14 +273,15 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String sDanhsachcau = gson.toJson(mListCauhoiAnswer);
         objExer.setsDetailExercise(sDanhsachcau);
-        objExer.setsThoiluonglambai("" + iTime);
         mRealm.beginTransaction();
         mRealm.copyToRealmOrUpdate(objExer);
         mRealm.commitTransaction();
+
+        int iTime_duration = Integer.parseInt(objExer.getsTimequydinh()) / 1000;
         showDialogLoading();
         mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise()
                 , objExer.getsThoiluonglambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
-                objExer.getsTimequydinh(), objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
+                "" + iTime_duration, objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
 
     }
 

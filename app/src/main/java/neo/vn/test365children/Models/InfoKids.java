@@ -52,8 +52,12 @@ public class InfoKids implements Serializable {
     private String sSCHOOL;
     @SerializedName("DISTRICT")
     private String sDISTRICT;
+    @SerializedName("PROVINCE_ID")
+    private String PROVINCE_ID;
     @SerializedName("PROVINCE")
     private String sPROVINCE;
+    @SerializedName("DISTRICT_ID")
+    private String DISTRICT_ID;
     @SerializedName("PARENT_USERNAME")
     private String sPARENT_USERNAME;
     @SerializedName("PARENT_FULLNAME")
@@ -64,6 +68,10 @@ public class InfoKids implements Serializable {
     private String sLIST_TAKEN;
     @SerializedName("USER_MOTHER")
     private String sUSER_MOTHER;
+    @SerializedName("PHONENUMBER")
+    private String sPHONENUMBER;
+    @SerializedName("EMAIL")
+    private String EMAIL;
 
     public String getsID() {
         return sID;
@@ -295,5 +303,37 @@ public class InfoKids implements Serializable {
 
     public void setsUSER_MOTHER(String sUSER_MOTHER) {
         this.sUSER_MOTHER = sUSER_MOTHER;
+    }
+
+    public String getPROVINCE_ID() {
+        return PROVINCE_ID;
+    }
+
+    public void setPROVINCE_ID(String PROVINCE_ID) {
+        this.PROVINCE_ID = PROVINCE_ID;
+    }
+
+    public String getDISTRICT_ID() {
+        return DISTRICT_ID;
+    }
+
+    public void setDISTRICT_ID(String DISTRICT_ID) {
+        this.DISTRICT_ID = DISTRICT_ID;
+    }
+
+    public String getsPHONENUMBER() {
+        return sPHONENUMBER;
+    }
+
+    public void setsPHONENUMBER(String sPHONENUMBER) {
+        this.sPHONENUMBER = sPHONENUMBER;
+    }
+
+    public String getEMAIL() {
+        return EMAIL;
+    }
+
+    public void setEMAIL(String EMAIL) {
+        this.EMAIL = EMAIL;
     }
 }

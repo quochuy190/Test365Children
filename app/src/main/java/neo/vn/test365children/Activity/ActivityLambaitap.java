@@ -23,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -36,6 +38,8 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import io.realm.Realm;
+import io.realm.RealmList;
 import neo.vn.test365children.Adapter.AdapterViewpager;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
@@ -65,6 +69,7 @@ import neo.vn.test365children.Models.TuanDamua;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
+import neo.vn.test365children.RealmController.RealmController;
 import neo.vn.test365children.Service.BoundServiceCountTime;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
@@ -121,6 +126,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             myService = binder.getService();
             isBound = true;
         }
+
         @Override
         public void onServiceDisconnected(ComponentName name) {
             isBound = false;
@@ -131,24 +137,21 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ll_player.setVisibility(View.GONE);
+        mRealm = RealmController.getInstance().getRealm();
         mPlayer = new MediaPlayer();
         mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        SharedPrefs.getInstance().put(Constants.KEY_SAVE_PLAYING_EXER, true);
         initSound();
-        Log.i(TAG, "onCreate: ");
-        //EventBus.getDefault().register(this);
         mPresenter = new PresenterBaitap(this);
-
         if (sTime.length() > 0) {
             iTotalTime = Integer.parseInt(sTime) * 1000;
         } else {
             iTotalTime = 30 * 60 * 1000;
         }
-        // iTotalTime = 1 * 60 * 1000;
         initData();
         initEvent();
         Animation animationRotale = AnimationUtils.loadAnimation(this, R.anim.animation_time);
         img_time.startAnimation(animationRotale);
-        // initViewPager(mCauhoi);
     }
 
     private void start_service_downtime() {
@@ -184,19 +187,15 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             mPlayer.setOnCompletionListener(this);
             mPlayer.prepareAsync();
             mHandler.postDelayed(mProgressCallback, 0);
-
         } catch (IOException e) {
             Log.e(TAG, "play: ", e);
         }
     }
 
-
     private Handler mHandler = new Handler();
-    //Make sure you update Seekbar on UI thread
     private Runnable mProgressCallback = new Runnable() {
         @Override
         public void run() {
-//            if (isDetached()) return;
             if (mPlayer.isPlaying()) {
                 int progress = (int) (seekBar.getMax() * ((float) mPlayer.getCurrentPosition() / mPlayer.getDuration()));
                 updateProgressTextWithDuration(mPlayer.getCurrentPosition());
@@ -223,7 +222,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
 
     private void updateProgressTextWithDuration(int duration) {
         txtDuration.setText(TimeUtils.formatDuration(duration));
-
     }
 
     private int cPlayTrue;
@@ -244,64 +242,36 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         cPlayClick = mSoundPool.load(getApplicationContext(), R.raw.click, 1);
         cPlayFalse = mSoundPool.load(getApplicationContext(), R.raw.false_te, 1);
         cPlayFalse_Sau = mSoundPool.load(getApplicationContext(), R.raw.sau_laughing_cut, 1);
-        cPlayPr_Win_1 = mSoundPool.load(getApplicationContext(), R.raw.pr_win1, 1);
-        cPlayPr_Win_2 = mSoundPool.load(getApplicationContext(), R.raw.pr_win2, 1);
-        cPlayPr_Win_lost = mSoundPool.load(getApplicationContext(), R.raw.pr_lose, 1);
+        cPlayPr_Win_1 = mSoundPool.load(getApplicationContext(), R.raw.yeah_mp3, 1);
+        cPlayPr_Win_2 = mSoundPool.load(getApplicationContext(), R.raw.yeah_mp3, 1);
+        cPlayPr_Win_lost = mSoundPool.load(getApplicationContext(), R.raw.false_te, 1);
     }
 
     public void play_mp3_true() {
-        /*//mp3 = new MediaPlayer();
-        mPlayer.release();
-        mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.true_mp3);
-        mPlayer.start();*/
         mSoundPool.play(cPlayTrue, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_click() {
-      /*  //mp3 = new MediaPlayer();
-        mPlayer.release();
-        mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.click);
-        mPlayer.start();*/
         mSoundPool.play(cPlayClick, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_pr_win1() {
-      /*  //mp3 = new MediaPlayer();
-        mPlayer.release();
-        mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.click);
-        mPlayer.start();*/
         mSoundPool.play(cPlayPr_Win_1, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_pr_win2() {
-      /*  //mp3 = new MediaPlayer();
-        mPlayer.release();
-        mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.click);
-        mPlayer.start();*/
         mSoundPool.play(cPlayPr_Win_2, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_pr_lost() {
-      /*  //mp3 = new MediaPlayer();
-        mPlayer.release();
-        mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.click);
-        mPlayer.start();*/
         mSoundPool.play(cPlayPr_Win_lost, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_false() {
-        /*//mp3 = new MediaPlayer();
-        mPlayer.release();
-        mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.false_te);
-        mPlayer.start();*/
         mSoundPool.play(cPlayFalse, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
     public void play_mp3_false_sau() {
-    /*    //mp3 = new MediaPlayer();
-        mPlayer.release();
-        mPlayer = MediaPlayer.create(ActivityLambaitap.this, R.raw.sau_laughing_cut);
-        mPlayer.start();*/
         mSoundPool.play(cPlayFalse_Sau, LEFT_VOL, RIGHT_VOL, PRIORITY, LOOP, RATE);
     }
 
@@ -310,8 +280,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         super.onStart();
         Log.i(TAG, "onStart: ");
     }
-    
-
   /*  @Override
     protected void onResume() {
         super.onResume();
@@ -323,7 +291,9 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         if (event.message.equals("Service")) {
-            iCurrenTime = iTotalTime - event.time;
+            iCurrenTime = event.time / (1000);
+            Log.e(TAG, "onMessageEvent: " + event.time);
+            Log.e(TAG, "onMessageEvent currentime: " + iCurrenTime);
             if (event.point == 0) {
                 if (event.time < (10 * 60 * 1000)) {
                     txt_time.setTextColor(getResources().getColor(R.color.orange));
@@ -335,22 +305,37 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             } else {
                 EventBus.getDefault().post(new MessageEvent("close_princess", 0, 0));
                 final Intent intent = new Intent(ActivityLambaitap.this, ActivityComplete.class);
-                intent.putExtra(Constants.KEY_SEND_KIEU_NOP, "1");
                 objExer.setsKieunopbai("1");
-                objExer.setsTimequydinh(""+iTotalTime);
+                objExer.setsTimequydinh("" + iTotalTime);
                 objExer.setsThoiluonglambai("" + iTotalTime);
                 objExer.setsTimeketthuclambai(get_current_time());
-                intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, objExer);
+                objExer.setsStatus_Play("0");
                 showDialogLoading();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        hideDialogLoading();
-                        startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
-                        //finish();
-                    }
-                }, 2000);
-                put_api_nopbai("1");
+                if (isPlay_Again) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideDialogLoading();
+                            intent.putExtra(Constants.KEY_SEND_EXER_AGAIN, true);
+                            App.mExercise = objExer;
+                            startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
+                            //finish();
+                        }
+                    }, 2000);
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideDialogLoading();
+                            App.mExercise = objExer;
+                            startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
+                            // put_api_nopbai("1");
+                            //finish();
+                        }
+                    }, 2000);
+                }
+
+
             }
         } else if (event.message.equals("Point_true")) {
             play_mp3_true();
@@ -368,21 +353,33 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             final Intent intent = new Intent(ActivityLambaitap.this, ActivityComplete.class);
             objExer.setsKieunopbai("0");
             objExer.setsThoiluonglambai("" + iCurrenTime);
-            objExer.setsTimequydinh(""+iTotalTime);
+            objExer.setsTimequydinh("" + iTotalTime);
             objExer.setsTimeketthuclambai(get_current_time());
-            intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, objExer);
-            intent.putExtra(Constants.KEY_SEND_KIEU_NOP, "0");
-            objExer.setsTimeketthuclambai(get_current_time());
+            objExer.setsStatus_Play("1");
+            save_playing_exer();
             showDialogLoading();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    hideDialogLoading();
-                    startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
-                }
-            }, 2000);
-            put_api_nopbai("0");
-
+            if (isPlay_Again) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideDialogLoading();
+                        intent.putExtra(Constants.KEY_SEND_EXER_AGAIN, true);
+                        App.mExercise = objExer;
+                        startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
+                        //finish();
+                    }
+                }, 2000);
+            } else {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideDialogLoading();
+                        App.mExercise = objExer;
+                        startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
+                        // put_api_nopbai("0");
+                    }
+                }, 2000);
+            }
         } else if (event.message.equals("mp3")) {
             play_mp3_click();
         } else if (event.message.equals("pr_win1")) {
@@ -395,7 +392,24 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             play_mp3_pr_win2();
         } else if (event.message.equals("pr_lost")) {
             play_mp3_pr_lost();
+        } else if (event.message.equals(Constants.KEY_SAVE_LIST_EXER_PLAYING)) {
+            save_playing_exer();
+
         }
+    }
+
+    private void save_playing_exer() {
+        RealmList<Cauhoi> mRealmList = new RealmList<>();
+        mRealmList.addAll(App.mLisCauhoi);
+        objExer.setmLisCauhoi(mRealmList);
+        objExer.setsThoiluonglambai("" + iCurrenTime);
+        objExer.setsPoint(StringUtil.format_point(fPoint));
+        objExer.setsTimeketthuclambai(get_current_time());
+        //  objExer.setmLisCauhoi((RealmList<Cauhoi>) App.mLisCauhoi);
+        Gson gson = new Gson();
+        String json = gson.toJson(objExer);
+        Log.i(TAG, "onMessageEvent: " + json);
+        SharedPrefs.getInstance().put(Constants.KEY_SAVE_LIST_EXER_PLAYING, json);
     }
 
     @Override
@@ -429,8 +443,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume: ");
-        Log.i(TAG, "onResume: " + sTest);
     }
 
     @Override
@@ -439,9 +451,10 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         super.onStop();
     }
 
+    Realm mRealm;
+
     private void initEvent() {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mPlayer.seekTo(getDuration(seekBar.getProgress()));
@@ -480,13 +493,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Fragment page = getSupportFragmentManager().findFragmentByTag
-                        ("android:switcher:" + R.id.viewpager_lambai + ":" + viewpager_lambai.getCurrentItem());
-                // based on the current position you can then cast the page to the correct
-                // class and call the method:
-                if (viewpager_lambai.getCurrentItem() == 0 && page != null) {
-                    EventBus.getDefault().post(new MessageEvent("chondapan", 1, 0));
-                }*/
                 int current = viewpager_lambai.getCurrentItem();
                 if (maxPage > 0)
                     if (current < (maxPage)) {
@@ -535,16 +541,28 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
 
     private ExerciseAnswer objExer;
     int current = 0;
+    boolean isPlay_Again;
 
     private void initData() {
         current = 0;
-        objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);
+        isPlay_Again = getIntent().getBooleanExtra(Constants.KEY_SEND_EXER_AGAIN, false);
+        if (isPlay_Again) {
+            objExer = App.mExercise;
+            if (objExer.getsPoint() != null) {
+                fPoint = Float.parseFloat(objExer.getsPoint());
+                txt_point.setText("" + StringUtil.format_point(fPoint));
+            }
+        } else
+            objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);
         mLisCauhoi = new ArrayList<>();
         mLisCauhoi.addAll(App.mLisCauhoi);
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         objExer.setsId_userCon(sUserCon);
         objExer.setsId_userMe(sUserMe);
+        objExer.setsStatus_Play("1");
+        objExer.setsTimequydinh("" + iTotalTime);
+        save_playing_exer();
         if (mLisCauhoi != null) {
             //  viewpager_lambai = new CustomViewPager(this);
             adapterViewpager = new AdapterViewpager(getSupportFragmentManager());
@@ -569,9 +587,11 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
                         obj.getLisInfo().get(i).setsSubNumberCau("" + (i + 1));
                         obj.getLisInfo().get(i).setsCauhoi_huongdan(obj.getsHUONGDAN());
                         obj.getLisInfo().get(i).setsTextDebai(obj.getsTEXT());
-                        App.mLisCauhoi.get(j).getLisInfo().get(i).setsRESULT_CHILD("0");
-                        App.mLisCauhoi.get(j).getLisInfo().get(i).setsPOINT_CHILD("0");
-                        App.mLisCauhoi.get(j).getLisInfo().get(i).setsANSWER_CHILD("");
+                        if (!isPlay_Again) {
+                            App.mLisCauhoi.get(j).getLisInfo().get(i).setsRESULT_CHILD("0");
+                            App.mLisCauhoi.get(j).getLisInfo().get(i).setsPOINT_CHILD("0");
+                            App.mLisCauhoi.get(j).getLisInfo().get(i).setsANSWER_CHILD("");
+                        }
                         if (obj.getsKIEU().equals("1")) {
                             adapterViewpager.addFragment(FragmentChondapanDung.
                                     newInstance(obj.getLisInfo().get(i), current), obj.getsERROR());
@@ -615,6 +635,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             viewpager_lambai.setOffscreenPageLimit(maxPage);
             viewpager_lambai.setAdapter(adapterViewpager);
             start_service_downtime();
+            //    SharedPrefs.getInstance().put("abc", App.mLisCauhoi);
         }
     }
 

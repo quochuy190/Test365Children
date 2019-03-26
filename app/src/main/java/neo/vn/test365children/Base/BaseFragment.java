@@ -100,7 +100,8 @@ public class BaseFragment extends Fragment {
             }
         }, 35000);
         if (!getActivity().isFinishing()) {
-            dialog = new ProgressDialog(getActivity());
+            dialog = new ProgressDialog(getActivity(), android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+            //     dialog = new ProgressDialog(getActivity());
             dialog.setCancelable(false);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage("Loading. Please wait...");
@@ -210,7 +211,7 @@ public class BaseFragment extends Fragment {
 
 
     public void showDialogComfirm(String title, String message, boolean is_hide_cancel,
-                                  final ClickDialog clickDialog){
+                                  final ClickDialog clickDialog) {
         final Dialog dialog_yes = new Dialog(getContext());
         dialog_yes.setCancelable(false);
         dialog_yes.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -238,10 +239,10 @@ public class BaseFragment extends Fragment {
                 clickDialog.onClickNoDialog();
             }
         });
-        if (is_hide_cancel){
+        if (is_hide_cancel) {
             view_warning.setVisibility(View.GONE);
             btn_cancel.setVisibility(View.GONE);
-        }else{
+        } else {
             view_warning.setVisibility(View.VISIBLE);
             btn_cancel.setVisibility(View.VISIBLE);
         }

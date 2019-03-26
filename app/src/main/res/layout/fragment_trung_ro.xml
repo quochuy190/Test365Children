@@ -170,7 +170,7 @@
                 android:id="@+id/img_trung1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/dp15" />
+                android:padding="@dimen/pading_egg" />
 
             <TextView
                 android:id="@+id/txt_trung1"
@@ -194,7 +194,7 @@
                 android:id="@+id/img_trung2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/dp15" />
+                android:padding="@dimen/pading_egg" />
 
             <TextView
                 android:id="@+id/txt_trung2"
@@ -219,7 +219,7 @@
                 android:id="@+id/img_trung3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/dp15" />
+                android:padding="@dimen/pading_egg" />
 
             <TextView
                 android:id="@+id/txt_trung3"
@@ -243,7 +243,7 @@
                 android:id="@+id/img_trung4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/dp15" />
+                android:padding="@dimen/pading_egg" />
 
             <TextView
                 android:id="@+id/txt_trung4"
@@ -273,6 +273,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ll_lable" />
 
     <Button
+        android:visibility="visible"
         android:id="@+id/btn_xemdiem"
         android:layout_width="@dimen/btn_showpoint_width"
         android:layout_height="@dimen/btn_showpoint_hight"
@@ -301,8 +302,7 @@
             android:id="@+id/bg_dapan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_xep_trung" />
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/txt_title_dapan"
@@ -323,6 +323,76 @@
         </android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ll_player_again"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/btn_xemdiem"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_lable">
+
+        <ImageView
+            android:id="@+id/bg_dapan_again"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/txt_title_dapan_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:text="Đáp án:"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_dapan"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_title_dapan_again">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/txt_title_anwser_chil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:text="Bé trả lời:"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline3" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_anwser_chil"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_title_anwser_chil">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.constraint.ConstraintLayout>
 
     <ImageView
         android:id="@+id/img_anwser_chil"

@@ -13,30 +13,36 @@
         android:scaleType="fitXY" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_gameplay_sudoku"
+    <android.support.constraint.Guideline
+        app:layout_constraintGuide_percent="0.18"
+        android:id="@+id/guideline10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        app:layout_constraintGuide_percent="0.82"
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_gameplay_sudoku"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/bg_sudoku_gameplay"
         android:padding="@dimen/pading_sudoku"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline11"
+        app:layout_constraintStart_toStartOf="@id/guideline10"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rv_gameplay_sudoku"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -48,7 +54,6 @@
             android:background="@drawable/ic_sudoku_cell"
             android:text="1"
             android:textColor="@color/white"
-
             android:textSize="@dimen/txt_value_sudoku"
             app:layout_constraintBottom_toTopOf="@+id/btn_key_3"
             app:layout_constraintEnd_toStartOf="@+id/btn_key_2"
@@ -231,13 +236,12 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/img_background"
-        app:layout_constraintStart_toEndOf="@+id/rv_gameplay_sudoku"
+        app:layout_constraintStart_toEndOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="parent">
 
 

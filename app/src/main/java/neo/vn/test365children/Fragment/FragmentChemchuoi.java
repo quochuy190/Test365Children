@@ -32,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseFragment;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.CauhoiDetail;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.Models.MessageEvent;
@@ -215,6 +216,7 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                         }
                     }
                     isClickXemdiem = true;
+                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                 }
             }
         });
@@ -256,6 +258,10 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
             ll_anwser_D.setVisibility(View.VISIBLE);
         } else {
             ll_anwser_D.setVisibility(View.GONE);
+        }
+        if (mCauhoi.isDalam()) {
+            isClickXemdiem = true;
+            sAnwser = mCauhoi.getsANSWER_CHILD();
         }
     }
 
@@ -305,6 +311,59 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                     anwser();
                 }
                 break;
+        }
+    }
+
+    private void set_anwser_playing() {
+        sAnwser = mCauhoi.getsANSWER_CHILD();
+        img_anwser_chil.setVisibility(View.VISIBLE);
+        if (sAnwser.equals(mCauhoi.getsANSWER())) {
+            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            switch (mCauhoi.getsANSWER()) {
+                case "A":
+                    animation_anwsertrue(img_hoaqua_A);
+                    break;
+                case "B":
+                    animation_anwsertrue(img_hoaqua_B);
+                    break;
+                case "C":
+                    animation_anwsertrue(img_hoaqua_C);
+                    break;
+                case "D":
+                    animation_anwsertrue(img_hoaqua_D);
+                    break;
+            }
+
+        } else {
+            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+            switch (mCauhoi.getsANSWER()) {
+                case "A":
+                    animation_anwsertrue(img_hoaqua_A);
+                    break;
+                case "B":
+                    animation_anwsertrue(img_hoaqua_B);
+                    break;
+                case "C":
+                    animation_anwsertrue(img_hoaqua_C);
+                    break;
+                case "D":
+                    animation_anwsertrue(img_hoaqua_D);
+                    break;
+            }
+            switch (mCauhoi.getsANSWER_CHILD()) {
+                case "A":
+                    animation_click(img_hoaqua_A);
+                    break;
+                case "B":
+                    animation_click(img_hoaqua_B);
+                    break;
+                case "C":
+                    animation_click(img_hoaqua_C);
+                    break;
+                case "D":
+                    animation_click(img_hoaqua_D);
+                    break;
+            }
         }
     }
 
@@ -483,6 +542,9 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
                                             setHeightAll(iHeightmax, rl_dapan_D);
                                         }
                                         //reload();
+                                        if (mCauhoi.isDalam()) {
+                                            set_anwser_playing();
+                                        }
                                         hideDialogLoading();
                                     }
                                 }.start();

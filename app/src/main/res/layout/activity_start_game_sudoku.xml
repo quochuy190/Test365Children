@@ -146,6 +146,7 @@
         app:srcCompat="@drawable/img_mute" />
 
     <TextView
+        android:background="@drawable/spr_click_textview"
         android:id="@+id/txt_guilde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

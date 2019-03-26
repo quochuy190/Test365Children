@@ -81,6 +81,7 @@
     <dimen name="margin_egg_4">435dp</dimen>
     <dimen name="txt_xeptrung">17sp</dimen>
     <dimen name="hight_egg_dapan">130dp</dimen>
+    <dimen name="pading_egg">15dp</dimen>
     <!--view chào mừng-->
     <dimen name="hight_img_chaomung">90dp</dimen>
     <dimen name="margin_top_chaomung">10dp</dimen>
@@ -95,7 +96,7 @@
     <dimen name="exercises_margin_leght">15dp</dimen>
     <dimen name="exercises_icon_point">40dp</dimen>
     <dimen name="exer_hight_debai">40dp</dimen>
-    <dimen name="exer_margin_top">7dp</dimen>
+    <dimen name="exer_margin_top">5dp</dimen>
     <dimen name="exer_margin_left_text_lable">10dp</dimen>
     <dimen name="exer_width_sticker">70dp</dimen>
     <dimen name="icon_back_exercises">40dp</dimen>
@@ -155,6 +156,7 @@
     <dimen name="width_logo">220dp</dimen>
     <dimen name="height_logo">70dp</dimen>
     <dimen name="margin_list_user">90dp</dimen>
+    <dimen name="text_lable_lambai">19sp</dimen>
     <!--Xem lại bài tập-->
     <dimen name="txt_lable_exer">20sp</dimen>
     <dimen name="img_avata_home">45dp</dimen>
@@ -197,4 +199,16 @@
     <!--Start làm bài tập-->
     <dimen name="txt_app">16sp</dimen>
     <dimen name="txt_name_subject">19sp</dimen>
+    <!--  kow easy game play-->
+    <dimen name="width_item_easy">60dp</dimen>
+    <dimen name="margin_item_kow_easy">2dp</dimen>
+    <dimen name="txt_kow_easy">22sp</dimen>
+
+    <dimen name="margin_item_menu_untility">8dp</dimen>
+    <dimen name="txt_menu_utility_name">12sp</dimen>
+    <dimen name="txt_title_menu_exer">15sp</dimen>
+
+    <dimen name="txt_name_exer">18sp</dimen>
+    <dimen name="txt_exer_content">16sp</dimen>
+    <dimen name="txt_name_home">13sp</dimen>
 </resources>

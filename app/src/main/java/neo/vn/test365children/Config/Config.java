@@ -18,4 +18,5 @@ public class Config {
     public static String URL_IMAGE = "https://content1.home365.online";
     public static String URL_VIDEO = "https://content1.home365.online";
     public static String URL_REST_LOGIN = "https://nodejs.home365.online";
+    public static String BASE_URL_IMAGE_UPLOAD = "https://admin.home365.online/";
 }

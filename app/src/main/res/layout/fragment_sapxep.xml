@@ -135,7 +135,6 @@
             android:clipChildren="true"
             android:clipToPadding="false"
             android:paddingLeft="@dimen/dp10"
-
             android:paddingRight="@dimen/dp10" />
     </LinearLayout>
 

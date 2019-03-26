@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/bg_untilities"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/dp5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="@dimen/dp2"
+                android:src="@drawable/ic_back_menu"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.075" />
+
+            <ImageView
+                android:id="@+id/btn_home"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="@dimen/dp2"
+                android:src="@drawable/img_mute"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.075" />
+
+            <TextView
+                android:id="@+id/txt_url"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+                android:background="@drawable/spr_title_menu_exer"
+                android:fontFamily="@font/font1"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_title_webview_doctruyen"
+                app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                app:layout_constraintEnd_toStartOf="@+id/btn_home"
+                app:layout_constraintStart_toEndOf="@+id/btn_back"
+                app:layout_constraintTop_toTopOf="@id/btn_back"
+                app:layout_constraintWidth_percent="0.85" />
+
+            <ImageView
+                android:id="@+id/logo_infor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="@dimen/dp5"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_back"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_detail_untilities"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_address_title"
+                app:layout_constraintTop_toBottomOf="@+id/logo_infor" />
+
+            <TextView
+                android:id="@+id/txt_address_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_detail_untilities"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/txt_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/logo_infor"
+                app:layout_constraintWidth_percent="0.22" />
+
+            <TextView
+                android:id="@+id/txt_unit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_detail_untilities"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_unit_title"
+                app:layout_constraintTop_toBottomOf="@+id/txt_address" />
+
+            <TextView
+                android:id="@+id/txt_unit_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Đơn vị cung cấp: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_detail_untilities"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/txt_unit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_address"
+                app:layout_constraintWidth_percent="0.22" />
+
+            <TextView
+                android:id="@+id/txt_depcrition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mô tả: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_detail_untilities"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_unit" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <ImageView
+        android:id="@+id/btn_call"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintDimensionRatio="1:1"
+        android:src="@drawable/animation_call_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHeight_percent="0.22"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+</android.support.constraint.ConstraintLayout>

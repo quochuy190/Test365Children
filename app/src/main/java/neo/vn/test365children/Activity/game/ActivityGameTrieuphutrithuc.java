@@ -455,7 +455,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         });
     }
 
-
     private void initChamdiem() {
         isAnwserIng = true;
         stopService(intent_service);
@@ -521,9 +520,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                                 } else {
                                     initAnwserFalse(10, false);
                                 }
-
                             }
-
                         }
                     }, 4000);
                 }
@@ -730,6 +727,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                                 });
                                 break;
                             case R.id.webview_anwser_D:
+                                hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A_test:
                                 if (iHeightmax < rl_anwser_A_test.getHeight()) {
@@ -741,7 +739,6 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                                     setHeightAll(iHeightmax, rl_anwser_B);
                                     setHeightAll(iHeightmax, rl_anwser_D);
                                 }
-                                hideDialogLoading();
                                 break;
                         }
                     }

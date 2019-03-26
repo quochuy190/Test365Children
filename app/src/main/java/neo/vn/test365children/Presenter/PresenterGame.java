@@ -176,8 +176,9 @@ public class PresenterGame implements ImlGetGameTptt.Presenter {
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
-                mView.show_error_api(null);
-                Log.i(TAG, "onGetDataErrorFault: " + e);
+                ErrorApi obj = new ErrorApi();
+                obj.setsERROR("submit_tnnl");
+                mView.show_error_api(obj);
             }
 
             @Override
@@ -186,11 +187,12 @@ public class PresenterGame implements ImlGetGameTptt.Presenter {
                 try {
                     //jArray = new JSONArray(c);
                     ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
-                     mView.show_submit_game_tnnl(obj);
+                    mView.show_submit_game_tnnl(obj);
                 } catch (Exception e) {
+                    ErrorApi obj = new ErrorApi();
+                    obj.setsERROR("submit_tnnl");
+                    mView.show_error_api(obj);
                     e.printStackTrace();
-                    mView.show_error_api(null);
-                    Log.i(TAG, "Log_error_api_filght: " + e);
                 }
             }
         }, sService, mMap);
