@@ -148,6 +148,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         } else {
             iTotalTime = 30 * 60 * 1000;
         }
+       // iTotalTime = 5 * 60 * 1000;
         initData();
         initEvent();
         Animation animationRotale = AnimationUtils.loadAnimation(this, R.anim.animation_time);

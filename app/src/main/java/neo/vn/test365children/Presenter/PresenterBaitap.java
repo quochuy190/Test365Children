@@ -239,17 +239,17 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
         mMap.put("SUBMIT_TYPE", sKieunop);
         mMap.put("POINT", sDiem);
         mMap.put("DETAIL", sDanhsachcau);
-
+        Log.e("ActivityComplete", "get_api_submit_execercise: call submit" );
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
                 mView.show_error_api(null);
-                Log.i(TAG, "onGetDataErrorFault: " + e);
+                Log.i(TAG, "onGetDataErrorFault: submit fault" + e);
             }
 
             @Override
             public void onGetDataSuccess(String objT) {
-                Log.i(TAG, "onGetDataSuccess: " + objT);
+                Log.i("ActivityComplete", "onGetDataSuccess: submid suscess " + objT);
                 try {
                     //jArray = new JSONArray(c);
                     ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);

@@ -523,6 +523,7 @@ public class FragmentReviewNoicau extends BaseFragment {
                                 });
                                 break;
                             case R.id.webview_dapannoicau_B_4:
+                                hideDialogLoading();
                                 if (rl_dapanA_1.getHeight() > iHeightmax) {
                                     iHeightmax = rl_dapanA_1.getHeight();
                                 }

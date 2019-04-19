@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <WebView
-        android:id="@+id/webview_skill"
+        android:id="@+id/webview_edumall"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -14,5 +14,30 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </WebView>
+
+    <ImageView
+
+        android:id="@+id/btn_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp3"
+        android:padding="@dimen/dp1"
+        android:src="@drawable/ic_back_menu"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btn_home"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp3"
+        android:padding="@dimen/dp1"
+        android:src="@drawable/icon_home_web"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -23,7 +23,6 @@ import java.util.List;
 import butterknife.BindView;
 import io.realm.Realm;
 import io.realm.RealmList;
-import neo.vn.test365children.Activity.untility_menu.ActivityUntitiliesDetail;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
@@ -92,7 +91,6 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
     RadioButton rb_rate_2_1;
     @BindView(R.id.imageView27)
     ImageView imageView27;
-
     @BindView(R.id.rb_rate_2_2)
     RadioButton rb_rate_2_2;
     @BindView(R.id.view_danhgia)
@@ -109,6 +107,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate: ");
         mRealm = RealmController.getInstance().getRealm();
         mPresenter = new PresenterBaitap(this);
         mPresenterFeedback = new PresenterFeedback(this);
@@ -204,6 +203,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
     }
 
     public void nopbai() {
+        Log.e(TAG, "nopbai: start");
         fPoint = 0;
         List<CauhoiAnswer> mListCauhoiAnswer = new ArrayList<>();
         //  String sDanhsachcau = App.self().getGSon().toJson(App.mLisCauhoi);
@@ -279,6 +279,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
 
         int iTime_duration = Integer.parseInt(objExer.getsTimequydinh()) / 1000;
         showDialogLoading();
+        Log.e(TAG, "nopbai: loading submit");
         mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise()
                 , objExer.getsThoiluonglambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
                 "" + iTime_duration, objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
@@ -311,6 +312,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
         hideDialogLoading();
+        Log.e(TAG, "show_error_api: ");
         btn_guidiem.setEnabled(true);
     }
 
@@ -348,6 +350,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
 
             // showDialogNotify("Thông báo", "Nộp bài thành công");
         } else {
+            Log.i(TAG, "show_submit_execercise: error" + mLis.getsRESULT());
             showDialogNotify("Thông báo", "Bài làm chưa được gửi cho mẹ," +
                     " con có vào phần Bài tập đã làm và gửi lại sau");
             btn_guidiem.setEnabled(true);

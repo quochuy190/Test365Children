@@ -1,19 +1,13 @@
 package neo.vn.test365children.Activity.doctruyen;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.http.SslError;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.PowerManager;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintManager;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -30,16 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-
 import javax.net.ssl.TrustManagerFactory;
 
 import butterknife.BindView;
@@ -50,16 +34,18 @@ import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 
-public class Activity_webview_doctruyen extends BaseActivity {
+public class ActivityWebviewReadStory extends BaseActivity {
     private static final String TAG = "Activity_webview_doctru";
     @BindView(R.id.btn_back)
     ImageView btn_back;
     @BindView(R.id.btn_home)
     ImageView btn_home;
     @BindView(R.id.webview_doctruyen)
-    ObservableWebView webView;
+    WebView webView;
     @BindView(R.id.txt_url)
     TextView txt_url;
+    @BindView(R.id.view_scroll)
+    NestedScrollView view_scroll;
     private String sLanguage;
     private String sUrlEng = "https://doctruyen.home365.online/en/";
     private String sUrlVie = "https://doctruyen.home365.online/vn/";
@@ -72,7 +58,7 @@ public class Activity_webview_doctruyen extends BaseActivity {
 
     @Override
     public int setContentViewId() {
-        return R.layout.activity_webview_doctruyen;
+        return R.layout.activity_webview_story;
     }
 
     @Override
@@ -81,42 +67,6 @@ public class Activity_webview_doctruyen extends BaseActivity {
         initData();
         initEvent();
         initWebview();
-        initEventWebview();
-    }
-
-    private void initEventWebview() {
-      /*  webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
-            public void onScroll(int l, int t, int oldl, int oldt) {
-                if (t > oldt && ((t - oldt) > 50)) {
-                    //Do stuff
-                    if (txt_url.isCursorVisible()) {
-                        gone_url();
-                    }
-                    Log.e(TAG, "onScroll: UP NEW:" + t + " OLD: " + oldt);
-                   *//* Toast.makeText(Activity_webview_doctruyen.this, "Up new: "+l+", old: "+o, Toast.LENGTH_SHORT).show();
-                    System.out.println("Swipe UP");*//*
-                    //Do stuff
-           *//*         new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            txt_url.setVisibility(View.GONE);
-                        }
-                    }, 300);*//*
-                } else if (t < oldt && (t == 0)) {
-                    visible_url();
-                    Log.e(TAG, "onScroll: DOWN NEW:" + t + " OLD: " + oldt);
-             *//*       new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            txt_url.setVisibility(View.VISIBLE);
-                        }
-                    }, 300);*//*
-         *//*    Toast.makeText(Activity_webview_doctruyen.this, "Down", Toast.LENGTH_SHORT).show();
-                    System.out.println("Swipe Down");*//*
-                }
-                Log.d(TAG, "We Scrolled etc...");
-            }
-        });*/
     }
 
     private void visible_url() {
@@ -141,12 +91,13 @@ public class Activity_webview_doctruyen extends BaseActivity {
     private void initWebview() {
         showDialogLoading();
         sLanguage = getIntent().getStringExtra(Constants.KEY_SEND_LANGUAGE);
+
         if (sLanguage != null) {
-            if (sLanguage.equals("Gift") || sLanguage.equals("review_video")) {
+      /*      if (sLanguage.equals("Gift") || sLanguage.equals("review_video")) {
                 txt_url.setVisibility(View.GONE);
             } else {
                 txt_url.setVisibility(View.VISIBLE);
-            }
+            }*/
             if (sLanguage.equals("eng")) {
                 txt_url.setText("READ STORY");
                 goUrl(sUrlEng);
@@ -207,11 +158,11 @@ public class Activity_webview_doctruyen extends BaseActivity {
                     webView.goBack();
                     // txt_url.setText(webView.getUrl());
                 } else {
-                    KeyboardUtil.play_click_button(Activity_webview_doctruyen.this);
+                    KeyboardUtil.play_click_button(ActivityWebviewReadStory.this);
                     showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn thoát khỏi trang", true, new ClickDialog() {
                         @Override
                         public void onClickYesDialog() {
-                            KeyboardUtil.play_click_button(Activity_webview_doctruyen.this);
+                            KeyboardUtil.play_click_button(ActivityWebviewReadStory.this);
                             finish();
                         }
 
@@ -226,14 +177,14 @@ public class Activity_webview_doctruyen extends BaseActivity {
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtil.play_click_button(Activity_webview_doctruyen.this);
+                KeyboardUtil.play_click_button(ActivityWebviewReadStory.this);
                 if (sLanguage.equals("share_exer")) {
-                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
                     String shareBody = sUrl;
                     String shareSub = "Home365";
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                    sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                     startActivity(Intent.createChooser(sharingIntent, "Home365"));
                   /*  download_pdf();
                     printOrCreatePdfFromWebview();*/
@@ -243,7 +194,7 @@ public class Activity_webview_doctruyen extends BaseActivity {
                             true, new ClickDialog() {
                                 @Override
                                 public void onClickYesDialog() {
-                                    KeyboardUtil.play_click_button(Activity_webview_doctruyen.this);
+                                    KeyboardUtil.play_click_button(ActivityWebviewReadStory.this);
                                     finish();
                                 }
 
@@ -255,131 +206,6 @@ public class Activity_webview_doctruyen extends BaseActivity {
                 }
             }
         });
-    }
-
-    private void download_pdf() {
-        URL u = null;
-        try {
-            u = new URL(sUrl);
-            HttpURLConnection c = (HttpURLConnection) u.openConnection();
-            c.setRequestMethod("GET");
-            c.setDoOutput(true);
-            c.connect();
-           /* FileOutputStream f = new FileOutputStream(new File("abc","baitap.pdf"));
-            InputStream in = c.getInputStream();
-            byte[] buffer = new byte[1024];
-            int len1 = 0;
-    *//*        while ( (len1 = in.read(buffer)) > 0 ) {
-                f.write(buffer);
-            }*//*
-            while ( (len1 = in.read(buffer)) > 0 ) {
-                f.write(buffer,0, len1);
-            }
-            f.close();*/
-            String PATH = Environment.getExternalStorageDirectory()
-                    + "/download/";
-            Log.d("Abhan", "PATH: " + PATH);
-            File file = new File(PATH);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-            File outputFile = new File(file, "baitap.pdf");
-            FileOutputStream fos = new FileOutputStream(outputFile);
-            InputStream is = c.getInputStream();
-            byte[] buffer = new byte[1024];
-            int len1 = 0;
-            while ((len1 = is.read(buffer)) != -1) {
-                fos.write(buffer, 0, len1);
-            }
-            fos.flush();
-            fos.close();
-            is.close();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    private class DownloadTask extends AsyncTask<String, String, String> {
-
-        private Context context;
-        private PowerManager.WakeLock mWakeLock;
-
-        public DownloadTask(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected String doInBackground(String... s) {
-            URL u = null;
-            try {
-                u = new URL(s[0]);
-                HttpURLConnection c = (HttpURLConnection) u.openConnection();
-                c.setRequestMethod("GET");
-                c.setDoOutput(true);
-                c.connect();
-           /* FileOutputStream f = new FileOutputStream(new File("abc","baitap.pdf"));
-            InputStream in = c.getInputStream();
-            byte[] buffer = new byte[1024];
-            int len1 = 0;
-    *//*        while ( (len1 = in.read(buffer)) > 0 ) {
-                f.write(buffer);
-            }*//*
-            while ( (len1 = in.read(buffer)) > 0 ) {
-                f.write(buffer,0, len1);
-            }
-            f.close();*/
-                String PATH = Environment.getExternalStorageDirectory()
-                        + "/download/";
-                Log.d("Abhan", "PATH: " + PATH);
-                File file = new File(PATH);
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-                File outputFile = new File(file, "baitap.pdf");
-                FileOutputStream fos = new FileOutputStream(outputFile);
-                InputStream is = c.getInputStream();
-                byte[] buffer = new byte[1024];
-                int len1 = 0;
-                while ((len1 = is.read(buffer)) != -1) {
-                    fos.write(buffer, 0, len1);
-                }
-                fos.flush();
-                fos.close();
-                is.close();
-                return PATH;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return null;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                return null;
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-        }
     }
 
     @Override
@@ -407,20 +233,13 @@ public class Activity_webview_doctruyen extends BaseActivity {
             Toast.makeText(this, "Please enter url", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        //  webView.setWebViewClient(new WebViewClient());
         webView.setWebViewClient(new Browser_home());
-        //  webView.setWebViewClient(new CheckServerTrustedWebViewClient());
         webView.setWebChromeClient(new MyChrome());
-        //webView.setWebChromeClient(new WebChromeClient());
         WebSettings webSettings = webView.getSettings();
         webSettings.setLoadsImagesAutomatically(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         webView.setBackgroundColor(Color.TRANSPARENT);
-        /** JAVADOC QUOTE: Clears the SSL preferences table stored in response to proceeding with SSL certificate errors.*/
         webView.clearSslPreferences();
-        // Added in API level 8
-//Those other methods I tried out of despair just in case
         webView.clearFormData();
         webView.clearCache(true);
         webView.clearHistory();
@@ -443,7 +262,6 @@ public class Activity_webview_doctruyen extends BaseActivity {
         webSettings.setDomStorageEnabled(true);
         webView.requestFocusFromTouch();
         webView.loadUrl(url);
-        //webView.loadDataWithBaseURL(url,"","text/html","utf-8",null);
     }
 
     TrustManagerFactory tmf = null;
@@ -459,18 +277,6 @@ public class Activity_webview_doctruyen extends BaseActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             Log.e(TAG, "onPageStarted: start loading");
-            // Enable Javascript
-       /*     WebSettings webSettings = view.getSettings();
-            webSettings.setJavaScriptEnabled(true);
-            view.clearSslPreferences();
-            // Added in API level 8
-//Those other methods I tried out of despair just in case
-            view.clearFormData();
-            view.clearCache(true);
-            view.clearHistory();
-            view.clearMatches();
-            view.getSettings().setPluginState(WebSettings.PluginState.ON);
-            view.getSettings().setMediaPlaybackRequiresUserGesture(false);*/
             super.onPageStarted(view, url, favicon);
         }
 
@@ -490,6 +296,8 @@ public class Activity_webview_doctruyen extends BaseActivity {
             // setTitle(view.getTitle());
             Log.e(TAG, "onPageFinished: " + url);
             hideDialogLoading();
+            view_scroll.scrollTo(0, 0);
+            view_scroll.fullScroll(View.FOCUS_UP);
             super.onPageFinished(view, url);
         }
 
@@ -509,7 +317,7 @@ public class Activity_webview_doctruyen extends BaseActivity {
 
     private class MyChrome extends WebChromeClient {
         private View mCustomView;
-        private WebChromeClient.CustomViewCallback mCustomViewCallback;
+        private CustomViewCallback mCustomViewCallback;
         private int mOriginalOrientation;
         private int mOriginalSystemUiVisibility;
 
@@ -532,7 +340,7 @@ public class Activity_webview_doctruyen extends BaseActivity {
             this.mCustomViewCallback = null;
         }
 
-        public void onShowCustomView(View paramView, WebChromeClient.CustomViewCallback paramCustomViewCallback) {
+        public void onShowCustomView(View paramView, CustomViewCallback paramCustomViewCallback) {
             if (this.mCustomView != null) {
                 onHideCustomView();
                 return;
@@ -546,25 +354,4 @@ public class Activity_webview_doctruyen extends BaseActivity {
             getWindow().getDecorView().setSystemUiVisibility(3846);
         }
     }
-
-    public void printOrCreatePdfFromWebview() {
-        PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
-        // Get a print adapter instance
-        PrintDocumentAdapter printAdapter;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            printAdapter = webView.createPrintDocumentAdapter(sUrl);
-        } else {
-            printAdapter = webView.createPrintDocumentAdapter();
-        }
-        // Create a print job with name and adapter instance
-        String jobName = getString(R.string.app_name) + " Document";
-        PrintAttributes attributes = new PrintAttributes.Builder()
-                .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-                .setResolution(new PrintAttributes.Resolution("id", Context.PRINT_SERVICE, 200, 200))
-                .setColorMode(PrintAttributes.COLOR_MODE_COLOR)
-                .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
-                .build();
-        printManager.print(jobName, printAdapter, attributes);
-    }
-
 }

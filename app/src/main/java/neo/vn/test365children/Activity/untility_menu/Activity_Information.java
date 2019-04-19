@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
-import neo.vn.test365children.Activity.doctruyen.Activity_webview_doctruyen;
+import neo.vn.test365children.Activity.doctruyen.ActivityWebviewReadStory;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.BuildConfig;
 import neo.vn.test365children.Config.Constants;
@@ -59,7 +59,7 @@ public class Activity_Information extends BaseActivity {
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(Activity_Information.this);
                 Intent intent = new Intent(
-                        Activity_Information.this, Activity_webview_doctruyen.class);
+                        Activity_Information.this, ActivityWebviewReadStory.class);
                 intent.putExtra(Constants.KEY_SEND_LANGUAGE, "BCT");
                 startActivity(intent);
             }
@@ -69,7 +69,7 @@ public class Activity_Information extends BaseActivity {
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(Activity_Information.this);
                 Intent intent = new Intent(
-                        Activity_Information.this, Activity_webview_doctruyen.class);
+                        Activity_Information.this, ActivityWebviewReadStory.class);
                 intent.putExtra(Constants.KEY_SEND_LANGUAGE, "policy");
                 startActivity(intent);
             }
@@ -79,7 +79,7 @@ public class Activity_Information extends BaseActivity {
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(Activity_Information.this);
                 Intent intent = new Intent(
-                        Activity_Information.this, Activity_webview_doctruyen.class);
+                        Activity_Information.this, ActivityWebviewReadStory.class);
                 intent.putExtra(Constants.KEY_SEND_LANGUAGE, "web");
                 startActivity(intent);
             }

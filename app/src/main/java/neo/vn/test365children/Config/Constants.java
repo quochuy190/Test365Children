@@ -28,6 +28,7 @@ public class Constants {
 
     public static final String KEY_TOKEN = "KEY_TOKEN";
     public static final String KEY_ISTOKEN = "KEY_ISTOKEN";
+    public static final String KEY_UPDATE_TOKEN = "KEY_UPDATE_TOKEN";
     public static final String KEY_USER_ME = "KEY_USER_ME";
     public static final String KEY_USER_CON = "KEY_USER_CON";
     public static final String KEY_PASSWORD = "KEY_PASSWORD";
@@ -72,4 +73,7 @@ public class Constants {
     public static final String KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS = "KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS";
     public static final String KEY_SAVE_TIME_INIT = "KEY_SAVE_TIME_INIT";
     public static final String KEY_SAVE_UPDATE_LEVEL_ID_SUCCESS = "KEY_SAVE_UPDATE_LEVEL_ID_SUCCESS";
+    public static final String KEY_SEND_URL_WEBVIEW = "KEY_SEND_URL_WEBVIEW";
+    public static final String KEY_SEND_ID_SKILL = "KEY_SEND_ID_SKILL";
+    public static final String KEY_SEND_OBJ_LESSON_SKILL= "KEY_SEND_OBJ_LESSON_SKILL";
 }

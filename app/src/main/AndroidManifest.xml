@@ -18,11 +18,31 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize">
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="false" />
+
+        <activity
+            android:name=".Activity.skill.Activity_Menu_Skill"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
+            android:name=".Activity.skill.Activity_List_Lesson_Skill"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
         <activity
             android:name=".Activity.ActivityHome"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.login.ActivityLoginNew"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
         <activity
             android:name=".Activity.login.ActivityUpdateInforChil"
             android:configChanges="orientation|screenSize"
@@ -136,6 +156,13 @@
             android:name=".Activity.doctruyen.Activity_webview_doctruyen"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode
             |screenSize|smallestScreenSize|mcc|mnc"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.doctruyen.ActivityWebviewReadStory"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode
+            |screenSize|smallestScreenSize|mcc|mnc"
+            android:hardwareAccelerated="true"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".Activity.ActivityComplete"
@@ -161,6 +188,15 @@
             android:name=".Activity.game.game_kow.ActivityKowPlay_Level_Two"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.doctruyen.Activity_Webview_Edumall"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.doctruyen.Activity_Webview_Kyna"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape"></activity>
+
         <activity
             android:name=".Activity.game.game_kow.ActivityKoWPlayGame"
             android:configChanges="orientation|screenSize"

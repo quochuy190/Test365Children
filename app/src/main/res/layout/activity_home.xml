@@ -7,18 +7,18 @@
     tools:context=".Activity.ActivityHome">
 
     <android.support.constraint.Guideline
-        app:layout_constraintGuide_percent="0.07"
         android:id="@+id/guideline13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
 
     <android.support.constraint.Guideline
-        app:layout_constraintGuide_percent="0.2"
         android:id="@+id/guideline12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
 
     <ImageView
 
@@ -26,19 +26,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
-    <ImageView
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/icon_boy_home"
-        app:layout_constraintDimensionRatio="1:2"
 
-        app:layout_constraintTop_toTopOf="@id/guideline12"
-        app:layout_constraintStart_toStartOf="@id/guideline13"
+    <ImageView
         android:layout_width="0dp"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:src="@drawable/icon_boy_home"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:2"
+        app:layout_constraintStart_toStartOf="@id/guideline13"
+        app:layout_constraintTop_toTopOf="@id/guideline12" />
+
     <RelativeLayout
-        android:background="@color/bg_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bg_home">
 
     </RelativeLayout>
 
@@ -94,7 +96,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/spr_button_blue_click"
         android:fontFamily="@font/font1"
-        android:text="Nghe truyện"
+        android:text="Kỹ năng"
         android:textColor="@color/white"
         android:textSize="@dimen/size_txt_content_guild_login"
         app:layout_constraintBottom_toTopOf="@+id/btn_bxh"
@@ -144,13 +146,15 @@
         app:layout_constraintWidth_percent="0.35" />
 
     <ImageView
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintDimensionRatio="1:1"
         android:id="@+id/img_mute"
-        android:layout_width="@dimen/height_keyboard_sudoku"
-        android:layout_height="@dimen/height_keyboard_sudoku"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
-        android:src="@drawable/img_mute"
-        android:visibility="invisible"
+        android:src="@drawable/icon_user"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -208,24 +212,38 @@
         app:civ_border_color="@color/orange"
         app:civ_border_width="1dp"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintWidth_percent="0.14"
         app:layout_constraintEnd_toEndOf="@id/txt_name_home"
         app:layout_constraintStart_toStartOf="@id/txt_name_home"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:layout_marginLeft="@dimen/dp5"
-        android:id="@+id/txt_name_home"
-        android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/txt_name_home"
-        android:textStyle="italic"
-        android:textSize="@dimen/txt_name_home"
-        android:gravity="center"
-        app:layout_constraintWidth_percent="0.18"
-        app:layout_constraintTop_toBottomOf="@id/img_avata"
-        app:layout_constraintStart_toStartOf="parent"
-        android:maxLines="2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.15" />
+
+    <ImageView
+        android:layout_marginLeft="2dp"
+        android:id="@+id/img_switch"
         android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:rotation="90"
+        android:src="@drawable/btn_switch"
+        app:layout_constraintBottom_toBottomOf="@+id/img_mute"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="@id/img_mute"
+        app:layout_constraintWidth_percent="0.04" />
+
+    <TextView
+        android:id="@+id/txt_name_home"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp5"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:maxLines="2"
+        android:padding="@dimen/dp1"
+        android:textColor="@color/txt_name_home"
+        android:textSize="@dimen/txt_name_home"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_avata"
+        app:layout_constraintWidth_percent="0.17" />
 
     <Button
         android:id="@+id/btn_information"
@@ -239,5 +257,68 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.18" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ll_show_multil_user"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/bg_game_tnnl"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/gl_show_user"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_percent="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_back_ll_user"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_bang"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.92"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_multil_user"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline18"
+            app:layout_constraintEnd_toEndOf="@id/img_back_ll_user"
+            app:layout_constraintStart_toStartOf="@id/img_back_ll_user"
+            app:layout_constraintTop_toTopOf="@id/gl_show_user"
+            app:layout_constraintWidth_percent="0.75">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/img_exit_ll_show"
+            android:layout_margin="5dp"
+            android:layout_width="@dimen/height_keyboard_sudoku"
+            android:layout_height="@dimen/height_keyboard_sudoku"
+            android:src="@drawable/icon_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

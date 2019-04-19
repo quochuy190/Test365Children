@@ -346,55 +346,125 @@
                     app:layout_constraintStart_toStartOf="@id/txt_title_point_min"
                     app:layout_constraintTop_toBottomOf="@id/txt_title_point_min" />
 
+
+
                 <Button
+                    android:fontFamily="@font/roboto_bold"
                     android:id="@+id/btn_guilai"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/exercises_icon_point"
+                    android:layout_height="0dp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp10"
                     android:layout_marginBottom="@dimen/dp7"
                     android:background="@drawable/btn_3"
                     android:text="Gửi lại bài"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_16sp"
+                    android:textSize="@dimen/txt_exer_content"
+                    app:layout_constraintHeight_percent="0.13"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_xemlaibai"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_point"
+                    app:layout_constraintTop_toBottomOf="@+id/img_sticker"
                     app:layout_constraintWidth_percent="0.3" />
 
                 <Button
+                    android:fontFamily="@font/roboto_bold"
+                    app:layout_constraintHeight_percent="0.13"
                     android:id="@+id/btn_xemlaibai"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/exercises_icon_point"
+                    android:layout_height="0dp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp10"
                     android:layout_marginBottom="@dimen/dp7"
                     android:background="@drawable/btn_1"
                     android:text="Xem lại bài đã làm"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_16sp"
+                    android:textSize="@dimen/txt_exer_content"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/btn_guilai"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_point"
+                    app:layout_constraintTop_toBottomOf="@+id/img_sticker"
                     app:layout_constraintWidth_percent="0.3" />
 
                 <ImageView
+                    android:layout_marginTop="@dimen/dp10"
+                    android:padding="@dimen/dp3"
                     android:id="@+id/img_sticker"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp10"
                     android:src="@drawable/sticker"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_debai"
-                    app:layout_constraintWidth_percent="0.1" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_point_min"
+                    app:layout_constraintHeight_percent="0.2" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:padding="@dimen/dp3"
+                    app:civ_border_color="@color/orange"
+                    app:civ_border_width="1dp"
+                    android:id="@+id/img_avata_chil"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:src="@drawable/icon_avata"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_exer_point_min"
+                    app:layout_constraintHeight_percent="0.2" />
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/txt_review_video"
+                    android:gravity="center"
+                    android:textSize="@dimen/txt_name_home"
+                    android:text="Xem bài giảng"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toStartOf="@id/txt_share_exer"
+                    app:layout_constraintBottom_toBottomOf="@id/img_avata_chil"
+                    app:layout_constraintStart_toEndOf="@id/img_avata_chil"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/txt_share_exer"
+                    android:gravity="center"
+                    android:textSize="@dimen/txt_name_home"
+                    android:text="Chia sẻ bài tập"
+                    android:textStyle="italic"
+                    app:layout_constraintStart_toEndOf="@id/txt_review_video"
+                    app:layout_constraintBottom_toBottomOf="@id/img_avata_chil"
+                    app:layout_constraintEnd_toStartOf="@id/img_sticker"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/img_share_exer"
+                    android:layout_width="0dp"
+                    android:layout_height="68dp"
+                    android:padding="@dimen/dp5"
+                    android:src="@drawable/icon_share"
+                    app:layout_constraintBottom_toTopOf="@id/txt_share_exer"
+                    app:layout_constraintEnd_toEndOf="@id/txt_share_exer"
+                    app:layout_constraintStart_toStartOf="@id/txt_share_exer"
+                    app:layout_constraintTop_toTopOf="@id/img_sticker" />
+                <ImageView
+                    android:visibility="visible"
+                    android:padding="@dimen/dp5"
+                    android:id="@+id/img_review_video"
+                    app:layout_constraintEnd_toStartOf="@id/txt_share_exer"
+                    app:layout_constraintStart_toEndOf="@id/img_avata_chil"
+                    app:layout_constraintTop_toTopOf="@id/img_sticker"
+                    app:layout_constraintBottom_toTopOf="@id/txt_review_video"
+                    android:src="@drawable/icon_show_video"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
     </RelativeLayout>

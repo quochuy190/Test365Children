@@ -15,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import io.realm.Realm;
+import neo.vn.test365children.Activity.doctruyen.Activity_webview_doctruyen;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Config;
@@ -81,6 +82,10 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
         TextView txt_lable_nhanxet;*/
     @BindView(R.id.img_sticker)
     ImageView img_sticker;
+    @BindView(R.id.img_share_exer)
+    ImageView img_share_exer;
+    @BindView(R.id.img_review_video)
+    ImageView img_review_video;
     private String sStatus;
     /*    @BindView(R.id.rl_guilaibai)
         RelativeLayout rl_guilaibai;
@@ -106,6 +111,43 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     }
 
     private void initEvent() {
+        img_share_exer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityExercisesDetail.this);
+              /*  Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Your body here";
+                String shareSub = "Your subject here";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share using"));*/
+                if (obj.getFILE_PDF() != null && obj.getFILE_PDF().length() > 0) {
+                    Intent intent = new Intent(ActivityExercisesDetail.this, Activity_webview_doctruyen.class);
+                    intent.putExtra(Constants.KEY_SEND_LANGUAGE, "share_exer");
+                    intent.putExtra(Constants.KEY_SEND_URL_WEBVIEW, obj.getFILE_PDF());
+                    startActivity(intent);
+                } else {
+                    showDialogNotify("Thông báo", "Bạn không có quyền tài đề bài này");
+                }
+
+            }
+        });
+        img_review_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityExercisesDetail.this);
+                if (obj.getLINK() != null && obj.getLINK().length() > 0) {
+                    Intent intent = new Intent(ActivityExercisesDetail.this, Activity_webview_doctruyen.class);
+                    intent.putExtra(Constants.KEY_SEND_LANGUAGE, "review_video");
+                    intent.putExtra(Constants.KEY_SEND_URL_WEBVIEW, obj.getLINK());
+                    startActivity(intent);
+                } else {
+                    showDialogNotify("Thông báo", "Bài giảng tuần này chưa sẵn sàng");
+                }
+
+            }
+        });
         btn_guilai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,13 +290,14 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     }
 
     String sBaseUrl = "https://content1.home365.online/upload///image/sticker/sticker1//";
+    DetailExercise obj;
 
     @Override
     public void show_detail_taken(ResponDetailTakenExercise objRes) {
         hideDialogLoading();
         if (objRes != null && objRes.getDETAILS() != null) {
             btn_xemlaibai.setEnabled(true);
-            DetailExercise obj = objRes.getDETAILS();
+            obj = objRes.getDETAILS();
             txt_debai.setText(Html.fromHtml(obj.getsNAME()));
             if (obj.getSTICKER() != null) {
                 String sUrlImager = sBaseUrl + obj.getSTICKER();

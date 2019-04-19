@@ -8,9 +8,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import neo.vn.test365children.ApiService.ApiServiceIml;
+import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.CallbackData;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.respon_api.ResponInitChil;
+import neo.vn.test365children.Untils.SharedPrefs;
 
 
 /**
@@ -42,7 +44,7 @@ public class Presenter_Init_Login implements Iml_init.Presenter {
         String sService = "init";
         mMap.put("APP_VERSION", APP_VERSION);
         mMap.put("DEVICE_MODEL", DEVICE_MODEL);
-        mMap.put("TOKEN_KEY", "abc");
+        mMap.put("TOKEN_KEY", TOKEN_KEY);
         mMap.put("DEVICE_TYPE", DEVICE_TYPE);
         mMap.put("OS_VERSION", OS_VERSION);
         mMap.put("UUID", UUID);
@@ -105,7 +107,7 @@ public class Presenter_Init_Login implements Iml_init.Presenter {
     @Override
     public void api_update_info_chil_2(String USER_MOTHER, String USER_CHILD, String ID_SCHOOL, String ID_LEVEL,
                                        String CLASS, String ID_YEAR, String CHILD_NAME, String CHILD_PASS, String
-                                                   LINK_AVATAR, String MOBILE, String EMAIL, String ISUPDATE) {
+                                               LINK_AVATAR, String MOBILE, String EMAIL, String ISUPDATE) {
         Map<String, String> mMap = new LinkedHashMap<>();
         String sService = "update_info2";
         mMap.put("USER_MOTHER", USER_MOTHER);
@@ -139,6 +141,37 @@ public class Presenter_Init_Login implements Iml_init.Presenter {
                 } catch (Exception e) {
                     e.printStackTrace();
                     // mView.show_error_api(null);
+                }
+            }
+        }, sService, mMap);
+    }
+
+    @Override
+    public void api_update_child_device(String USER_MOTHER, String USER_CHILD, String APP_VERSION, String DEVICE_MODEL,
+                                        String TOKEN_KEY, String DEVICE_TYPE, String OS_VERSION) {
+        final Map<String, String> mMap = new LinkedHashMap<>();
+        String sService = "update_child_device";
+        mMap.put("USER_MOTHER", USER_MOTHER);
+        mMap.put("USER_CHILD", USER_CHILD);
+        mMap.put("APP_VERSION", APP_VERSION);
+        mMap.put("DEVICE_MODEL", DEVICE_MODEL);
+        mMap.put("TOKEN_KEY", TOKEN_KEY);
+        mMap.put("DEVICE_TYPE", DEVICE_TYPE);
+        mMap.put("OS_VERSION", OS_VERSION);
+
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                mView.show_error_api(null);
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.e(TAG, "onGetDataSuccess: " + objT);
+                ErrorApi obj = new Gson().fromJson(objT, ErrorApi.class);
+                if (obj.getsERROR().equals("0000")) {
+                    SharedPrefs.getInstance().put(Constants.KEY_UPDATE_TOKEN, true);
                 }
             }
         }, sService, mMap);

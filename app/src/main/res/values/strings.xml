@@ -48,7 +48,7 @@ Mỗi tuần chỉ chơi một lần vào bất kỳ ngày nào.
     <string name="notification_message">Đang làm bài tập</string>
     <string name="txt_guilde_sudoku_title"><u>Hướng dẫn chơi</u></string>
     <string name="txt_title_select_sub">SELECT TOPIC</string>
-    <string name="txt_quenmatkhau">Quên mật khẩu</string>
+    <string name="txt_quenmatkhau"><b><u><i>Quên mã học sinh</i></u></b></string>
     <string name="txt_dangky">Đăng ký tài khoản</string>
     <string name="txt_content_feedback">Cảm ơn con, hãy giữ kiên trì rèn luyện hàng ngày  cùng Home365 để đạt được thành công nhé.
 </string>

@@ -242,9 +242,9 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, 
                 txt_notify_need.setVisibility(View.VISIBLE);
                 recycle_baitap_tuan.setVisibility(View.INVISIBLE);
                 if (obj.getsINFO().size() > 0) {
-                    txt_notify_need.setText("Không có bài tập");
+                    txt_notify_need.setText("Bạn đã làm hết bài tập tuần này, mời bạn làm tiếp vào tuần sau nhé");
                 } else {
-                    txt_notify_need.setText("Không có bài tập");
+                    txt_notify_need.setText("Bạn đã làm hết bài tập tuần này, mời bạn làm tiếp vào tuần sau nhé");
                 }
                 if (sUserMe.equals(Constants.KEY_SAVE_USER_MOTHER_TRY)) {
                     showDialogComfirm_two_button("Thông báo",

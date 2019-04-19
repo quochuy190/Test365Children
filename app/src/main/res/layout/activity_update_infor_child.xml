@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -39,6 +40,8 @@
             android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/orange"
                 android:layout_marginTop="@dimen/dp10"
                 android:src="@drawable/icon_avata"
                 android:id="@+id/img_avata_update"
@@ -53,6 +56,7 @@
                 app:layout_constraintWidth_percent="0.23" />
 
             <ImageView
+                android:tint="@color/orange"
                 android:id="@+id/img_get_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -290,7 +294,7 @@
                     android:backgroundTint="@color/white"
                     android:ems="10"
                     android:hint="Tên lớp"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
@@ -352,7 +356,7 @@
                     android:backgroundTint="@color/white"
                     android:ems="10"
                     android:hint="Họ và tên"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
@@ -381,7 +385,7 @@
                     android:backgroundTint="@color/white"
                     android:ems="10"
                     android:hint="Số điện thoại (tuỳ chọn)"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />

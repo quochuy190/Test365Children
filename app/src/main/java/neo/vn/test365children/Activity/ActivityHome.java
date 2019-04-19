@@ -9,8 +9,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,25 +30,27 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
 import io.realm.RealmList;
-import neo.vn.test365children.Activity.doctruyen.Activity_menu_doctruyen;
 import neo.vn.test365children.Activity.doctruyen.Activity_webview_doctruyen;
 import neo.vn.test365children.Activity.game.menu_game.ActivityMenuGame;
+import neo.vn.test365children.Activity.login.ActivityLoginNew;
 import neo.vn.test365children.Activity.login.ActivitySelectLevelTry;
 import neo.vn.test365children.Activity.login.ActivityUpdateInforChil;
+import neo.vn.test365children.Activity.skill.Activity_Menu_Skill;
 import neo.vn.test365children.Activity.untility_menu.Activity_Information;
 import neo.vn.test365children.Activity.untility_menu.Activity_Menu_Untility;
+import neo.vn.test365children.Adapter.AdapterUserLogin;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.BuildConfig;
 import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Listener.ClickDialog;
+import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.CauhoiAnswer;
 import neo.vn.test365children.Models.CauhoiDetail;
@@ -68,6 +75,7 @@ import neo.vn.test365children.Presenter.PresenterSticker;
 import neo.vn.test365children.Presenter.Presenter_Init_Login;
 import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.TimeUtils;
 
@@ -99,6 +107,12 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     CircleImageView img_avata;
     @BindView(R.id.btn_information)
     Button btn_information;
+    @BindView(R.id.ll_show_multil_user)
+    ConstraintLayout ll_show_multil_user;
+    @BindView(R.id.img_switch)
+    ImageView img_switch;
+    @BindView(R.id.img_exit_ll_show)
+    ImageView img_exit_ll_show;
     Realm mRealm;
     PresenterSticker mPresenter;
     PresenterBaitap mPresenterBaitap;
@@ -111,7 +125,10 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // play_music_bg();
+        String sTokenkey = SharedPrefs.getInstance().get(Constants.KEY_TOKEN, String.class);
+        Log.e(TAG, "onCreate: token: " + sTokenkey);
+
+        // play_music_bg();
         mPlayClick = new MediaPlayer();
         id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         mRealm = RealmController.with(this).getRealm();
@@ -124,13 +141,116 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         if (!is_check_update) {
             check_notify_update_child();
         }
+        check_update_token_push();
         check_init_login();
         initCheckExerPlaying();
         //  initConfig();
         //initData();
-        initEvent();
 
+        initEvent();
+        initAnimation();
         //play_mp3();
+    }
+
+    List<InfoKids> lisUserLoginRealm;
+    RecyclerView.LayoutManager mLayoutManager;
+    AdapterUserLogin adapter;
+    @BindView(R.id.recycle_multil_user)
+    RecyclerView recycle_multil_user;
+    List<InfoKids> lisUserLogin;
+
+    private void init_get_multil_user() {
+        lisUserLogin = new ArrayList<>();
+        lisUserLoginRealm = mRealm.where(InfoKids.class).findAll();
+        if (lisUserLoginRealm != null && lisUserLoginRealm.size() > 0) {
+            for (int i = 0; i < lisUserLoginRealm.size(); i++) {
+                InfoKids obj = new InfoKids();
+                obj.setsID(lisUserLoginRealm.get(i).getsID());
+                obj.setsFULLNAME(lisUserLoginRealm.get(i).getsFULLNAME());
+                obj.setsUSERNAME(lisUserLoginRealm.get(i).getsUSERNAME());
+                obj.setsUSER_MOTHER(lisUserLoginRealm.get(i).getsUSER_MOTHER());
+                obj.setsAVATAR(lisUserLoginRealm.get(i).getsAVATAR());
+                obj.setsCLASS(lisUserLoginRealm.get(i).getsCLASS());
+                obj.setsPASSWORD(lisUserLoginRealm.get(i).getsPASSWORD());
+                obj.setsLEVEL_ID(lisUserLoginRealm.get(i).getsLEVEL_ID());
+                obj.setsLEVEL(lisUserLoginRealm.get(i).getsLEVEL());
+                lisUserLogin.add(obj);
+            }
+        }
+        lisUserLogin.add(null);
+        init_lis_login();
+        Log.e(TAG, "init_get_multil_user_size: " + lisUserLogin.size());
+    }
+    private void init_lis_login() {
+        //  lisUserLogin.add(null);
+        adapter = new AdapterUserLogin(lisUserLogin, this);
+        mLayoutManager = new GridLayoutManager(this,
+                4, GridLayoutManager.VERTICAL, false);
+        //    recycleBaitap.setNestedScrollingEnabled(false);
+        recycle_multil_user.setHasFixedSize(true);
+        recycle_multil_user.setLayoutManager(mLayoutManager);
+        recycle_multil_user.setItemAnimator(new DefaultItemAnimator());
+        recycle_multil_user.setAdapter(adapter);
+        adapter.setOnIListener(new ItemClickListener() {
+            @Override
+            public void onClickItem(int position, Object item) {
+                KeyboardUtil.play_click_button(ActivityHome.this);
+                InfoKids obj = (InfoKids) item;
+                if (obj != null) {
+                    sUserCon = obj.getsUSERNAME();
+                    sUserMe = obj.getsUSER_MOTHER();
+                    sPassword = obj.getsPASSWORD();
+                    if (sUserMe != null && sUserCon != null && sPassword != null) {
+                        showDialogLoading();
+                        mPresenterLogin.api_login_restful(sUserMe, sUserCon, sPassword);
+                    }
+                    gone_multil_user();
+                } else {
+                    ObjLogin objLogin = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
+                    if (objLogin != null && objLogin.getsObjInfoKid() != null) {
+                        InfoKids objChil = objLogin.getsObjInfoKid();
+                        if (objChil != null) {
+                            if (objChil.getsFULLNAME() != null) {
+                                check_user_logout(objChil.getsFULLNAME().toUpperCase());
+                            } else if (objChil.getsUSERNAME() != null) {
+                                check_user_logout("MHS: " + objChil.getsUSERNAME().toUpperCase());
+                            } else {
+                                check_user_logout("");
+                            }
+                        } else {
+                            check_user_logout("");
+                        }
+
+                    } else {
+                        check_user_logout("");
+                    }
+                }
+            }
+        });
+    }
+
+    private void check_user_logout(String sContent) {
+        showDialogComfirm("Thông báo",
+                "Bạn có muốn thoát học sinh <b><font color='#0033FF'>" + sContent + "</font></b> " +
+                        "để chuyển sang học sinh khác?",
+                true, new ClickDialog() {
+                    @Override
+                    public void onClickYesDialog() {
+                        startActivity(new Intent(ActivityHome.this, ActivityLoginNew.class));
+                        gone_multil_user();
+                        finish();
+                    }
+
+                    @Override
+                    public void onClickNoDialog() {
+
+                    }
+                });
+    }
+
+    private void initAnimation() {
+        Animation animationRotale = AnimationUtils.loadAnimation(this, R.anim.animation_switch_user);
+        img_switch.startAnimation(animationRotale);
     }
 
     @Override
@@ -300,17 +420,21 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
 
     ExerciseAnswer objExer;
     private float fPoint = 0;
-
-
     ObjLogin chil;
+    MediaPlayer mPlayer, mPlayClick;
 
     private void show_info_kid() {
         chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
         sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
         sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-
+        sPassword = SharedPrefs.getInstance().get(Constants.KEY_PASSWORD, String.class);
         if (chil != null && chil.getsObjInfoKid() != null) {
             InfoKids obj = chil.getsObjInfoKid();
+            obj.setsUSER_MOTHER(sUserMe);
+            obj.setsPASSWORD(sPassword);
+            mRealm.beginTransaction();
+            mRealm.copyToRealmOrUpdate(obj);
+            mRealm.commitTransaction();
             if (obj.getsFULLNAME() != null && obj.getsFULLNAME().length() > 0) {
                 if (obj.getsLEVEL_ID() == null || obj.getsLEVEL_ID().length() == 0 || obj.getsLEVEL_ID().equals("0")) {
                     txt_name_home.setText(obj.getsFULLNAME());
@@ -338,11 +462,21 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                                 //   progressBar.setVisibility(View.GONE);
                             }
                         });
+            } else {
+                Glide.with(this)
+                        .load(R.drawable.icon_avata)
+                        .asBitmap()
+                        .placeholder(R.drawable.icon_avata)
+                        .into(new BitmapImageViewTarget(img_avata) {
+                            @Override
+                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                super.onResourceReady(drawable, anim);
+                                //   progressBar.setVisibility(View.GONE);
+                            }
+                        });
             }
         } else txt_name_home.setVisibility(View.INVISIBLE);
     }
-
-    MediaPlayer mPlayer, mPlayClick;
 
     public void play_music_bg() {
         //mp3 = new MediaPlayer();
@@ -368,6 +502,8 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     }
 
     private void initEvent() {
+        img_exit_ll_show.setOnClickListener(this);
+        img_switch.setOnClickListener(this);
         btn_lambaitap.setOnClickListener(this);
         btn_ketquahoctap.setOnClickListener(this);
         btn_vuichoi.setOnClickListener(this);
@@ -410,11 +546,20 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                                 startActivity(intent);
                                 finish();
                             }
+
                             @Override
                             public void onClickNoDialog() {
 
                             }
                         });
+            }
+        });
+        img_mute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                play_click();
+                init_get_multil_user();
+                show_multil_user();
             }
         });
     }
@@ -423,6 +568,13 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
         play_click();
         switch (v.getId()) {
+            case R.id.img_switch:
+                init_get_multil_user();
+                show_multil_user();
+                break;
+            case R.id.img_exit_ll_show:
+                gone_multil_user();
+                break;
             case R.id.img_avata:
                 v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.click_animation));
                 start_update_infor_child();
@@ -455,7 +607,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
                 if (chil != null) {
                     if (chil != null && chil.getsObjInfoKid().getsLEVEL_ID() != null && !chil.getsObjInfoKid().getsLEVEL_ID().equals("0")) {
-                        startActivity(new Intent(ActivityHome.this, Activity_menu_doctruyen.class));
+                        startActivity(new Intent(ActivityHome.this, Activity_Menu_Skill.class));
                     } else {
                         start_get_class();
                     }
@@ -534,6 +686,28 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    private void gone_multil_user() {
+        ll_show_multil_user.setVisibility(View.GONE);
+        //ll_show_multil_user.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animation_show_question));
+        btn_bxh.setVisibility(View.VISIBLE);
+        btn_lambaitap.setVisibility(View.VISIBLE);
+        btn_information.setVisibility(View.VISIBLE);
+        btn_utilities.setVisibility(View.VISIBLE);
+        btn_ketquahoctap.setVisibility(View.VISIBLE);
+        btn_vuichoi.setVisibility(View.VISIBLE);
+    }
+
+    private void show_multil_user() {
+        ll_show_multil_user.setVisibility(View.VISIBLE);
+        ll_show_multil_user.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animation_show_question));
+        btn_bxh.setVisibility(View.INVISIBLE);
+        btn_lambaitap.setVisibility(View.INVISIBLE);
+        btn_information.setVisibility(View.INVISIBLE);
+        btn_utilities.setVisibility(View.INVISIBLE);
+        btn_ketquahoctap.setVisibility(View.INVISIBLE);
+        btn_vuichoi.setVisibility(View.INVISIBLE);
+    }
+
     private void start_get_class() {
         Intent intent = new Intent(ActivityHome.this, ActivitySelectLevelTry.class);
         startActivityForResult(intent, Constants.RequestCode.START_USER_TRY);
@@ -573,6 +747,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                     sPassword = SharedPrefs.getInstance().get(Constants.KEY_PASSWORD, String.class);
                     mPresenter_init.api_update_info_chil(sUserMe, sUserCon, "", App.sLevel, "",
                             "", "", sPassword, "", "", "");
+                    check_update_token_push();
                 }
                 break;
             case Constants.RequestCode.START_UPDATE_INFOR_CHILD:
@@ -581,6 +756,20 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                     initLogin();
                 }
                 break;
+        }
+    }
+
+    private void check_update_token_push() {
+        boolean isUpdateToken = SharedPrefs.getInstance().get(Constants.KEY_UPDATE_TOKEN, Boolean.class);
+        String sToken_push = SharedPrefs.getInstance().get(Constants.KEY_TOKEN, String.class);
+        String sUserMother = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+        String sUserChil = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+        if (!isUpdateToken) {
+            if (sToken_push != null && sToken_push.length() > 0) {
+                mPresenter_init.api_update_child_device(sUserMother, sUserChil, BuildConfig.VERSION_NAME,
+                        android.os.Build.BRAND + " " + android.os.Build.MODEL,
+                        sToken_push, "2", android.os.Build.VERSION.RELEASE);
+            }
         }
     }
 
@@ -613,12 +802,10 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void show_list_list_buy(List<TuanDamua> mLis) {
-
     }
 
     @Override
     public void show_list_get_part(ResponDetailExer objDetailExer) {
-
     }
 
     @Override
@@ -741,16 +928,6 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
 
     }
 
-  /*  @Override
-    public void show_submit_execercise(List<ErrorApi> mLis) {
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
-            objExer.setIsTrangthailambai("3");
-            mRealm.beginTransaction();
-            mRealm.copyToRealmOrUpdate(objExer);
-            mRealm.commitTransaction();
-        }
-    }*/
-
     @Override
     public void show_list_sticker(List<Sticker> mList) {
         if (mList != null && mList.get(0).getsERROR().equals("0000")) {
@@ -762,37 +939,12 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     @Override
     public void show_info_chil(List<ObjLogin> mLis) {
         hideDialogLoading();
-        if (mLis != null && mLis.get(0).getsERROR().equals("0000")) {
-            SharedPrefs.getInstance().put(Constants.KEY_SAVE_CHIL, mLis.get(0));
-            ObjLogin chil = mLis.get(0);
-            //txt_name_home.setText("Bé: " + chil.getsFULLNAME() + ", Lớp" + chil.getsLEVEL_ID());
-            if (chil.getsObjInfoKid() != null && chil.getsObjInfoKid().getsAVATAR() != null
-                    && chil.getsObjInfoKid().getsAVATAR().length() > 0) {
-                /*Glide.with(this).load(Config.URL_IMAGE + chil.getsObjInfoKid().getsAVATAR())
-                        .into(img_avata);*/
-                Glide.with(this)
-                        .load(Config.URL_IMAGE + chil.getsObjInfoKid().getsAVATAR())
-                        .asBitmap()
-                        .placeholder(R.drawable.icon_avata)
-                        .into(new BitmapImageViewTarget(img_avata) {
-                            @Override
-                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
-                                super.onResourceReady(drawable, anim);
-                                //   progressBar.setVisibility(View.GONE);
-                            }
-                        });
-            }
-        }
     }
 
     private int CHANNEL_ID = 1001;
     private NotificationChannel mChannel;
     private NotificationManager notifManager;
     String GROUP_KEY_WORK_EMAIL = "com.android.example.WORK_EMAIL";
-
-    private void displayCustomNotificationForOrders(Map<String, String> mMap) {
-    }
-
     private RealmList<Cauhoi> mRealmList = new RealmList<>();
 
     public void nopbai() {
@@ -854,12 +1006,20 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         mPresenterBaitap.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise()
                 , objExer.getsThoiluonglambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
                 "" + iTime_duration, "1", objExer.getsPoint(), sDanhsachcau);
-
     }
 
     private void get_init() {
-        mPresenter_init.api_init(BuildConfig.VERSION_NAME, android.os.Build.BRAND + " " + android.os.Build.MODEL,
-                "", "2", android.os.Build.VERSION.RELEASE, id);
+        String sTokenkey = SharedPrefs.getInstance().get(Constants.KEY_TOKEN, String.class);
+        if (sTokenkey != null && sTokenkey.length() > 0) {
+            Log.e("sToken", "home_get_init token: " + sTokenkey);
+            mPresenter_init.api_init(BuildConfig.VERSION_NAME, android.os.Build.BRAND + " " + android.os.Build.MODEL,
+                    sTokenkey, "2", android.os.Build.VERSION.RELEASE, id);
+        } else {
+            Log.e("sToken", "home_get_init token: " + "update");
+            mPresenter_init.api_init(BuildConfig.VERSION_NAME, android.os.Build.BRAND + " " + android.os.Build.MODEL,
+                    "update", "2", android.os.Build.VERSION.RELEASE, id);
+        }
+
     }
 
 }

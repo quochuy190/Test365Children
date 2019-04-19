@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,12 +21,14 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import io.realm.Realm;
+import neo.vn.test365children.Activity.doctruyen.Activity_webview_doctruyen;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.Baitap_Tuan;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.ConfigChildren;
+import neo.vn.test365children.Models.DetailExercise;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.Models.ResponDetailExer;
@@ -46,7 +48,11 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
 
     private static final String TAG = "ActivityStartBaitap";
     @BindView(R.id.btn_start_lambai)
-    Button btn_start_lambai;
+    ConstraintLayout btn_start_lambai;
+    @BindView(R.id.btn_share)
+    ConstraintLayout btn_share;
+    @BindView(R.id.btn_review_video)
+    ConstraintLayout btn_review_video;
     @BindView(R.id.img_mute)
     ImageView img_mute;
     Baitap_Tuan objBaitapTuan;
@@ -88,6 +94,8 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         // KeyboardUtil.button_disable(btn_start_lambai);
         // btn_start_lambai.getBackground().setAlpha(50);
         btn_start_lambai.getBackground().setAlpha(70);
+        btn_share.setVisibility(View.GONE);
+        btn_review_video.setVisibility(View.GONE);
         initData();
         initEvent();
         //  play_mp3();
@@ -157,6 +165,35 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
     }
 
     private void initEvent() {
+        btn_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityStartBaitap.this);
+              /*  Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Your body here";
+                String shareSub = "Your subject here";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share using"));*/
+                Intent intent = new Intent(ActivityStartBaitap.this, Activity_webview_doctruyen.class);
+                intent.putExtra(Constants.KEY_SEND_LANGUAGE, "share_exer");
+                intent.putExtra(Constants.KEY_SEND_URL_WEBVIEW, objDetail.getFILE_PDF());
+                startActivity(intent);
+
+
+            }
+        });
+        btn_review_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityStartBaitap.this);
+                Intent intent = new Intent(ActivityStartBaitap.this, Activity_webview_doctruyen.class);
+                intent.putExtra(Constants.KEY_SEND_LANGUAGE, "review_video");
+                intent.putExtra(Constants.KEY_SEND_URL_WEBVIEW, objDetail.getLINK());
+                startActivity(intent);
+            }
+        });
         btn_start_lambai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,6 +264,8 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
 
     }
 
+    DetailExercise objDetail;
+
     @Override
     public void show_list_get_part(ResponDetailExer objDetailExer) {
         hideDialogLoading();
@@ -236,6 +275,15 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
             //   KeyboardUtil.button_enable(btn_start_lambai);
             //  txt_soluongcauhoi.setText("Số lượng câu hỏi: " + mLis.size());
             List<Cauhoi> lisCauhoi = objDetailExer.getDETAILS().getLisPARTS();
+            objDetail = objDetailExer.getDETAILS();
+            if (objDetail.getLINK() != null && objDetail.getLINK().length() > 0) {
+                btn_review_video.setVisibility(View.VISIBLE);
+            } else
+                btn_review_video.setVisibility(View.GONE);
+            if (objDetail.getFILE_PDF() != null && objDetail.getFILE_PDF().length() > 0) {
+                btn_share.setVisibility(View.VISIBLE);
+            } else
+                btn_share.setVisibility(View.GONE);
             txt_soluongcauhoi.setText("Số lượng câu hỏi: " + objDetailExer.getDETAILS().getLisPARTS().size());
             mLisCauhoi.addAll(lisCauhoi);
         } else if (objDetailExer.getsERROR().equals("0002")) {
@@ -378,4 +426,5 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         //hiển thị lên giao diện
         return date;
     }
+
 }

@@ -355,7 +355,6 @@ public class FragmentDienvaochotrong extends BaseFragment {
 
     public class WebAppInterface {
         Context mContext;
-
         WebAppInterface(Context ctx) {
             this.mContext = ctx;
         }

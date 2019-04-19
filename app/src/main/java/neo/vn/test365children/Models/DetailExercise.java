@@ -43,6 +43,10 @@ public class DetailExercise {
     String sPOINT;
     @SerializedName("STICKER")
     String STICKER;
+    @SerializedName("FILE_PDF")
+    String FILE_PDF;
+    @SerializedName("LINK")
+    String LINK;
     @SerializedName("RECOMMENT_MOTHER")
     String RECOMMENT_MOTHER;
     @SerializedName("PARTS")
@@ -224,5 +228,21 @@ public class DetailExercise {
 
     public void setRECOMMENT_MOTHER(String RECOMMENT_MOTHER) {
         this.RECOMMENT_MOTHER = RECOMMENT_MOTHER;
+    }
+
+    public String getFILE_PDF() {
+        return FILE_PDF;
+    }
+
+    public void setFILE_PDF(String FILE_PDF) {
+        this.FILE_PDF = FILE_PDF;
+    }
+
+    public String getLINK() {
+        return LINK;
+    }
+
+    public void setLINK(String LINK) {
+        this.LINK = LINK;
     }
 }

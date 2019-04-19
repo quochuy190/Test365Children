@@ -213,5 +213,5 @@
 
     <dimen name="txt_name_exer">25sp</dimen>
     <dimen name="txt_exer_content">20sp</dimen>
-    <dimen name="txt_name_home">18sp</dimen>
+    <dimen name="txt_name_home">22sp</dimen>
 </resources>

@@ -32,7 +32,7 @@ public class Activity_menu_doctruyen extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Glide.with(this).load(R.drawable.bg_kow_playgame).into(img_background);
+        Glide.with(this).load(R.drawable.bg_congchua5).into(img_background);
         initEvent();
     }
 
@@ -48,7 +48,7 @@ public class Activity_menu_doctruyen extends BaseActivity {
             @Override
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(Activity_menu_doctruyen.this);
-                Intent intent = new Intent(Activity_menu_doctruyen.this, Activity_webview_doctruyen.class);
+                Intent intent = new Intent(Activity_menu_doctruyen.this, ActivityWebviewReadStory.class);
                 intent.putExtra(Constants.KEY_SEND_LANGUAGE, "eng");
                 startActivity(intent);
             }
@@ -57,7 +57,7 @@ public class Activity_menu_doctruyen extends BaseActivity {
             @Override
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(Activity_menu_doctruyen.this);
-                Intent intent = new Intent(Activity_menu_doctruyen.this, Activity_webview_doctruyen.class);
+                Intent intent = new Intent(Activity_menu_doctruyen.this, ActivityWebviewReadStory.class);
                 intent.putExtra(Constants.KEY_SEND_LANGUAGE, "vie");
                 startActivity(intent);
             }

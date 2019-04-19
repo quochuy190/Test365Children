@@ -21,7 +21,7 @@ public class MyFirebaseIDService extends FirebaseInstanceIdService {
         super.onTokenRefresh();
         mToken = FirebaseInstanceId.getInstance().getToken();
         if (mToken != null) {
-            Log.i(TAG, "onTokenRefresh: "+mToken);
+            Log.e("sToken", "onTokenRefresh: "+mToken);
             // SharedPrefs.getInstance().put(Constants.KEY_TOKEN, mToken);
             SharedPrefs.getInstance().put(Constants.KEY_TOKEN, mToken);
             SharedPrefs.getInstance().put(Constants.KEY_ISTOKEN, true);

@@ -73,7 +73,6 @@ public class Activity_Menu_Untility extends BaseActivity implements Iml_Untiliti
 
     private void init() {
         lisMenuUntility = new ArrayList<>();
-
         adapter = new AdapterMenuUntility(lisMenuUntility, this);
         mLayoutManager = new GridLayoutManager(this,
                 7, GridLayoutManager.VERTICAL, false);

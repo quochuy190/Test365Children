@@ -432,11 +432,20 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
                 KeyboardUtil.requestKeyboard(edt_full_name);
                 return;
             } else sFullname = edt_full_name.getText().toString().trim();
-            if (edt_phone.getText().toString().length() > 0) {
+            if (edt_phone.getText().toString().length() == 0) {
+                hideDialogLoading();
+                //  showDialogNotify("Thông báo", "Bạn chưa nhập vào tên của bé");
+                Toast.makeText(ActivityUpdateInforChil.this,
+                        "Bạn cần nhập vào số điện thoại để giúp khôi phục tài khoản.", Toast.LENGTH_SHORT).show();
+                edt_phone.requestFocus();
+                KeyboardUtil.requestKeyboard(edt_phone);
+                return;
+            } else sMobile = edt_phone.getText().toString().trim();
+/*            if (edt_phone.getText().toString().length() > 0) {
                 sMobile = edt_phone.getText().toString();
             } else {
                 sMobile = "";
-            }
+            }*/
             if (edt_email.getText().toString().length() > 0) {
                 sEmail = edt_email.getText().toString();
             } else {

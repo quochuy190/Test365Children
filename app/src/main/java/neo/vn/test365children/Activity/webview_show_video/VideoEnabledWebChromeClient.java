@@ -1,4 +1,4 @@
-package name.cpr;
+package neo.vn.test365children.Activity.webview_show_video;
 
 import android.media.MediaPlayer;
 import android.view.SurfaceView;

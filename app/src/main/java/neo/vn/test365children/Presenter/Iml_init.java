@@ -15,6 +15,9 @@ public interface Iml_init {
         void api_update_info_chil_2(String USER_MOTHER, String USER_CHILD, String ID_SCHOOL, String ID_LEVEL,
                                     String CLASS, String ID_YEAR, String CHILD_NAME, String CHILD_PASS,
                                     String LINK_AVATAR, String MOBILE, String EMAIL, String ISUPDATE);
+
+        void api_update_child_device(String USER_MOTHER, String USER_CHILD, String APP_VERSION, String DEVICE_MODEL,
+                                     String TOKEN_KEY, String DEVICE_TYPE, String OS_VERSION);
     }
 
     interface View {

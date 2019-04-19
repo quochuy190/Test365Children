@@ -4,9 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class InfoKids implements Serializable {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class InfoKids extends RealmObject implements Serializable {
     @SerializedName("ID")
     private String sID;
+    @PrimaryKey
     @SerializedName("USERNAME")
     private String sUSERNAME;
     @SerializedName("PASSWORD")
@@ -72,6 +76,7 @@ public class InfoKids implements Serializable {
     private String sPHONENUMBER;
     @SerializedName("EMAIL")
     private String EMAIL;
+
 
     public String getsID() {
         return sID;
