@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.http.SslError;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -432,13 +430,6 @@ public class Activity_webview_doctruyen extends BaseActivity {
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             Log.e(TAG, "onReceivedError: ");
             super.onReceivedError(view, request, error);
-        }
-
-        @Override
-        public void onReceivedSslError(final WebView view, final SslErrorHandler handler, final SslError error) {
-            //Showing a first confirmation dialog
-            Log.e(TAG, "onReceivedSslError: ");
-            handler.proceed();
         }
     }
 

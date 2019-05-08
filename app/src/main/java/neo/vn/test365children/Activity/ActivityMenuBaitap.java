@@ -115,15 +115,8 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, 
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mp3 != null) {
-                    if (mp3.isPlaying()) {
-                        img_mute.setImageResource(R.drawable.icon_tat_loa);
-                        mp3.pause();
-                    } else {
-                        img_mute.setImageResource(R.drawable.img_mute);
-                        mp3.start();
-                    }
-                }
+                KeyboardUtil.play_click_button(ActivityMenuBaitap.this);
+                finish();
             }
         });
     }
@@ -219,8 +212,10 @@ public class ActivityMenuBaitap extends BaseActivity implements ImpBaitap.View, 
 
     @Override
     public void show_error_api(List<ErrorApi> mLis) {
-        //showDialogNotify("Lỗi", "Lỗi kết nối, kiểm tra lại kết nối mạng hoặc wifi của bạn");
         hideDialogLoading();
+        if (mLis != null && mLis.get(0).getsRESULT().equals("needed")) {
+            showAlertErrorNetwork();
+        }
         //showAlertErrorNetwork();
     }
 

@@ -8,8 +8,8 @@ android {
         applicationId "neo.vn.test365children"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 23
-        versionName "1.4.2"
+        versionCode 26
+        versionName "1.4.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
@@ -78,15 +78,9 @@ dependencies {
     // Check for v11.4.2 or higher
   //  implementation 'com.google.firebase:firebase-core:16.0.8'
     // Add dependency
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+   implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     //Eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
-    // Biểu thức toán học
-    implementation 'io.github.kexanie.library:MathView:0.0.6'
-    implementation 'in.hourglass.mathrender:katexmathview:1.0'
-    // realm in android
-    //Biểu đồ
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     //EasyFlipView
     implementation 'com.wajahatkarim3.EasyFlipView:EasyFlipView:2.1.1'
     // discrete-scrollview (menu kow)

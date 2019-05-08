@@ -2,7 +2,6 @@ package neo.vn.test365children.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +16,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import katex.hourglass.in.mathlib.MathView;
 import neo.vn.test365children.Config.Config;
 import neo.vn.test365children.Listener.ItemClickListener;
 import neo.vn.test365children.Models.DapAn;
 import neo.vn.test365children.R;
-import neo.vn.test365children.Untils.StringUtil;
 
 
 /**
@@ -61,13 +58,7 @@ public class AdapterReviewChondapandung extends RecyclerView.Adapter<AdapterRevi
         holder.ll_dapan_all.removeAllViews();
         if (obj.getsContent() != null )
             if (obj.getsContent().indexOf("//") > 0) {
-                MathView mathView = new MathView(context);
-                mathView.setClickable(true);
-                mathView.setTextSize(16);
-                mathView.setTextColor(ContextCompat.getColor(context, android.R.color.black));
-                mathView.setDisplayText(StringUtil.StringFraction(obj.getsContent()));
-                mathView.setViewBackgroundColor(context.getResources().getColor(R.color.bg_item_dapan));
-                holder.ll_dapan_all.addView(mathView);
+
             } else if (obj.getsContent().indexOf("image") > 0) {
                 ImageView txt_dapan = new ImageView(context);
                 int hight_image = (int) context.getResources().getDimension(R.dimen.item_dapan);

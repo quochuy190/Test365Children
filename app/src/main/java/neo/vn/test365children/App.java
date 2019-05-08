@@ -58,7 +58,6 @@ public class App extends Application {
         mLisDistrict = new ArrayList<>();
         mLisCity = new ArrayList<>();
         mLisSchools = new ArrayList<>();
-
         sObjLogin = new ObjLogin();
         mListSticker = new ArrayList<>();
         mLisGameTNNL = new ArrayList<>();
@@ -70,12 +69,6 @@ public class App extends Application {
                 .schemaVersion(42)
                 .deleteRealmIfMigrationNeeded()
                 .build();
-
-      /*  RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
-                .name(Realm.DEFAULT_REALM_NAME)
-                .schemaVersion(0)
-                .deleteRealmIfMigrationNeeded()
-                .build();*/
         Realm.setDefaultConfiguration(config);
     }
     private void createNotificationChannel() {

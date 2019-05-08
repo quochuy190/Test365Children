@@ -308,19 +308,31 @@ public class FragmentXepTrung extends BaseFragment {
         map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
         if (egg1[0] != null) {
             mLisTrung.add(egg1[0]);
-            mLisDapan.add(new Item_Xeptrung(egg1[1], R.drawable.egg_blue, egg1[0]));
+            if (egg1.length > 1)
+                mLisDapan.add(new Item_Xeptrung(egg1[1], R.drawable.egg_blue, egg1[0]));
+            else
+                mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_blue, egg1[0]));
         }
         if (egg2[0] != null) {
             mLisTrung.add(egg2[0]);
-            mLisDapan.add(new Item_Xeptrung(egg2[1], R.drawable.egg_red, egg2[0]));
+            if (egg2.length > 1)
+                mLisDapan.add(new Item_Xeptrung(egg2[1], R.drawable.egg_red, egg2[0]));
+            else
+                mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_red, egg2[0]));
         }
         if (egg3[0] != null) {
             mLisTrung.add(egg3[0]);
-            mLisDapan.add(new Item_Xeptrung(egg3[1], R.drawable.egg_yellow, egg3[0]));
+            if (egg3.length > 1)
+                mLisDapan.add(new Item_Xeptrung(egg3[1], R.drawable.egg_yellow, egg3[0]));
+            else
+                mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_yellow, egg3[0]));
         }
         if (egg4[0] != null) {
             mLisTrung.add(egg4[0]);
-            mLisDapan.add(new Item_Xeptrung(egg4[1], R.drawable.egg_pink, egg4[0]));
+            if (egg3.length > 1)
+                mLisDapan.add(new Item_Xeptrung(egg4[1], R.drawable.egg_pink, egg4[0]));
+            else
+                mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_pink, egg4[0]));
         }
         if (egg1.length > 1) {
             mLisRoTrung.add(egg1[1]);
@@ -368,18 +380,23 @@ public class FragmentXepTrung extends BaseFragment {
             String[] egg2_chil = mCauhoi.getsEGG_2_RESULT().split("::");
             String[] egg3_chil = mCauhoi.getsEGG_3_RESULT().split("::");
             String[] egg4_chil = mCauhoi.getsEGG_4_RESULT().split("::");
-            if (egg1_chil[0] != null) {
+            if (egg1_chil.length > 1 && egg1_chil[0] != null) {
                 mLisAnwserChil.add(new Item_Xeptrung(egg1_chil[1], R.drawable.egg_blue, egg1_chil[0]));
+            } else {
+                mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_blue, "Error"));
             }
-            if (egg2_chil[0] != null) {
+            if (egg2_chil.length > 1 && egg2_chil[0] != null) {
                 mLisAnwserChil.add(new Item_Xeptrung(egg2_chil[1], R.drawable.egg_red, egg2_chil[0]));
-            }
-            if (egg3_chil[0] != null) {
+            } else
+                mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_red, "Error"));
+            if (egg3_chil.length > 1 && egg3_chil[0] != null) {
                 mLisAnwserChil.add(new Item_Xeptrung(egg3_chil[1], R.drawable.egg_yellow, egg3_chil[0]));
-            }
-            if (egg4_chil[0] != null) {
+            } else
+                mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_yellow, "Error"));
+            if (egg4.length > 1 && egg4_chil[0] != null) {
                 mLisAnwserChil.add(new Item_Xeptrung(egg4_chil[1], R.drawable.egg_pink, egg4_chil[0]));
-            }
+            } else
+                mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_pink, "Error"));
             adapter_anwser_chil.notifyDataSetChanged();
             img_anwser_chil.setVisibility(View.VISIBLE);
             if (mCauhoi.isAnserTrue()) {
@@ -409,7 +426,6 @@ public class FragmentXepTrung extends BaseFragment {
     ImageView bg_dapan;
 
     private void initEvent() {
-
         rl_trung1.setOnTouchListener(onTouchListener());
         rl_trung2.setOnTouchListener(onTouchListener());
         rl_trung3.setOnTouchListener(onTouchListener());

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
@@ -12,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -307,12 +305,6 @@ public class ActivityWebviewReadStory extends BaseActivity {
             super.onReceivedError(view, request, error);
         }
 
-        @Override
-        public void onReceivedSslError(final WebView view, final SslErrorHandler handler, final SslError error) {
-            //Showing a first confirmation dialog
-            Log.e(TAG, "onReceivedSslError: ");
-            handler.proceed();
-        }
     }
 
     private class MyChrome extends WebChromeClient {

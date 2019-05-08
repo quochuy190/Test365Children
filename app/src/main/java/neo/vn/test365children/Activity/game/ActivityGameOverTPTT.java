@@ -306,7 +306,7 @@ public class ActivityGameOverTPTT extends BaseActivity
     @Override
     public void show_error_api(ErrorApi mLis) {
         hideDialogLoading();
-        if (mLis.getsERROR().equals("submit_tnnl")) {
+        if (mLis != null && mLis.getsERROR() != null && mLis.getsERROR().equals("submit_tnnl")) {
             btn_exit.setEnabled(true);
         } else {
 

@@ -91,6 +91,8 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
     ImageView img_get_image;
     @BindView(R.id.img_back)
     ImageView img_back;
+    @BindView(R.id.img_background)
+    ImageView img_background;
     @BindView(R.id.img_avata_update)
     CircleImageView img_avata_update;
     @BindView(R.id.btn_ok_add_sub)
@@ -111,6 +113,7 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
         super.onCreate(savedInstanceState);
         mPresenterUpload = new PresenterUploadImage(this);
         mPresetner = new Presenter_Init_Login(this);
+        Glide.with(this).load(R.drawable.bg_select_class).into(img_background);
         KeyboardUtil.hideSoftKeyboard(ActivityUpdateInforChil.this);
         //checkPermistion();
         initData();
@@ -122,7 +125,7 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
         InfoKids obj = chil.getsObjInfoKid();
         if (obj != null) {
             if (obj.getsUSERNAME() != null) {
-                edt_username.setText("MÃ HS: "+obj.getsUSERNAME());
+                edt_username.setText("MÃ HS: " + obj.getsUSERNAME());
             }
             if (chil.getsObjInfoKid().getsLEVEL_ID() != null && !obj.getsLEVEL_ID().equals("0")) {
                 sIs_status_update = "2";
@@ -209,6 +212,18 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
             Intent i = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(i, Constants.RequestCode.GET_IMAGE);
+            /* *//*     Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.RequestCode.GET_IMAGE);*//*
+
+            Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            getIntent.setType("image/*");
+            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickIntent.setType("image/*");
+            Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+            startActivityForResult(chooserIntent, Constants.RequestCode.GET_IMAGE);*/
         } catch (Exception exp) {
             Log.i("Error", exp.toString());
         }
@@ -243,7 +258,7 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
             @Override
             public void onClick(View v) {
                 showDialogLoading();
-                if (IMAGE_PATH.length() > 0) {
+                if (IMAGE_PATH != null && IMAGE_PATH.length() > 0) {
                     mPresenterUpload.api_upload_image(IMAGE_PATH);
                 } else {
                     api_login();
@@ -377,12 +392,16 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
                 if (resultCode == RESULT_OK) {
                     try {
                         IMAGE_PATH = ReadPathUtil.getPath(ActivityUpdateInforChil.this, data.getData());
-                        File file = new File(IMAGE_PATH);
-                        final Uri imageUri = data.getData();
-                        File file1 = new File(imageUri.getPath());
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        img_avata_update.setImageBitmap(selectedImage);
+                        if (IMAGE_PATH != null) {
+                            File file = new File(IMAGE_PATH);
+                            final Uri imageUri = data.getData();
+                            File file1 = new File(imageUri.getPath());
+                            final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                            img_avata_update.setImageBitmap(selectedImage);
+                        } else {
+                            Toast.makeText(this, "Loading image error!", Toast.LENGTH_LONG).show();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         //Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();

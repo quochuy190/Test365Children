@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import neo.vn.test365children.Activity.ActivityHome;
@@ -28,6 +31,9 @@ public class ActivityLoginNew extends BaseActivity implements ImlLoginNew.View {
     EditText edt_user_con;
     @BindView(R.id.txt_hotline)
     TextView txt_hotline;
+    @BindView(R.id.imageView)
+    ImageView imageView;  @BindView(R.id.imageView4)
+    ImageView img_broad;
 
     @Override
     public int setContentViewId() {
@@ -38,6 +44,8 @@ public class ActivityLoginNew extends BaseActivity implements ImlLoginNew.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterLoginNew(this);
+        Glide.with(this).load(R.drawable.img_backround_login).into(imageView);
+        Glide.with(this).load(R.drawable.login_broad).into(img_broad);
         initEvent();
     }
 

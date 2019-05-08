@@ -439,25 +439,87 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
             String[] egg2_chil = mCauhoi.getsEGG_2_RESULT().split("::");
             String[] egg3_chil = mCauhoi.getsEGG_3_RESULT().split("::");
             String[] egg4_chil = mCauhoi.getsEGG_4_RESULT().split("::");
-            mLisAnwser_A.add(egg1_chil[0]);
-            mLisAnwser_A.add(egg2_chil[0]);
-            mLisAnwser_A.add(egg3_chil[0]);
-            mLisAnwser_A.add(egg4_chil[0]);
+            if ((egg1_chil[0] != null)) {
+                mLisAnwser_A.add(egg1_chil[0]);
+            } else {
+                mLisAnwser_A.add("");
+            }
+            if ((egg2_chil[0] != null)) {
+                mLisAnwser_A.add(egg2_chil[0]);
+            } else {
+                mLisAnwser_A.add("");
+            }
+            if ((egg3_chil[0] != null)) {
+                mLisAnwser_A.add(egg3_chil[0]);
+            } else {
+                mLisAnwser_A.add("");
+            }
+            if ((egg4_chil[0] != null)) {
+                mLisAnwser_A.add(egg4_chil[0]);
+            } else {
+                mLisAnwser_A.add("");
+            }
 
-            mLisAnwser_B.add(egg1_chil[1]);
-            mLisAnwser_B.add(egg2_chil[1]);
-            mLisAnwser_B.add(egg3_chil[1]);
-            mLisAnwser_B.add(egg4_chil[1]);
-
-            mLisAnwser_A_traloi.add(egg1[0]);
-            mLisAnwser_A_traloi.add(egg2[0]);
-            mLisAnwser_A_traloi.add(egg3[0]);
-            mLisAnwser_A_traloi.add(egg4[0]);
-
-            mLisAnwser_B_traloi.add(egg1[1]);
-            mLisAnwser_B_traloi.add(egg2[1]);
-            mLisAnwser_B_traloi.add(egg3[1]);
-            mLisAnwser_B_traloi.add(egg4[1]);
+            if ((egg1_chil.length > 1) && (egg1_chil[1] != null)) {
+                mLisAnwser_B.add(egg1_chil[1]);
+            } else {
+                mLisAnwser_B.add("");
+            }
+            if ((egg2_chil.length > 1) && (egg2_chil[1] != null)) {
+                mLisAnwser_B.add(egg2_chil[1]);
+            } else {
+                mLisAnwser_B.add("");
+            }
+            if ((egg3_chil.length > 1) && (egg3_chil[1] != null)) {
+                mLisAnwser_B.add(egg3_chil[1]);
+            } else {
+                mLisAnwser_B.add("");
+            }
+            if ((egg4_chil.length > 1) && (egg4_chil[1] != null)) {
+                mLisAnwser_B.add(egg4_chil[1]);
+            } else {
+                mLisAnwser_B.add("");
+            }
+            if ((egg1.length > 0) && (egg1[0] != null)) {
+                mLisAnwser_A_traloi.add(egg1[0]);
+            } else {
+                mLisAnwser_A_traloi.add("");
+            }
+            if ((egg2.length > 0) && (egg2[0] != null)) {
+                mLisAnwser_A_traloi.add(egg2[0]);
+            } else {
+                mLisAnwser_A_traloi.add("");
+            }
+            if ((egg3.length > 0) && (egg3[0] != null)) {
+                mLisAnwser_A_traloi.add(egg3[0]);
+            } else {
+                mLisAnwser_A_traloi.add("");
+            }
+            if ((egg4.length > 0) && (egg4[0] != null)) {
+                mLisAnwser_A_traloi.add(egg4[0]);
+            } else {
+                mLisAnwser_A_traloi.add("");
+            }
+            if ((egg1.length > 1) && (egg1[1] != null)) {
+                mLisAnwser_B_traloi.add(egg1[1]);
+            } else {
+                mLisAnwser_B_traloi.add("");
+            }
+            if ((egg2.length > 1) && (egg2[1] != null)) {
+                mLisAnwser_B_traloi.add(egg2[1]);
+            } else {
+                mLisAnwser_B_traloi.add("");
+            }
+            if ((egg3.length > 1) && (egg3[1] != null)) {
+                mLisAnwser_B_traloi.add(egg3[1]);
+            } else {
+                mLisAnwser_B_traloi.add("");
+            }
+            if ((egg4.length > 1) && (egg4[1] != null)) {
+                mLisAnwser_B_traloi.add(egg4[1]);
+            } else {
+                mLisAnwser_B_traloi.add("");
+            }
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {

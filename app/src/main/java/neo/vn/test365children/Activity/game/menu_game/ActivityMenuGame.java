@@ -30,6 +30,7 @@ import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.Models.ConfigGame;
 import neo.vn.test365children.Models.ErrorApi;
 import neo.vn.test365children.Models.respon_api.ResponConfigGame;
+import neo.vn.test365children.Presenter.PresenterLogActionServer;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
@@ -56,12 +57,14 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
     ImageView img_game_sudoku;
     @BindView(R.id.imageView12)
     ImageView imageView12;
+    @BindView(R.id.img_mute)
+    ImageView img_mute;
     @BindView(R.id.img_title_menugame)
     ImageView img_title_menugame;
     PresenterConfigGameRest mPresenter;
     String sUserMother, sUserKid;
     private boolean isPlaySudoku = true, isPlayKow = true, isPlayTPTT = true, isPlayTNNL = true;
-
+    PresenterLogActionServer mPresenterLogServer;
     @Override
     public int setContentViewId() {
         return R.layout.activity_menu_game;
@@ -72,7 +75,8 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         initEvent();
         mPresenter = new PresenterConfigGameRest(this);
-       // initData();
+        mPresenterLogServer = new PresenterLogActionServer();
+        // initData();
         Glide.with(this).load(R.drawable.bg_menu_game).into(imageView12);
         Glide.with(this).load(R.drawable.title_game).into(img_title_menugame);
     }
@@ -93,6 +97,7 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
         rl_kingofword.setOnClickListener(this);
         rl_sodoku.setOnClickListener(this);
         img_back.setOnClickListener(this);
+        img_mute.setOnClickListener(this);
     }
 
     @Override
@@ -172,6 +177,9 @@ public class ActivityMenuGame extends BaseActivity implements View.OnClickListen
                 //   KeyboardUtil.animation_click_button(ActivityMenuGame.this, img_game_kow);
                 break;
             case R.id.img_back:
+                finish();
+                break;
+            case R.id.img_mute:
                 finish();
                 break;
         }

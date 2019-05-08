@@ -10,12 +10,12 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -70,6 +70,7 @@ import neo.vn.test365children.Presenter.ImlLogin;
 import neo.vn.test365children.Presenter.Iml_init;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
+import neo.vn.test365children.Presenter.PresenterLogActionServer;
 import neo.vn.test365children.Presenter.PresenterLogin;
 import neo.vn.test365children.Presenter.PresenterSticker;
 import neo.vn.test365children.Presenter.Presenter_Init_Login;
@@ -109,10 +110,11 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     Button btn_information;
     @BindView(R.id.ll_show_multil_user)
     ConstraintLayout ll_show_multil_user;
-    @BindView(R.id.img_switch)
-    ImageView img_switch;
+
     @BindView(R.id.img_exit_ll_show)
     ImageView img_exit_ll_show;
+    @BindView(R.id.img_back_ll_user)
+    ImageView img_back_ll_user;
     Realm mRealm;
     PresenterSticker mPresenter;
     PresenterBaitap mPresenterBaitap;
@@ -121,13 +123,13 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     private Presenter_Init_Login mPresenter_init;
     boolean isLogin;
     boolean isMute = false;
+    PresenterLogActionServer mPresenterLogActionServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String sTokenkey = SharedPrefs.getInstance().get(Constants.KEY_TOKEN, String.class);
         Log.e(TAG, "onCreate: token: " + sTokenkey);
-
         // play_music_bg();
         mPlayClick = new MediaPlayer();
         id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -136,8 +138,17 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         mPresenterBaitap = new PresenterBaitap(this);
         mPresenter_init = new Presenter_Init_Login(this);
         mPresenterLogin = new PresenterLogin(this);
+        mPresenterLogActionServer = new PresenterLogActionServer();
         Glide.with(this).load(R.drawable.bg_home).into(img_background);
+        Glide.with(this).load(R.drawable.icon_bang).into(img_back_ll_user);
         boolean is_check_update = SharedPrefs.getInstance().get(Constants.KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS, Boolean.class);
+        //Check multil user login
+        lisUserLoginRealm = mRealm.where(InfoKids.class).findAll();
+        if (lisUserLoginRealm != null && lisUserLoginRealm.size() > 1) {
+            txt_add_user.setText("Đổi tài khoản");
+        } else {
+            txt_add_user.setText("Thêm tài khoản");
+        }
         if (!is_check_update) {
             check_notify_update_child();
         }
@@ -146,9 +157,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         initCheckExerPlaying();
         //  initConfig();
         //initData();
-
         initEvent();
-        initAnimation();
         //play_mp3();
     }
 
@@ -181,6 +190,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         init_lis_login();
         Log.e(TAG, "init_get_multil_user_size: " + lisUserLogin.size());
     }
+
     private void init_lis_login() {
         //  lisUserLogin.add(null);
         adapter = new AdapterUserLogin(lisUserLogin, this);
@@ -236,6 +246,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 true, new ClickDialog() {
                     @Override
                     public void onClickYesDialog() {
+                        SharedPrefs.getInstance().put(Constants.KEY_SAVE_COUNT_START_EXER, "" + 0);
                         startActivity(new Intent(ActivityHome.this, ActivityLoginNew.class));
                         gone_multil_user();
                         finish();
@@ -248,10 +259,6 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 });
     }
 
-    private void initAnimation() {
-        Animation animationRotale = AnimationUtils.loadAnimation(this, R.anim.animation_switch_user);
-        img_switch.startAnimation(animationRotale);
-    }
 
     @Override
     protected void onStart() {
@@ -332,6 +339,11 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 get_init();
             }
         }
+        sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+        sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+        if (sUserCon != null && sUserMe != null)
+            mPresenterLogActionServer.api_log_action_server(sUserMe, sUserCon,
+                    "launcher_app", "");
     }
 
     private boolean isPlayingExer;
@@ -341,10 +353,12 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         String sWeek;
         isPlayingExer = SharedPrefs.getInstance().get(Constants.KEY_SAVE_PLAYING_EXER, Boolean.class);
         String json = SharedPrefs.getInstance().get(Constants.KEY_SAVE_LIST_EXER_PLAYING, String.class);
+        sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+        sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         if (isPlayingExer && json != null && json.length() > 0) {
             Gson gson = new Gson(); // Or use new GsonBuilder().create();
             objExer = gson.fromJson(json, ExerciseAnswer.class);
-            if (objExer.getsMonhoc() != null) {
+            if (objExer != null && objExer.getsMonhoc() != null) {
                 switch (objExer.getsMonhoc()) {
                     case "1":
                         sSubject = "Toán";
@@ -357,40 +371,46 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                         break;
                 }
             }
-            if (sUserMe.equals(objExer.getsId_userMe()) && sUserCon.equals(objExer.getsId_userCon())) {
-                showDialogComfirm("Thông báo", "Bài tập môn " + sSubject + " tuần " + objExer.getsIdTuan()
-                        + " chưa hoàn thành bạn có muốn tiếp tục làm bài không?", true, new ClickDialog() {
-                    @Override
-                    public void onClickYesDialog() {
-                        ExerciseAnswer obj = objExer;
-                        obj.setsTimebatdaulambai(get_current_time());
-                        // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
-                        obj.setIsTrangthailambai("1");
-                        obj.setsStatus_Play("1");
-                        mRealm.beginTransaction();
-                        mRealm.copyToRealmOrUpdate(objExer);
-                        mRealm.commitTransaction();
-                        Intent intent = new Intent(ActivityHome.this, ActivityLambaitap.class);
-                        App.sTime = objExer.getsThoiluonglambai();
-                        mLisCauhoi.addAll(objExer.getmLisCauhoi());
-                        intent.putExtra(Constants.KEY_SEND_EXER_AGAIN, true);
-                        App.mExercise = obj;
-                        startActivity(intent);
-                    }
+            if (sUserMe != null && sUserCon != null) {
+                if (objExer.getsId_userMe() != null && objExer.getsId_userCon() != null) {
+                    if (sUserMe.equals(objExer.getsId_userMe()) && sUserCon.equals(objExer.getsId_userCon())) {
+                        showDialogComfirm("Thông báo", "Bài tập môn " + sSubject + " tuần " + objExer.getsIdTuan()
+                                + " chưa hoàn thành bạn có muốn tiếp tục làm bài không?", true, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+                                ExerciseAnswer obj = objExer;
+                                obj.setsTimebatdaulambai(get_current_time());
+                                // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
+                                obj.setIsTrangthailambai("1");
+                                obj.setsStatus_Play("1");
+                                mRealm.beginTransaction();
+                                mRealm.copyToRealmOrUpdate(objExer);
+                                mRealm.commitTransaction();
+                                Intent intent = new Intent(ActivityHome.this, ActivityLambaitap.class);
+                                App.sTime = objExer.getsThoiluonglambai();
+                                mLisCauhoi.addAll(objExer.getmLisCauhoi());
+                                intent.putExtra(Constants.KEY_SEND_EXER_AGAIN, true);
+                                App.mExercise = obj;
+                                startActivity(intent);
+                            }
 
-                    @Override
-                    public void onClickNoDialog() {
-                        showDialogLoading();
-                        objExer.setIsTrangthailambai("2");
-                        mRealm.beginTransaction();
-                        mRealm.copyToRealmOrUpdate(objExer);
-                        mRealm.commitTransaction();
-                        nopbai();
-                        SharedPrefs.getInstance().put(Constants.KEY_SAVE_PLAYING_EXER, false);
-                        SharedPrefs.getInstance().put(Constants.KEY_SAVE_LIST_EXER_PLAYING, null);
+                            @Override
+                            public void onClickNoDialog() {
+                                showDialogLoading();
+                                objExer.setIsTrangthailambai("2");
+                                mRealm.beginTransaction();
+                                mRealm.copyToRealmOrUpdate(objExer);
+                                mRealm.commitTransaction();
+                                nopbai();
+                                SharedPrefs.getInstance().put(Constants.KEY_SAVE_PLAYING_EXER, false);
+                                SharedPrefs.getInstance().put(Constants.KEY_SAVE_LIST_EXER_PLAYING, null);
+                            }
+                        });
                     }
-                });
+                }
             }
+
+
             // deserializes json into target2
         }
 
@@ -496,6 +516,9 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         mPlayClick.start();
     }
 
+    @BindView(R.id.txt_add_user)
+    TextView txt_add_user;
+
     @Override
     public int setContentViewId() {
         return R.layout.activity_home;
@@ -503,7 +526,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
 
     private void initEvent() {
         img_exit_ll_show.setOnClickListener(this);
-        img_switch.setOnClickListener(this);
+        //  img_switch.setOnClickListener(this);
         btn_lambaitap.setOnClickListener(this);
         btn_ketquahoctap.setOnClickListener(this);
         btn_vuichoi.setOnClickListener(this);
@@ -568,10 +591,10 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
         play_click();
         switch (v.getId()) {
-            case R.id.img_switch:
+   /*         case R.id.img_switch:
                 init_get_multil_user();
                 show_multil_user();
-                break;
+                break;*/
             case R.id.img_exit_ll_show:
                 gone_multil_user();
                 break;
@@ -686,6 +709,9 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    @BindView(R.id.card_change_user)
+    CardView card_change_user;
+
     private void gone_multil_user() {
         ll_show_multil_user.setVisibility(View.GONE);
         //ll_show_multil_user.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animation_show_question));
@@ -695,6 +721,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         btn_utilities.setVisibility(View.VISIBLE);
         btn_ketquahoctap.setVisibility(View.VISIBLE);
         btn_vuichoi.setVisibility(View.VISIBLE);
+        card_change_user.setVisibility(View.VISIBLE);
     }
 
     private void show_multil_user() {
@@ -706,6 +733,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         btn_utilities.setVisibility(View.INVISIBLE);
         btn_ketquahoctap.setVisibility(View.INVISIBLE);
         btn_vuichoi.setVisibility(View.INVISIBLE);
+        card_change_user.setVisibility(View.INVISIBLE);
     }
 
     private void start_get_class() {
@@ -819,6 +847,14 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 SharedPrefs.getInstance().put(Constants.KEY_USER_CON, sUserCon);
                 SharedPrefs.getInstance().put(Constants.KEY_PASSWORD, sPassword);
                 show_info_kid();
+                String sToken_push = SharedPrefs.getInstance().get(Constants.KEY_TOKEN, String.class);
+                String sUserMother = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+                String sUserChil = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+                if (sToken_push != null && sToken_push.length() > 0) {
+                    mPresenter_init.api_update_child_device(sUserMother, sUserChil, BuildConfig.VERSION_NAME,
+                            android.os.Build.BRAND + " " + android.os.Build.MODEL,
+                            sToken_push, "2", android.os.Build.VERSION.RELEASE);
+                }
             } else if (mLis.getsERROR().equals("0001")) {
               /*  showDialogComfirm("Lỗi", mLis.getsRESULT(), false, new ClickDialog() {
                     @Override

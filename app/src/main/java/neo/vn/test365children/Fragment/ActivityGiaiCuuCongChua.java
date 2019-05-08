@@ -349,6 +349,7 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
 
         }
     }
+
     private void anwser() {
         if (sAnwser.length() > 0) {
             if (sAnwser.equals(mCauhoi.getsANSWER())) {
@@ -363,6 +364,7 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
         } else showDialogNotify("Thông báo", "Bạn chưa chọn đáp án nào");
         isClickXemdiem = true;
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -394,6 +396,9 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
+        webview.getSettings().setDomStorageEnabled(true);
+        webview.getSettings().setPluginState(WebSettings.PluginState.ON);
+        webview.getSettings().setMediaPlaybackRequiresUserGesture(false);
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
         String text = "<html><head>"

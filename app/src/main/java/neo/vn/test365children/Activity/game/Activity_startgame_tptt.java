@@ -127,18 +127,11 @@ public class Activity_startgame_tptt extends BaseActivity
             case R.id.btn_play_game:
                 KeyboardUtil.animation_click_button(Activity_startgame_tptt.this, img_btn_play);
                 /*test */
-                if (sPartId.length() > 0)
-                    if (sUserMe.equals("quochuy190") || sUserMe.equals("maitham123")) {
-                        Intent intent = new Intent(Activity_startgame_tptt.this,
-                                ActivityGuideGameTPTT.class);
-                        startActivity(intent);
-                        finish();
-                        //mPresenter.api_start_tptt(sUserMe, sUserCon, sPartId);
-                    } else {
-                        btn_play_game.setEnabled(false);
-                        showDialogLoading();
-                        mPresenter.api_start_tptt(sUserMe, sUserCon, sPartId);
-                    }
+                if (sPartId.length() > 0) {
+                    btn_play_game.setEnabled(false);
+                    showDialogLoading();
+                    mPresenter.api_start_tptt(sUserMe, sUserCon, sPartId);
+                }
                 break;
         }
     }
@@ -197,6 +190,7 @@ public class Activity_startgame_tptt extends BaseActivity
         //mp3 = new MediaPlayer();
         mPlayer.release();
         mPlayer = MediaPlayer.create(Activity_startgame_tptt.this, R.raw.nhac_mo_dau_2008);
+        mPlayer.isLooping();
         mPlayer.start();
     }
 }

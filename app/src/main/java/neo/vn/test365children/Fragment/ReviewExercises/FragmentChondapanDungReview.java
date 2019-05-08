@@ -250,6 +250,13 @@ public class FragmentChondapanDungReview extends BaseFragment
         webSettings.setDefaultFontSize(18);
         webview.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
+        webSettings.setAllowFileAccess(true);
+        //  webSettings.setAppCacheEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webview.getSettings().setPluginState(WebSettings.PluginState.ON);
+        webview.getSettings().setMediaPlaybackRequiresUserGesture(false);
+        webSettings .setMediaPlaybackRequiresUserGesture(false);
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
         String text = "<html><head>"

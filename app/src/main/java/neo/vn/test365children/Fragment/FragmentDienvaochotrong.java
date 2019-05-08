@@ -115,7 +115,7 @@ public class FragmentDienvaochotrong extends BaseFragment {
         }
     }
 
-    String sHtml;
+    String sHtml = "";
 
     @Override
     public void onDestroy() {
@@ -151,6 +151,9 @@ public class FragmentDienvaochotrong extends BaseFragment {
         webSettings2.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings2.setDefaultFontSize(18);
         browser.setWebChromeClient(new WebChromeClient());
+        browser.getSettings().setDomStorageEnabled(true);
+        browser.getSettings().setPluginState(WebSettings.PluginState.ON);
+        browser.getSettings().setMediaPlaybackRequiresUserGesture(false);
         webview_dapan.clearHistory();
         webview_dapan.clearFormData();
         webview_dapan.clearCache(true);
@@ -163,13 +166,15 @@ public class FragmentDienvaochotrong extends BaseFragment {
         browser.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
         browser.getSettings().setJavaScriptEnabled(true);
         browser.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
-        if (!mCauhoi.isDalam()) {
-            sHtml = replaceXML("<<", ">>", mCauhoi.getsHTML_CONTENT().replace(">>>",
-                    "> >>"));
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD
-                    (replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT()));
-            String sAnwser = replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT());
+        if (mCauhoi != null && !mCauhoi.isDalam()) {
+            if (mCauhoi.getsHTML_CONTENT() != null) {
+                sHtml = replaceXML("<<", ">>", mCauhoi.getsHTML_CONTENT().replace(">>>",
+                        "> >>"));
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD
+                        (replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT()));
+                String sAnwser = replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT());
+            }
             sHtlml = "<html>\n" +
                     "<head>\n" +
  /*               "<style>\n" +
@@ -205,6 +210,36 @@ public class FragmentDienvaochotrong extends BaseFragment {
                     "       Android.sendData9(x9);" +
                     "       var x10 = document.getElementById(\"txt_input10\").value;\n" +
                     "       Android.sendData10(x10);" +
+                    "       var x11 = document.getElementById(\"txt_input11\").value;\n" +
+                    "       Android.sendData11(x11);" +
+                    "       var x12 = document.getElementById(\"txt_input12\").value;\n" +
+                    "       Android.sendData12(x12);" +
+                    "       var x13 = document.getElementById(\"txt_input13\").value;\n" +
+                    "       Android.sendData13(x13);" +
+                    "       var x14 = document.getElementById(\"txt_input14\").value;\n" +
+                    "       Android.sendData14(x14);" +
+                    "       var x15 = document.getElementById(\"txt_input15\").value;\n" +
+                    "       Android.sendData15(x15);" +
+                    "       var x16 = document.getElementById(\"txt_input16\").value;\n" +
+                    "       Android.sendData16(x16);" +
+                    "       var x17 = document.getElementById(\"txt_input17\").value;\n" +
+                    "       Android.sendData17(x17);" +
+                    "       var x18 = document.getElementById(\"txt_input18\").value;\n" +
+                    "       Android.sendData18(x18);" +
+                    "       var x19 = document.getElementById(\"txt_input19\").value;\n" +
+                    "       Android.sendData19(x19);" +
+                    "       var x20 = document.getElementById(\"txt_input20\").value;\n" +
+                    "       Android.sendData20(x20);" +
+                    "       var x21 = document.getElementById(\"txt_input21\").value;\n" +
+                    "       Android.sendData21(x21);" +
+                    "       var x22 = document.getElementById(\"txt_input22\").value;\n" +
+                    "       Android.sendData22(x22);" +
+                    "       var x23 = document.getElementById(\"txt_input23\").value;\n" +
+                    "       Android.sendData23(x23);" +
+                    "       var x24 = document.getElementById(\"txt_input24\").value;\n" +
+                    "       Android.sendData24(x24);" +
+                    "       var x25 = document.getElementById(\"txt_input25\").value;\n" +
+                    "       Android.sendData25(x25);" +
                     "    }\n" +
                     "    </script>\n" +
                     "\n" +
@@ -293,20 +328,51 @@ public class FragmentDienvaochotrong extends BaseFragment {
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_9());
             mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_10());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_11());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_12());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_13());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_14());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_15());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_16());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_17());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_18());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_19());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_20());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_21());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_22());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_23());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_24());
+            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_25());
             CauhoiDetail obj = App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1)
                     .getLisInfo().get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1);
 
             if (sAnwser_true.size() > 0) {
                 for (int i = 0; i < sAnwser_true.size(); i++) {
-                    if (mLisAnwser.get(i) != null && mLisAnwser.get(i).length() > 0) {
-                        if (sAnwser_true.get(i).toUpperCase().equals(mLisAnwser.get(i).trim().toUpperCase())) {
-                            mLisTrue.add(i);
-                            iCountPoint++;
+                    if (i < mLisAnwser.size()) {
+                        if (mLisAnwser.get(i) != null && mLisAnwser.get(i).length() > 0) {
+                            if (sAnwser_true.get(i).toUpperCase().equals(mLisAnwser.get(i).trim().toUpperCase())) {
+                                mLisTrue.add(i);
+                                iCountPoint++;
+                            } else
+                                isAnwserTrue = false;
                         } else
                             isAnwserTrue = false;
-                    } else
-                        isAnwserTrue = false;
-
+                    }
                 }
                 float sTotalPoint = Float.parseFloat(obj.getsPOINT());
                 float sPoint = 0;
@@ -355,6 +421,7 @@ public class FragmentDienvaochotrong extends BaseFragment {
 
     public class WebAppInterface {
         Context mContext;
+
         WebAppInterface(Context ctx) {
             this.mContext = ctx;
         }
@@ -433,6 +500,110 @@ public class FragmentDienvaochotrong extends BaseFragment {
 
         }
 
+        @JavascriptInterface
+        public void sendData11(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_11(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData12(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_12(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData13(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_13(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData14(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_14(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData15(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_15(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData16(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_16(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData17(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_17(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData18(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_18(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData19(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_19(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData20(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_20(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData21(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_21(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData22(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_22(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData23(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_23(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData24(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_24(data);
+
+        }
+
+        @JavascriptInterface
+        public void sendData25(String data) {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_25(data);
+
+        }
         public String getData() {
             String s = "";
             return s;
@@ -574,27 +745,59 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_9());
         mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
                 .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_10());
-        if (mLisAnwser.get((position - 1)) != null && mLisAnwser.get((position - 1)).length() > 0) {
-            if (mLisTrue.size() > 0) {
-                for (int i : mLisTrue) {
-                    if (i == (position - 1)) {
-                        isAnwserT = true;
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_11());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_12());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_13());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_14());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_15());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_16());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_17());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_18());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_19());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_20());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_21());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_22());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_23());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_24());
+        mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_25());
+        if (position < mLisAnwser.size()) {
+            if (mLisAnwser.get((position - 1)) != null && mLisAnwser.get((position - 1)).length() > 0) {
+                if (mLisTrue.size() > 0) {
+                    for (int i : mLisTrue) {
+                        if (i == (position - 1)) {
+                            isAnwserT = true;
+                        }
                     }
                 }
-            }
-            if (isAnwserT) {
-                String sContent = mLisAnwser.get((position - 1));
-                s = String.valueOf(sbf.replace(first, last, " <u><b><font color='blue'> "
-                        + sContent + " </font></b></u>"));
-            } else {
-                String sContent = mLisAnwser.get((position - 1));
-                s = String.valueOf(sbf.replace(first, last, " <u><b><font color='red'> "
-                        + sContent + " </font></b></u>"));
-            }
+                if (isAnwserT) {
+                    String sContent = mLisAnwser.get((position - 1));
+                    s = String.valueOf(sbf.replace(first, last, " <u><b><font color='blue'> "
+                            + sContent + " </font></b></u>"));
+                } else {
+                    String sContent = mLisAnwser.get((position - 1));
+                    s = String.valueOf(sbf.replace(first, last, " <u><b><font color='red'> "
+                            + sContent + " </font></b></u>"));
+                }
 
-        } else {
-            s = String.valueOf(sbf.replace(first, last, "<u><b><font color='red'>"
-                    + "___" + "</font></b></u>"));
+            } else {
+                s = String.valueOf(sbf.replace(first, last, "<u><b><font color='red'>"
+                        + "___" + "</font></b></u>"));
+            }
         }
         // s = String.valueOf(sbf.replace(first, last, "<img src=\"http://content1.test365.vn//upload//image/toan//tamgiacvuong.PNG\" style=\"height:10%; width:10%;\">"));
         return s;

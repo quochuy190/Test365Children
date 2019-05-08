@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -125,6 +126,8 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     ImageView img_stop_game;
     @BindView(R.id.imageView16)
     ImageView imageView16;
+    @BindView(R.id.scroll_tptt)
+    NestedScrollView scroll_tptt;
 
     @Override
     public int setContentViewId() {
@@ -730,6 +733,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                                 hideDialogLoading();
                                 break;
                             case R.id.webview_anwser_A_test:
+                                scroll_tptt.scrollTo(0, 0);
                                 if (iHeightmax < rl_anwser_A_test.getHeight()) {
                                     iHeightmax = rl_anwser_A_test.getHeight();
                                 }

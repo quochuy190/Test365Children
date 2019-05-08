@@ -104,7 +104,21 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
     String sAnwserChil_Dientu_8;
     String sAnwserChil_Dientu_9;
     String sAnwserChil_Dientu_10;
-
+    String sAnwserChil_Dientu_11;
+    String sAnwserChil_Dientu_12;
+    String sAnwserChil_Dientu_13;
+    String sAnwserChil_Dientu_15;
+    String sAnwserChil_Dientu_14;
+    String sAnwserChil_Dientu_16;
+    String sAnwserChil_Dientu_17;
+    String sAnwserChil_Dientu_18;
+    String sAnwserChil_Dientu_19;
+    String sAnwserChil_Dientu_20;
+    String sAnwserChil_Dientu_21;
+    String sAnwserChil_Dientu_22;
+    String sAnwserChil_Dientu_23;
+    String sAnwserChil_Dientu_24;
+    String sAnwserChil_Dientu_25;
     float fTempPoint;
 
     public CauhoiDetail(String sERROR, String sMESSAGE, String sRESULT) {
@@ -577,6 +591,124 @@ public class CauhoiDetail extends RealmObject implements Parcelable, Serializabl
 
     }
 
+    public String getsAnwserChil_Dientu_11() {
+        return sAnwserChil_Dientu_11;
+    }
 
+    public void setsAnwserChil_Dientu_11(String sAnwserChil_Dientu_11) {
+        this.sAnwserChil_Dientu_11 = sAnwserChil_Dientu_11;
+    }
+
+    public String getsAnwserChil_Dientu_12() {
+        return sAnwserChil_Dientu_12;
+    }
+
+    public void setsAnwserChil_Dientu_12(String sAnwserChil_Dientu_12) {
+        this.sAnwserChil_Dientu_12 = sAnwserChil_Dientu_12;
+    }
+
+    public String getsAnwserChil_Dientu_13() {
+        return sAnwserChil_Dientu_13;
+    }
+
+    public void setsAnwserChil_Dientu_13(String sAnwserChil_Dientu_13) {
+        this.sAnwserChil_Dientu_13 = sAnwserChil_Dientu_13;
+    }
+
+    public String getsAnwserChil_Dientu_15() {
+        return sAnwserChil_Dientu_15;
+    }
+
+    public void setsAnwserChil_Dientu_15(String sAnwserChil_Dientu_15) {
+        this.sAnwserChil_Dientu_15 = sAnwserChil_Dientu_15;
+    }
+
+    public String getsAnwserChil_Dientu_14() {
+        return sAnwserChil_Dientu_14;
+    }
+
+    public void setsAnwserChil_Dientu_14(String sAnwserChil_Dientu_14) {
+        this.sAnwserChil_Dientu_14 = sAnwserChil_Dientu_14;
+    }
+
+    public String getsAnwserChil_Dientu_16() {
+        return sAnwserChil_Dientu_16;
+    }
+
+    public void setsAnwserChil_Dientu_16(String sAnwserChil_Dientu_16) {
+        this.sAnwserChil_Dientu_16 = sAnwserChil_Dientu_16;
+    }
+
+    public String getsAnwserChil_Dientu_17() {
+        return sAnwserChil_Dientu_17;
+    }
+
+    public void setsAnwserChil_Dientu_17(String sAnwserChil_Dientu_17) {
+        this.sAnwserChil_Dientu_17 = sAnwserChil_Dientu_17;
+    }
+
+    public String getsAnwserChil_Dientu_18() {
+        return sAnwserChil_Dientu_18;
+    }
+
+    public void setsAnwserChil_Dientu_18(String sAnwserChil_Dientu_18) {
+        this.sAnwserChil_Dientu_18 = sAnwserChil_Dientu_18;
+    }
+
+    public String getsAnwserChil_Dientu_19() {
+        return sAnwserChil_Dientu_19;
+    }
+
+    public void setsAnwserChil_Dientu_19(String sAnwserChil_Dientu_19) {
+        this.sAnwserChil_Dientu_19 = sAnwserChil_Dientu_19;
+    }
+
+    public String getsAnwserChil_Dientu_20() {
+        return sAnwserChil_Dientu_20;
+    }
+
+    public void setsAnwserChil_Dientu_20(String sAnwserChil_Dientu_20) {
+        this.sAnwserChil_Dientu_20 = sAnwserChil_Dientu_20;
+    }
+
+    public String getsAnwserChil_Dientu_21() {
+        return sAnwserChil_Dientu_21;
+    }
+
+    public void setsAnwserChil_Dientu_21(String sAnwserChil_Dientu_21) {
+        this.sAnwserChil_Dientu_21 = sAnwserChil_Dientu_21;
+    }
+
+    public String getsAnwserChil_Dientu_22() {
+        return sAnwserChil_Dientu_22;
+    }
+
+    public void setsAnwserChil_Dientu_22(String sAnwserChil_Dientu_22) {
+        this.sAnwserChil_Dientu_22 = sAnwserChil_Dientu_22;
+    }
+
+    public String getsAnwserChil_Dientu_23() {
+        return sAnwserChil_Dientu_23;
+    }
+
+    public void setsAnwserChil_Dientu_23(String sAnwserChil_Dientu_23) {
+        this.sAnwserChil_Dientu_23 = sAnwserChil_Dientu_23;
+    }
+
+    public String getsAnwserChil_Dientu_24() {
+        return sAnwserChil_Dientu_24;
+    }
+
+    public void setsAnwserChil_Dientu_24(String sAnwserChil_Dientu_24) {
+        this.sAnwserChil_Dientu_24 = sAnwserChil_Dientu_24;
+    }
+
+    public String getsAnwserChil_Dientu_25() {
+        return sAnwserChil_Dientu_25;
+    }
+
+    public void setsAnwserChil_Dientu_25(String sAnwserChil_Dientu_25) {
+        this.sAnwserChil_Dientu_25 = sAnwserChil_Dientu_25;
+    }
 }
 

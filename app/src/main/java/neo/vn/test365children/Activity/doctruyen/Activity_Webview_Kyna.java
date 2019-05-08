@@ -183,7 +183,6 @@ public class Activity_Webview_Kyna extends BaseActivity {
         protected void onPostExecute(Void aVoid) {
             if (token != null) {
                 webview_get_token(token);
-
             }
             super.onPostExecute(aVoid);
         }

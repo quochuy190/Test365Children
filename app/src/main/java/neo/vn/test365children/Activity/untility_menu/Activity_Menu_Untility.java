@@ -32,6 +32,8 @@ public class Activity_Menu_Untility extends BaseActivity implements Iml_Untiliti
     ImageView img_background;
     @BindView(R.id.btn_back)
     ImageView btn_back;
+    @BindView(R.id.btn_mute)
+    ImageView btn_mute;
     RecyclerView.LayoutManager mLayoutManager;
     List<ObjUntility> lisMenuUntility;
     AdapterMenuUntility adapter;
@@ -63,6 +65,13 @@ public class Activity_Menu_Untility extends BaseActivity implements Iml_Untiliti
 
     private void initEvent() {
         btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyboardUtil.play_click_button(Activity_Menu_Untility.this);
+                finish();
+            }
+        });
+        btn_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(Activity_Menu_Untility.this);

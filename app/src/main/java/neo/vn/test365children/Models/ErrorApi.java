@@ -20,6 +20,12 @@ public class ErrorApi {
     String MESSGE;
     @SerializedName("RESULT")
     String sRESULT;
+    @SerializedName("ID")
+    String ID;
+    @SerializedName("NAME")
+    String NAME;
+    @SerializedName("ISONLINE")
+    String ISONLINE;
 
     public ErrorApi() {
     }
@@ -35,6 +41,30 @@ public class ErrorApi {
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getNAME() {
+        return NAME;
+    }
+
+    public void setNAME(String NAME) {
+        this.NAME = NAME;
+    }
+
+    public String getISONLINE() {
+        return ISONLINE;
+    }
+
+    public void setISONLINE(String ISONLINE) {
+        this.ISONLINE = ISONLINE;
     }
 
     public String getMESSGE() {

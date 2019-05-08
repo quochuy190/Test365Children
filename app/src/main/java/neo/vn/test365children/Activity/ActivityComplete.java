@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -108,7 +109,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate: ");
-        mRealm = RealmController.getInstance().getRealm();
+        mRealm = RealmController.with(this).getRealm();
         mPresenter = new PresenterBaitap(this);
         mPresenterFeedback = new PresenterFeedback(this);
         btn_guidiem.setEnabled(false);
@@ -197,7 +198,13 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         } else
             objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);*/
         objExer = App.mExercise;
-        nopbai();
+        if (objExer != null)
+            nopbai();
+        else {
+            Toast.makeText(this, "Bài tập đã được hoàn thành", Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK, new Intent());
+            App.mLisCauhoi.clear();
+        }
         SharedPrefs.getInstance().put(Constants.KEY_SAVE_PLAYING_EXER, false);
 
     }
@@ -251,24 +258,40 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         mRealmList.addAll(App.mLisCauhoi);
         objExer.setmLisCauhoi(mRealmList);
         txt_pointlambai.setText("Điểm con đạt được: " + StringUtil.format_point(fPoint) + " điểm");
-        if (objExer.getsThoiluonglambai() != null && objExer.getsThoiluonglambai().length() > 0) {
-            if (objExer.getsTimequydinh() != null && objExer.getsTimequydinh().length() > 0) {
-                durationInMillis = Long.parseLong(objExer.getsThoiluonglambai());
-                long timeTotal = Long.parseLong(objExer.getsTimequydinh());
-                long time = (timeTotal / 1000) - durationInMillis;
-                txt_timelambai.setText("Thời gian làm bài: "
-                        + TimeUtils.formatTime_Complete((int) (time * 1000)));
-            } else {
-                durationInMillis = Long.parseLong(objExer.getsThoiluonglambai());
-                long timeTotal = 30 * 60;
-                long time = timeTotal - durationInMillis;
-                txt_timelambai.setText("Thời gian làm bài: "
-                        + TimeUtils.formatTime_Complete((int) (time * 1000)));
-            }
-
+        if (objExer.getsKieunopbai().equals("1")) {
+            long timeTotal = Long.parseLong(objExer.getsTimequydinh());
+            txt_timelambai.setText("Thời gian làm bài: "
+                    + TimeUtils.formatTime_Complete((int) (timeTotal)));
         } else {
-            txt_timelambai.setText("Thời gian làm bài không xác định");
+            if (objExer.getsThoiluonglambai() != null && objExer.getsThoiluonglambai().length() > 0) {
+                if (objExer.getsTimequydinh() != null && objExer.getsTimequydinh().length() > 0) {
+                    durationInMillis = Long.parseLong(objExer.getsThoiluonglambai());
+                    long timeTotal = Long.parseLong(objExer.getsTimequydinh());
+
+                    if (timeTotal > 0) {
+                        long time = (timeTotal / 1000) - (durationInMillis);
+                        txt_timelambai.setText("Thời gian làm bài: "
+                                + TimeUtils.formatTime_Complete((int) (time * 1000)));
+                    } else {
+                        long timeTotal_test = 30 * 60;
+                        long time = timeTotal_test - durationInMillis;
+                        txt_timelambai.setText("Thời gian làm bài: "
+                                + TimeUtils.formatTime_Complete((int) (time * 1000)));
+                    }
+
+                } else {
+                    durationInMillis = Long.parseLong(objExer.getsThoiluonglambai());
+                    long timeTotal = 30 * 60;
+                    long time = timeTotal - durationInMillis;
+                    txt_timelambai.setText("Thời gian làm bài: "
+                            + TimeUtils.formatTime_Complete((int) (time * 1000)));
+                }
+
+            } else {
+                txt_timelambai.setText("Thời gian làm bài không xác định");
+            }
         }
+
         int iTime = (int) (durationInMillis / 1000);
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String sDanhsachcau = gson.toJson(mListCauhoiAnswer);

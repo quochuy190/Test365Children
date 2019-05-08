@@ -27,8 +27,11 @@ public class ObjUntility implements Serializable {
     String TTIME;
     @SerializedName("DES_PHONE")
     String DES_PHONE;
+    @SerializedName("OD")
+    String OD;
     @SerializedName("IMAGE_URL")
     String sIMAGE_URL_SKILL;
+
 
     public ObjUntility(String sName, String sLogo) {
         this.sName = sName;
@@ -36,6 +39,14 @@ public class ObjUntility implements Serializable {
     }
 
     public ObjUntility() {
+    }
+
+    public String getOD() {
+        return OD;
+    }
+
+    public void setOD(String OD) {
+        this.OD = OD;
     }
 
     public String getsName() {

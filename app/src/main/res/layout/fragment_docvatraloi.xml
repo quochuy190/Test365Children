@@ -248,8 +248,7 @@
                 android:id="@+id/img_bang"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon_broad" />
+                android:scaleType="fitXY" />
 
             <WebView
                 android:id="@+id/txt_cauhoi"

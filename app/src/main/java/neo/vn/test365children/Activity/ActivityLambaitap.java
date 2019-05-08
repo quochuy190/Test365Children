@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -38,7 +39,6 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
-import io.realm.Realm;
 import io.realm.RealmList;
 import neo.vn.test365children.Adapter.AdapterViewpager;
 import neo.vn.test365children.App;
@@ -69,7 +69,6 @@ import neo.vn.test365children.Models.TuanDamua;
 import neo.vn.test365children.Presenter.ImpBaitap;
 import neo.vn.test365children.Presenter.PresenterBaitap;
 import neo.vn.test365children.R;
-import neo.vn.test365children.RealmController.RealmController;
 import neo.vn.test365children.Service.BoundServiceCountTime;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
@@ -119,6 +118,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
     private Intent intent;
     private boolean isBound = false;
     private BoundServiceCountTime myService;
+
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -137,7 +137,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ll_player.setVisibility(View.GONE);
-        mRealm = RealmController.getInstance().getRealm();
         mPlayer = new MediaPlayer();
         mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         SharedPrefs.getInstance().put(Constants.KEY_SAVE_PLAYING_EXER, true);
@@ -148,7 +147,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         } else {
             iTotalTime = 30 * 60 * 1000;
         }
-       // iTotalTime = 5 * 60 * 1000;
+        //iTotalTime = 2 * 60 * 1000;
         initData();
         initEvent();
         Animation animationRotale = AnimationUtils.loadAnimation(this, R.anim.animation_time);
@@ -353,7 +352,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         } else if (event.message.equals("nop_bai")) {
             final Intent intent = new Intent(ActivityLambaitap.this, ActivityComplete.class);
             objExer.setsKieunopbai("0");
-            objExer.setsThoiluonglambai("" + iCurrenTime);
+            objExer.setsThoiluonglambai("" + (iCurrenTime));
             objExer.setsTimequydinh("" + iTotalTime);
             objExer.setsTimeketthuclambai(get_current_time());
             objExer.setsStatus_Play("1");
@@ -395,7 +394,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             play_mp3_pr_lost();
         } else if (event.message.equals(Constants.KEY_SAVE_LIST_EXER_PLAYING)) {
             save_playing_exer();
-
         }
     }
 
@@ -452,7 +450,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         super.onStop();
     }
 
-    Realm mRealm;
 
     private void initEvent() {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -549,9 +546,14 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         isPlay_Again = getIntent().getBooleanExtra(Constants.KEY_SEND_EXER_AGAIN, false);
         if (isPlay_Again) {
             objExer = App.mExercise;
-            if (objExer.getsPoint() != null) {
-                fPoint = Float.parseFloat(objExer.getsPoint());
-                txt_point.setText("" + StringUtil.format_point(fPoint));
+            if (objExer != null) {
+                if (objExer.getsPoint() != null) {
+                    fPoint = Float.parseFloat(objExer.getsPoint());
+                    txt_point.setText("" + StringUtil.format_point(fPoint));
+                }
+            } else {
+                Toast.makeText(this, "Bài tập đã được hoàn thành.", Toast.LENGTH_SHORT).show();
+                finish();
             }
         } else
             objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);

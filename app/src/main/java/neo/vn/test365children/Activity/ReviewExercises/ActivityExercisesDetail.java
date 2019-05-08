@@ -105,7 +105,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenterBaitap = new PresenterBaitap(this);
-        mRealm = RealmController.getInstance().getRealm();
+        mRealm = RealmController.with(this).getRealm();
         initData();
         initEvent();
     }
@@ -122,7 +122,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Share using"));*/
-                if (obj.getFILE_PDF() != null && obj.getFILE_PDF().length() > 0) {
+                if (obj != null && obj.getFILE_PDF() != null && obj.getFILE_PDF().length() > 0) {
                     Intent intent = new Intent(ActivityExercisesDetail.this, Activity_webview_doctruyen.class);
                     intent.putExtra(Constants.KEY_SEND_LANGUAGE, "share_exer");
                     intent.putExtra(Constants.KEY_SEND_URL_WEBVIEW, obj.getFILE_PDF());
@@ -137,7 +137,7 @@ public class ActivityExercisesDetail extends BaseActivity implements ImlExerDeta
             @Override
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(ActivityExercisesDetail.this);
-                if (obj.getLINK() != null && obj.getLINK().length() > 0) {
+                if (obj != null && obj.getLINK() != null && obj.getLINK().length() > 0) {
                     Intent intent = new Intent(ActivityExercisesDetail.this, Activity_webview_doctruyen.class);
                     intent.putExtra(Constants.KEY_SEND_LANGUAGE, "review_video");
                     intent.putExtra(Constants.KEY_SEND_URL_WEBVIEW, obj.getLINK());

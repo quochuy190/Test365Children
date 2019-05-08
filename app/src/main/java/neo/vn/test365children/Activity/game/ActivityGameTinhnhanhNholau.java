@@ -246,6 +246,7 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     List<String> mLisDebai = new ArrayList<>();
 
     private void initData() {
+        Glide.with(this).load(R.drawable.icon_avata).into(img_avata_player2);
         sLevel = getIntent().getStringExtra(Constants.KEY_SEND_LEVEL);
         ObjLogin chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
         Glide.with(this).load(R.drawable.icon_broad).into(img_broad_question_1);
@@ -1907,7 +1908,7 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     public void play_gameover_win() {
         //mp3 = new MediaPlayer();
         mPlayer_Click.release();
-        mPlayer_Click = MediaPlayer.create(ActivityGameTinhnhanhNholau.this, R.raw.tnnl_cheering1);
+        mPlayer_Click = MediaPlayer.create(ActivityGameTinhnhanhNholau.this, R.raw.yeah_mp3);
         mPlayer_Click.start();
 
     }
@@ -1915,7 +1916,7 @@ public class ActivityGameTinhnhanhNholau extends BaseActivity implements View.On
     public void play_gameover_lost() {
         //mp3 = new MediaPlayer();
         mPlayer_Click.release();
-        mPlayer_Click = MediaPlayer.create(ActivityGameTinhnhanhNholau.this, R.raw.tnnl_boo3);
+        mPlayer_Click = MediaPlayer.create(ActivityGameTinhnhanhNholau.this, R.raw.false_te);
         mPlayer_Click.start();
 
     }

@@ -6,8 +6,6 @@
     <string name="error_network">Lỗi kết nối</string>
     <string name="error">Lỗi</string>
     <string name="error_network_message">Lỗi kết nối, vui lòng kiểm tra mạng và thử lại</string>
-
-
     <string name="txt_dieukhoan">Tôi hoàn toàn đồng ý với các <b><u>Điều khoản dịch vụ</u></b> của Home365Kid</string>
     <string name="notify">Thông báo</string>
     <string name="btn_no">Không</string>

@@ -210,7 +210,6 @@ public class FragmentChondapanDung extends BaseFragment
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
         Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
     }
-
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
                 != null && mCauhoi.getsSubNumberCau().equals("1")) {
@@ -225,6 +224,7 @@ public class FragmentChondapanDung extends BaseFragment
             @Override
             public void run() {
                 initWebview_center(webview_debai, mCauhoi.getsHTML_CONTENT());
+                // initWebview_center(webview_debai, sHtml);
                 initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
                 initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
                 initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
@@ -296,22 +296,31 @@ public class FragmentChondapanDung extends BaseFragment
     }
 
     public void initWebview_center(final WebView webview, String link_web) {
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.getSettings();
-        webview.clearHistory();
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setLoadsImagesAutomatically(true);
+        webview.setBackgroundColor(Color.TRANSPARENT);
+        webview.clearSslPreferences();
         webview.clearFormData();
         webview.clearCache(true);
-        webview.setBackgroundColor(Color.TRANSPARENT);
-        webview.setWebChromeClient(new WebChromeClient());
-        WebSettings webSettings = webview.getSettings();
+        webview.clearHistory();
+        webview.clearMatches();
+        webview.getSettings().setPluginState(WebSettings.PluginState.ON);
+        webview.getSettings().setMediaPlaybackRequiresUserGesture(false);
+    //    webSettings .setMediaPlaybackRequiresUserGesture(false);
+        webview.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
+       // webSettings.setUseWideViewPort(true);
+     //  webSettings.setLoadWithOverviewMode(true);
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
-        webview.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
-        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.2));
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.1));
+      //  webSettings.setBuiltInZoomControls(true);
+        webSettings.setAllowFileAccess(true);
+      //  webSettings.setAppCacheEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webview.setWebChromeClient(new WebChromeClient());
         String pish = "<html><body  align='center'>";
         String pas = "</body></html>";
-        webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
-                "text/html", "UTF-8", "");
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(final WebView view, String url) {
@@ -342,6 +351,8 @@ public class FragmentChondapanDung extends BaseFragment
                 }.start();
             }
         });
+        webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
+                "text/html", "UTF-8", "");
     }
 
     public void initWebview(final WebView webview, String link_web) {

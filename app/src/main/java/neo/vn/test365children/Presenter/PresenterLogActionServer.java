@@ -21,7 +21,7 @@ import neo.vn.test365children.Listener.CallbackData;
  * @since 1.0
  */
 public class PresenterLogActionServer implements Iml_Log_Server.Presenter {
-    private static final String TAG = "PresenterLogin";
+    private static final String TAG = "PresenterLogActionServer";
     ApiServiceIml mApiService;
 
 
@@ -38,6 +38,34 @@ public class PresenterLogActionServer implements Iml_Log_Server.Presenter {
         mMap.put("USER_CHILD", USER_CHILD);
         mMap.put("ACTION", ACTION);
         mMap.put("DESCRIPTION", DESCRIPTION);
+
+        mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
+            @Override
+            public void onGetDataErrorFault(Exception e) {
+                Log.i(TAG, "onGetDataErrorFault: " + e);
+            }
+
+            @Override
+            public void onGetDataSuccess(String objT) {
+                Log.i(TAG, "onGetDataSuccess: " + objT);
+                try {
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // mView.show_error_api(null);
+                }
+            }
+        }, sService, mMap);
+    }
+
+    @Override
+    public void api_log_web_lesson_skill(String USER_MOTHER, String USER_CHILD, String ACTION, String SKILL_ID) {
+        Map<String, String> mMap = new LinkedHashMap<>();
+        String sService = "ud_status_lesson";
+        mMap.put("USER_MOTHER", USER_MOTHER);
+        mMap.put("USER_CHILD", USER_CHILD);
+        mMap.put("ACTION", ACTION);
+        mMap.put("SKILL_ID", SKILL_ID);
 
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override

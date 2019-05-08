@@ -312,30 +312,32 @@ public class ActivityKowPlayEasyGame extends BaseActivity implements
 
     private void check_point() {
         String[] string_start = new String[mLisStart.size()];
-        String[] string_sapxep = new String[adapterSapxep.getList().size()];
-        for (int i = 0; i < mLisStart.size(); i++) {
-            string_start[i] = mLisStart.get(i).getsContent();
-        }
-        for (int i = 0; i < adapterSapxep.getList().size(); i++) {
-            string_sapxep[i] = adapterSapxep.getList().get(i).getsContent();
-        }
-        boolean isa = Arrays.equals(string_start, string_sapxep);
-        if (!isClickXemdiem) {
-            if (isa) {
-                // Trả lời đúng
-                play_true();
-                check_gameover(true);
-            } else {
-                play_false();
-                //Trả lời sai
-                check_gameover(false);
+        if (adapterSapxep!=null&&adapterSapxep.getList()!=null){
+            String[] string_sapxep = new String[adapterSapxep.getList().size()];
+            for (int i = 0; i < mLisStart.size(); i++) {
+                string_start[i] = mLisStart.get(i).getsContent();
             }
-            isClickXemdiem = true;
-            for (DapAn obj : mLis) {
-                obj.setClick(true);
+            for (int i = 0; i < adapterSapxep.getList().size(); i++) {
+                string_sapxep[i] = adapterSapxep.getList().get(i).getsContent();
             }
-            initViews(false);
-            adapterSapxep.notifyDataSetChanged();
+            boolean isa = Arrays.equals(string_start, string_sapxep);
+            if (!isClickXemdiem) {
+                if (isa) {
+                    // Trả lời đúng
+                    play_true();
+                    check_gameover(true);
+                } else {
+                    play_false();
+                    //Trả lời sai
+                    check_gameover(false);
+                }
+                isClickXemdiem = true;
+                for (DapAn obj : mLis) {
+                    obj.setClick(true);
+                }
+                initViews(false);
+                adapterSapxep.notifyDataSetChanged();
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import neo.vn.test365children.ApiService.ApiServiceIml;
@@ -103,7 +104,12 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {
-                mView.show_error_api(null);
+                List<ErrorApi> mLis = new ArrayList<>();
+                ErrorApi obj = new ErrorApi();
+                obj.setsERROR("0001");
+                obj.setsRESULT("needed");
+                mLis.add(obj);
+                mView.show_error_api(mLis);
                 Log.i(TAG, "onGetDataErrorFault: " + e);
             }
 
@@ -239,7 +245,7 @@ public class PresenterBaitap implements ImpBaitap.Presenter {
         mMap.put("SUBMIT_TYPE", sKieunop);
         mMap.put("POINT", sDiem);
         mMap.put("DETAIL", sDanhsachcau);
-        Log.e("ActivityComplete", "get_api_submit_execercise: call submit" );
+        Log.e("ActivityComplete", "get_api_submit_execercise: call submit");
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {
             @Override
             public void onGetDataErrorFault(Exception e) {

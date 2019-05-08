@@ -89,6 +89,7 @@ public class AdapterUserLogin extends RecyclerView.Adapter<AdapterUserLogin.Topi
                             //   progressBar.setVisibility(View.GONE);
                         }
                     });
+            holder.txt_name.setText("Thêm tài khoản khác");
         }
 
     }

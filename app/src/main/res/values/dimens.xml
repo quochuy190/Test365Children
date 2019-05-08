@@ -67,8 +67,8 @@
     <dimen name="text_20sp">20sp</dimen>
     <dimen name="text_25sp">25sp</dimen>
     <dimen name="text_30sp">30sp</dimen>
-    <dimen name="width_item_objservice">170dp</dimen>
-    <dimen name="height_item_objservice">120dp</dimen>
+    <dimen name="width_item_objservice">230dp</dimen>
+    <dimen name="height_item_objservice">130dp</dimen>
 
     <dimen name="img_avata_feedback">30dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
@@ -236,4 +236,5 @@
     <dimen name="txt_exer_content">17sp</dimen>
     <dimen name="txt_name_home">14sp</dimen>
     <dimen name="txt_title_start_exer">20sp</dimen>
+
 </resources>

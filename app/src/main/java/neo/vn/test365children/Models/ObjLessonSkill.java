@@ -21,9 +21,9 @@ public class ObjLessonSkill implements Serializable {
     String MESSGE;
     @SerializedName("RESULT")
     String sRESULT;
-    @SerializedName("ID")
+    @SerializedName("ID_COURSE")
     String ID;
-    @SerializedName("NAME")
+    @SerializedName("NAME_COURSE")
     String NAME;
     @SerializedName("IMAGES")
     String IMAGES;
@@ -45,9 +45,31 @@ public class ObjLessonSkill implements Serializable {
     String URL_PASS;
     @SerializedName("STATE")
     String STATE;
-
+    @SerializedName("URL_OUT")
+    String URL_OUT;
+    @SerializedName("URL3")
+    String URL3;
+    @SerializedName("FN_COURSE")
+    String FN_COURSE;
+    @SerializedName("ONLINE_COURSE")
+    String ONLINE_COURSE;
+    @SerializedName("TEACHER")
+    String TEACHER;
+    @SerializedName("SUPPLIER")
+    String SUPPLIER;
+    @SerializedName("DURATION")
+    String DURATION;
+    @SerializedName("LEARN_PERTIME")
+    String LEARN_PERTIME;
+    @SerializedName("CLASS")
+    String CLASS;
 
     public ObjLessonSkill() {
+    }
+
+    public ObjLessonSkill(String NAME, String IMAGES) {
+        this.NAME = NAME;
+        this.IMAGES = IMAGES;
     }
 
     private static ObjLessonSkill getObject(JSONObject jsonObject) {
@@ -61,6 +83,38 @@ public class ObjLessonSkill implements Serializable {
         Gson gson = new Gson();
         arrayList = gson.fromJson(jsonArray, type);
         return arrayList;
+    }
+
+    public String getURL_OUT() {
+        return URL_OUT;
+    }
+
+    public String getURL3() {
+        return URL3;
+    }
+
+    public String getFN_COURSE() {
+        return FN_COURSE;
+    }
+
+    public void setFN_COURSE(String FN_COURSE) {
+        this.FN_COURSE = FN_COURSE;
+    }
+
+    public String getONLINE_COURSE() {
+        return ONLINE_COURSE;
+    }
+
+    public void setONLINE_COURSE(String ONLINE_COURSE) {
+        this.ONLINE_COURSE = ONLINE_COURSE;
+    }
+
+    public void setURL3(String URL3) {
+        this.URL3 = URL3;
+    }
+
+    public void setURL_OUT(String URL_OUT) {
+        this.URL_OUT = URL_OUT;
     }
 
     public String getMESSGE() {
@@ -189,5 +243,45 @@ public class ObjLessonSkill implements Serializable {
 
     public void setSTATE(String STATE) {
         this.STATE = STATE;
+    }
+
+    public String getTEACHER() {
+        return TEACHER;
+    }
+
+    public void setTEACHER(String TEACHER) {
+        this.TEACHER = TEACHER;
+    }
+
+    public String getSUPPLIER() {
+        return SUPPLIER;
+    }
+
+    public void setSUPPLIER(String SUPPLIER) {
+        this.SUPPLIER = SUPPLIER;
+    }
+
+    public String getDURATION() {
+        return DURATION;
+    }
+
+    public void setDURATION(String DURATION) {
+        this.DURATION = DURATION;
+    }
+
+    public String getLEARN_PERTIME() {
+        return LEARN_PERTIME;
+    }
+
+    public void setLEARN_PERTIME(String LEARN_PERTIME) {
+        this.LEARN_PERTIME = LEARN_PERTIME;
+    }
+
+    public String getCLASS() {
+        return CLASS;
+    }
+
+    public void setCLASS(String CLASS) {
+        this.CLASS = CLASS;
     }
 }
