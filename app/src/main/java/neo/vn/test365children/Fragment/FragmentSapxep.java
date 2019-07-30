@@ -138,7 +138,8 @@ public class FragmentSapxep extends BaseFragment implements
                     img_anwser_chil.setVisibility(View.VISIBLE);
                     if (isa) {
                         Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-                        EventBus.getDefault().post(new MessageEvent("Point_true", Float.parseFloat(mCauhoi.getsPOINT()), 0));
+                        EventBus.getDefault().post(new MessageEvent("Point_true",
+                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
                         recycle_ketqua.setVisibility(View.GONE);
                     }
                     //  EventBus.getDefault().post(new MessageEvent("Dung", Float.parseFloat(mCauhoi.getsPOINT()), 0));

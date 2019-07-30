@@ -379,6 +379,7 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
     List<String> mLisAnwser_B;
     List<String> mLisAnwser_B_traloi;
     List<String> mLisAnwser_A_traloi;
+    String[] egg1, egg2, egg3, egg4;
 
     private void initData() {
         if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
@@ -398,31 +399,45 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
         if (!mCauhoi.isDalam()) {
-            String[] egg1 = mCauhoi.getsHTML_A().split("::");
-            String[] egg2 = mCauhoi.getsHTML_B().split("::");
-            String[] egg3 = mCauhoi.getsHTML_C().split("::");
-            String[] egg4 = mCauhoi.getsHTML_D().split("::");
-            map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
-            map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
-            map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
-            map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
-            mLisAnwser_A.add(egg1[0]);
-            mLisAnwser_A.add(egg2[0]);
-            mLisAnwser_A.add(egg3[0]);
-            mLisAnwser_A.add(egg4[0]);
-
-            mLisAnwser_B.add(egg1[1]);
-            mLisAnwser_B.add(egg2[1]);
-            mLisAnwser_B.add(egg3[1]);
-            mLisAnwser_B.add(egg4[1]);
-
-            mLisAnwser_B_traloi.add(egg1[1]);
-            mLisAnwser_B_traloi.add(egg2[1]);
-            mLisAnwser_B_traloi.add(egg3[1]);
-            mLisAnwser_B_traloi.add(egg4[1]);
-
+            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
+                egg1 = mCauhoi.getsHTML_A().split("::");
+                map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
+            }
+            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
+                egg2 = mCauhoi.getsHTML_B().split("::");
+                map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
+            }
+            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
+                egg3 = mCauhoi.getsHTML_C().split("::");
+                map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
+            }
+            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
+                egg4 = mCauhoi.getsHTML_D().split("::");
+                map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
+            }
+            if (egg1 != null) {
+                mLisAnwser_A.add(egg1[0]);
+                mLisAnwser_B.add(egg1[1]);
+                mLisAnwser_B_traloi.add(egg1[1]);
+            }
+            if (egg2 != null) {
+                mLisAnwser_A.add(egg2[0]);
+                mLisAnwser_B.add(egg2[1]);
+                mLisAnwser_B_traloi.add(egg2[1]);
+            }
+            if (egg3 != null) {
+                mLisAnwser_A.add(egg3[0]);
+                mLisAnwser_B.add(egg3[1]);
+                mLisAnwser_B_traloi.add(egg3[1]);
+            }
+            if (egg4 != null) {
+                mLisAnwser_A.add(egg4[0]);
+                mLisAnwser_B.add(egg4[1]);
+                mLisAnwser_B_traloi.add(egg4[1]);
+            }
             //  initTraloi();
-            Collections.shuffle(mLisAnwser_B);
+            if (mLisAnwser_B.size() > 0)
+                Collections.shuffle(mLisAnwser_B);
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {

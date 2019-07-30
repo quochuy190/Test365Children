@@ -558,15 +558,17 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         } else
             objExer = (ExerciseAnswer) getIntent().getSerializableExtra(Constants.KEY_SEND_EXERCISE_ANSWER);
         mLisCauhoi = new ArrayList<>();
-        mLisCauhoi.addAll(App.mLisCauhoi);
-        sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
-        sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
-        objExer.setsId_userCon(sUserCon);
-        objExer.setsId_userMe(sUserMe);
-        objExer.setsStatus_Play("1");
-        objExer.setsTimequydinh("" + iTotalTime);
-        save_playing_exer();
-        if (mLisCauhoi != null) {
+        if (App.mLisCauhoi != null && App.mLisCauhoi.size() > 0) {
+            mLisCauhoi.addAll(App.mLisCauhoi);
+            sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+            sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+            objExer.setsId_userCon(sUserCon);
+            objExer.setsId_userMe(sUserMe);
+            objExer.setsStatus_Play("1");
+            objExer.setsTimequydinh("" + iTotalTime);
+            save_playing_exer();
+        }
+        if (mLisCauhoi != null && mLisCauhoi.size() > 0) {
             //  viewpager_lambai = new CustomViewPager(this);
             adapterViewpager = new AdapterViewpager(getSupportFragmentManager());
             maxPage = 0;
@@ -639,11 +641,12 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             viewpager_lambai.setAdapter(adapterViewpager);
             start_service_downtime();
             //    SharedPrefs.getInstance().put("abc", App.mLisCauhoi);
-        }
+        } else showDialogNotify("Thông báo", "Tải bài tập lỗi, kiểm tra lại mạng và thử lại.");
     }
 
     @Override
     public void show_list_list_buy(List<TuanDamua> mLis) {
+
     }
 
     @Override

@@ -57,4 +57,6 @@
     <color name="bg_untilities">#8fa2a0a9</color>
     <color name="bg_detail_untilities">#aa21219b</color>
     <color name="bg_home">#4a060621</color>
+    <color name="bg_start_welcom">#0C2B0C</color>
+    <color name="bg_centrer_welcom">#3F9E3F</color>
 </resources>

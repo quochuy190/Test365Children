@@ -199,7 +199,7 @@ public class ApiServiceIml {
     }
 
     public void getApi_Init(final CallbackData<String> callbackData, String sService,
-                                  Map<String, String> mData) {
+                            Map<String, String> mData) {
         api_init = ApiSevice_Init.retrofit_restful.create(ApiSevice_Init.class);
         Call<ResponseBody> getApiservice = api_init.getApiServiceRest(sService, mData);
         getApiservice.enqueue(new Callback<ResponseBody>() {

@@ -75,5 +75,12 @@ public class Constants {
     public static final String KEY_SAVE_UPDATE_LEVEL_ID_SUCCESS = "KEY_SAVE_UPDATE_LEVEL_ID_SUCCESS";
     public static final String KEY_SEND_URL_WEBVIEW = "KEY_SEND_URL_WEBVIEW";
     public static final String KEY_SEND_ID_SKILL = "KEY_SEND_ID_SKILL";
-    public static final String KEY_SEND_OBJ_LESSON_SKILL= "KEY_SEND_OBJ_LESSON_SKILL";
+    public static final String KEY_SEND_OBJ_LESSON_SKILL = "KEY_SEND_OBJ_LESSON_SKILL";
+    public static final String KEY_IS_WELCOM_APP = "KEY_IS_WELCOM_APP";
+    public static final String KEY_IS_START_PRACTICE = "KEY_IS_START_PRACTICE";
+    public static final String KEY_IS_START_SKILL = "KEY_IS_START_SKILL";
+
+    public static final String KEY_SEND_OPTION_GUILD = "KEY_SEND_OPTION_GUILD";
+    public static final String KEY_VALUE_GUIL_PRACTICE = "KEY_VALUE_GUIL_PRACTICE";
+    public static final String KEY_VALUE_GUIL_SKILL = "KEY_VALUE_GUIL_SKILL";
 }

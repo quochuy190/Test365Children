@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -18,17 +19,24 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EncodingUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import butterknife.BindView;
 import neo.vn.test365children.Base.BaseActivity;
@@ -42,6 +50,13 @@ import neo.vn.test365children.Service.BoundServiceCountTime;
 import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.TimeUtils;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW;
 
 public class Activity_Webview_Edumall extends BaseActivity {
     private static final String TAG = "Activity_Webview_Edumal";
@@ -179,6 +194,7 @@ public class Activity_Webview_Edumall extends BaseActivity {
                 url_out = objLessonSkill.getURL_OUT();
                 img_time.setVisibility(View.GONE);
                 txt_time.setVisibility(View.GONE);
+                //login_edumall();
                 webview_ClientPost();
             } else if (objLessonSkill.getURL1() != null && objLessonSkill.getURL1().indexOf("tienganh123.com") > 0) {
                 start_service_downtime();
@@ -201,11 +217,18 @@ public class Activity_Webview_Edumall extends BaseActivity {
                 img_time.setVisibility(View.GONE);
                 txt_time.setVisibility(View.GONE);
                 webview_ucan();
+            } else if (objLessonSkill.getURL1() != null && objLessonSkill.getURL1().indexOf("home365.online") > 0) {
+                sLinkWebBase = objLessonSkill.getURL2();
+                sUrlCompare = objLessonSkill.getURL3();
+                url_home = objLessonSkill.getURL1();
+                url_base = objLessonSkill.getURLONLINE();
+                sUserWeb = objLessonSkill.getURL_USER();
+                sPassWeb = objLessonSkill.getURL_PASS();
+                img_time.setVisibility(View.GONE);
+                txt_time.setVisibility(View.GONE);
+                goUrlHome365(sLinkWebBase);
             }
-        {
-
-        }
-        showDialogLoading();
+        //showDialogLoading();
     }
 
     private void initEvent() {
@@ -244,13 +267,24 @@ public class Activity_Webview_Edumall extends BaseActivity {
         webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
         webView.setWebChromeClient(new MyChrome());
         webView.setWebViewClient(new WebViewClientEdumail());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(MIXED_CONTENT_ALWAYS_ALLOW);
+            CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        }
         String url = "https://edumall.vn/users/sign_in";
-        String postData = "cookieexists=false" +
-                "&user[email]=" + sUserWeb +
-                "&user[password]=" + sPassWeb +
-                "&authenticity_token=" + sPassWeb +
-                "&login=Login";
-        webView.postUrl(url_base, EncodingUtils.getBytes(postData, "BASE64"));
+        String postData = null;
+        try {
+            postData = "cookieexists=false" +
+                    "&user[email]=" + URLEncoder.encode(sUserWeb, "UTF-8") +
+                    "&user[password]=" + URLEncoder.encode(sPassWeb, "UTF-8") +
+                    "&authenticity_token=" + URLEncoder.encode(sPassWeb, "UTF-8") +
+                    "&login=Login";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        //webView.postUrl(url_base, EncodingUtils.getBytes(postData, "BASE64"));
+        webView.postUrl(url_base, EncodingUtils.getBytes(postData, "UTF-8"));
+        // webView.postUrl(url_base, postData.getBytes());
         //  webView.setWebViewClient(new WebViewClientEdumail());
         //CookieSyncManager.getInstance().sync();
     }
@@ -608,6 +642,189 @@ public class Activity_Webview_Edumall extends BaseActivity {
             }
             Log.e(TAG, "shouldOverrideUrlLoading: loading");
             return super.shouldOverrideUrlLoading(view, request);
+        }
+
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            Log.e(TAG, "onReceivedError: ");
+            super.onReceivedError(view, request, error);
+        }
+    }
+
+    public void login_edumall() {
+        String url = sLinkWebBase;
+
+        webView.setVerticalScrollBarEnabled(true);
+        webView.setHorizontalScrollBarEnabled(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.setWebViewClient(wvc);
+        webView.loadUrl(url_base);
+
+    }
+
+    public WebViewClient wvc = new WebViewClient() {
+
+        @SuppressWarnings("deprecation")
+        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            try {
+                OkHttpClient client = new OkHttpClient();
+
+                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                RequestBody body = RequestBody.create(mediaType, "cookieexists=false&user%5Bemail%5D=0918881173&user%5Bpassword%5D=t!nhng123&authenticity_token=t!nhng123&login=Login");
+                Request request = new Request.Builder()
+                        .url("https://lms.edumall.vn/users/sign_in")
+                        .post(body)
+                        .addHeader("User-Agent", "PostmanRuntime/7.11.0")
+                        .addHeader("Accept", "*/*")
+                        .addHeader("cookie", "PHPSESSID=6pb9debqhqq6nr9e3s10ecd8jm; wp_customerGroup=NOT+LOGGED+IN; __cfduid=d4d0355b649612c51cc13e1a1a311e39a1557387965; remember_user_token=W1siNTlhZjZiMTkwZTEyNjY0YjQ4MDAwMGI4Il0sIiQyYSQxMCRaVG1scjJwVkt3RTUxeWIwd0kwR3llIl0%3D--7fff1028a40669f2f99eb9b8416f9beb98e0758c; EDM_sso_cookie=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNTlhZjZiMTkwZTEyNjY0YjQ4MDAwMGI4IiwiZXhwaXJlZF9hdCI6MTU1ODU5NzQ3OX0.NHUhapcBKuNzGRSs0hBts3p-WyIX53g5r_C9T3QfBSk; _session_id=L1VObjhNKzJrUWJESERnTXpBMC9GMCtmTm9YRkhVL09OUnZoY2wvZDlQRElOMThUTDIrM1c3NE5Bb3FSY212VnZDdmVhd0FKdnJGVTNJZVVWZG5vWUV3SVB2c2p4dWtGY0VtcCtDZTYzcWtTdU1BL3U4bjM5S0hXVGhXeG9JQnhnSHh2OVFkT2hhTjZXYUtwUUc5SHR3SFdYaVdPUXRqTTRzZVBSY0FCQnA3M2o0UTRMUnRNVk43ekZRZFlpQ3V2Y050UVpkY1JNVVdrYkJUcFFJb0dyQT09LS1IK1JialhmbnNyUi8xWjBRWTB1RmZnPT0%3D--d917efd9fe68564873f0e3bcb18cc29f221306e5; _edm_ss=eXp0TENyQ2FCaytOZm9HdUkrK1RidS9rUnNhczZxWjdJdFFlSzVFMW1jUmR2WDdQMERLZENOZ0lScDB3bUpIWDVBK1BJR3NEeHg1bzFQRjlWRUZFUWliQ3NuZ3FQd05LdHpXbUtSOUNsSGhuMEdTYnplWjhrb3Z3UExsTW1kMmhkNGFlamVTbjRyaWdnMHVHbzN0a1k5VVd4NjFteFlsZE1nYVhOQS8zK0FZRnhSN202Y2x1WTNMeUR3RlhKOGs1bGlsWTlzSnVJb0x5TS9VZ0FZalpTQT09LS1XT1cwclZOVlZ5QVlRS1RkNGcrUi9nPT0%3D--e57ff341beece71ae646d33e01a5e3bd86fbe181")
+                        .addHeader("accept-encoding", "gzip, deflate")
+                        .addHeader("referer", "https://lms.edumall.vn/")
+                        .addHeader("Connection", "keep-alive")
+                        .addHeader("cache-control", "no-cache")
+                        .addHeader("Postman-Token", "a04843fa-5a6d-4e3d-b789-2780fa0dfc58")
+                        .build();
+
+                Response response = client.newCall(request).execute();
+                webView.loadUrl(sLinkWebBase);
+               /* return new WebResourceResponse(response.header("text/html", response.body().contentType().type()), // You can set something other as default content-type
+                        response.header("content-encoding", "utf-8"),  // Again, you can set another encoding as default
+                        response.body().byteStream());*/
+                return null;
+
+            } catch (ClientProtocolException e) {
+                //return null to tell WebView we failed to fetch it WebView should try again.
+                return null;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    };
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
+    }
+
+    private void goUrlHome365(String url) {
+        if (url.isEmpty()) {
+            Toast.makeText(this, "Please enter url", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //  webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new Browser_home_all());
+        //  webView.setWebViewClient(new CheckServerTrustedWebViewClient());
+        webView.setWebChromeClient(new MyChromeAll());
+        //webView.setWebChromeClient(new WebChromeClient());
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setLoadsImagesAutomatically(true);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webView.setBackgroundColor(Color.TRANSPARENT);
+        /** JAVADOC QUOTE: Clears the SSL preferences table stored in response to proceeding with SSL certificate errors.*/
+        webView.clearSslPreferences();
+        // Added in API level 8
+//Those other methods I tried out of despair just in case
+        webView.clearFormData();
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.clearMatches();
+        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setSupportMultipleWindows(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.1));
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webView.requestFocusFromTouch();
+        webView.loadUrl(url);
+        //webView.loadDataWithBaseURL(url,"","text/html","utf-8",null);
+    }
+
+    class MyChromeAll extends WebChromeClient {
+        private View mCustomView;
+        private WebChromeClient.CustomViewCallback mCustomViewCallback;
+        private int mOriginalOrientation;
+        private int mOriginalSystemUiVisibility;
+
+        MyChromeAll() {
+        }
+
+        public Bitmap getDefaultVideoPoster() {
+            if (mCustomView == null) {
+                return null;
+            }
+            return BitmapFactory.decodeResource(getApplicationContext().getResources(), 2130837573);
+        }
+
+        public void onHideCustomView() {
+            ((FrameLayout) getWindow().getDecorView()).removeView(this.mCustomView);
+            this.mCustomView = null;
+            getWindow().getDecorView().setSystemUiVisibility(this.mOriginalSystemUiVisibility);
+            setRequestedOrientation(this.mOriginalOrientation);
+            this.mCustomViewCallback.onCustomViewHidden();
+            this.mCustomViewCallback = null;
+        }
+
+        public void onShowCustomView(View paramView, WebChromeClient.CustomViewCallback paramCustomViewCallback) {
+            if (this.mCustomView != null) {
+                onHideCustomView();
+                return;
+            }
+            this.mCustomView = paramView;
+            this.mOriginalSystemUiVisibility = getWindow().getDecorView().getSystemUiVisibility();
+            this.mOriginalOrientation = getRequestedOrientation();
+            this.mCustomViewCallback = paramCustomViewCallback;
+            ((FrameLayout) getWindow().getDecorView()).addView(this.mCustomView,
+                    new FrameLayout.LayoutParams(-1, -1));
+            getWindow().getDecorView().setSystemUiVisibility(3846);
+        }
+    }
+
+    class Browser_home_all extends WebViewClient {
+        Browser_home_all() {
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            Log.e(TAG, "onPageStarted: start loading");
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (request.hasGesture()) {
+                    showDialogLoading();
+                }
+            }
+            Log.e(TAG, "shouldOverrideUrlLoading: loading");
+            return super.shouldOverrideUrlLoading(view, request);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            // setTitle(view.getTitle());
+            Log.e(TAG, "onPageFinished: " + url);
+            hideDialogLoading();
+            super.onPageFinished(view, url);
         }
 
         @Override

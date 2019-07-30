@@ -399,6 +399,7 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
                             final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                             final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                             img_avata_update.setImageBitmap(selectedImage);
+
                         } else {
                             Toast.makeText(this, "Loading image error!", Toast.LENGTH_LONG).show();
                         }

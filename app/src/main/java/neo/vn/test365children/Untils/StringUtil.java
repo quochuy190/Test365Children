@@ -70,6 +70,23 @@ public class StringUtil {
 
     }
 
+    public static void share_app(Activity activity, String content) {
+        final String my_package_name = "neo.vn.test365children";  // <- HERE YOUR PACKAGE NAME!!
+        String url = "";
+        try {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT, "Home365");
+            // String sAux = "Tải Home365 tại https://home365.online để con làm bài tập về nhà, rất tuyệt vời.";
+            url = "https://play.google.com/store/apps/details?id=" + my_package_name;
+            // sAux = sAux + url + "\n\n";
+            i.putExtra(Intent.EXTRA_TEXT, content);
+            activity.startActivity(Intent.createChooser(i, "Home365"));
+        } catch (Exception e) {
+            e.toString();
+        }
+    }
+
     public static List<Integer> check_random(List<Integer> mLisInput) {
         List<Integer> mLisOutput = new ArrayList<>();
         boolean iCheck = false;
@@ -376,6 +393,7 @@ public class StringUtil {
 
         return sMonney;
     }
+
     public static void call_phone(Context mContext, String phone) {
         sPhone = phone;
         if (Build.VERSION.SDK_INT < 23) {

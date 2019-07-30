@@ -85,7 +85,7 @@
         android:layout_height="0dp"
         android:gravity="center|center_horizontal"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
+        app:layout_constraintBottom_toTopOf="@+id/txt_noicau_guild"
         app:layout_constraintEnd_toEndOf="@+id/img_background"
         app:layout_constraintStart_toStartOf="@+id/img_background"
         app:layout_constraintTop_toBottomOf="@+id/ll_lable">
@@ -162,4 +162,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+    <TextView
+        android:id="@+id/txt_noicau_guild"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:textSize="@dimen/txt_menu_utility_name"
+        android:text="@string/txt_guild_xapxep"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_xemdiem"
+        android:padding="@dimen/dp3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>

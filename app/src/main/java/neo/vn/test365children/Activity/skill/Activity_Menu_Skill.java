@@ -93,7 +93,7 @@ public class Activity_Menu_Skill extends BaseActivity implements InterfaceSkill.
         sUserChild = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
         showDialogLoading();
         mPresenter.api_get_menu_skill(sUserMother, sUserChild);
-        //   mPresenter.api_get_list_lesson_skill(sUserMother, sUserChild, "");
+        //mPresenter.api_get_list_lesson_skill(sUserMother, sUserChild, "");
     }
 
     private void initEvent() {

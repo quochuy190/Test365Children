@@ -97,7 +97,8 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
         super.onDestroy();
         mPlayer.release();
         mPlayer_Anwser.release();
-        stopService(intent_service);
+        if (intent_service != null)
+            stopService(intent_service);
     }
 
     public void play_music_bg() {
@@ -327,7 +328,6 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
         lisChucai.add(new Chucai("X", 0, "", R.drawable.x));
         lisChucai.add(new Chucai("Y", 0, "", R.drawable.y));
         lisChucai.add(new Chucai("Z", 0, "", R.drawable.z));
-
     }
 
     private void reloadData() {
@@ -363,21 +363,24 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
         mAdapter.setOnIListener(new ItemClickListener() {
             @Override
             public void onClickItem(int position, Object item) {
-                if (!isClick) {
-                    isClick = true;
-                    Chucai sChucai = (Chucai) item;
-                    String s = txt_content.getText().toString();
-                    if (mLevel.length() > 0 && mLevel.equals("1")) {
-                        stopService(intent_service);
-                        txt_content.setText(s + sChucai.getsChucai());
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                check_chucai(txt_content.getText().toString().toUpperCase());
-                                //check_level_two(txt_content.getText().toString().toUpperCase());
-                            }
-                        }, 500);
-                    } else if (mLevel.length() > 0 && mLevel.equals("2")) {
+                if (item != null) {
+                    if (!isClick) {
+                        isClick = true;
+                        Chucai sChucai = (Chucai) item;
+                        if (sChucai != null) {
+                            String s = txt_content.getText().toString();
+                            if (mLevel.length() > 0 && mLevel.equals("1")) {
+                                if (intent_service != null)
+                                    stopService(intent_service);
+                                txt_content.setText(s + sChucai.getsChucai());
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        check_chucai(txt_content.getText().toString().toUpperCase());
+                                        //check_level_two(txt_content.getText().toString().toUpperCase());
+                                    }
+                                }, 500);
+                            } else if (mLevel.length() > 0 && mLevel.equals("2")) {
                       /*  txt_content.setText(sChucai.getsChucai() + s);
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -386,9 +389,12 @@ public class ActivityKoWPlayGame extends BaseActivity implements ImlGameKoW.View
                                 check_level_two(txt_content.getText().toString().toUpperCase());
                             }
                         }, 500);*/
-                    } else if (mLevel.length() > 0 && mLevel.equals("3")) {
+                            } else if (mLevel.length() > 0 && mLevel.equals("3")) {
+                            }
+                        }
                     }
                 }
+
             }
         });
     }

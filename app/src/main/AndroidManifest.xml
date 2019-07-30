@@ -21,7 +21,20 @@
         <meta-data
             android:name="android.webkit.WebView.EnableSafeBrowsing"
             android:value="false" />
+        <activity
+            android:name=".Activity.SplashScreen"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.login.ActivityGuildPractice"
+            android:screenOrientation="sensorLandscape">
 
+        </activity>
         <activity
             android:name=".Activity.skill.Activity_Menu_Skill"
             android:screenOrientation="sensorLandscape">
@@ -42,6 +55,12 @@
             android:name=".Activity.login.ActivityUpdateInforChil"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".Activity.login.ActivityWelcomApp"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
         <activity
             android:name=".MenuSearch.ActivityDanhsachKhoihoc"
             android:configChanges="orientation|screenSize"
@@ -126,15 +145,7 @@
             android:name=".Activity.game.ActivityGameOverTPTT"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape"></activity>
-        <activity
-            android:name=".Activity.SplashScreen"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".Activity.ActivityLogin"
             android:configChanges="orientation|screenSize"
@@ -224,9 +235,13 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/app_name" />
         <service android:name=".Service.ServiceDownTime"></service>
         <service android:name=".Service.BoundServiceCountTime"></service>
         <service android:name=".Service.ServiceDownTimeGame"></service>
+
     </application>
 
 </manifest>

@@ -7,13 +7,14 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import neo.vn.test365children.Activity.login.ActivityWelcomApp;
 import neo.vn.test365children.Base.BaseActivity;
 import neo.vn.test365children.Config.Constants;
 import neo.vn.test365children.R;
 import neo.vn.test365children.Untils.SharedPrefs;
 
 
-public class SplashScreen extends BaseActivity  {
+public class SplashScreen extends BaseActivity {
     private static final String TAG = "SplashScreen";
 
     ImageView img_splash;
@@ -23,7 +24,7 @@ public class SplashScreen extends BaseActivity  {
      **/
     private final int SPLASH_DISPLAY_LENGTH = 2000;
     Intent mainIntent = new Intent();
-    Intent mainIntent_language = new Intent();
+    Intent mainIntent_welcom = new Intent();
     String id;
 
     /**
@@ -32,23 +33,19 @@ public class SplashScreen extends BaseActivity  {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        boolean isLogin = SharedPrefs.getInstance().get(Constants.KEY_ISLOGIN, Boolean.class);
+        boolean is_welcom_app = SharedPrefs.getInstance().get(Constants.KEY_IS_WELCOM_APP, Boolean.class);
 
         img_splash = (ImageView) findViewById(R.id.img_splash);
         Glide.with(this).load(R.drawable.img_splash).into(img_splash);
-
-        mainIntent.setClass(SplashScreen.this, ActivityHome.class);
-        start_activity();
-       /* if (isLogin) {
-
+        if (is_welcom_app) {
+            mainIntent.setClass(SplashScreen.this, ActivityHome.class);
         } else {
-            //  mainIntent.setClass(SplashScreen.this, ActivityLogin.class);
-            get_init();
-        }*/
+            mainIntent.setClass(SplashScreen.this, ActivityWelcomApp.class);
+        }
+        start_activity();
     }
 
     private String sTokenKey;
-
 
 
     private void start_activity() {

@@ -221,47 +221,89 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     private String sOld_Anwser = "";
 
     private void initEvent() {
+
         rl_sp_5050.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_5050);
                 if (!isSupport5050) {
-                    img_delete_sp_5050.setVisibility(View.VISIBLE);
-                    play_mp3_click();
-                    final GameTrieuPhuTriThuc obj = mLisGameTptt.get(iCurrentQuestion);
-                    if (obj.getsANSWER().equals("A") || obj.getsANSWER().equals("B")) {
-                        rl_anwser_C.setVisibility(View.INVISIBLE);
-                        rl_anwser_D.setVisibility(View.INVISIBLE);
-                    } else {
-                        rl_anwser_A.setVisibility(View.INVISIBLE);
-                        rl_anwser_B.setVisibility(View.INVISIBLE);
-                    }
-                    isSupport5050 = true;
+                    KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_5050);
+                    showDialogComfirm("Quyền trợ giúp 50:50", "Máy tính sẽ bỏ đi ngẫu nhiên 2 phương án trả lời sai. \n" +
+                            "Bạn có chắc chắn muốn sử dụng quyền trợ giúp này không?", true, new ClickDialog() {
+                        @Override
+                        public void onClickYesDialog() {
+                            img_delete_sp_5050.setVisibility(View.VISIBLE);
+                            play_mp3_click();
+                            final GameTrieuPhuTriThuc obj = mLisGameTptt.get(iCurrentQuestion);
+                            if (obj.getsANSWER().equals("A") || obj.getsANSWER().equals("B")) {
+                                rl_anwser_C.setVisibility(View.INVISIBLE);
+                                rl_anwser_D.setVisibility(View.INVISIBLE);
+                            } else {
+                                rl_anwser_A.setVisibility(View.INVISIBLE);
+                                rl_anwser_B.setVisibility(View.INVISIBLE);
+                            }
+                            isSupport5050 = true;
+
+                        }
+
+                        @Override
+                        public void onClickNoDialog() {
+
+                        }
+                    });
                 }
             }
         });
+
+
         rl_sp_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_call);
                 if (!isAddTwoAnwser) {
-                    img_delete_sp_call.setVisibility(View.VISIBLE);
-                    play_mp3_click();
-                    isTwoAnwser_ing = true;
-                    isAddTwoAnwser = !isAddTwoAnwser;
+                    showDialogComfirm("Quyền trợ giúp 2/4", "Bạn được quyền chọn 2 đáp án mà bạn cho là đúng nhất.\n" +
+                            "Bạn có chắc chắn muốn sử dụng quyền trợ giúp này không?", true, new ClickDialog() {
+                        @Override
+                        public void onClickYesDialog() {
+                            KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_call);
+
+                            img_delete_sp_call.setVisibility(View.VISIBLE);
+                            play_mp3_click();
+                            isTwoAnwser_ing = true;
+                            isAddTwoAnwser = !isAddTwoAnwser;
+
+                        }
+
+                        @Override
+                        public void onClickNoDialog() {
+
+                        }
+                    });
+
                 }
             }
         });
         rl_sp_khangia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_khangia);
                 if (time > 0) {
                     if (!isAddTime) {
-                        img_delete_sp_add_time.setVisibility(View.VISIBLE);
-                        play_mp3_click();
-                        resetTime60(time + 60000);
-                        isAddTime = !isAddTime;
+                        KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_khangia);
+                        showDialogComfirm("Quyền trợ giúp +60s", "Bạn sẽ được cộng thêm 60s để suy nghĩ câu trả lời.\n" +
+                                "Bạn có chắc chắn muốn chọn quyền trợ giúp này không?", true, new ClickDialog() {
+                            @Override
+                            public void onClickYesDialog() {
+
+                                img_delete_sp_add_time.setVisibility(View.VISIBLE);
+                                play_mp3_click();
+                                resetTime60(time + 60000);
+                                isAddTime = !isAddTime;
+
+                            }
+
+                            @Override
+                            public void onClickNoDialog() {
+
+                            }
+                        });
                     }
                 }
             }
@@ -269,42 +311,44 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         rl_sp_minus_monney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_minus_monney);
                 if (!isSp_minus_monney) {
-                    play_mp3_click();
-                    showDialogComfirm("Thông báo", "Sử dụng quyền trợ giúp này giúp bạn vượt qua câu hỏi này và bị trừ 1.000đ bạn có đồng ý không", false, new ClickDialog() {
-                        @Override
-                        public void onClickYesDialog() {
-                            //play_mp3_click();
-                            img_delete_sp_minus_monney.setVisibility(View.VISIBLE);
-                            isSp_minus_monney = true;
-                            new Handler().postDelayed(new Runnable() {
+                    //    play_mp3_click();
+                    KeyboardUtil.animation_click_button(ActivityGameTrieuphutrithuc.this, img_sp_minus_monney);
+                    showDialogComfirm("Thông báo",
+                            "Sử dụng quyền trợ giúp này giúp bạn vượt qua câu hỏi này và bị trừ 1.000đ.\n" +
+                                    "Bạn có chắc chắn muốn sử dụng quyền trợ giúp này không?",
+                            true, new ClickDialog() {
                                 @Override
-                                public void run() {
+                                public void onClickYesDialog() {
+                                    play_mp3_click();
+                                    img_delete_sp_minus_monney.setVisibility(View.VISIBLE);
+                                    isSp_minus_monney = true;
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
                                     /*iCurrentQuestion++;
                                     set_point_lever((iCurrentQuestion));
                                     show_lever_point();
                                     hideDialogLoading();
                                     getData(mLisGameTptt.get(iCurrentQuestion));*/
-                                    //  click_anwser("" + mLisGameTptt.get(iCurrentQuestion).getsANSWER());
-                                    sAnwserChil = mLisGameTptt.get(iCurrentQuestion).getsANSWER();
-                                    initChamdiem();
+                                            //  click_anwser("" + mLisGameTptt.get(iCurrentQuestion).getsANSWER());
+                                            sAnwserChil = mLisGameTptt.get(iCurrentQuestion).getsANSWER();
+                                            initChamdiem();
                                   /*  new Handler().postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
                                             initChamdiem();
                                         }
                                     }, 500);*/
+                                        }
+                                    }, 0);
+
                                 }
-                            }, 0);
 
-                        }
-
-                        @Override
-                        public void onClickNoDialog() {
-                        }
-                    });
-
+                                @Override
+                                public void onClickNoDialog() {
+                                }
+                            });
                 }
 
             }
@@ -471,11 +515,10 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                 if (isTwoAnwser_ing) {
                     if (sAnwserChil.equals(obj.getsANSWER()) || sAnwserChil_Two.equals(obj.getsANSWER())) {
                         set_point_lever((iCurrentQuestion + 1));
-                        show_lever_point();
                         play_mp3_true();
                     } else {
                         set_point_lever((iCurrentQuestion));
-                        show_lever_point();
+                     //   show_lever_point();
                         play_mp3_false();
                     }
                     new Handler().postDelayed(new Runnable() {
@@ -499,11 +542,11 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                 } else {
                     if (sAnwserChil.equals(obj.getsANSWER())) {
                         set_point_lever((iCurrentQuestion + 1));
-                        show_lever_point();
+                    //    show_lever_point();
                         play_mp3_true();
                     } else {
                         set_point_lever((iCurrentQuestion));
-                        show_lever_point();
+                      //  show_lever_point();
                         play_mp3_false();
                     }
                     new Handler().postDelayed(new Runnable() {
@@ -1012,19 +1055,21 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
         mPlayer.start();
     }
 
-    public void set_point_lever(int iCurrent) {
-      /*  new Handler().postDelayed(new Runnable() {
+    public void set_point_lever(final int iCurrent) {
+        show_lever_point();
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
+                for (int i = (mLisPoint.size() - 1); i > -1; i--) {
+                    if (i == (mLisPoint.size() - iCurrent - 1)) {
+                        mLisPoint.get(i).setPlaying(true);
+                    } else mLisPoint.get(i).setPlaying(false);
+                }
+                adapter.notifyDataSetChanged();
             }
-        }, 1000);*/
-        for (int i = (mLisPoint.size() - 1); i > -1; i--) {
-            if (i == (mLisPoint.size() - iCurrent - 1)) {
-                mLisPoint.get(i).setPlaying(true);
-            } else mLisPoint.get(i).setPlaying(false);
-        }
-        adapter.notifyDataSetChanged();
+        }, 1000);
+
+
     }
 
     public void set_anwser_true_background_cam(final String sAnwser) {

@@ -72,4 +72,21 @@ Công ty Cổ phần Đầu tư Phát triển Công nghệ và Truyền thông\n
     <string name="txt_read_story">Nghe truyện rất tốt, giúp tăng trí tưởng tượng và ngôn ngữ.
         Home365 dành tặng kho truyện được tuyển chọn từ các nguồn trên Internet.
         Con có thể nghe ngay cả khi tắt màn hình.</string>
+    <string name="txt_baitaptuan"><b>Bài tập tuần:</b> Hàng tuần HOME365 sẽ lần lượt gửi bài tập bám sát theo chương trình SGK xuống App, học sinh học trên lớp đến đâu sẽ làm bài tập đến đó</string>
+    <string name="txt_guild_princess">Lưu ý: làm sai sẽ không giải cứu được công chúa và bạn sẽ không được tiếp tục làm bài này, hết sức cẩn thận</string>
+    <string name="txt_guild_dientu">Hướng dẫn: điền đủ dấu, thanh, có thể viết hoa hoặc thường đều được</string>
+    <string name="txt_guild_noicau">Hướng dẫn: chạm vào liên tiếp vào 2 ô để nối</string>
+    <string name="txt_guild_xapxep">Hướng dẫn: bấm, giữ và di chuyển ô chữ/số đến vị trí thích hợp</string>
+    <string name="txt_guild_practice">
+        Phần này bao gồm các bài tập luyện tập, bám sát theo chương trình SGK học kỳ I, II và ôn tập hè.\n\n
+        Hàng tuần hệ thống sẽ tự động giao bài xuống App theo tiến độ học thực tế trên lớp.\n\n
+        Các bạn lưu ý hoàn thành bài tập ngay trong tuần, không để đến kỳ thi rồi mới học.\n\n
+        Chúc bạn thành công!
+</string>
+    <string name="txt_guild_skill">
+        Phần này bao gồm các khoá học tiếng Anh và các môn kỹ năng được tích hợp từ các hệ thống đào tạo trực tuyến uy tín trong và ngoài nước.\n\n
+        Các bạn lưu ý chọn khoá học phù hợp, học chậm rãi hàng ngày và học hết các bài để đạt kết quả cao nhất.\n\n
+        Chúc bạn thành công!
+
+</string>
 </resources>

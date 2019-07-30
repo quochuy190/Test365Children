@@ -1,15 +1,11 @@
 package neo.vn.test365children.Activity.doctruyen;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -24,16 +20,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 
 import javax.net.ssl.TrustManagerFactory;
 
@@ -176,24 +162,6 @@ public class Activity_webview_doctruyen extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e(TAG, "onDestroy: webivew");
-    }
-
     private void initEvent() {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,81 +220,6 @@ public class Activity_webview_doctruyen extends BaseActivity {
         });
     }
 
-    private class DownloadTask extends AsyncTask<String, String, String> {
-
-        private Context context;
-        private PowerManager.WakeLock mWakeLock;
-
-        public DownloadTask(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        protected String doInBackground(String... s) {
-            URL u = null;
-            try {
-                u = new URL(s[0]);
-                HttpURLConnection c = (HttpURLConnection) u.openConnection();
-                c.setRequestMethod("GET");
-                c.setDoOutput(true);
-                c.connect();
-           /* FileOutputStream f = new FileOutputStream(new File("abc","baitap.pdf"));
-            InputStream in = c.getInputStream();
-            byte[] buffer = new byte[1024];
-            int len1 = 0;
-    *//*        while ( (len1 = in.read(buffer)) > 0 ) {
-                f.write(buffer);
-            }*//*
-            while ( (len1 = in.read(buffer)) > 0 ) {
-                f.write(buffer,0, len1);
-            }
-            f.close();*/
-                String PATH = Environment.getExternalStorageDirectory()
-                        + "/download/";
-                Log.d("Abhan", "PATH: " + PATH);
-                File file = new File(PATH);
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-                File outputFile = new File(file, "baitap.pdf");
-                FileOutputStream fos = new FileOutputStream(outputFile);
-                InputStream is = c.getInputStream();
-                byte[] buffer = new byte[1024];
-                int len1 = 0;
-                while ((len1 = is.read(buffer)) != -1) {
-                    fos.write(buffer, 0, len1);
-                }
-                fos.flush();
-                fos.close();
-                is.close();
-                return PATH;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return null;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                return null;
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-        }
-    }
-
     @Override
     public void onBackPressed() {
         if (webView.canGoBack()) {
@@ -352,7 +245,6 @@ public class Activity_webview_doctruyen extends BaseActivity {
             Toast.makeText(this, "Please enter url", Toast.LENGTH_SHORT).show();
             return;
         }
-
         //  webView.setWebViewClient(new WebViewClient());
         webView.setWebViewClient(new Browser_home());
         //  webView.setWebViewClient(new CheckServerTrustedWebViewClient());
@@ -433,7 +325,7 @@ public class Activity_webview_doctruyen extends BaseActivity {
         }
     }
 
-    private class MyChrome extends WebChromeClient {
+    class MyChrome extends WebChromeClient {
         private View mCustomView;
         private WebChromeClient.CustomViewCallback mCustomViewCallback;
         private int mOriginalOrientation;

@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,12 +38,12 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import neo.vn.test365children.Activity.doctruyen.Activity_webview_doctruyen;
 import neo.vn.test365children.Activity.game.menu_game.ActivityMenuGame;
+import neo.vn.test365children.Activity.login.ActivityGuildPractice;
 import neo.vn.test365children.Activity.login.ActivityLoginNew;
 import neo.vn.test365children.Activity.login.ActivitySelectLevelTry;
 import neo.vn.test365children.Activity.login.ActivityUpdateInforChil;
 import neo.vn.test365children.Activity.skill.Activity_Menu_Skill;
 import neo.vn.test365children.Activity.untility_menu.Activity_Information;
-import neo.vn.test365children.Activity.untility_menu.Activity_Menu_Untility;
 import neo.vn.test365children.Adapter.AdapterUserLogin;
 import neo.vn.test365children.App;
 import neo.vn.test365children.Base.BaseActivity;
@@ -78,6 +79,7 @@ import neo.vn.test365children.R;
 import neo.vn.test365children.RealmController.RealmController;
 import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
+import neo.vn.test365children.Untils.StringUtil;
 import neo.vn.test365children.Untils.TimeUtils;
 
 import static neo.vn.test365children.App.mLisCauhoi;
@@ -110,7 +112,6 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     Button btn_information;
     @BindView(R.id.ll_show_multil_user)
     ConstraintLayout ll_show_multil_user;
-
     @BindView(R.id.img_exit_ll_show)
     ImageView img_exit_ll_show;
     @BindView(R.id.img_back_ll_user)
@@ -152,6 +153,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         if (!is_check_update) {
             check_notify_update_child();
         }
+        // Animation();
         check_update_token_push();
         check_init_login();
         initCheckExerPlaying();
@@ -161,6 +163,21 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         //play_mp3();
     }
 
+    @BindView(R.id.btn_call)
+    ImageView btn_call;
+    private AnimationDrawable anim;
+
+    private void Animation() {
+        anim = (AnimationDrawable) btn_call.getDrawable();
+        btn_call.post(run);
+    }
+
+    Runnable run = new Runnable() {
+        @Override
+        public void run() {
+            anim.start();
+        }
+    };
     List<InfoKids> lisUserLoginRealm;
     RecyclerView.LayoutManager mLayoutManager;
     AdapterUserLogin adapter;
@@ -409,12 +426,8 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                     }
                 }
             }
-
-
             // deserializes json into target2
         }
-
-
     }
 
     private void initLogin() {
@@ -539,6 +552,12 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 startActivity(new Intent(ActivityHome.this, Activity_Information.class));
             }
         });
+        btn_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringUtil.call_phone(ActivityHome.this, "0845600365");
+            }
+        });
         img_avata.setOnClickListener(this);
       /*  img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -609,12 +628,21 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 if (chil != null) {
                     if (chil != null && chil.getsObjInfoKid().getsLEVEL_ID() != null &&
                             !chil.getsObjInfoKid().getsLEVEL_ID().equals("0")) {
-                        startActivity(new Intent(ActivityHome.this, ActivityMenuBaitap.class));
+                        boolean is_start_practice = SharedPrefs.getInstance().get(Constants.KEY_IS_START_PRACTICE, Boolean.class);
+                        if (is_start_practice) {
+                            startActivity(new Intent(ActivityHome.this, ActivityMenuBaitap.class));
+                        } else {
+                            Intent intent = new Intent(ActivityHome.this, ActivityGuildPractice.class);
+                            intent.putExtra(Constants.KEY_SEND_OPTION_GUILD, Constants.KEY_VALUE_GUIL_PRACTICE);
+                            startActivity(intent);
+                        }
                     } else {
                         start_get_class();
                         //  Toast.makeText(this, "Thiếu level id", Toast.LENGTH_SHORT).show();
                     }
                 }
+
+
                 break;
             case R.id.btn_ketquahoctap:
                 chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
@@ -630,7 +658,14 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
                 if (chil != null) {
                     if (chil != null && chil.getsObjInfoKid().getsLEVEL_ID() != null && !chil.getsObjInfoKid().getsLEVEL_ID().equals("0")) {
-                        startActivity(new Intent(ActivityHome.this, Activity_Menu_Skill.class));
+                        boolean is_start_skill = SharedPrefs.getInstance().get(Constants.KEY_IS_START_SKILL, Boolean.class);
+                        if (is_start_skill) {
+                            startActivity(new Intent(ActivityHome.this, Activity_Menu_Skill.class));
+                        } else {
+                            Intent intent = new Intent(ActivityHome.this, ActivityGuildPractice.class);
+                            intent.putExtra(Constants.KEY_SEND_OPTION_GUILD, Constants.KEY_VALUE_GUIL_SKILL);
+                            startActivity(intent);
+                        }
                     } else {
                         start_get_class();
                     }
@@ -696,7 +731,8 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 startActivity(intent);*/
                 break;
             case R.id.btn_utilities:
-                if (chil != null) {
+                //Chức năng tiện ích
+               /* if (chil != null) {
                     if (chil != null && chil.getsObjInfoKid().getsLEVEL_ID() != null &&
                             !chil.getsObjInfoKid().getsLEVEL_ID().equals("0")) {
                         Intent intent = new Intent(ActivityHome.this, Activity_Menu_Untility.class);
@@ -704,7 +740,22 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                     } else {
                         start_get_class();
                     }
-                }
+                }*/
+                // Chức năng share app
+                showDialogComfirm_two_button("Chia sẻ App", "Hãy giới thiệu Home365 cho bạn bè để cùng xây dựng cộng đồng Học mà chơi - Chơi mà học nhé.\n" +
+                        "Xin cảm ơn!\n", true, new ClickDialog() {
+                    @Override
+                    public void onClickYesDialog() {
+                        StringUtil.share_app(ActivityHome.this, "Ứng dụng học trực tuyến Home365 rất HAY và MIỄN PHÍ," +
+                                " tải app tại https://home365.online/app");
+                    }
+
+                    @Override
+                    public void onClickNoDialog() {
+
+                    }
+                }, "Chia sẻ", "Để sau");
+
                 break;
         }
     }
