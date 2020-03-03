@@ -24,8 +24,8 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     private String sTrangthainopbai;
     private String sDetailExercise;
     private String sStatus_Play;//1 đang làm , 0 đã làm xong nộp bài
-
-
+    private boolean isLuyenthi;
+    private String EXCERCISE_ID_LUYENTAP;
     public ExerciseAnswer(String sId_exercise, String sId_userMe, String sId_userCon, String sPoint, String sMonhoc,
                           String isTrangthailambai, RealmList<Cauhoi> mLisCauhoi) {
         this.sId_exercise = sId_exercise;
@@ -38,6 +38,22 @@ public class ExerciseAnswer extends RealmObject implements Serializable {
     }
 
     public ExerciseAnswer() {
+    }
+
+    public String getEXCERCISE_ID_LUYENTAP() {
+        return EXCERCISE_ID_LUYENTAP;
+    }
+
+    public void setEXCERCISE_ID_LUYENTAP(String EXCERCISE_ID_LUYENTAP) {
+        this.EXCERCISE_ID_LUYENTAP = EXCERCISE_ID_LUYENTAP;
+    }
+
+    public boolean isLuyenthi() {
+        return isLuyenthi;
+    }
+
+    public void setLuyenthi(boolean luyenthi) {
+        isLuyenthi = luyenthi;
     }
 
     public String getsStatus_Play() {

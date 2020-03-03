@@ -3,8 +3,8 @@ package neo.vn.test365children.Activity.ReviewExercises;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +46,7 @@ import neo.vn.test365children.Untils.SharedPrefs;
 public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.View {
     private static final String TAG = "ActivityLambaitap";
     private MediaPlayer mPlayer;
+
     @Override
     public int setContentViewId() {
         return R.layout.activity_review_exercises;
@@ -74,12 +75,15 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
         initEvent();
         // initViewPager(mCauhoi);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
 
     }
+
     private float fPoint = 0;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -197,8 +201,8 @@ public class ActivityReviewExercises extends BaseActivity implements ImpBaitap.V
                         mCauhoiDetail.setsHTML_C(obj.getLisInfo().get(i).getsHTML_C());
                         mCauhoiDetail.setsHTML_D(obj.getLisInfo().get(i).getsHTML_D());
                         if (obj.getsKIEU().equals("1")) {
-                                adapterViewpager.addFragment(FragmentChondapanDungReview.newInstance(mCauhoiDetail, 0),
-                                        obj.getsERROR());
+                            adapterViewpager.addFragment(FragmentChondapanDungReview.newInstance(mCauhoiDetail,
+                                    0), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("2")) {
                             adapterViewpager.addFragment(FragmentReviewBatsauNew.newInstance(mCauhoiDetail), obj.getsERROR());
                         } else if (obj.getsKIEU().equals("3")) {

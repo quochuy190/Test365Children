@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="neo.vn.test365children">
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,6 +36,21 @@
         </activity>
         <activity
             android:name=".Activity.skill.Activity_Menu_Skill"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
+            android:name=".Activity.luyenthi.ActivityActiveLuyenthi"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
+            android:name=".Activity.luyenthi.ActivityListBaitapLuyenthi"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity
+            android:name=".Activity.luyenthi.Activity_Menu_Luyenthi"
             android:screenOrientation="sensorLandscape">
 
         </activity>

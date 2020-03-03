@@ -7,11 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +18,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -171,10 +172,11 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
     }
 
     private void initData() {
-        mLisGameTptt.addAll(App.mLisGameTPTT);
-        getData(mLisGameTptt.get(iCurrentQuestion));
-       /* String sHtml = "<strong><em>Truyền thuyết nào được nhắc đến trong khái niệm hình thành Đất Nước?</em></strong>";
-        StringUtil.initWebview_Whitetext(webview_game, sHtml);*/
+        if (App.mLisGameTPTT != null && App.mLisGameTPTT.size() > 0) {
+            mLisGameTptt.addAll(App.mLisGameTPTT);
+            if (mLisGameTptt.get(iCurrentQuestion) != null)
+                getData(mLisGameTptt.get(iCurrentQuestion));
+        }
     }
 
     @Override
@@ -518,7 +520,7 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                         play_mp3_true();
                     } else {
                         set_point_lever((iCurrentQuestion));
-                     //   show_lever_point();
+                        //   show_lever_point();
                         play_mp3_false();
                     }
                     new Handler().postDelayed(new Runnable() {
@@ -542,11 +544,11 @@ public class ActivityGameTrieuphutrithuc extends BaseActivity {
                 } else {
                     if (sAnwserChil.equals(obj.getsANSWER())) {
                         set_point_lever((iCurrentQuestion + 1));
-                    //    show_lever_point();
+                        //    show_lever_point();
                         play_mp3_true();
                     } else {
                         set_point_lever((iCurrentQuestion));
-                      //  show_lever_point();
+                        //  show_lever_point();
                         play_mp3_false();
                     }
                     new Handler().postDelayed(new Runnable() {

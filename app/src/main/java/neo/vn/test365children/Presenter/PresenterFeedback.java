@@ -83,16 +83,15 @@ public class PresenterFeedback implements ImlFeedback.Presenter {
     }*/
 
     @Override
-    public void api_send_feetback(String sUserMother, String sUserKid, String sType_Rate_1, String Rating1,
-                                  String TYPE_RATE2, String RATING2, String TYPE_EXE, String ID_EXCERCISE) {
+    public void api_send_feetback(String sUserMother, String sUserKid, String RATING,
+                                  String TYPE_EXE, String ID_EXCERCISE) {
         Map<String, String> mMap = new LinkedHashMap<>();
-        String sService = "submit_rating";
+        String sService = "rating/submit";
         mMap.put("USER_MOTHER", sUserMother);
         mMap.put("USER_CHILD", sUserKid);
-      //  mMap.put("TYPE_RATE", sType_Rate_1);
-        mMap.put("RATING", Rating1);
-      //  mMap.put("TYPE_RATE2", TYPE_RATE2);
-        mMap.put("RATING2", RATING2);
+        //  mMap.put("TYPE_RATE", sType_Rate_1);
+        mMap.put("RATING", RATING);
+        //  mMap.put("TYPE_RATE2", TYPE_RATE2);
         mMap.put("TYPE_EXE", TYPE_EXE);
         mMap.put("ID_EXCERCISE", ID_EXCERCISE);
         mApiService.getApiPostResfull_ALL(new CallbackData<String>() {

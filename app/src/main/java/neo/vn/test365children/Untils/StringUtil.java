@@ -5,15 +5,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import java.text.DecimalFormat;
 import java.text.Normalizer;
@@ -31,8 +33,33 @@ import java.util.regex.Pattern;
  * Created by Envy 15T on 6/5/2015.
  */
 public class StringUtil {
+    public static void start_facebook(Activity activity,String sIdPage) {
+        final String urlFb = "fb://page/" + sIdPage;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(urlFb));
+
+        // If a Facebook app is installed, use it. Otherwise, launch
+        // a browser
+        final PackageManager packageManager = activity.getPackageManager();
+        List<ResolveInfo> list =
+                packageManager.queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        if (list.size() == 0) {
+            final String urlBrowser = "https://www.facebook.com/pages/" + sIdPage;
+            intent.setData(Uri.parse(urlBrowser));
+        }
+        activity.startActivity(intent);
+    }
     public static String ConvertFraction(String a, String b, String c) {
         return "\\(" + a + "\\dfrac{" + b + "} {" + c + "} \\)";
+    }
+
+    public static void sendSMS(Activity activity, String sContent, String sPhone) {
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+        smsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        smsIntent.setData(Uri.parse("smsto:" + sPhone)); // This ensures only SMS apps respond
+        smsIntent.putExtra("sms_body", sContent);
+        activity.startActivity(smsIntent);
     }
 
     public static void onLunchAnotherApp(Context context) {

@@ -1,10 +1,18 @@
 package neo.vn.test365children.Models;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DetailExercise {
+public class DetailExercise implements Comparable<DetailExercise>, Serializable {
+    @SerializedName("EXCERCISE_ID")
+    String EXCERCISE_ID;
+    String EXCERCISE_ID_LUYENTAP;
+    @SerializedName("EXCERCISE_NAME")
+    String EXCERCISE_NAME;
     @SerializedName("ID")
     String sID;
     @SerializedName("YEAR_ID")
@@ -53,6 +61,42 @@ public class DetailExercise {
     List<Cauhoi> lisPARTS;
     @SerializedName("STATISTIC")
     StatisticDetailExer objStatistic;
+    @SerializedName("DURATION")
+    String DURATION;
+    String sTrangthailambai;
+    boolean isDalam;
+
+    public String getEXCERCISE_ID_LUYENTAP() {
+        return EXCERCISE_ID_LUYENTAP;
+    }
+
+    public void setEXCERCISE_ID_LUYENTAP(String EXCERCISE_ID_LUYENTAP) {
+        this.EXCERCISE_ID_LUYENTAP = EXCERCISE_ID_LUYENTAP;
+    }
+
+    public boolean isDalam() {
+        return isDalam;
+    }
+
+    public void setDalam(boolean dalam) {
+        isDalam = dalam;
+    }
+
+    public String getDURATION() {
+        return DURATION;
+    }
+
+    public void setDURATION(String DURATION) {
+        this.DURATION = DURATION;
+    }
+
+    public String getsTrangthailambai() {
+        return sTrangthailambai;
+    }
+
+    public void setsTrangthailambai(String sTrangthailambai) {
+        this.sTrangthailambai = sTrangthailambai;
+    }
 
     public String getsSTATE_BUY() {
         return sSTATE_BUY;
@@ -244,5 +288,31 @@ public class DetailExercise {
 
     public void setLINK(String LINK) {
         this.LINK = LINK;
+    }
+
+    public String getEXCERCISE_ID() {
+        return EXCERCISE_ID;
+    }
+
+    public void setEXCERCISE_ID(String EXCERCISE_ID) {
+        this.EXCERCISE_ID = EXCERCISE_ID;
+    }
+
+    public String getEXCERCISE_NAME() {
+        return EXCERCISE_NAME;
+    }
+
+    public void setEXCERCISE_NAME(String EXCERCISE_NAME) {
+        this.EXCERCISE_NAME = EXCERCISE_NAME;
+    }
+
+    @Override
+    public int compareTo(@NonNull DetailExercise detailExercise) {
+        if (Integer.parseInt(EXCERCISE_ID) == Integer.parseInt(detailExercise.getEXCERCISE_ID()))
+            return 0;
+        else if (Integer.parseInt(EXCERCISE_ID) > Integer.parseInt(detailExercise.getEXCERCISE_ID()))
+            return 1;
+        else
+            return -1;
     }
 }

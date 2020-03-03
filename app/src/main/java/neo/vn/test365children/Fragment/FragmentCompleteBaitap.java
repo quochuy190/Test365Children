@@ -57,7 +57,7 @@ public class FragmentCompleteBaitap extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_complete_baitap, container, false);
         ButterKnife.bind(this, view);
         initEvent();
-        Glide.with(this).load(R.drawable.bg_chao_mung).into(img_background);
+        Glide.with(getActivity()).load(R.drawable.bg_chao_mung).into(img_background);
         return view;
     }
 

@@ -3,10 +3,10 @@ package neo.vn.test365children.Fragment;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -290,132 +290,134 @@ public class FragmentXepTrung extends BaseFragment {
     }
 
     private void initData() {
-        txt_cauhoi.setVisibility(View.GONE);
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        txt_cauhoi.setText("Đáp án: " + mCauhoi.getsEGG_1() + " , " + mCauhoi.getsEGG_2() + " , " + mCauhoi.getsEGG_3() + " , "
-                + mCauhoi.getsEGG_4());
-        Glide.with(this).load(R.drawable.bg_xep_trung).into(img_background);
-        String[] egg1 = mCauhoi.getsHTML_A().split("::");
-        String[] egg2 = mCauhoi.getsHTML_B().split("::");
-        String[] egg3 = mCauhoi.getsHTML_C().split("::");
-        String[] egg4 = mCauhoi.getsHTML_D().split("::");
-        map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
-        map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
-        map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
-        map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
-        if (egg1[0] != null) {
-            mLisTrung.add(egg1[0]);
-            if (egg1.length > 1)
-                mLisDapan.add(new Item_Xeptrung(egg1[1], R.drawable.egg_blue, egg1[0]));
-            else
-                mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_blue, egg1[0]));
-        }
-        if (egg2[0] != null) {
-            mLisTrung.add(egg2[0]);
-            if (egg2.length > 1)
-                mLisDapan.add(new Item_Xeptrung(egg2[1], R.drawable.egg_red, egg2[0]));
-            else
-                mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_red, egg2[0]));
-        }
-        if (egg3[0] != null) {
-            mLisTrung.add(egg3[0]);
-            if (egg3.length > 1)
-                mLisDapan.add(new Item_Xeptrung(egg3[1], R.drawable.egg_yellow, egg3[0]));
-            else
-                mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_yellow, egg3[0]));
-        }
-        if (egg4[0] != null) {
-            mLisTrung.add(egg4[0]);
-            if (egg3.length > 1)
-                mLisDapan.add(new Item_Xeptrung(egg4[1], R.drawable.egg_pink, egg4[0]));
-            else
-                mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_pink, egg4[0]));
-        }
-        if (egg1.length > 1) {
-            mLisRoTrung.add(egg1[1]);
-        } else
-            mLisRoTrung.add("");
-        if (egg2.length > 1) {
-            mLisRoTrung.add(egg2[1]);
-        } else
-            mLisRoTrung.add("");
-        if (egg3.length > 1) {
-            mLisRoTrung.add(egg3[1]);
-        } else {
-            mLisRoTrung.add("");
-        }
-        if (egg4.length > 1) {
-            mLisRoTrung.add(egg4[1]);
-        } else
-            mLisRoTrung.add("");
-
-
-        // Collections.shuffle(mLisTrung);
-        Collections.shuffle(mLisRoTrung);
-
-        if (mLisTrung.get(0) != null)
-            txt_trung1.setText(mLisTrung.get(0));
-        if (mLisTrung.get(1) != null)
-            txt_trung2.setText(mLisTrung.get(1));
-        if (mLisTrung.get(2) != null)
-            txt_trung3.setText(mLisTrung.get(2));
-        if (mLisTrung.get(3) != null)
-            txt_trung4.setText(mLisTrung.get(3));
-        if (mLisRoTrung.get(0) != null)
-            txt_rotrung_1.setText(mLisRoTrung.get(0));
-        if (mLisRoTrung.get(1) != null)
-            txt_rotrung_2.setText(mLisRoTrung.get(1));
-        if (mLisRoTrung.get(2) != null)
-            txt_rotrung_3.setText(mLisRoTrung.get(2));
-        if (mLisRoTrung.get(3) != null)
-            txt_rotrung_4.setText(mLisRoTrung.get(3));
-        adapterDapan.notifyDataSetChanged();
-        if (mCauhoi.isDalam()) {
-            btn_xemdiem.setVisibility(View.GONE);
-            ll_player_again.setVisibility(View.VISIBLE);
-            String[] egg1_chil = mCauhoi.getsEGG_1_RESULT().split("::");
-            String[] egg2_chil = mCauhoi.getsEGG_2_RESULT().split("::");
-            String[] egg3_chil = mCauhoi.getsEGG_3_RESULT().split("::");
-            String[] egg4_chil = mCauhoi.getsEGG_4_RESULT().split("::");
-            if (egg1_chil.length > 1 && egg1_chil[0] != null) {
-                mLisAnwserChil.add(new Item_Xeptrung(egg1_chil[1], R.drawable.egg_blue, egg1_chil[0]));
-            } else {
-                mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_blue, "Error"));
+        try {
+            txt_cauhoi.setVisibility(View.GONE);
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+            txt_cauhoi.setText("Đáp án: " + mCauhoi.getsEGG_1() + " , " + mCauhoi.getsEGG_2() + " , " + mCauhoi.getsEGG_3() + " , "
+                    + mCauhoi.getsEGG_4());
+            Glide.with(this).load(R.drawable.bg_xep_trung).into(img_background);
+            String[] egg1 = mCauhoi.getsHTML_A().split("::");
+            String[] egg2 = mCauhoi.getsHTML_B().split("::");
+            String[] egg3 = mCauhoi.getsHTML_C().split("::");
+            String[] egg4 = mCauhoi.getsHTML_D().split("::");
+            map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
+            map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
+            map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
+            map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
+            if (egg1[0] != null) {
+                mLisTrung.add(egg1[0]);
+                if (egg1.length > 1)
+                    mLisDapan.add(new Item_Xeptrung(egg1[1], R.drawable.egg_blue, egg1[0]));
+                else
+                    mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_blue, egg1[0]));
             }
-            if (egg2_chil.length > 1 && egg2_chil[0] != null) {
-                mLisAnwserChil.add(new Item_Xeptrung(egg2_chil[1], R.drawable.egg_red, egg2_chil[0]));
-            } else
-                mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_red, "Error"));
-            if (egg3_chil.length > 1 && egg3_chil[0] != null) {
-                mLisAnwserChil.add(new Item_Xeptrung(egg3_chil[1], R.drawable.egg_yellow, egg3_chil[0]));
-            } else
-                mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_yellow, "Error"));
-            if (egg4.length > 1 && egg4_chil[0] != null) {
-                mLisAnwserChil.add(new Item_Xeptrung(egg4_chil[1], R.drawable.egg_pink, egg4_chil[0]));
-            } else
-                mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_pink, "Error"));
-            adapter_anwser_chil.notifyDataSetChanged();
-            img_anwser_chil.setVisibility(View.VISIBLE);
-            if (mCauhoi.isAnserTrue()) {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-                recycle_anwser_chil.setVisibility(View.INVISIBLE);
-                txt_title_anwser_chil.setVisibility(View.INVISIBLE);
-            } else {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-                recycle_anwser_chil.setVisibility(View.VISIBLE);
-                txt_title_anwser_chil.setVisibility(View.VISIBLE);
+            if (egg2[0] != null) {
+                mLisTrung.add(egg2[0]);
+                if (egg2.length > 1)
+                    mLisDapan.add(new Item_Xeptrung(egg2[1], R.drawable.egg_red, egg2[0]));
+                else
+                    mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_red, egg2[0]));
             }
+            if (egg3[0] != null) {
+                mLisTrung.add(egg3[0]);
+                if (egg3.length > 1)
+                    mLisDapan.add(new Item_Xeptrung(egg3[1], R.drawable.egg_yellow, egg3[0]));
+                else
+                    mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_yellow, egg3[0]));
+            }
+            if (egg4[0] != null) {
+                mLisTrung.add(egg4[0]);
+                if (egg3.length > 1)
+                    mLisDapan.add(new Item_Xeptrung(egg4[1], R.drawable.egg_pink, egg4[0]));
+                else
+                    mLisDapan.add(new Item_Xeptrung("", R.drawable.egg_pink, egg4[0]));
+            }
+            if (egg1.length > 1) {
+                mLisRoTrung.add(egg1[1]);
+            } else
+                mLisRoTrung.add("");
+            if (egg2.length > 1) {
+                mLisRoTrung.add(egg2[1]);
+            } else
+                mLisRoTrung.add("");
+            if (egg3.length > 1) {
+                mLisRoTrung.add(egg3[1]);
+            } else {
+                mLisRoTrung.add("");
+            }
+            if (egg4.length > 1) {
+                mLisRoTrung.add(egg4[1]);
+            } else
+                mLisRoTrung.add("");
 
 
-        } else {
-            ll_player_again.setVisibility(View.GONE);
-            btn_xemdiem.setVisibility(View.VISIBLE);
+            // Collections.shuffle(mLisTrung);
+            Collections.shuffle(mLisRoTrung);
+
+            if (mLisTrung.get(0) != null)
+                txt_trung1.setText(mLisTrung.get(0));
+            if (mLisTrung.get(1) != null)
+                txt_trung2.setText(mLisTrung.get(1));
+            if (mLisTrung.get(2) != null)
+                txt_trung3.setText(mLisTrung.get(2));
+            if (mLisTrung.get(3) != null)
+                txt_trung4.setText(mLisTrung.get(3));
+            if (mLisRoTrung.get(0) != null)
+                txt_rotrung_1.setText(mLisRoTrung.get(0));
+            if (mLisRoTrung.get(1) != null)
+                txt_rotrung_2.setText(mLisRoTrung.get(1));
+            if (mLisRoTrung.get(2) != null)
+                txt_rotrung_3.setText(mLisRoTrung.get(2));
+            if (mLisRoTrung.get(3) != null)
+                txt_rotrung_4.setText(mLisRoTrung.get(3));
+            adapterDapan.notifyDataSetChanged();
+            if (mCauhoi.isDalam()) {
+                btn_xemdiem.setVisibility(View.GONE);
+                ll_player_again.setVisibility(View.VISIBLE);
+                String[] egg1_chil = mCauhoi.getsEGG_1_RESULT().split("::");
+                String[] egg2_chil = mCauhoi.getsEGG_2_RESULT().split("::");
+                String[] egg3_chil = mCauhoi.getsEGG_3_RESULT().split("::");
+                String[] egg4_chil = mCauhoi.getsEGG_4_RESULT().split("::");
+                if (egg1_chil.length > 1 && egg1_chil[0] != null) {
+                    mLisAnwserChil.add(new Item_Xeptrung(egg1_chil[1], R.drawable.egg_blue, egg1_chil[0]));
+                } else {
+                    mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_blue, "Error"));
+                }
+                if (egg2_chil.length > 1 && egg2_chil[0] != null) {
+                    mLisAnwserChil.add(new Item_Xeptrung(egg2_chil[1], R.drawable.egg_red, egg2_chil[0]));
+                } else
+                    mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_red, "Error"));
+                if (egg3_chil.length > 1 && egg3_chil[0] != null) {
+                    mLisAnwserChil.add(new Item_Xeptrung(egg3_chil[1], R.drawable.egg_yellow, egg3_chil[0]));
+                } else
+                    mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_yellow, "Error"));
+                if (egg4.length > 1 && egg4_chil[0] != null) {
+                    mLisAnwserChil.add(new Item_Xeptrung(egg4_chil[1], R.drawable.egg_pink, egg4_chil[0]));
+                } else
+                    mLisAnwserChil.add(new Item_Xeptrung("Error", R.drawable.egg_pink, "Error"));
+                adapter_anwser_chil.notifyDataSetChanged();
+                img_anwser_chil.setVisibility(View.VISIBLE);
+                if (mCauhoi.isAnserTrue()) {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                    recycle_anwser_chil.setVisibility(View.INVISIBLE);
+                    txt_title_anwser_chil.setVisibility(View.INVISIBLE);
+                } else {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                    recycle_anwser_chil.setVisibility(View.VISIBLE);
+                    txt_title_anwser_chil.setVisibility(View.VISIBLE);
+                }
+
+
+            } else {
+                ll_player_again.setVisibility(View.GONE);
+                btn_xemdiem.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
     }
 
 

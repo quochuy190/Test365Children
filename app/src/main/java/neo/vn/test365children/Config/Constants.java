@@ -24,6 +24,8 @@ public class Constants {
         public static final int START_USER_TRY = 1009;
         public static final int GET_SCHOOLS = 1010;
         public static final int START_UPDATE_INFOR_CHILD = 1011;
+        public static final int START_ACTIVE_LUYENTHI = 1012;
+        public static final int START_EXER_LUYENTHI= 1013;
     }
 
     public static final String KEY_TOKEN = "KEY_TOKEN";
@@ -83,4 +85,8 @@ public class Constants {
     public static final String KEY_SEND_OPTION_GUILD = "KEY_SEND_OPTION_GUILD";
     public static final String KEY_VALUE_GUIL_PRACTICE = "KEY_VALUE_GUIL_PRACTICE";
     public static final String KEY_VALUE_GUIL_SKILL = "KEY_VALUE_GUIL_SKILL";
+    public static final String KEY_SEND_GOI_LUYENTHI = "KEY_SEND_GOI_LUYENTHI";
+
+    public static final String KEY_SEND_EXER_LUYENTHI= "KEY_SEND_EXER_LUYENTHI";
+    public static final String KEY_SEND_IS_START_EXER_LUYENTHI= "KEY_SEND_IS_START_EXER_LUYENTHI";
 }

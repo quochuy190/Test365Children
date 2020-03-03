@@ -3,12 +3,13 @@ package neo.vn.test365children.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -83,6 +84,8 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         return R.layout.activity_start_lambai;
     }
 
+    boolean isLuyenthi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,13 +93,68 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         mRealm = RealmController.with(this).getRealm();
         mPresenter = new PresenterBaitap(this);
         mPresenterConfig = new PresenterConfigChil(this);
-        btn_start_lambai.setEnabled(false);
-        // KeyboardUtil.button_disable(btn_start_lambai);
-        // btn_start_lambai.getBackground().setAlpha(50);
-        btn_start_lambai.getBackground().setAlpha(70);
-        btn_share.setVisibility(View.GONE);
-        btn_review_video.setVisibility(View.GONE);
-        initData();
+        DetailExercise objDetailExer = (DetailExercise) getIntent().getSerializableExtra(Constants.KEY_SEND_EXER_LUYENTHI);
+        isLuyenthi = getIntent().getBooleanExtra(Constants.KEY_SEND_IS_START_EXER_LUYENTHI, false);
+        Glide.with(this).load(R.drawable.bg_start_exercises).into(img_background);
+        sUserMe = SharedPrefs.getInstance().get(Constants.KEY_USER_ME, String.class);
+        sUserCon = SharedPrefs.getInstance().get(Constants.KEY_USER_CON, String.class);
+        if (isLuyenthi) {
+            try {
+                btn_start_lambai.setEnabled(true);
+                // KeyboardUtil.button_disable(btn_start_lambai);
+                // btn_start_lambai.getBackground().setAlpha(50);
+                btn_start_lambai.getBackground().setAlpha(250);
+                btn_share.setVisibility(View.GONE);
+                btn_review_video.setVisibility(View.GONE);
+                DetailExercise objDetail = App.mExerLuyentap;
+                txt_noidung.setText("NỘI DUNG: " + objDetail.getsREQUIREMENT());
+                txt_thoigianlambai.setText("Thời gian làm bài: "
+                        + (Integer.parseInt(objDetail.getDURATION()) / 60) + " phút");
+                App.sTime = objDetail.getDURATION();
+                switch (objDetail.getsSUBJECT_ID()) {
+                    case "1":
+                        txt_lable_mon.setText("BÀI TẬP TOÁN");
+                        txt_tuan.setText("Lớp " + objDetail.getsLEVEL_ID());
+                        break;
+                    case "2":
+                        txt_lable_mon.setText("BÀI TẬP TIẾNG VIỆT");
+                        // txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                        txt_tuan.setText("Lớp " + objDetail.getsLEVEL_ID());
+                        break;
+                    case "3":
+                        txt_lable_mon.setText("BÀI TẬP TIẾNG ANH");
+                        // txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                        txt_tuan.setText("Lớp " + objDetail.getsLEVEL_ID());
+                        break;
+                }
+                mLisCauhoi = new ArrayList<>();
+                mLisCauhoi.addAll(objDetail.getLisPARTS());
+                obj_answer = new ExerciseAnswer();
+                obj_answer.setEXCERCISE_ID_LUYENTAP(objDetail.getEXCERCISE_ID_LUYENTAP());
+                obj_answer.setsIdTuan(objDetail.getsWEEK_ID());
+                obj_answer.setsId_exercise(objDetail.getEXCERCISE_ID());
+                obj_answer.setsId_userMe(sUserMe);
+                obj_answer.setsId_userCon(sUserCon);
+                obj_answer.setsMonhoc(objDetail.getsSUBJECT_ID());
+                obj_answer.setLuyenthi(true);
+                // Trạng thái làm bài 0: chưa làm
+                obj_answer.setIsTrangthailambai(objDetail.getsTrangthailambai());
+        /*    mRealm.beginTransaction();
+            mRealm.copyToRealmOrUpdate(obj_answer);
+            mRealm.commitTransaction();*/
+                App.mExercise = obj_answer;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            btn_start_lambai.setEnabled(false);
+            // KeyboardUtil.button_disable(btn_start_lambai);
+            // btn_start_lambai.getBackground().setAlpha(50);
+            btn_start_lambai.getBackground().setAlpha(70);
+            btn_share.setVisibility(View.GONE);
+            btn_review_video.setVisibility(View.GONE);
+            initData();
+        }
         initEvent();
         //  play_mp3();
     }
@@ -104,47 +162,51 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
     ExerciseAnswer obj_answer;
 
     private void initData() {
-        sCount_Start_Exer = SharedPrefs.getInstance().get(Constants.KEY_SAVE_COUNT_START_EXER, String.class);
-        Glide.with(this).load(R.drawable.bg_start_exercises).into(img_background);
-        mLisCauhoi = new ArrayList<>();
-        objBaitapTuan = getIntent().getParcelableExtra(Constants.KEY_SEND_BAITAPTUAN);
-        show_time_lambai(objBaitapTuan);
-        ExerciseAnswer obj = mRealm.where(ExerciseAnswer.class)
-                .equalTo("sId_exercise",
-                        objBaitapTuan.getsID()).findFirst();
-        if (objBaitapTuan != null && objBaitapTuan.getsREQUIREMENT() != null)
-            txt_muctieu.setText("MỤC TIÊU: " + objBaitapTuan.getsREQUIREMENT());
-        if (objBaitapTuan != null && objBaitapTuan.getsNAME() != null)
-            txt_noidung.setText("NỘI DUNG: " + objBaitapTuan.getsNAME());
-        switch (objBaitapTuan.getsSUBJECT_ID()) {
-            case "1":
-                txt_lable_mon.setText("BÀI TẬP TOÁN");
-                txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
-                break;
-            case "2":
-                txt_lable_mon.setText("BÀI TẬP TIẾNG VIỆT");
-                // txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
-                txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
-                break;
-            case "3":
-                txt_lable_mon.setText("BÀI TẬP TIẾNG ANH");
-                // txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
-                txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
-                break;
+        try {
+            sCount_Start_Exer = SharedPrefs.getInstance().get(Constants.KEY_SAVE_COUNT_START_EXER, String.class);
+            mLisCauhoi = new ArrayList<>();
+            objBaitapTuan = getIntent().getParcelableExtra(Constants.KEY_SEND_BAITAPTUAN);
+            show_time_lambai(objBaitapTuan);
+            ExerciseAnswer obj = mRealm.where(ExerciseAnswer.class)
+                    .equalTo("sId_exercise",
+                            objBaitapTuan.getsID()).findFirst();
+            if (objBaitapTuan != null && objBaitapTuan.getsREQUIREMENT() != null)
+                txt_muctieu.setText("MỤC TIÊU: " + objBaitapTuan.getsREQUIREMENT());
+            if (objBaitapTuan != null && objBaitapTuan.getsNAME() != null)
+                txt_noidung.setText("NỘI DUNG: " + objBaitapTuan.getsNAME());
+            switch (objBaitapTuan.getsSUBJECT_ID()) {
+                case "1":
+                    txt_lable_mon.setText("BÀI TẬP TOÁN");
+                    txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
+                    break;
+                case "2":
+                    txt_lable_mon.setText("BÀI TẬP TIẾNG VIỆT");
+                    // txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                    txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
+                    break;
+                case "3":
+                    txt_lable_mon.setText("BÀI TẬP TIẾNG ANH");
+                    // txt_tuan.setText("Tuần: " + objBaitapTuan.getsWEEK_ID());
+                    txt_tuan.setText("Lớp " + objBaitapTuan.getsLEVEL_ID() + " - Tuần " + objBaitapTuan.getsWEEK_ID());
+                    break;
+            }
+            obj_answer = new ExerciseAnswer();
+            obj_answer.setsIdTuan(objBaitapTuan.getsWEEK_ID());
+            obj_answer.setsId_exercise(objBaitapTuan.getsID());
+            obj_answer.setsId_userMe(sUserMe);
+            obj_answer.setsId_userCon(sUserCon);
+            obj_answer.setsMonhoc(objBaitapTuan.getsSUBJECT_ID());
+            // Trạng thái làm bài 0: chưa làm
+            obj_answer.setIsTrangthailambai("0");
+            mRealm.beginTransaction();
+            mRealm.copyToRealmOrUpdate(obj_answer);
+            mRealm.commitTransaction();
+            App.mExercise = obj_answer;
+            get_api();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        obj_answer = new ExerciseAnswer();
-        obj_answer.setsIdTuan(objBaitapTuan.getsWEEK_ID());
-        obj_answer.setsId_exercise(objBaitapTuan.getsID());
-        obj_answer.setsId_userMe(sUserMe);
-        obj_answer.setsId_userCon(sUserCon);
-        obj_answer.setsMonhoc(objBaitapTuan.getsSUBJECT_ID());
-        // Trạng thái làm bài 0: chưa làm
-        obj_answer.setIsTrangthailambai("0");
-        mRealm.beginTransaction();
-        mRealm.copyToRealmOrUpdate(obj_answer);
-        mRealm.commitTransaction();
-        App.mExercise = obj_answer;
-        get_api();
+
     }
 
     private void get_api() {
@@ -169,13 +231,6 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
             @Override
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(ActivityStartBaitap.this);
-              /*  Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = "Your body here";
-                String shareSub = "Your subject here";
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSub);
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share using"));*/
                 Intent intent = new Intent(ActivityStartBaitap.this, Activity_webview_doctruyen.class);
                 intent.putExtra(Constants.KEY_SEND_LANGUAGE, "share_exer");
                 intent.putExtra(Constants.KEY_SEND_URL_WEBVIEW, objDetail.getFILE_PDF());
@@ -208,12 +263,14 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
                         SharedPrefs.getInstance().put(Constants.KEY_SAVE_COUNT_START_EXER, "" + 1);
                     }
                     //  btn_start_lambai.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
-                    if (sUserMe.equals("quochuy190")) {
+                    if (isLuyenthi) {
 
                     } else {
                         mPresenter.get_api_start_taken(sUserMe, sUserCon, objBaitapTuan.getsID(),
                                 get_current_time(), "30");
                     }
+                    if (obj_answer == null)
+                        return;
                     obj_answer.setsTimebatdaulambai(get_current_time());
                     // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
                     obj_answer.setIsTrangthailambai("1");
@@ -222,6 +279,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
                     mRealm.copyToRealmOrUpdate(obj_answer);
                     mRealm.commitTransaction();
                     Intent intent = new Intent(ActivityStartBaitap.this, ActivityLambaitap.class);
+                    App.mLisCauhoi.clear();
                     App.mLisCauhoi.addAll(mLisCauhoi);
                     intent.putExtra(Constants.KEY_SEND_EXERCISE_ANSWER, obj_answer);
                     startActivityForResult(intent, Constants.RequestCode.GET_START_LAMBAI);
@@ -246,6 +304,7 @@ public class ActivityStartBaitap extends BaseActivity implements ImpBaitap.View,
         switch (requestCode) {
             case Constants.RequestCode.GET_START_LAMBAI:
                 if (resultCode == RESULT_OK) {
+                    setResult(RESULT_OK, new Intent());
                     finish();
                 }
                 break;

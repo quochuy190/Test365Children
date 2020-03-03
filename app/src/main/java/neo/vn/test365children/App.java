@@ -14,6 +14,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import neo.vn.test365children.Models.Cauhoi;
 import neo.vn.test365children.Models.City;
+import neo.vn.test365children.Models.DetailExercise;
 import neo.vn.test365children.Models.District;
 import neo.vn.test365children.Models.ExerciseAnswer;
 import neo.vn.test365children.Models.GameTNNL;
@@ -48,6 +49,7 @@ public class App extends Application {
     public static ObjLogin sObjLogin;
     public static String sLevel;
     public static final String CHANNEL_ID = "home365kid";
+    public static DetailExercise mExerLuyentap;
 
     @Override
     public void onCreate() {

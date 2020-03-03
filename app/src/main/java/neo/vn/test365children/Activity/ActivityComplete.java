@@ -2,7 +2,6 @@ package neo.vn.test365children.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -11,8 +10,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -100,6 +102,9 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
     String rate_1 = "";
     String rate_2 = "";
 
+    @BindView(R.id.rating_exer)
+    RatingBar rating_exer;
+
     @Override
     public int setContentViewId() {
         return R.layout.activity_comple_baitap;
@@ -115,6 +120,11 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         btn_guidiem.setEnabled(false);
         initData();
         initEvent();
+        initRating();
+    }
+
+    private void initRating() {
+        rating_exer.setRating(5);
     }
 
     private void show_feedback() {
@@ -128,6 +138,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
     }
 
     private void initEvent() {
+
         btn_guidiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,26 +159,15 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
             public void onClick(View v) {
                 KeyboardUtil.play_click_button(ActivityComplete.this);
                 showDialogLoading();
-                if (rb_rate_1_1.isChecked()) {
-                    rate_1 = "1";
+                int rating = (int) rating_exer.getRating();
+                if (objExer.isLuyenthi()) {
+                    mPresenterFeedback.api_send_feetback(objExer.getsId_userMe(), objExer.getsId_userCon(),
+                            "" + rating, "1", objExer.getEXCERCISE_ID_LUYENTAP());
+                } else {
+                    mPresenterFeedback.api_send_feetback(objExer.getsId_userMe(), objExer.getsId_userCon(),
+                            "" + rating, "1", objExer.getsId_exercise());
                 }
-                if (rb_rate_1_2.isChecked()) {
-                    rate_1 = "2";
-                }
-                if (rb_rate_1_3.isChecked()) {
-                    rate_1 = "3";
-                }
-                if (rb_rate_2_1.isChecked()) {
-                    rate_2 = "1";
-                }
-                if (rb_rate_2_2.isChecked()) {
-                    rate_2 = "2";
-                }
-                if (rb_rate_2_3.isChecked()) {
-                    rate_2 = "3";
-                }
-                mPresenterFeedback.api_send_feetback(objExer.getsId_userMe(), objExer.getsId_userCon(), "1",
-                        rate_1, "2", rate_2, "1", objExer.getsId_exercise());
+
             }
         });
     }
@@ -254,7 +254,7 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         // Trạng thái làm bài 0: chưa làm, 1: bắt đầu làm bài: 2: đã làm bài xong 3: đã nộp bài
         objExer.setIsTrangthailambai("2");
         objExer.setsStatus_Play("0");
-        objExer.setsPoint("" + fPoint);
+        objExer.setsPoint("" + StringUtil.format_point(fPoint));
         mRealmList.addAll(App.mLisCauhoi);
         objExer.setmLisCauhoi(mRealmList);
         txt_pointlambai.setText("Điểm con đạt được: " + StringUtil.format_point(fPoint) + " điểm");
@@ -301,12 +301,24 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
         mRealm.commitTransaction();
 
         int iTime_duration = Integer.parseInt(objExer.getsTimequydinh()) / 1000;
-        showDialogLoading();
-        Log.e(TAG, "nopbai: loading submit");
-        mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise()
-                , objExer.getsThoiluonglambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
-                "" + iTime_duration, objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
 
+        Log.e(TAG, "nopbai: loading submit");
+        if (!objExer.isLuyenthi()) {
+            showDialogLoading();
+            mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(), objExer.getsId_exercise()
+                    , objExer.getsThoiluonglambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
+                    "" + iTime_duration, objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
+        } else {
+            objExer.setIsTrangthailambai("4");
+            mRealm.beginTransaction();
+            mRealm.copyToRealmOrUpdate(objExer);
+            mRealm.commitTransaction();
+            showDialogLoading();
+            mPresenter.get_api_submit_execercise(objExer.getsId_userMe(), objExer.getsId_userCon(),
+                    objExer.getEXCERCISE_ID_LUYENTAP()
+                    , objExer.getsThoiluonglambai(), objExer.getsTimebatdaulambai(), objExer.getsTimeketthuclambai(),
+                    "" + iTime_duration, objExer.getsKieunopbai(), objExer.getsPoint(), sDanhsachcau);
+        }
     }
 
 
@@ -395,7 +407,8 @@ public class ActivityComplete extends BaseActivity implements ImpBaitap.View, Im
     public void show_send_feedback(ErrorApi objError) {
         hideDialogLoading();
         if (objError.getsERROR().equals("0000")) {
-            showDialogComfirm("Thông báo", "Đánh giá đã được gửi đi. Cảm ơn con đã đóng góp xây dựng Home365.",
+            showDialogComfirm("Thông báo",
+                    "Đánh giá đã được gửi đi. Cảm ơn con đã đóng góp xây dựng Home365.",
                     false, new ClickDialog() {
                         @Override
                         public void onClickYesDialog() {

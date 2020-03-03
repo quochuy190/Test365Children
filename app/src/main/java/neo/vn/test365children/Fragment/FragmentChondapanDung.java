@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -205,63 +206,69 @@ public class FragmentChondapanDung extends BaseFragment
     }
 
     private void initLoadImage() {
-        Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_A);
-        Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_B);
-        Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
-        Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
+        Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_A);
+        Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_B);
+        Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_C);
+        Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_D);
     }
-    private void initData() {
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
-                != null && mCauhoi.getsSubNumberCau().equals("1")) {
-            showDialogLoading();
-        }
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview_center(webview_debai, mCauhoi.getsHTML_CONTENT());
-                // initWebview_center(webview_debai, sHtml);
-                initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-                initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-                initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-                initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
-            }
-        });
-        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
-            ll_webview_A.setVisibility(View.VISIBLE);
-        } else {
-            ll_webview_A.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
-            ll_webview_B.setVisibility(View.VISIBLE);
-        } else {
-            ll_webview_B.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
-            ll_webview_C.setVisibility(View.VISIBLE);
-        } else {
-            ll_webview_C.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
-            ll_webview_D.setVisibility(View.VISIBLE);
-        } else {
-            ll_webview_D.setVisibility(View.GONE);
-        }
-        if (mCauhoi.isDalam()) {
-            isClickXemdiem = true;
-            img_anwser_chil.setVisibility(View.VISIBLE);
-            if (mCauhoi.isAnserTrue()) {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-            } else {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
 
+    private void initData() {
+        try {
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                    != null && mCauhoi.getsSubNumberCau().equals("1")) {
+                showDialogLoading();
             }
-            check_anwser_chil();
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+            Glide.with(getActivity()).load(R.drawable.bg_nghe_nhin).into(img_background);
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview_center(webview_debai, mCauhoi.getsHTML_CONTENT());
+                    // initWebview_center(webview_debai, sHtml);
+                    initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+                    initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
+                    initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
+                    initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+                }
+            });
+            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
+                ll_webview_A.setVisibility(View.VISIBLE);
+            } else {
+                ll_webview_A.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
+                ll_webview_B.setVisibility(View.VISIBLE);
+            } else {
+                ll_webview_B.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
+                ll_webview_C.setVisibility(View.VISIBLE);
+            } else {
+                ll_webview_C.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
+                ll_webview_D.setVisibility(View.VISIBLE);
+            } else {
+                ll_webview_D.setVisibility(View.GONE);
+            }
+            if (mCauhoi.isDalam()) {
+                isClickXemdiem = true;
+                img_anwser_chil.setVisibility(View.VISIBLE);
+                if (mCauhoi.isAnserTrue()) {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                } else {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+
+                }
+                check_anwser_chil();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     private void check_anwser_chil() {
@@ -306,16 +313,16 @@ public class FragmentChondapanDung extends BaseFragment
         webview.clearMatches();
         webview.getSettings().setPluginState(WebSettings.PluginState.ON);
         webview.getSettings().setMediaPlaybackRequiresUserGesture(false);
-    //    webSettings .setMediaPlaybackRequiresUserGesture(false);
+        //    webSettings .setMediaPlaybackRequiresUserGesture(false);
         webview.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
-       // webSettings.setUseWideViewPort(true);
-     //  webSettings.setLoadWithOverviewMode(true);
+        // webSettings.setUseWideViewPort(true);
+        //  webSettings.setLoadWithOverviewMode(true);
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webSettings.setDefaultFontSize(18);
         webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.1));
-      //  webSettings.setBuiltInZoomControls(true);
+        //  webSettings.setBuiltInZoomControls(true);
         webSettings.setAllowFileAccess(true);
-      //  webSettings.setAppCacheEnabled(true);
+        //  webSettings.setAppCacheEnabled(true);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webview.setWebChromeClient(new WebChromeClient());
@@ -410,27 +417,32 @@ public class FragmentChondapanDung extends BaseFragment
     int iHeightmax = 0;
 
     private boolean anwser() {
-        if (sAnwser.length() > 0) {
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-            if (sAnwser.equals(mCauhoi.getsANSWER())) {
+        try {
+            if (sAnwser.length() > 0) {
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
                 App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                return true;
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
+                if (sAnwser.equals(mCauhoi.getsANSWER())) {
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+                    return true;
+                } else {
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                    return false;
+                }
+            } else showDialogNotify("Thông báo", "Bạn chưa chọn đáp án nào");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
-            } else {
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-                return false;
-            }
-        } else showDialogNotify("Thông báo", "Bạn chưa chọn đáp án nào");
-        return false;
     }
 
     private void setImageFalse(String sClickAnwser) {
@@ -578,28 +590,28 @@ public class FragmentChondapanDung extends BaseFragment
             btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
             switch (sClick) {
                 case "A":
-                    Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_A);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_B);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
+                    Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_A);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_B);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_C);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_D);
                     break;
                 case "B":
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_A);
-                    Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_B);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_A);
+                    Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_B);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_C);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_D);
                     break;
                 case "C":
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_A);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_B);
-                    Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_C);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_D);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_A);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_B);
+                    Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_C);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_D);
                     break;
                 case "D":
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_A);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_B);
-                    Glide.with(this).load(R.drawable.ic_checker).into(img_checkbox_C);
-                    Glide.with(this).load(R.drawable.ic_checked_blue).into(img_checkbox_D);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_A);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_B);
+                    Glide.with(getActivity()).load(R.drawable.ic_checker).into(img_checkbox_C);
+                    Glide.with(getActivity()).load(R.drawable.ic_checked_blue).into(img_checkbox_D);
                     break;
             }
             anwser();

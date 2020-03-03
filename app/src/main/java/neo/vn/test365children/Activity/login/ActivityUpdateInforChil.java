@@ -8,10 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,9 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
 import java.io.InputStream;
@@ -121,17 +122,80 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
     }
 
     private void initData() {
-        chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
-        InfoKids obj = chil.getsObjInfoKid();
-        if (obj != null) {
-            if (obj.getsUSERNAME() != null) {
-                edt_username.setText("MÃ HS: " + obj.getsUSERNAME());
-            }
-            if (chil.getsObjInfoKid().getsLEVEL_ID() != null && !obj.getsLEVEL_ID().equals("0")) {
-                sIs_status_update = "2";
-                img_level_id.setEnabled(false);
-                sLevel_id = chil.getsObjInfoKid().getsLEVEL_ID();
-                edt_level_id.setText(chil.getsObjInfoKid().getsLEVEL_ID());
+        try {
+            chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
+            if (chil == null)
+                return;
+            if (chil.getsObjInfoKid() == null)
+                return;
+            InfoKids obj = chil.getsObjInfoKid();
+            if (obj != null) {
+                if (obj.getsUSERNAME() != null) {
+                    edt_username.setText("MÃ HS: " + obj.getsUSERNAME());
+                }
+                if (chil.getsObjInfoKid().getsLEVEL_ID() != null && !obj.getsLEVEL_ID().equals("0")) {
+                    sIs_status_update = "2";
+                    img_level_id.setEnabled(false);
+                    sLevel_id = chil.getsObjInfoKid().getsLEVEL_ID();
+                    edt_level_id.setText(chil.getsObjInfoKid().getsLEVEL_ID());
+                } else {
+                    boolean is_update_level_id = SharedPrefs.getInstance()
+                            .get(Constants.KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS, Boolean.class);
+                    if (is_update_level_id) {
+                        sIs_status_update = "2";
+                        img_level_id.setEnabled(false);
+                        edt_level_id.setText("");
+                    } else {
+                        sIs_status_update = "1";
+                        img_level_id.setEnabled(true);
+                        edt_level_id.setText("");
+                    }
+                }
+                if (obj.getsPROVINCE() != null && obj.getPROVINCE_ID() != null) {
+                    City objCity = new City(obj.getPROVINCE_ID(), obj.getsPROVINCE());
+                    App.mCity = objCity;
+                    edt_city_addsub.setText(obj.getsPROVINCE());
+                } else App.mCity = null;
+                if (obj.getsDISTRICT() != null && obj.getDISTRICT_ID() != null) {
+                    District objDistrict = new District(obj.getDISTRICT_ID(), obj.getsDISTRICT());
+                    App.mDistrict = objDistrict;
+                    edt_district.setText(obj.getsDISTRICT());
+                } else {
+                    App.mDistrict = null;
+                }
+                if (obj.getsSCHOOL() != null && obj.getsSCHOOL_ID() != null) {
+                    Schools objSchool = new Schools(obj.getsSCHOOL_ID(), obj.getsSCHOOL());
+                    App.mSchools = objSchool;
+                    edt_school.setText(obj.getsSCHOOL());
+                } else App.mSchools = null;
+                if (obj.getsFULLNAME() != null) {
+                    edt_full_name.setText(obj.getsFULLNAME());
+                }
+                if (obj.getsCLASS() != null) {
+                    edt_class_name.setText(obj.getsCLASS());
+                }
+                if (obj.getsPHONENUMBER() != null) {
+                    edt_phone.setText(obj.getsPHONENUMBER());
+                }
+                if (obj.getEMAIL() != null) {
+                    edt_email.setText(obj.getEMAIL());
+                }
+                if (obj.getsAVATAR() != null) {
+                    sAvata = chil.getsObjInfoKid().getsAVATAR();
+                    Glide.with(this)
+                            .load(Config.URL_IMAGE + chil.getsObjInfoKid().getsAVATAR())
+                            .asBitmap()
+                            .placeholder(R.drawable.icon_avata)
+                            .into(new BitmapImageViewTarget(img_avata_update) {
+                                @Override
+                                public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                                    super.onResourceReady(drawable, anim);
+                                    //   progressBar.setVisibility(View.GONE);
+                                }
+                            });
+                } else {
+
+                }
             } else {
                 boolean is_update_level_id = SharedPrefs.getInstance()
                         .get(Constants.KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS, Boolean.class);
@@ -144,66 +208,12 @@ public class ActivityUpdateInforChil extends BaseActivity implements ImpUploadIm
                     img_level_id.setEnabled(true);
                     edt_level_id.setText("");
                 }
-            }
-            if (obj.getsPROVINCE() != null && obj.getPROVINCE_ID() != null) {
-                City objCity = new City(obj.getPROVINCE_ID(), obj.getsPROVINCE());
-                App.mCity = objCity;
-                edt_city_addsub.setText(obj.getsPROVINCE());
-            } else App.mCity = null;
-            if (obj.getsDISTRICT() != null && obj.getDISTRICT_ID() != null) {
-                District objDistrict = new District(obj.getDISTRICT_ID(), obj.getsDISTRICT());
-                App.mDistrict = objDistrict;
-                edt_district.setText(obj.getsDISTRICT());
-            } else {
-                App.mDistrict = null;
-            }
-            if (obj.getsSCHOOL() != null && obj.getsSCHOOL_ID() != null) {
-                Schools objSchool = new Schools(obj.getsSCHOOL_ID(), obj.getsSCHOOL());
-                App.mSchools = objSchool;
-                edt_school.setText(obj.getsSCHOOL());
-            } else App.mSchools = null;
-            if (obj.getsFULLNAME() != null) {
-                edt_full_name.setText(obj.getsFULLNAME());
-            }
-            if (obj.getsCLASS() != null) {
-                edt_class_name.setText(obj.getsCLASS());
-            }
-            if (obj.getsPHONENUMBER() != null) {
-                edt_phone.setText(obj.getsPHONENUMBER());
-            }
-            if (obj.getEMAIL() != null) {
-                edt_email.setText(obj.getEMAIL());
-            }
-            if (obj.getsAVATAR() != null) {
-                sAvata = chil.getsObjInfoKid().getsAVATAR();
-                Glide.with(this)
-                        .load(Config.URL_IMAGE + chil.getsObjInfoKid().getsAVATAR())
-                        .asBitmap()
-                        .placeholder(R.drawable.icon_avata)
-                        .into(new BitmapImageViewTarget(img_avata_update) {
-                            @Override
-                            public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
-                                super.onResourceReady(drawable, anim);
-                                //   progressBar.setVisibility(View.GONE);
-                            }
-                        });
-            } else {
 
             }
-        } else {
-            boolean is_update_level_id = SharedPrefs.getInstance()
-                    .get(Constants.KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS, Boolean.class);
-            if (is_update_level_id) {
-                sIs_status_update = "2";
-                img_level_id.setEnabled(false);
-                edt_level_id.setText("");
-            } else {
-                sIs_status_update = "1";
-                img_level_id.setEnabled(true);
-                edt_level_id.setText("");
-            }
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
     }
 

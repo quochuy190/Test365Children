@@ -1,9 +1,9 @@
 package neo.vn.test365children.Fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -170,48 +170,53 @@ public class FragmentSapxep extends BaseFragment implements
     List<String> mLiDapan_chil;
 
     private void initData() {
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        Log.i(TAG, "initData: " + mCauhoi.getsHTML_CONTENT());
-        // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
-        if (mCauhoi.getsHTML_CONTENT() != null)
-            txt_cauhoi.setText("Đáp án: " + mCauhoi.getsHTML_CONTENT().replace("::", " "));
+        try {
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+            Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
+            Log.i(TAG, "initData: " + mCauhoi.getsHTML_CONTENT());
+            // String[] debai = mCauhoi.getsQUESTION().split("<br /><br>");
+            if (mCauhoi.getsHTML_CONTENT() != null)
+                txt_cauhoi.setText("Đáp án: " + mCauhoi.getsHTML_CONTENT().replace("::", " "));
 
-        txt_cauhoi.setVisibility(View.INVISIBLE);
-        mLis = new ArrayList<>();
-        if (mCauhoi.getsHTML_CONTENT() != null) {
-            String[] dapan = mCauhoi.getsHTML_CONTENT().split("::");
-            mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
-        }
-        if (mCauhoi.getsANSWER_CHILD() != null) {
-            String[] dapan_chil = mCauhoi.getsANSWER_CHILD().split("::");
-            mLiDapan_chil = new ArrayList<String>(Arrays.asList(dapan_chil));
-        }
-        if (mLiDapan != null && mLiDapan.size() > 0) {
-            for (int i = 0; i < mLiDapan.size(); i++) {
-                String s = mLiDapan.get(i);
-                mLisStart.add(new DapAn("1", s, "",
-                        "agcbd", false, "" + i));
+            txt_cauhoi.setVisibility(View.INVISIBLE);
+            mLis = new ArrayList<>();
+            if (mCauhoi.getsHTML_CONTENT() != null) {
+                String[] dapan = mCauhoi.getsHTML_CONTENT().split("::");
+                mLiDapan = new ArrayList<String>(Arrays.asList(dapan));
+            }
+            if (mCauhoi.getsANSWER_CHILD() != null) {
+                String[] dapan_chil = mCauhoi.getsANSWER_CHILD().split("::");
+                mLiDapan_chil = new ArrayList<String>(Arrays.asList(dapan_chil));
+            }
+            if (mLiDapan != null && mLiDapan.size() > 0) {
+                for (int i = 0; i < mLiDapan.size(); i++) {
+                    String s = mLiDapan.get(i);
+                    mLisStart.add(new DapAn("1", s, "",
+                            "agcbd", false, "" + i));
+                    if (!mCauhoi.isDalam()) {
+                        mLis.add(new DapAn("1", s, "",
+                                "agcbd", false, "" + i));
+                    }
+
+                }
                 if (!mCauhoi.isDalam()) {
+                    Collections.shuffle(mLis);
+                }
+            }
+            if (mCauhoi.isDalam() && mLiDapan_chil != null && mLiDapan_chil.size() > 0) {
+                for (int i = 0; i < mLiDapan_chil.size(); i++) {
+                    String s = mLiDapan_chil.get(i);
                     mLis.add(new DapAn("1", s, "",
                             "agcbd", false, "" + i));
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            }
-            if (!mCauhoi.isDalam()) {
-                Collections.shuffle(mLis);
-            }
-        }
-        if (mCauhoi.isDalam() && mLiDapan_chil != null && mLiDapan_chil.size() > 0) {
-            for (int i = 0; i < mLiDapan_chil.size(); i++) {
-                String s = mLiDapan_chil.get(i);
-                mLis.add(new DapAn("1", s, "",
-                        "agcbd", false, "" + i));
-            }
-        }
 
     }
 
@@ -261,35 +266,40 @@ public class FragmentSapxep extends BaseFragment implements
     }
 
     private void save_anwser_chil() {
-        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-        String answer_chil = "";
-        for (int i = 0; i < mLis.size(); i++) {
-            if (i < mLis.size() - 1)
-                answer_chil = answer_chil + mLis.get(i).getsContent() + "::";
-            else answer_chil = answer_chil + mLis.get(i).getsContent();
+        try {
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
+            String answer_chil = "";
+            for (int i = 0; i < mLis.size(); i++) {
+                if (i < mLis.size() - 1)
+                    answer_chil = answer_chil + mLis.get(i).getsContent() + "::";
+                else answer_chil = answer_chil + mLis.get(i).getsContent();
+            }
+            String dapan = "";
+            for (int i = 0; i < mLisStart.size(); i++) {
+                if (i < mLisStart.size() - 1)
+                    dapan = dapan + mLisStart.get(i).getsContent() + "::";
+                else dapan = dapan + mLisStart.get(i).getsContent();
+            }
+            dapan.trim();
+            answer_chil.trim();
+            if (dapan.equals(answer_chil)) {
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+            } else {
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+            }
+            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(answer_chil);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        String dapan = "";
-        for (int i = 0; i < mLisStart.size(); i++) {
-            if (i < mLisStart.size() - 1)
-                dapan = dapan + mLisStart.get(i).getsContent() + "::";
-            else dapan = dapan + mLisStart.get(i).getsContent();
-        }
-        dapan.trim();
-        answer_chil.trim();
-        if (dapan.equals(answer_chil)) {
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-        } else {
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-        }
-        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(answer_chil);
+
     }
 
 

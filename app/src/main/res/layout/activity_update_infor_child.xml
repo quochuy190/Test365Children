@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,7 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -66,7 +66,7 @@
                 app:layout_constraintEnd_toEndOf="@id/img_avata_update"
                 app:layout_constraintWidth_percent="0.05" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/dp5"
                 android:id="@+id/txt_input_city"
                 android:background="@drawable/spr_login_edt"
@@ -94,7 +94,7 @@
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
             <ImageView
                 android:id="@+id/img_city"
                 app:layout_constraintDimensionRatio="1:1"
@@ -117,7 +117,7 @@
                 android:layout_width="1dp"
                 android:layout_height="0dp"/>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/margin_top_update_infor_child"
                 android:id="@+id/txt_input_district"
                 android:background="@drawable/spr_login_edt"
@@ -146,7 +146,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
             <ImageView
                 android:id="@+id/img_district"
                 app:layout_constraintDimensionRatio="1:1"
@@ -168,7 +168,7 @@
                 app:layout_constraintStart_toStartOf="@id/img_district"
                 android:layout_width="1dp"
                 android:layout_height="0dp"/>
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/margin_top_update_infor_child"
                 android:id="@+id/txt_input_school"
                 android:background="@drawable/spr_login_edt"
@@ -196,7 +196,7 @@
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
             <ImageView
                 android:id="@+id/img_school"
                 app:layout_constraintDimensionRatio="1:1"
@@ -218,7 +218,7 @@
                 app:layout_constraintStart_toStartOf="@id/img_school"
                 android:layout_width="1dp"
                 android:layout_height="0dp"/>
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/margin_top_update_infor_child"
                 android:id="@+id/txt_input_level_id"
                 android:background="@drawable/spr_login_edt"
@@ -247,7 +247,7 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
             <ImageView
                 android:id="@+id/img_level_id"
                 app:layout_constraintDimensionRatio="1:1"
@@ -269,7 +269,7 @@
                 app:layout_constraintStart_toStartOf="@id/img_level_id"
                 android:layout_width="1dp"
                 android:layout_height="0dp"/>
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/margin_top_update_infor_child"
                 android:id="@+id/txt_input_class_name"
                 android:background="@drawable/spr_login_edt"
@@ -297,8 +297,8 @@
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
                 android:visibility="gone"
                 android:clickable="false"
                 android:layout_marginTop="@dimen/margin_top_update_infor_child"
@@ -329,9 +329,9 @@
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/margin_top_update_infor_child"
                 android:id="@+id/txt_input_full_name"
                 android:background="@drawable/spr_login_edt"
@@ -359,8 +359,8 @@
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/margin_top_update_infor_child"
                 android:id="@+id/txt_input_phone"
                 android:background="@drawable/spr_login_edt"
@@ -388,9 +388,9 @@
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/margin_top_update_infor_child"
                 android:id="@+id/txt_input_email"
                 android:background="@drawable/spr_login_edt"
@@ -418,7 +418,7 @@
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
             <Button
                 app:layout_constraintHeight_percent="0.08"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -474,8 +474,8 @@
                 android:src="@drawable/img_mute"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

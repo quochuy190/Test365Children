@@ -28,9 +28,9 @@ public interface ApiSeviceUploadImage {
     Call<ResponseBody> uploadImage(@Part MultipartBody.Part file);
 
     final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(7, TimeUnit.SECONDS)
-            .writeTimeout(7, TimeUnit.SECONDS)
-            .readTimeout(7, TimeUnit.SECONDS)
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
             .build();
 
     Retrofit retrofit = new Retrofit.Builder()

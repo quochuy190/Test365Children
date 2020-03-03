@@ -5,9 +5,6 @@ import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,6 +14,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -765,210 +766,220 @@ public class ActivityKowPlay_Level_Two extends BaseActivity implements ImlGameKo
         return new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                final int x = (int) event.getRawX();
-                final int y = (int) event.getRawY();
-                String sContent = view.toString();
-                String id = String.valueOf(view.getId());
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_DOWN:
-                        //txt_char_1.setVisibility(View.VISIBLE);
-                        ConstraintLayout.LayoutParams lParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                        xDelta = x - lParams.leftMargin;
-                        yDelta = y - lParams.topMargin;
-                        x_start1 = lParams.leftMargin;
-                        y_start1 = lParams.topMargin;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (inViewInBounds(view_play_game, (int) event.getRawX(), (int) event.getRawY())) {
-                            if (inViewInBounds(txt_destination_2, (int) event.getRawX(), (int) event.getRawY())) {
-                                if (mMap_Anwser.get(1) == -1) {
-                                    if (check_des_null(2)) {
+                try {
+                    final int x = (int) event.getRawX();
+                    final int y = (int) event.getRawY();
+                    String sContent = view.toString();
+                    String id = String.valueOf(view.getId());
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_DOWN:
+                            //txt_char_1.setVisibility(View.VISIBLE);
+                            ConstraintLayout.LayoutParams lParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                            xDelta = x - lParams.leftMargin;
+                            yDelta = y - lParams.topMargin;
+                            x_start1 = lParams.leftMargin;
+                            y_start1 = lParams.topMargin;
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            if (inViewInBounds(view_play_game, (int) event.getRawX(), (int) event.getRawY())) {
+                                if (inViewInBounds(txt_destination_2, (int) event.getRawX(), (int) event.getRawY())) {
+                                    if (mMap_Anwser.get(1) == -1) {
+                                        if (check_des_null(2)) {
+                                            settext_action_up(txt_destination_2, view.getId(), 1);
+                                            mLisCharTeml.set(1, txt_destination_2.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams)
+                                                    view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(1), x_start1, y_start1);
                                         settext_action_up(txt_destination_2, view.getId(), 1);
                                         mLisCharTeml.set(1, txt_destination_2.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams)
-                                                view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(1), x_start1, y_start1);
-                                    settext_action_up(txt_destination_2, view.getId(), 1);
-                                    mLisCharTeml.set(1, txt_destination_2.getText().toString().toLowerCase());
-                                }
 
-                            } else if (inViewInBounds(txt_destination_1, (int) event.getRawX(), (int) event.getRawY())) {
-                                if (mMap_Anwser.get(0) == -1) {
-                                    if (check_des_null(1)) {
+                                } else if (inViewInBounds(txt_destination_1,
+                                        (int) event.getRawX(), (int) event.getRawY())) {
+                                    if (mMap_Anwser.get(0) == -1) {
+                                        if (check_des_null(1)) {
+                                            settext_action_up(txt_destination_1, view.getId(), 0);
+                                            mLisCharTeml.set(0, txt_destination_1.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(0), x_start1, y_start1);
                                         settext_action_up(txt_destination_1, view.getId(), 0);
                                         mLisCharTeml.set(0, txt_destination_1.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(0), x_start1, y_start1);
-                                    settext_action_up(txt_destination_1, view.getId(), 0);
-                                    mLisCharTeml.set(0, txt_destination_1.getText().toString().toLowerCase());
-                                }
 
-                            } else if (inViewInBounds(txt_destination_3, (int) event.getRawX(), (int) event.getRawY())) {
-                                if (mMap_Anwser.get(2) == -1) {
-                                    if (check_des_null(3)) {
+                                } else if (inViewInBounds(txt_destination_3, (int) event.getRawX(), (int) event.getRawY())) {
+                                    if (mMap_Anwser.get(2) == -1) {
+                                        if (check_des_null(3)) {
+                                            settext_action_up(txt_destination_3, view.getId(), 2);
+                                            mLisCharTeml.set(2, txt_destination_3.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(2), x_start1, y_start1);
                                         settext_action_up(txt_destination_3, view.getId(), 2);
                                         mLisCharTeml.set(2, txt_destination_3.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(2), x_start1, y_start1);
-                                    settext_action_up(txt_destination_3, view.getId(), 2);
-                                    mLisCharTeml.set(2, txt_destination_3.getText().toString().toLowerCase());
-                                }
 
 
-                            } else if (inViewInBounds(txt_destination_4, (int) event.getRawX(), (int) event.getRawY())) {
-                                if (mMap_Anwser.get(3) == -1) {
-                                    if (check_des_null(4)) {
+                                } else if (inViewInBounds(txt_destination_4, (int) event.getRawX(), (int) event.getRawY())) {
+                                    if (mMap_Anwser.get(3) == -1) {
+                                        if (check_des_null(4)) {
+                                            settext_action_up(txt_destination_4, view.getId(), 3);
+                                            mLisCharTeml.set(3, txt_destination_4.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(3), x_start1, y_start1);
                                         settext_action_up(txt_destination_4, view.getId(), 3);
                                         mLisCharTeml.set(3, txt_destination_4.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(3), x_start1, y_start1);
-                                    settext_action_up(txt_destination_4, view.getId(), 3);
-                                    mLisCharTeml.set(3, txt_destination_4.getText().toString().toLowerCase());
-                                }
-                            } else if (inViewInBounds(txt_destination_5, (int) event.getRawX(), (int) event.getRawY())) {
+                                } else if (inViewInBounds(txt_destination_5, (int) event.getRawX(), (int) event.getRawY())) {
 
-                                if (mMap_Anwser.get(4) == -1) {
-                                    if (check_des_null(5)) {
+                                    if (mMap_Anwser.get(4) == -1) {
+                                        if (check_des_null(5)) {
+                                            settext_action_up(txt_destination_5, view.getId(), 4);
+                                            mLisCharTeml.set(4, txt_destination_5.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(4), x_start1, y_start1);
                                         settext_action_up(txt_destination_5, view.getId(), 4);
                                         mLisCharTeml.set(4, txt_destination_5.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(4), x_start1, y_start1);
-                                    settext_action_up(txt_destination_5, view.getId(), 4);
-                                    mLisCharTeml.set(4, txt_destination_5.getText().toString().toLowerCase());
-                                }
-                            } else if (inViewInBounds(txt_destination_6, (int) event.getRawX(), (int) event.getRawY())) {
+                                } else if (inViewInBounds(txt_destination_6, (int) event.getRawX(), (int) event.getRawY())) {
 
-                                if (mMap_Anwser.get(5) == -1) {
-                                    if (check_des_null(6)) {
+                                    if (mMap_Anwser.get(5) == -1) {
+                                        if (check_des_null(6)) {
+                                            settext_action_up(txt_destination_6, view.getId(), 5);
+                                            mLisCharTeml.set(5, txt_destination_6.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(5), x_start1, y_start1);
                                         settext_action_up(txt_destination_6, view.getId(), 5);
                                         mLisCharTeml.set(5, txt_destination_6.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(5), x_start1, y_start1);
-                                    settext_action_up(txt_destination_6, view.getId(), 5);
-                                    mLisCharTeml.set(5, txt_destination_6.getText().toString().toLowerCase());
-                                }
-                            } else if (inViewInBounds(txt_destination_7, (int) event.getRawX(), (int) event.getRawY())) {
-                                if (mMap_Anwser.get(6) == -1) {
-                                    if (check_des_null(7)) {
+                                } else if (inViewInBounds(txt_destination_7, (int) event.getRawX(), (int) event.getRawY())) {
+                                    if (mMap_Anwser.get(6) == -1) {
+                                        if (check_des_null(7)) {
+                                            settext_action_up(txt_destination_7, view.getId(), 6);
+                                            mLisCharTeml.set(6, txt_destination_7.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(6), x_start1, y_start1);
                                         settext_action_up(txt_destination_7, view.getId(), 6);
                                         mLisCharTeml.set(6, txt_destination_7.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(6), x_start1, y_start1);
-                                    settext_action_up(txt_destination_7, view.getId(), 6);
-                                    mLisCharTeml.set(6, txt_destination_7.getText().toString().toLowerCase());
-                                }
-                            } else if (inViewInBounds(txt_destination_8, (int) event.getRawX(), (int) event.getRawY())) {
+                                } else if (inViewInBounds(txt_destination_8, (int) event.getRawX(), (int) event.getRawY())) {
 
-                                if (mMap_Anwser.get(7) == -1) {
-                                    if (check_des_null(8)) {
+                                    if (mMap_Anwser.get(7) == -1) {
+                                        if (check_des_null(8)) {
+                                            settext_action_up(txt_destination_8, view.getId(), 7);
+                                            mLisCharTeml.set(7, txt_destination_8.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(7), x_start1, y_start1);
                                         settext_action_up(txt_destination_8, view.getId(), 7);
                                         mLisCharTeml.set(7, txt_destination_8.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(7), x_start1, y_start1);
-                                    settext_action_up(txt_destination_8, view.getId(), 7);
-                                    mLisCharTeml.set(7, txt_destination_8.getText().toString().toLowerCase());
-                                }
-                            } else if (inViewInBounds(txt_destination_9, (int) event.getRawX(), (int) event.getRawY())) {
+                                } else if (inViewInBounds(txt_destination_9, (int) event.getRawX(), (int) event.getRawY())) {
 
 
-                                if (mMap_Anwser.get(8) == -1) {
-                                    if (check_des_null(9)) {
+                                    if (mMap_Anwser.get(8) == -1) {
+                                        if (check_des_null(9)) {
+                                            settext_action_up(txt_destination_9, view.getId(), 8);
+                                            mLisCharTeml.set(8, txt_destination_9.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(8), x_start1, y_start1);
                                         settext_action_up(txt_destination_9, view.getId(), 8);
                                         mLisCharTeml.set(8, txt_destination_9.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
-                                } else {
-                                    set_text_swap(mMap_Anwser.get(8), x_start1, y_start1);
-                                    settext_action_up(txt_destination_9, view.getId(), 8);
-                                    mLisCharTeml.set(8, txt_destination_9.getText().toString().toLowerCase());
-                                }
-                            } else if (inViewInBounds(txt_destination_10, (int) event.getRawX(), (int) event.getRawY())) {
-                                if (mMap_Anwser.get(9) == -1) {
-                                    if (check_des_null(10)) {
+                                } else if (inViewInBounds(txt_destination_10, (int) event.getRawX(), (int) event.getRawY())) {
+                                    if (mMap_Anwser.get(9) == -1) {
+                                        if (check_des_null(10)) {
+                                            settext_action_up(txt_destination_10, view.getId(), 9);
+                                            mLisCharTeml.set(9, txt_destination_10.getText().toString().toLowerCase());
+                                        } else {
+                                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                            layoutParams1.leftMargin = x_start1;
+                                            layoutParams1.topMargin = y_start1;
+                                            layoutParams1.rightMargin = 0;
+                                            layoutParams1.bottomMargin = 0;
+                                            view.setLayoutParams(layoutParams1);
+                                        }
+                                    } else {
+                                        set_text_swap(mMap_Anwser.get(9), x_start1, y_start1);
                                         settext_action_up(txt_destination_10, view.getId(), 9);
                                         mLisCharTeml.set(9, txt_destination_10.getText().toString().toLowerCase());
-                                    } else {
-                                        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                                        layoutParams1.leftMargin = x_start1;
-                                        layoutParams1.topMargin = y_start1;
-                                        layoutParams1.rightMargin = 0;
-                                        layoutParams1.bottomMargin = 0;
-                                        view.setLayoutParams(layoutParams1);
                                     }
                                 } else {
-                                    set_text_swap(mMap_Anwser.get(9), x_start1, y_start1);
-                                    settext_action_up(txt_destination_10, view.getId(), 9);
-                                    mLisCharTeml.set(9, txt_destination_10.getText().toString().toLowerCase());
+                                    ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                                    layoutParams1.leftMargin = x_start1;
+                                    layoutParams1.topMargin = y_start1;
+                                    layoutParams1.rightMargin = 0;
+                                    layoutParams1.bottomMargin = 0;
+                                    view.setLayoutParams(layoutParams1);
                                 }
                             } else {
                                 ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
@@ -978,24 +989,19 @@ public class ActivityKowPlay_Level_Two extends BaseActivity implements ImlGameKo
                                 layoutParams1.bottomMargin = 0;
                                 view.setLayoutParams(layoutParams1);
                             }
-                        } else {
-                            ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                            layoutParams1.leftMargin = x_start1;
-                            layoutParams1.topMargin = y_start1;
-                            layoutParams1.rightMargin = 0;
-                            layoutParams1.bottomMargin = 0;
-                            view.setLayoutParams(layoutParams1);
-                        }
 
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-                        layoutParams.leftMargin = x - xDelta;
-                        layoutParams.topMargin = y - yDelta;
-                        view.setLayoutParams(layoutParams);
-                        break;
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+                            layoutParams.leftMargin = x - xDelta;
+                            layoutParams.topMargin = y - yDelta;
+                            view.setLayoutParams(layoutParams);
+                            break;
+                    }
+                    view_play_game.invalidate();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                view_play_game.invalidate();
                 return true;
             }
         };

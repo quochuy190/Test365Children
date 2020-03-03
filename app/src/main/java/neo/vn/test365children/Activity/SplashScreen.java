@@ -34,7 +34,6 @@ public class SplashScreen extends BaseActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         boolean is_welcom_app = SharedPrefs.getInstance().get(Constants.KEY_IS_WELCOM_APP, Boolean.class);
-
         img_splash = (ImageView) findViewById(R.id.img_splash);
         Glide.with(this).load(R.drawable.img_splash).into(img_splash);
         if (is_welcom_app) {

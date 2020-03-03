@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -223,45 +224,49 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     }
 
     private void initData() {
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
-                != null && mCauhoi.getsSubNumberCau().equals("1")) {
-            showDialogLoading();
-        }
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        Glide.with(this).load(R.drawable.bg_chem_hoa_qua).into(img_background);
-        initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+        try {
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                    != null && mCauhoi.getsSubNumberCau().equals("1")) {
+                showDialogLoading();
             }
-        });
-        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
-            ll_anwser_A.setVisibility(View.VISIBLE);
-        } else {
-            ll_anwser_A.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
-            ll_anwser_B.setVisibility(View.VISIBLE);
-        } else {
-            ll_anwser_B.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
-            ll_anwser_C.setVisibility(View.VISIBLE);
-        } else {
-            ll_anwser_C.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
-            ll_anwser_D.setVisibility(View.VISIBLE);
-        } else {
-            ll_anwser_D.setVisibility(View.GONE);
-        }
-        if (mCauhoi.isDalam()) {
-            isClickXemdiem = true;
-            sAnwser = mCauhoi.getsANSWER_CHILD();
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+            Glide.with(getActivity()).load(R.drawable.bg_chem_hoa_qua).into(img_background);
+            initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+                }
+            });
+            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
+                ll_anwser_A.setVisibility(View.VISIBLE);
+            } else {
+                ll_anwser_A.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
+                ll_anwser_B.setVisibility(View.VISIBLE);
+            } else {
+                ll_anwser_B.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
+                ll_anwser_C.setVisibility(View.VISIBLE);
+            } else {
+                ll_anwser_C.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
+                ll_anwser_D.setVisibility(View.VISIBLE);
+            } else {
+                ll_anwser_D.setVisibility(View.GONE);
+            }
+            if (mCauhoi.isDalam()) {
+                isClickXemdiem = true;
+                sAnwser = mCauhoi.getsANSWER_CHILD();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -315,56 +320,61 @@ public class FragmentChemchuoi extends BaseFragment implements View.OnClickListe
     }
 
     private void set_anwser_playing() {
-        sAnwser = mCauhoi.getsANSWER_CHILD();
-        img_anwser_chil.setVisibility(View.VISIBLE);
-        if (sAnwser.equals(mCauhoi.getsANSWER())) {
-            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-            switch (mCauhoi.getsANSWER()) {
-                case "A":
-                    animation_anwsertrue(img_hoaqua_A);
-                    break;
-                case "B":
-                    animation_anwsertrue(img_hoaqua_B);
-                    break;
-                case "C":
-                    animation_anwsertrue(img_hoaqua_C);
-                    break;
-                case "D":
-                    animation_anwsertrue(img_hoaqua_D);
-                    break;
-            }
+        try {
+            sAnwser = mCauhoi.getsANSWER_CHILD();
+            img_anwser_chil.setVisibility(View.VISIBLE);
+            if (sAnwser.equals(mCauhoi.getsANSWER())) {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                switch (mCauhoi.getsANSWER()) {
+                    case "A":
+                        animation_anwsertrue(img_hoaqua_A);
+                        break;
+                    case "B":
+                        animation_anwsertrue(img_hoaqua_B);
+                        break;
+                    case "C":
+                        animation_anwsertrue(img_hoaqua_C);
+                        break;
+                    case "D":
+                        animation_anwsertrue(img_hoaqua_D);
+                        break;
+                }
 
-        } else {
-            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-            switch (mCauhoi.getsANSWER()) {
-                case "A":
-                    animation_anwsertrue(img_hoaqua_A);
-                    break;
-                case "B":
-                    animation_anwsertrue(img_hoaqua_B);
-                    break;
-                case "C":
-                    animation_anwsertrue(img_hoaqua_C);
-                    break;
-                case "D":
-                    animation_anwsertrue(img_hoaqua_D);
-                    break;
+            } else {
+                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                switch (mCauhoi.getsANSWER()) {
+                    case "A":
+                        animation_anwsertrue(img_hoaqua_A);
+                        break;
+                    case "B":
+                        animation_anwsertrue(img_hoaqua_B);
+                        break;
+                    case "C":
+                        animation_anwsertrue(img_hoaqua_C);
+                        break;
+                    case "D":
+                        animation_anwsertrue(img_hoaqua_D);
+                        break;
+                }
+                switch (mCauhoi.getsANSWER_CHILD()) {
+                    case "A":
+                        animation_click(img_hoaqua_A);
+                        break;
+                    case "B":
+                        animation_click(img_hoaqua_B);
+                        break;
+                    case "C":
+                        animation_click(img_hoaqua_C);
+                        break;
+                    case "D":
+                        animation_click(img_hoaqua_D);
+                        break;
+                }
             }
-            switch (mCauhoi.getsANSWER_CHILD()) {
-                case "A":
-                    animation_click(img_hoaqua_A);
-                    break;
-                case "B":
-                    animation_click(img_hoaqua_B);
-                    break;
-                case "C":
-                    animation_click(img_hoaqua_C);
-                    break;
-                case "D":
-                    animation_click(img_hoaqua_D);
-                    break;
-            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 
     private void animation_click(ImageView img) {

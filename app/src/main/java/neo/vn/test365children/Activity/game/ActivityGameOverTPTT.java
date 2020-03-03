@@ -2,7 +2,7 @@ package neo.vn.test365children.Activity.game;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +28,7 @@ import neo.vn.test365children.Presenter.ImlGetGameTptt;
 import neo.vn.test365children.Presenter.PresenterFeedback;
 import neo.vn.test365children.Presenter.PresenterGame;
 import neo.vn.test365children.R;
+import neo.vn.test365children.Untils.KeyboardUtil;
 import neo.vn.test365children.Untils.SharedPrefs;
 import neo.vn.test365children.Untils.StringUtil;
 
@@ -62,9 +64,13 @@ public class ActivityGameOverTPTT extends BaseActivity
     RadioButton rb_rate_2_2;
     @BindView(R.id.view_danhgia)
     ConstraintLayout view_danhgia;
+    @BindView(R.id.imageView27)
+    ImageView img_bang;
     PresenterFeedback mPresenterFeedback;
     String rate_1 = "";
     String rate_2 = "";
+    @BindView(R.id.rating_exer)
+    RatingBar rating_exer;
 
     @Override
     public int setContentViewId() {
@@ -76,8 +82,14 @@ public class ActivityGameOverTPTT extends BaseActivity
         super.onCreate(savedInstanceState);
         mPresenter = new PresenterGame(this);
         mPresenterFeedback = new PresenterFeedback(this);
+        Glide.with(this).load(R.drawable.icon_bang).into(img_bang);
         initData();
         initEvent();
+        initRating();
+    }
+
+    private void initRating() {
+        rating_exer.setRating(5);
     }
 
     private void initEvent() {
@@ -98,28 +110,14 @@ public class ActivityGameOverTPTT extends BaseActivity
         btn_gui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KeyboardUtil.play_click_button(ActivityGameOverTPTT.this);
                 showDialogLoading();
-                if (rb_rate_1_1.isChecked()) {
-                    rate_1 = "1";
-                }
-                if (rb_rate_1_2.isChecked()) {
-                    rate_1 = "2";
-                }
-                if (rb_rate_1_3.isChecked()) {
-                    rate_1 = "3";
-                }
-                if (rb_rate_2_1.isChecked()) {
-                    rate_2 = "1";
-                }
-                if (rb_rate_2_2.isChecked()) {
-                    rate_2 = "2";
-                }
-                if (rb_rate_2_3.isChecked()) {
-                    rate_2 = "3";
-                }
+                int rating = (int) rating_exer.getRating();
+           /*     mPresenterFeedback.api_send_feetback(objExer.getsId_userMe(), objExer.getsId_userCon(),
+                        "" + rating, "1", objExer.getsId_exercise());*/
                 String sPart_id = App.mLisGameTPTT.get(0).getsPART_ID();
-                mPresenterFeedback.api_send_feetback(sUserMe, sUserCon, "1",
-                        rate_1, "2", rate_2, "1", sPart_id);
+                mPresenterFeedback.api_send_feetback(sUserMe, sUserCon, "" + rating,
+                        "2", sPart_id);
             }
         });
     }

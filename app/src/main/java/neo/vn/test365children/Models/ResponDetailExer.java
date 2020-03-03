@@ -2,6 +2,8 @@ package neo.vn.test365children.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ResponDetailExer {
     @SerializedName("ERROR")
     private String sERROR;
@@ -11,6 +13,8 @@ public class ResponDetailExer {
     private String sRESULT;
     @SerializedName("DETAILS")
     private DetailExercise DETAILS;
+    @SerializedName("INFO")
+    private List<DetailExercise> listExerLuyentap;
 
     public String getsERROR() {
         return sERROR;
@@ -42,5 +46,13 @@ public class ResponDetailExer {
 
     public void setDETAILS(DetailExercise DETAILS) {
         this.DETAILS = DETAILS;
+    }
+
+    public List<DetailExercise> getListExerLuyentap() {
+        return listExerLuyentap;
+    }
+
+    public void setListExerLuyentap(List<DetailExercise> listExerLuyentap) {
+        this.listExerLuyentap = listExerLuyentap;
     }
 }

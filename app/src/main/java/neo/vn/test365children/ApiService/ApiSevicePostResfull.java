@@ -28,9 +28,9 @@ public interface ApiSevicePostResfull {
     Call<ResponseBody> getApiServiceRest(@Path("service") String service, @FieldMap Map<String, String> data);
 
     final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.SECONDS)
-            .writeTimeout(5, TimeUnit.SECONDS)
-            .readTimeout(5, TimeUnit.SECONDS)
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
             .build();
 
     Retrofit retrofit_restful = new Retrofit.Builder()

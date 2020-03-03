@@ -2,9 +2,9 @@ package neo.vn.test365children.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,74 +97,61 @@ public class FragmentCuuCongchua extends BaseFragment {
     }
 
     private void initData() {
-/*        btn_nopbai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn nộp bài trước khi hết thời gian",
-                        false, new ClickDialog() {
-                            @Override
-                            public void onClickYesDialog() {
-                                EventBus.getDefault().post(new MessageEvent("nop_bai", Float.parseFloat("0"), 0));
-                            }
-
-                            @Override
-                            public void onClickNoDialog() {
-
-                            }
-                        });
-
-            }
-        });*/
-        txt_lable.setText("Bài " + mCauhoi.getmNumber() + ": " + mCauhoi.getsHUONGDAN());
-        Glide.with(this).load(R.drawable.bg_congchua).into(img_background);
-        // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
-        //txtCauhoi.setText(mCauhoi.getsQUESTION());
-        iStart.add(2);
-        mLis.add(new DapAn("0", "", "", "0", false, ""));
-        mLis.add(new DapAn("1", "", "", "0", false, ""));
-        mLis.add(new DapAn("2", "", "", "1", true, ""));
-        mLis.add(new DapAn("3", "", "", "0", false, ""));
-        mLis.add(new DapAn("4", "", "", "0", false, ""));
-        mLis.add(new DapAn("5", "", "", "0", false, ""));
-        mLis.add(new DapAn("6", "", "", "0", false, ""));
-        mLis.add(new DapAn("7", "", "", "0", false, ""));
-        mLis.add(new DapAn("8", "", "", "0", false, ""));
-        mLis.add(new DapAn("9", "", "", "0", false, ""));
-        mLis.add(new DapAn("10", "", "", "0", false, ""));
-        mLis.add(new DapAn("11", "", "", "0", false, ""));
-        if (mCauhoi.isDalam()) {
-            if (mCauhoi.isEndGame()) {
-                if (mCauhoi.isResul_chil()) {
-                    txt_lable.setText("Chúc mừng công chúa đã được giải cứu");
-                    img_done.setVisibility(View.VISIBLE);
-                    Glide.with(getContext()).load(R.drawable.done).into(img_done);
-                    recycle_dapan.setVisibility(View.GONE);
+        try {
+            txt_lable.setText("Bài " + mCauhoi.getmNumber() + ": " + mCauhoi.getsHUONGDAN());
+            Glide.with(this).load(R.drawable.bg_congchua).into(img_background);
+            // txtSubNumber.setText("Câu hỏi: "+mCauhoi.getsSubNumberCau());
+            //txtCauhoi.setText(mCauhoi.getsQUESTION());
+            iStart.add(2);
+            mLis.add(new DapAn("0", "", "", "0", false, ""));
+            mLis.add(new DapAn("1", "", "", "0", false, ""));
+            mLis.add(new DapAn("2", "", "", "1", true, ""));
+            mLis.add(new DapAn("3", "", "", "0", false, ""));
+            mLis.add(new DapAn("4", "", "", "0", false, ""));
+            mLis.add(new DapAn("5", "", "", "0", false, ""));
+            mLis.add(new DapAn("6", "", "", "0", false, ""));
+            mLis.add(new DapAn("7", "", "", "0", false, ""));
+            mLis.add(new DapAn("8", "", "", "0", false, ""));
+            mLis.add(new DapAn("9", "", "", "0", false, ""));
+            mLis.add(new DapAn("10", "", "", "0", false, ""));
+            mLis.add(new DapAn("11", "", "", "0", false, ""));
+            if (mCauhoi.isDalam()) {
+                if (mCauhoi.isEndGame()) {
+                    if (mCauhoi.isResul_chil()) {
+                        txt_lable.setText("Chúc mừng công chúa đã được giải cứu");
+                        img_done.setVisibility(View.VISIBLE);
+                        Glide.with(getContext()).load(R.drawable.done).into(img_done);
+                        recycle_dapan.setVisibility(View.GONE);
+                    } else {
+                        txt_lable.setText("Giải cứu công chúa thất bại");
+                        Glide.with(getContext()).load(R.drawable.icon_congchua_lost)
+                                .placeholder(R.drawable.icon_congchua_lost).into(img_done);
+                        img_done.setVisibility(View.VISIBLE);
+                        recycle_dapan.setVisibility(View.GONE);
+                    }
                 } else {
-                    txt_lable.setText("Giải cứu công chúa thất bại");
-                    Glide.with(getContext()).load(R.drawable.icon_congchua_lost)
-                            .placeholder(R.drawable.icon_congchua_lost).into(img_done);
-                    img_done.setVisibility(View.VISIBLE);
-                    recycle_dapan.setVisibility(View.GONE);
-                }
-            } else {
-                iCauhoiStart = mCauhoi.getiCount_Princess();
-                for (int i = 0; i < mCauhoi.getiCount_Princess(); i++) {
-                    iStart.add(getRandom(iStart));
-                }
-                for (int j = 0; j < mLis.size(); j++) {
-                    for (int k = 0; k < iStart.size(); k++) {
-                        if (Integer.parseInt(mLis.get(j).getsName()) == iStart.get(k)) {
-                            mLis.get(j).setsDapan_Dung("1");
-                            mLis.get(j).setClick(true);
-                        } else {
-                            mLis.get(j).setClick(false);
+                    iCauhoiStart = mCauhoi.getiCount_Princess();
+                    for (int i = 0; i < mCauhoi.getiCount_Princess(); i++) {
+                        iStart.add(getRandom(iStart));
+                    }
+                    for (int j = 0; j < mLis.size(); j++) {
+                        for (int k = 0; k < iStart.size(); k++) {
+                            if (Integer.parseInt(mLis.get(j).getsName()) == iStart.get(k)) {
+                                mLis.get(j).setsDapan_Dung("1");
+                                mLis.get(j).setClick(true);
+                            } else {
+                                mLis.get(j).setClick(false);
+                            }
                         }
                     }
                 }
-            }
 
+            }
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        adapter.notifyDataSetChanged();
+
     }
 
     @BindView(R.id.recycle_dapan)
@@ -206,94 +193,98 @@ public class FragmentCuuCongchua extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case Constants.RequestCode.GET_CONGCHUA:
-                boolean isTraloi = SharedPrefs.getInstance().get(Constants.KEY_SEND_TRALOI, Boolean.class);
-                sDapan = SharedPrefs.getInstance().get(Constants.KEY_SEND_CAUHOI_CONGCHUA, String.class);
-                if (isTraloi) {
+                try {
+                    boolean isTraloi = SharedPrefs.getInstance().get(Constants.KEY_SEND_TRALOI, Boolean.class);
+                    sDapan = SharedPrefs.getInstance().get(Constants.KEY_SEND_CAUHOI_CONGCHUA, String.class);
+                    if (isTraloi) {
                    /* EventBus.getDefault().post(new MessageEvent("Point_true",
                             Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));*/
-                    iCauhoiStart++;
-                    if (iCauhoiStart < mCauhoi.getLisInfo().size()) {
-                        EventBus.getDefault().post(new MessageEvent("pr_win1",
-                                Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));
-                        img_done.setVisibility(View.GONE);
-                        int value = getRandom(iStart);
-                        iStart.add(value);
-                        for (DapAn obj : mLis) {
-                            if (Integer.parseInt(obj.getsName()) == value) {
-                                for (int i : iStart) {
-                                    if (obj.getsName().equals("" + i))
-                                        obj.setsDapan_Dung("1");
-                                }
-                                obj.setClick(true);
-                            } else obj.setClick(false);
-                        }
-                        for (int i = 0; i < App.mLisCauhoi.size(); i++) {
-                            Cauhoi obj = App.mLisCauhoi.get(i);
-                            if (obj.getsID().equals(mCauhoi.getsID())) {
-                                App.mLisCauhoi.get(i).setiCount_Princess(iCauhoiStart);
-                                App.mLisCauhoi.get(i).setDalam(true);
-                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(true);
-                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
-                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
-                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
+                        iCauhoiStart++;
+                        if (iCauhoiStart < mCauhoi.getLisInfo().size()) {
+                            EventBus.getDefault().post(new MessageEvent("pr_win1",
+                                    Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart).getsPOINT()), 0));
+                            img_done.setVisibility(View.GONE);
+                            int value = getRandom(iStart);
+                            iStart.add(value);
+                            for (DapAn obj : mLis) {
+                                if (Integer.parseInt(obj.getsName()) == value) {
+                                    for (int i : iStart) {
+                                        if (obj.getsName().equals("" + i))
+                                            obj.setsDapan_Dung("1");
+                                    }
+                                    obj.setClick(true);
+                                } else obj.setClick(false);
                             }
+                            for (int i = 0; i < App.mLisCauhoi.size(); i++) {
+                                Cauhoi obj = App.mLisCauhoi.get(i);
+                                if (obj.getsID().equals(mCauhoi.getsID())) {
+                                    App.mLisCauhoi.get(i).setiCount_Princess(iCauhoiStart);
+                                    App.mLisCauhoi.get(i).setDalam(true);
+                                    App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(true);
+                                    App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
+                                    App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
+                                    App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
+                                }
+                            }
+                            EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            EventBus.getDefault().post(new MessageEvent("pr_win2",
+                                    Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart - 1).getsPOINT()), 0));
+                            txt_lable.setText("Chúc mừng công chúa đã được giải cứu");
+                            img_done.setVisibility(View.VISIBLE);
+                            recycle_dapan.setVisibility(View.GONE);
+                            for (DapAn obj : mLis) {
+                                obj.setClick(false);
+                            }
+                            adapter.notifyDataSetChanged();
+                            for (int i = 0; i < App.mLisCauhoi.size(); i++) {
+                                Cauhoi obj = App.mLisCauhoi.get(i);
+                                if (obj.getsID().equals(mCauhoi.getsID())) {
+                                    App.mLisCauhoi.get(i).setiCount_Princess(iCauhoiStart);
+                                    App.mLisCauhoi.get(i).setDalam(true);
+                                    App.mLisCauhoi.get(i).setResul_chil(true);
+                                    App.mLisCauhoi.get(i).setEndGame(true);
+                                    App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(true);
+                                    App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
+                                    App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
+                                    App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
+                                }
+                            }
+                            EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
                         }
-                        EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
-                        adapter.notifyDataSetChanged();
                     } else {
-                        EventBus.getDefault().post(new MessageEvent("pr_win2",
-                                Float.parseFloat(mCauhoi.getLisInfo().get(iCauhoiStart - 1).getsPOINT()), 0));
-                        txt_lable.setText("Chúc mừng công chúa đã được giải cứu");
-                        img_done.setVisibility(View.VISIBLE);
-                        recycle_dapan.setVisibility(View.GONE);
+                        iCauhoiStart++;
                         for (DapAn obj : mLis) {
                             obj.setClick(false);
                         }
-                        adapter.notifyDataSetChanged();
+                        img_done.setVisibility(View.VISIBLE);
+                        EventBus.getDefault().post(new MessageEvent("pr_lost", 0, 0));
+                        txt_lable.setText("Giải cứu công chúa thất bại");
+                        Glide.with(getContext()).load(R.drawable.icon_congchua_lost)
+                                .placeholder(R.drawable.icon_congchua_lost).into(img_done);
+                        recycle_dapan.setVisibility(View.GONE);
                         for (int i = 0; i < App.mLisCauhoi.size(); i++) {
                             Cauhoi obj = App.mLisCauhoi.get(i);
                             if (obj.getsID().equals(mCauhoi.getsID())) {
                                 App.mLisCauhoi.get(i).setiCount_Princess(iCauhoiStart);
                                 App.mLisCauhoi.get(i).setDalam(true);
-                                App.mLisCauhoi.get(i).setResul_chil(true);
+                                App.mLisCauhoi.get(i).setResul_chil(false);
                                 App.mLisCauhoi.get(i).setEndGame(true);
-                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(true);
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(false);
                                 App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
-                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("1");
+                                App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("0");
                                 App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
+                          /*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
+                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
                             }
                         }
                         EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
+                        adapter.notifyDataSetChanged();
+                        //  EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                     }
-                } else {
-                    iCauhoiStart++;
-                    for (DapAn obj : mLis) {
-                        obj.setClick(false);
-                    }
-                    img_done.setVisibility(View.VISIBLE);
-                    EventBus.getDefault().post(new MessageEvent("pr_lost", 0, 0));
-                    txt_lable.setText("Giải cứu công chúa thất bại");
-                    Glide.with(getContext()).load(R.drawable.icon_congchua_lost)
-                            .placeholder(R.drawable.icon_congchua_lost).into(img_done);
-                    recycle_dapan.setVisibility(View.GONE);
-                    for (int i = 0; i < App.mLisCauhoi.size(); i++) {
-                        Cauhoi obj = App.mLisCauhoi.get(i);
-                        if (obj.getsID().equals(mCauhoi.getsID())) {
-                            App.mLisCauhoi.get(i).setiCount_Princess(iCauhoiStart);
-                            App.mLisCauhoi.get(i).setDalam(true);
-                            App.mLisCauhoi.get(i).setResul_chil(false);
-                            App.mLisCauhoi.get(i).setEndGame(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setAnserTrue(false);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setDalam(true);
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsRESULT_CHILD("0");
-                            App.mLisCauhoi.get(i).getLisInfo().get(iCauhoiStart - 1).setsANSWER_CHILD(sDapan);
-                          /*  App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe())-1).getLisInfo()
-                                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau())-1).setsANSWER_CHILD(obj.getsContent());*/
-                        }
-                    }
-                    EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
-                    adapter.notifyDataSetChanged();
-                    //  EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
         }

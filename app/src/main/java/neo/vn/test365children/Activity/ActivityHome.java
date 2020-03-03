@@ -3,18 +3,15 @@ package neo.vn.test365children.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -22,6 +19,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -36,12 +40,12 @@ import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.Realm;
 import io.realm.RealmList;
-import neo.vn.test365children.Activity.doctruyen.Activity_webview_doctruyen;
 import neo.vn.test365children.Activity.game.menu_game.ActivityMenuGame;
 import neo.vn.test365children.Activity.login.ActivityGuildPractice;
 import neo.vn.test365children.Activity.login.ActivityLoginNew;
 import neo.vn.test365children.Activity.login.ActivitySelectLevelTry;
 import neo.vn.test365children.Activity.login.ActivityUpdateInforChil;
+import neo.vn.test365children.Activity.luyenthi.Activity_Menu_Luyenthi;
 import neo.vn.test365children.Activity.skill.Activity_Menu_Skill;
 import neo.vn.test365children.Activity.untility_menu.Activity_Information;
 import neo.vn.test365children.Adapter.AdapterUserLogin;
@@ -94,8 +98,10 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     Button btn_ketquahoctap;
     @BindView(R.id.btn_vuichoi)
     Button btn_vuichoi;
-    @BindView(R.id.btn_bxh)
-    Button btn_bxh;
+    @BindView(R.id.btn_luyenthi)
+    Button btn_luyenthi;
+/*    @BindView(R.id.btn_bxh)
+    Button btn_bxh;*/
     @BindView(R.id.btn_utilities)
     Button btn_utilities;
     @BindView(R.id.img_mute)
@@ -104,8 +110,6 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     ImageView img_background;
     @BindView(R.id.txt_name_home)
     TextView txt_name_home;
-    @BindView(R.id.img_logout)
-    ImageView img_logout;
     @BindView(R.id.img_avata)
     CircleImageView img_avata;
     @BindView(R.id.btn_information)
@@ -164,7 +168,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     }
 
     @BindView(R.id.btn_call)
-    ImageView btn_call;
+    CircleImageView btn_call;
     private AnimationDrawable anim;
 
     private void Animation() {
@@ -183,6 +187,10 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     AdapterUserLogin adapter;
     @BindView(R.id.recycle_multil_user)
     RecyclerView recycle_multil_user;
+    @BindView(R.id.img_face)
+    ImageView img_face;
+    @BindView(R.id.img_groupface)
+    ImageView img_groupface;
     List<InfoKids> lisUserLogin;
 
     private void init_get_multil_user() {
@@ -538,12 +546,42 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     }
 
     private void initEvent() {
+        img_face.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sPage = "434531697078487";
+                StringUtil.start_facebook(ActivityHome.this, sPage);
+            }
+        });
+        img_groupface.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = "2053079854714200";
+              //  StringUtil.start_facebook(ActivityHome.this, sPage);
+                final String urlFb = "fb://group/" + id;
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(urlFb));
+
+                // If a Facebook app is installed, use it. Otherwise, launch
+                // a browser
+                final PackageManager packageManager = getPackageManager();
+                List<ResolveInfo> list =
+                        packageManager.queryIntentActivities(intent,
+                                PackageManager.MATCH_DEFAULT_ONLY);
+                if (list.size() == 0) {
+                    final String urlBrowser = "https://www.facebook.com/group/" + id;
+                    intent.setData(Uri.parse(urlBrowser));
+                }
+                startActivity(intent);
+            }
+        });
         img_exit_ll_show.setOnClickListener(this);
         //  img_switch.setOnClickListener(this);
         btn_lambaitap.setOnClickListener(this);
+        btn_luyenthi.setOnClickListener(this);
         btn_ketquahoctap.setOnClickListener(this);
         btn_vuichoi.setOnClickListener(this);
-        btn_bxh.setOnClickListener(this);
+       // btn_bxh.setOnClickListener(this);
         btn_utilities.setOnClickListener(this);
         btn_information.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -575,7 +613,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                 }
             }
         });*/
-        img_logout.setOnClickListener(new View.OnClickListener() {
+     /*   img_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogComfirm("Thông báo", "Bạn có chắc chắn muốn đăng xuất không?",
@@ -595,7 +633,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                             }
                         });
             }
-        });
+        });*/
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -654,6 +692,17 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                     }
                 }
                 break;
+            case R.id.btn_luyenthi:
+                chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
+                if (chil != null) {
+                    if (chil != null && chil.getsObjInfoKid().getsLEVEL_ID() != null &&
+                            !chil.getsObjInfoKid().getsLEVEL_ID().equals("0")) {
+                        startActivity(new Intent(ActivityHome.this, Activity_Menu_Luyenthi.class));
+                    } else {
+                        start_get_class();
+                    }
+                }
+                break;
             case R.id.btn_vuichoi:
                 chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
                 if (chil != null) {
@@ -671,7 +720,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                     }
                 }
                 break;
-            case R.id.btn_bxh:
+          /*  case R.id.btn_bxh:
                 chil = SharedPrefs.getInstance().get(Constants.KEY_SAVE_CHIL, ObjLogin.class);
                 boolean is_check_update = SharedPrefs.getInstance().get
                         (Constants.KEY_SAVE_UPDATE_INFOR_CHILD_SUCCESS, Boolean.class);
@@ -727,9 +776,9 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                         start_get_class();
                     }
                 }
-             /*   Intent intent = new Intent(ActivityHome.this, Activity_Menu_Untility.class);
-                startActivity(intent);*/
-                break;
+             *//*   Intent intent = new Intent(ActivityHome.this, Activity_Menu_Untility.class);
+                startActivity(intent);*//*
+                break;*/
             case R.id.btn_utilities:
                 //Chức năng tiện ích
                /* if (chil != null) {
@@ -746,7 +795,8 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
                         "Xin cảm ơn!\n", true, new ClickDialog() {
                     @Override
                     public void onClickYesDialog() {
-                        StringUtil.share_app(ActivityHome.this, "Ứng dụng học trực tuyến Home365 rất HAY và MIỄN PHÍ," +
+                        StringUtil.share_app(ActivityHome.this,
+                                "Ứng dụng học trực tuyến Home365 rất HAY và MIỄN PHÍ," +
                                 " tải app tại https://home365.online/app");
                     }
 
@@ -766,10 +816,11 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     private void gone_multil_user() {
         ll_show_multil_user.setVisibility(View.GONE);
         //ll_show_multil_user.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animation_show_question));
-        btn_bxh.setVisibility(View.VISIBLE);
+        btn_luyenthi.setVisibility(View.VISIBLE);
         btn_lambaitap.setVisibility(View.VISIBLE);
         btn_information.setVisibility(View.VISIBLE);
         btn_utilities.setVisibility(View.VISIBLE);
+        btn_ketquahoctap.setVisibility(View.VISIBLE);
         btn_ketquahoctap.setVisibility(View.VISIBLE);
         btn_vuichoi.setVisibility(View.VISIBLE);
         card_change_user.setVisibility(View.VISIBLE);
@@ -778,7 +829,7 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
     private void show_multil_user() {
         ll_show_multil_user.setVisibility(View.VISIBLE);
         ll_show_multil_user.startAnimation(AnimationUtils.loadAnimation(this, R.anim.animation_show_question));
-        btn_bxh.setVisibility(View.INVISIBLE);
+        btn_luyenthi.setVisibility(View.INVISIBLE);
         btn_lambaitap.setVisibility(View.INVISIBLE);
         btn_information.setVisibility(View.INVISIBLE);
         btn_utilities.setVisibility(View.INVISIBLE);
@@ -969,8 +1020,6 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
             SharedPrefs.getInstance().put(Constants.KEY_SAVE_UPDATE_LEVEL_ID_SUCCESS, true);
             initLogin();
         } else showAlertDialog("Thông báo", mLis.getsRESULT());
-
-
     }
 
     @Override
@@ -1099,8 +1148,8 @@ public class ActivityHome extends BaseActivity implements View.OnClickListener,
         String sTokenkey = SharedPrefs.getInstance().get(Constants.KEY_TOKEN, String.class);
         if (sTokenkey != null && sTokenkey.length() > 0) {
             Log.e("sToken", "home_get_init token: " + sTokenkey);
-            mPresenter_init.api_init(BuildConfig.VERSION_NAME, android.os.Build.BRAND + " " + android.os.Build.MODEL,
-                    sTokenkey, "2", android.os.Build.VERSION.RELEASE, id);
+            mPresenter_init.api_init(BuildConfig.VERSION_NAME, android.os.Build.BRAND + " "
+                    + android.os.Build.MODEL, sTokenkey, "2", android.os.Build.VERSION.RELEASE, id);
         } else {
             Log.e("sToken", "home_get_init token: " + "update");
             mPresenter_init.api_init(BuildConfig.VERSION_NAME, android.os.Build.BRAND + " " + android.os.Build.MODEL,

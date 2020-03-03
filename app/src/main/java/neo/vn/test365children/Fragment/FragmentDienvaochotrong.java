@@ -133,50 +133,51 @@ public class FragmentDienvaochotrong extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dienvaochotrong, container, false);
         ButterKnife.bind(this, view);
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
-                != null && mCauhoi.getsSubNumberCau().equals("1")) {
-            showDialogLoading();
-        }
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        WebSettings webSettings = browser.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
-        webSettings.setDefaultFontSize(18);
-        WebSettings webSettings2 = webview_dapan.getSettings();
-        webSettings2.setTextSize(WebSettings.TextSize.NORMAL);
-        webSettings2.setDefaultFontSize(18);
-        browser.setWebChromeClient(new WebChromeClient());
-        browser.getSettings().setDomStorageEnabled(true);
-        browser.getSettings().setPluginState(WebSettings.PluginState.ON);
-        browser.getSettings().setMediaPlaybackRequiresUserGesture(false);
-        webview_dapan.clearHistory();
-        webview_dapan.clearFormData();
-        webview_dapan.clearCache(true);
-        browser.clearHistory();
-        browser.clearFormData();
-        browser.clearCache(true);
-        browser.getSettings().setJavaScriptEnabled(true);
-        browser.setBackgroundColor(Color.TRANSPARENT);
-        webview_dapan.setBackgroundColor(Color.TRANSPARENT);
-        browser.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
-        browser.getSettings().setJavaScriptEnabled(true);
-        browser.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
-        if (mCauhoi != null && !mCauhoi.isDalam()) {
-            if (mCauhoi.getsHTML_CONTENT() != null) {
-                sHtml = replaceXML("<<", ">>", mCauhoi.getsHTML_CONTENT().replace(">>>",
-                        "> >>"));
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD
-                        (replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT()));
-                String sAnwser = replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT());
+        try {
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                    != null && mCauhoi.getsSubNumberCau().equals("1")) {
+                showDialogLoading();
             }
-            sHtlml = "<html>\n" +
-                    "<head>\n" +
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
+            WebSettings webSettings = browser.getSettings();
+            webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+            webSettings.setDefaultFontSize(18);
+            WebSettings webSettings2 = webview_dapan.getSettings();
+            webSettings2.setTextSize(WebSettings.TextSize.NORMAL);
+            webSettings2.setDefaultFontSize(18);
+            browser.setWebChromeClient(new WebChromeClient());
+            browser.getSettings().setDomStorageEnabled(true);
+            browser.getSettings().setPluginState(WebSettings.PluginState.ON);
+            browser.getSettings().setMediaPlaybackRequiresUserGesture(false);
+            webview_dapan.clearHistory();
+            webview_dapan.clearFormData();
+            webview_dapan.clearCache(true);
+            browser.clearHistory();
+            browser.clearFormData();
+            browser.clearCache(true);
+            browser.getSettings().setJavaScriptEnabled(true);
+            browser.setBackgroundColor(Color.TRANSPARENT);
+            webview_dapan.setBackgroundColor(Color.TRANSPARENT);
+            browser.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
+            browser.getSettings().setJavaScriptEnabled(true);
+            browser.addJavascriptInterface(new WebAppInterface(getActivity()), "Android");
+            if (mCauhoi != null && !mCauhoi.isDalam()) {
+                if (mCauhoi.getsHTML_CONTENT() != null) {
+                    sHtml = replaceXML("<<", ">>", mCauhoi.getsHTML_CONTENT().replace(">>>",
+                            "> >>"));
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD
+                            (replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT()));
+                    String sAnwser = replaceXML_start_anwser("<<", ">>", mCauhoi.getsHTML_CONTENT());
+                }
+                sHtlml = "<html>\n" +
+                        "<head>\n" +
  /*               "<style>\n" +
                 ".Large\n" +
                 "{\n" +
@@ -184,107 +185,110 @@ public class FragmentDienvaochotrong extends BaseFragment {
                 "    height: 50px;\n" +
                 "}\n" +
                 "</style>" +*/
-                    "<body>\n" +
-                    "<div  style='text-align:center;'>" +
-                    sHtml +
-                    "</div>" +
-                    "    <script>\n" +
-                    "    function loadChartData() {\n" +
-                    "       var x1 = document.getElementById(\"txt_input1\").value;\n" +
-                    "       Android.sendData(x1);" +
-                    "       var x2 = document.getElementById(\"txt_input2\").value;\n" +
-                    "       Android.sendData2(x2);" +
-                    "       var x3 = document.getElementById(\"txt_input3\").value;\n" +
-                    "       Android.sendData3(x3);" +
-                    "       var x4 = document.getElementById(\"txt_input4\").value;\n" +
-                    "       Android.sendData4(x4);" +
-                    "       var x5 = document.getElementById(\"txt_input5\").value;\n" +
-                    "       Android.sendData5(x5);" +
-                    "       var x6 = document.getElementById(\"txt_input6\").value;\n" +
-                    "       Android.sendData6(x6);" +
-                    "       var x7 = document.getElementById(\"txt_input7\").value;\n" +
-                    "       Android.sendData7(x7);" +
-                    "       var x8 = document.getElementById(\"txt_input8\").value;\n" +
-                    "       Android.sendData8(x8);" +
-                    "       var x9 = document.getElementById(\"txt_input9\").value;\n" +
-                    "       Android.sendData9(x9);" +
-                    "       var x10 = document.getElementById(\"txt_input10\").value;\n" +
-                    "       Android.sendData10(x10);" +
-                    "       var x11 = document.getElementById(\"txt_input11\").value;\n" +
-                    "       Android.sendData11(x11);" +
-                    "       var x12 = document.getElementById(\"txt_input12\").value;\n" +
-                    "       Android.sendData12(x12);" +
-                    "       var x13 = document.getElementById(\"txt_input13\").value;\n" +
-                    "       Android.sendData13(x13);" +
-                    "       var x14 = document.getElementById(\"txt_input14\").value;\n" +
-                    "       Android.sendData14(x14);" +
-                    "       var x15 = document.getElementById(\"txt_input15\").value;\n" +
-                    "       Android.sendData15(x15);" +
-                    "       var x16 = document.getElementById(\"txt_input16\").value;\n" +
-                    "       Android.sendData16(x16);" +
-                    "       var x17 = document.getElementById(\"txt_input17\").value;\n" +
-                    "       Android.sendData17(x17);" +
-                    "       var x18 = document.getElementById(\"txt_input18\").value;\n" +
-                    "       Android.sendData18(x18);" +
-                    "       var x19 = document.getElementById(\"txt_input19\").value;\n" +
-                    "       Android.sendData19(x19);" +
-                    "       var x20 = document.getElementById(\"txt_input20\").value;\n" +
-                    "       Android.sendData20(x20);" +
-                    "       var x21 = document.getElementById(\"txt_input21\").value;\n" +
-                    "       Android.sendData21(x21);" +
-                    "       var x22 = document.getElementById(\"txt_input22\").value;\n" +
-                    "       Android.sendData22(x22);" +
-                    "       var x23 = document.getElementById(\"txt_input23\").value;\n" +
-                    "       Android.sendData23(x23);" +
-                    "       var x24 = document.getElementById(\"txt_input24\").value;\n" +
-                    "       Android.sendData24(x24);" +
-                    "       var x25 = document.getElementById(\"txt_input25\").value;\n" +
-                    "       Android.sendData25(x25);" +
-                    "    }\n" +
-                    "    </script>\n" +
-                    "\n" +
-                    "    </body>" +
-                    "</html>";
+                        "<body>\n" +
+                        "<div  style='text-align:center;'>" +
+                        sHtml +
+                        "</div>" +
+                        "    <script>\n" +
+                        "    function loadChartData() {\n" +
+                        "       var x1 = document.getElementById(\"txt_input1\").value;\n" +
+                        "       Android.sendData(x1);" +
+                        "       var x2 = document.getElementById(\"txt_input2\").value;\n" +
+                        "       Android.sendData2(x2);" +
+                        "       var x3 = document.getElementById(\"txt_input3\").value;\n" +
+                        "       Android.sendData3(x3);" +
+                        "       var x4 = document.getElementById(\"txt_input4\").value;\n" +
+                        "       Android.sendData4(x4);" +
+                        "       var x5 = document.getElementById(\"txt_input5\").value;\n" +
+                        "       Android.sendData5(x5);" +
+                        "       var x6 = document.getElementById(\"txt_input6\").value;\n" +
+                        "       Android.sendData6(x6);" +
+                        "       var x7 = document.getElementById(\"txt_input7\").value;\n" +
+                        "       Android.sendData7(x7);" +
+                        "       var x8 = document.getElementById(\"txt_input8\").value;\n" +
+                        "       Android.sendData8(x8);" +
+                        "       var x9 = document.getElementById(\"txt_input9\").value;\n" +
+                        "       Android.sendData9(x9);" +
+                        "       var x10 = document.getElementById(\"txt_input10\").value;\n" +
+                        "       Android.sendData10(x10);" +
+                        "       var x11 = document.getElementById(\"txt_input11\").value;\n" +
+                        "       Android.sendData11(x11);" +
+                        "       var x12 = document.getElementById(\"txt_input12\").value;\n" +
+                        "       Android.sendData12(x12);" +
+                        "       var x13 = document.getElementById(\"txt_input13\").value;\n" +
+                        "       Android.sendData13(x13);" +
+                        "       var x14 = document.getElementById(\"txt_input14\").value;\n" +
+                        "       Android.sendData14(x14);" +
+                        "       var x15 = document.getElementById(\"txt_input15\").value;\n" +
+                        "       Android.sendData15(x15);" +
+                        "       var x16 = document.getElementById(\"txt_input16\").value;\n" +
+                        "       Android.sendData16(x16);" +
+                        "       var x17 = document.getElementById(\"txt_input17\").value;\n" +
+                        "       Android.sendData17(x17);" +
+                        "       var x18 = document.getElementById(\"txt_input18\").value;\n" +
+                        "       Android.sendData18(x18);" +
+                        "       var x19 = document.getElementById(\"txt_input19\").value;\n" +
+                        "       Android.sendData19(x19);" +
+                        "       var x20 = document.getElementById(\"txt_input20\").value;\n" +
+                        "       Android.sendData20(x20);" +
+                        "       var x21 = document.getElementById(\"txt_input21\").value;\n" +
+                        "       Android.sendData21(x21);" +
+                        "       var x22 = document.getElementById(\"txt_input22\").value;\n" +
+                        "       Android.sendData22(x22);" +
+                        "       var x23 = document.getElementById(\"txt_input23\").value;\n" +
+                        "       Android.sendData23(x23);" +
+                        "       var x24 = document.getElementById(\"txt_input24\").value;\n" +
+                        "       Android.sendData24(x24);" +
+                        "       var x25 = document.getElementById(\"txt_input25\").value;\n" +
+                        "       Android.sendData25(x25);" +
+                        "    }\n" +
+                        "    </script>\n" +
+                        "\n" +
+                        "    </body>" +
+                        "</html>";
 
 
-        }
-        WebSettings settings = browser.getSettings();
-        WebSettings settings_dapan = webview_dapan.getSettings();
-        settings.setTextZoom((int) (settings.getTextZoom() * 1.2));
-        settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.2));
-        initEvent();
-        browser.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(final WebView view, String url) {
-                super.onPageFinished(view, url);
-                if (view.getId() == R.id.webview_dienchotrong) {
-                    hideDialogLoading();
-                }
             }
-        });
-        if (!mCauhoi.isDalam()) {
-            browser.loadDataWithBaseURL("", StringUtil.convert_html(sHtlml),
-                    "text/html", "UTF-8", "");
-        } else {
-            isGetpoint = true;
-            img_anwser_chil.setVisibility(View.VISIBLE);
-            if (mCauhoi.getsRESULT_CHILD().equals("1")) {
-                img_anwser_chil.setImageResource(R.drawable.icon_anwser_true);
-            } else
-                img_anwser_chil.setImageResource(R.drawable.icon_anwser_false);
-            btn_xemdiem_dientu.setEnabled(false);
-            btn_xemdiem_dientu.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
-            String sHtml_dapan = "";
-            sHtml_dapan = mCauhoi.getsHTML_CONTENT().replaceAll(">>>", " > >>");
-            sHtml_dapan = "<br /><br /> <b>Đáp án </b><br /><br />" +
-                    sHtml_dapan.replaceAll("<<", "<u><b><font color='blue'>")
-                            .replaceAll(">>", "</font></b></u>");
-            browser.setVisibility(View.GONE);
-            webview_dapan.loadDataWithBaseURL("",
-                    "<div style='text-align:center;'><b>Bé trả lời </b><br/><br/>"
-                            + mCauhoi.getsANSWER_CHILD() + sHtml_dapan + "</div>", "text/html",
-                    "UTF-8", "");
-            webview_dapan.setVisibility(View.VISIBLE);
+            WebSettings settings = browser.getSettings();
+            WebSettings settings_dapan = webview_dapan.getSettings();
+            settings.setTextZoom((int) (settings.getTextZoom() * 1.2));
+            settings_dapan.setTextZoom((int) (settings.getTextZoom() * 1.2));
+            initEvent();
+            browser.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(final WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    if (view.getId() == R.id.webview_dienchotrong) {
+                        hideDialogLoading();
+                    }
+                }
+            });
+            if (!mCauhoi.isDalam()) {
+                browser.loadDataWithBaseURL("", StringUtil.convert_html(sHtlml),
+                        "text/html", "UTF-8", "");
+            } else {
+                isGetpoint = true;
+                img_anwser_chil.setVisibility(View.VISIBLE);
+                if (mCauhoi.getsRESULT_CHILD().equals("1")) {
+                    img_anwser_chil.setImageResource(R.drawable.icon_anwser_true);
+                } else
+                    img_anwser_chil.setImageResource(R.drawable.icon_anwser_false);
+                btn_xemdiem_dientu.setEnabled(false);
+                btn_xemdiem_dientu.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
+                String sHtml_dapan = "";
+                sHtml_dapan = mCauhoi.getsHTML_CONTENT().replaceAll(">>>", " > >>");
+                sHtml_dapan = "<br /><br /> <b>Đáp án </b><br /><br />" +
+                        sHtml_dapan.replaceAll("<<", "<u><b><font color='blue'>")
+                                .replaceAll(">>", "</font></b></u>");
+                browser.setVisibility(View.GONE);
+                webview_dapan.loadDataWithBaseURL("",
+                        "<div style='text-align:center;'><b>Bé trả lời </b><br/><br/>"
+                                + mCauhoi.getsANSWER_CHILD() + sHtml_dapan + "</div>", "text/html",
+                        "UTF-8", "");
+                webview_dapan.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return view;
     }
@@ -301,127 +305,130 @@ public class FragmentDienvaochotrong extends BaseFragment {
     List<Integer> mLisTrue = new ArrayList<>();
 
     public void chamdiem(final boolean isClick) {
-        if (!isGetpoint) {
-            KeyboardUtil.dismissKeyboard(browser);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-            boolean isAnwserTrue = true;
-            int iCountPoint = 0;
-            List<String> mLisAnwser = new ArrayList<>();
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_1());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_2());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_3());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_4());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_5());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_6());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_7());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_8());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_9());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_10());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_11());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_12());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_13());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_14());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_15());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_16());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_17());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_18());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_19());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_20());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_21());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_22());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_23());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_24());
-            mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_25());
-            CauhoiDetail obj = App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1)
-                    .getLisInfo().get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1);
+        try {
+            if (!isGetpoint) {
+                KeyboardUtil.dismissKeyboard(browser);
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
+                boolean isAnwserTrue = true;
+                int iCountPoint = 0;
+                List<String> mLisAnwser = new ArrayList<>();
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_1());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_2());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_3());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_4());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_5());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_6());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_7());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_8());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_9());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_10());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_11());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_12());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_13());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_14());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_15());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_16());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_17());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_18());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_19());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_20());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_21());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_22());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_23());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_24());
+                mLisAnwser.add(App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).getsAnwserChil_Dientu_25());
+                CauhoiDetail obj = App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1)
+                        .getLisInfo().get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1);
 
-            if (sAnwser_true.size() > 0) {
-                for (int i = 0; i < sAnwser_true.size(); i++) {
-                    if (i < mLisAnwser.size()) {
-                        if (mLisAnwser.get(i) != null && mLisAnwser.get(i).length() > 0) {
-                            if (sAnwser_true.get(i).toUpperCase().equals(mLisAnwser.get(i).trim().toUpperCase())) {
-                                mLisTrue.add(i);
-                                iCountPoint++;
+                if (sAnwser_true.size() > 0) {
+                    for (int i = 0; i < sAnwser_true.size(); i++) {
+                        if (i < mLisAnwser.size()) {
+                            if (mLisAnwser.get(i) != null && mLisAnwser.get(i).length() > 0) {
+                                if (sAnwser_true.get(i).toUpperCase().equals(mLisAnwser.get(i).trim().toUpperCase())) {
+                                    mLisTrue.add(i);
+                                    iCountPoint++;
+                                } else
+                                    isAnwserTrue = false;
                             } else
                                 isAnwserTrue = false;
-                        } else
-                            isAnwserTrue = false;
-                    }
-                }
-                float sTotalPoint = Float.parseFloat(obj.getsPOINT());
-                float sPoint = 0;
-                if (iCountPoint > 0) {
-                    sPoint = (iCountPoint * sTotalPoint) / (sAnwser_true.size());
-                }
-                String sHtl = mCauhoi.getsHTML_CONTENT().replaceAll("<<<", "<< < ")
-                        .replaceAll(">>>", " > >>");
-                sAnwserChil = replaceAnwserChil("<<", ">>", sHtl, 0, false);
-                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwserChil);
-                if (isAnwserTrue) {
-                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-                    if (isClick) {
-                        Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-                        EventBus.getDefault().post(new MessageEvent("Point_true",
-                                Float.parseFloat(mCauhoi.getsPOINT()), 0));
-                    }
-
-                } else {
-                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
-                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setfTempPoint(sPoint);
-                    if (isClick) {
-                        if (iCountPoint > 0) {
-                            EventBus.getDefault().post(new MessageEvent("Point_false", sPoint, 0));
-                        } else {
-                            EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
                         }
-                        Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
                     }
+                    float sTotalPoint = Float.parseFloat(obj.getsPOINT());
+                    float sPoint = 0;
+                    if (iCountPoint > 0) {
+                        sPoint = (iCountPoint * sTotalPoint) / (sAnwser_true.size());
+                    }
+                    String sHtl = mCauhoi.getsHTML_CONTENT().replaceAll("<<<", "<< < ")
+                            .replaceAll(">>>", " > >>");
+                    sAnwserChil = replaceAnwserChil("<<", ">>", sHtl, 0, false);
+                    App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                            .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwserChil);
+                    if (isAnwserTrue) {
+                        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
+                        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+                        if (isClick) {
+                            Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                            EventBus.getDefault().post(new MessageEvent("Point_true",
+                                    Float.parseFloat(mCauhoi.getsPOINT()), 0));
+                        }
+
+                    } else {
+                        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setfTempPoint(sPoint);
+                        if (isClick) {
+                            if (iCountPoint > 0) {
+                                EventBus.getDefault().post(new MessageEvent("Point_false", sPoint, 0));
+                            } else {
+                                EventBus.getDefault().post(new MessageEvent("Point_false", 0, 0));
+                            }
+                            Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                        }
+                    }
+                } else {
+                    return;
                 }
-            } else {
-                return;
+                isGetpoint = true;
+                EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
             }
-            isGetpoint = true;
-            EventBus.getDefault().post(new MessageEvent(Constants.KEY_SAVE_LIST_EXER_PLAYING, 0, 0));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public class WebAppInterface {
         Context mContext;
-
         WebAppInterface(Context ctx) {
             this.mContext = ctx;
         }
@@ -604,6 +611,7 @@ public class FragmentDienvaochotrong extends BaseFragment {
                     .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsAnwserChil_Dientu_25(data);
 
         }
+
         public String getData() {
             String s = "";
             return s;
@@ -670,6 +678,11 @@ public class FragmentDienvaochotrong extends BaseFragment {
     public List<String> sAnwser_true = new ArrayList<>();
 
     public String replaceXML(String start, String end, String st) {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String s = st;
         if (s.length() == 0)
             return s;

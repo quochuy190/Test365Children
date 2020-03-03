@@ -4,8 +4,8 @@ import neo.vn.test365children.Models.ErrorApi;
 
 public interface ImlFeedback {
     interface Presenter {
-        void api_send_feetback(String sUserMother, String sUserKid, String sType_Rate_1, String Rating1,
-                               String TYPE_RATE2, String RATING2, String TYPE_EXE, String ID_EXCERCISE);
+        void api_send_feetback(String sUserMother, String sUserKid, String RATING,
+                               String TYPE_EXE, String ID_EXCERCISE);
     }
 
     interface View {

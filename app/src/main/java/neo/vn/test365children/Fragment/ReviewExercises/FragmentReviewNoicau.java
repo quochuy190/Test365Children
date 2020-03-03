@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 
@@ -181,6 +182,7 @@ public class FragmentReviewNoicau extends BaseFragment {
         initData();
         return view;
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -209,6 +211,7 @@ public class FragmentReviewNoicau extends BaseFragment {
         webview_dapannoicau_B_1.clearCache(true);
         webview_dapannoicau_B_1.clearHistory();
     }
+
     List<String> mLisAnwser_A;
     List<String> mLisAnwser_B;
     List<String> mLisQuestion_A;
@@ -218,126 +221,148 @@ public class FragmentReviewNoicau extends BaseFragment {
     List<String> mLisAnwser_B_traloi;
 
     private void initData() {
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
-                != null && mCauhoi.getsSubNumberCau().equals("1")) {
-            showDialogLoading();
-        }
-        Glide.with(getContext()).load(R.drawable.bg_chem_hoa_qua).into(img_background);
-        if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
-            if (mCauhoi.getsRESULT_CHILD().equals("0")) {
-                ll_dapan_traloi.setVisibility(View.VISIBLE);
-                text_lable_dapan.setVisibility(View.VISIBLE);
-                Glide.with(this).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-            } else {
-                ll_dapan_traloi.setVisibility(View.GONE);
-                text_lable_dapan.setVisibility(View.GONE);
-                Glide.with(this).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+        try {
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                    != null && mCauhoi.getsSubNumberCau().equals("1")) {
+                showDialogLoading();
             }
-        } else {
-            ll_questioln.setVisibility(View.GONE);
-            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
-        }
-        if (!mCauhoi.isDalam()) {
-            ll_questioln.setVisibility(View.GONE);
-            Glide.with(this).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
-        }
-        mLisAnwser_B_traloi = new ArrayList<>();
-        mLisDapanB = new ArrayList<>();
-        mLisDapanA = new ArrayList<>();
-        mLisAnwser_A = new ArrayList<>();
-        mLisAnwser_B = new ArrayList<>();
-        mLisQuestion_A = new ArrayList<>();
-        mLisQuestionr_B = new ArrayList<>();
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        String[] egg1 = mCauhoi.getsHTML_A().split("::");
-        String[] egg2 = mCauhoi.getsHTML_B().split("::");
-        String[] egg3 = mCauhoi.getsHTML_C().split("::");
-        String[] egg4 = mCauhoi.getsHTML_D().split("::");
+            Glide.with(getContext()).load(R.drawable.bg_chem_hoa_qua).into(img_background);
+            if (mCauhoi.getsRESULT_CHILD() != null && mCauhoi.getsRESULT_CHILD().length() > 0) {
+                if (mCauhoi.getsRESULT_CHILD().equals("0")) {
+                    ll_dapan_traloi.setVisibility(View.VISIBLE);
+                    text_lable_dapan.setVisibility(View.VISIBLE);
+                    Glide.with(getActivity()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                } else {
+                    ll_dapan_traloi.setVisibility(View.GONE);
+                    text_lable_dapan.setVisibility(View.GONE);
+                    Glide.with(getActivity()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                }
+            } else {
+                ll_questioln.setVisibility(View.GONE);
+                Glide.with(getActivity()).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
+            }
+            if (!mCauhoi.isDalam()) {
+                ll_questioln.setVisibility(View.GONE);
+                Glide.with(getActivity()).load(R.drawable.icon_anwser_unknow).into(img_anwser_chil);
+            }
+            mLisAnwser_B_traloi = new ArrayList<>();
+            mLisDapanB = new ArrayList<>();
+            mLisDapanA = new ArrayList<>();
+            mLisAnwser_A = new ArrayList<>();
+            mLisAnwser_B = new ArrayList<>();
+            mLisQuestion_A = new ArrayList<>();
+            mLisQuestionr_B = new ArrayList<>();
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+            String[] egg1 = mCauhoi.getsHTML_A().split("::");
+            String[] egg2 = mCauhoi.getsHTML_B().split("::");
+            String[] egg3 = mCauhoi.getsHTML_C().split("::");
+            String[] egg4 = mCauhoi.getsHTML_D().split("::");
+            if (egg1 == null)
+                return;
+            if (egg2 == null)
+                return;
+            if (egg3 == null)
+                return;
+            if (egg4 == null)
+                return;
+            map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
+            map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
+            map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
+            map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
+            if (egg1[0] == null)
+                return;
+            mLisAnwser_A.add(egg1[0]);
+            if (egg2[0] == null)
+                return;
+            mLisAnwser_A.add(egg2[0]);
+            if (egg3[0] == null)
+                return;
+            mLisAnwser_A.add(egg3[0]);
+            if (egg4[0] == null)
+                return;
+            mLisAnwser_A.add(egg4[0]);
+            if (egg1[1] == null)
+                return;
+            mLisAnwser_B.add(egg1[1]);
+            if (egg2[1] == null)
+                return;
+            mLisAnwser_B.add(egg2[1]);
+            if (egg3[1] == null)
+                return;
+            mLisAnwser_B.add(egg3[1]);
+            if (egg4[1] == null)
+                return;
+            mLisAnwser_B.add(egg4[1]);
 
-        map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
-        map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
-        map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
-        map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
+            mLisAnwser_B_traloi.add(egg1[1]);
+            mLisAnwser_B_traloi.add(egg2[1]);
+            mLisAnwser_B_traloi.add(egg3[1]);
+            mLisAnwser_B_traloi.add(egg4[1]);
 
-        mLisAnwser_A.add(egg1[0]);
-        mLisAnwser_A.add(egg2[0]);
-        mLisAnwser_A.add(egg3[0]);
-        mLisAnwser_A.add(egg4[0]);
-
-        mLisAnwser_B.add(egg1[1]);
-        mLisAnwser_B.add(egg2[1]);
-        mLisAnwser_B.add(egg3[1]);
-        mLisAnwser_B.add(egg4[1]);
-
-        mLisAnwser_B_traloi.add(egg1[1]);
-        mLisAnwser_B_traloi.add(egg2[1]);
-        mLisAnwser_B_traloi.add(egg3[1]);
-        mLisAnwser_B_traloi.add(egg4[1]);
-
-        if (mCauhoi.getsEGG_1_RESULT() != null && mCauhoi.getsEGG_1_RESULT().length() > 0) {
-            String[] egg_result1 = mCauhoi.getsEGG_1_RESULT().split("::");
-            if (egg_result1.length > 0 && egg_result1[0] != null) {
-                mLisQuestion_A.add(egg_result1[0]);
-            } else mLisQuestion_A.add("");
-            if (egg_result1.length > 1 && egg_result1[1] != null) {
-                mLisQuestionr_B.add(egg_result1[1]);
-            } else mLisQuestionr_B.add("");
-        } else {
-            mLisQuestion_A.add("");
-            mLisQuestionr_B.add("");
-        }
-        if (mCauhoi.getsEGG_2_RESULT() != null && mCauhoi.getsEGG_2_RESULT().length() > 0) {
-            String[] egg_result2 = mCauhoi.getsEGG_2_RESULT().split("::");
-            if (egg_result2.length > 0 && egg_result2[0] != null) {
-                mLisQuestion_A.add(egg_result2[0]);
-            } else
+            if (mCauhoi.getsEGG_1_RESULT() != null && mCauhoi.getsEGG_1_RESULT().length() > 0) {
+                String[] egg_result1 = mCauhoi.getsEGG_1_RESULT().split("::");
+                if (egg_result1.length > 0 && egg_result1[0] != null) {
+                    mLisQuestion_A.add(egg_result1[0]);
+                } else mLisQuestion_A.add("");
+                if (egg_result1.length > 1 && egg_result1[1] != null) {
+                    mLisQuestionr_B.add(egg_result1[1]);
+                } else mLisQuestionr_B.add("");
+            } else {
                 mLisQuestion_A.add("");
-            if (egg_result2.length > 1 && egg_result2[1] != null) {
-                mLisQuestionr_B.add(egg_result2[1]);
-            } else
                 mLisQuestionr_B.add("");
-        } else {
-            mLisQuestionr_B.add("");
-            mLisQuestion_A.add("");
-        }
-        if (mCauhoi.getsEGG_3_RESULT() != null && mCauhoi.getsEGG_3_RESULT().length() > 0) {
-            String[] egg_result3 = mCauhoi.getsEGG_3_RESULT().split("::");
-            if (egg_result3.length > 0 && egg_result3[0] != null) {
-                mLisQuestion_A.add(egg_result3[0]);
-            } else
+            }
+            if (mCauhoi.getsEGG_2_RESULT() != null && mCauhoi.getsEGG_2_RESULT().length() > 0) {
+                String[] egg_result2 = mCauhoi.getsEGG_2_RESULT().split("::");
+                if (egg_result2.length > 0 && egg_result2[0] != null) {
+                    mLisQuestion_A.add(egg_result2[0]);
+                } else
+                    mLisQuestion_A.add("");
+                if (egg_result2.length > 1 && egg_result2[1] != null) {
+                    mLisQuestionr_B.add(egg_result2[1]);
+                } else
+                    mLisQuestionr_B.add("");
+            } else {
+                mLisQuestionr_B.add("");
                 mLisQuestion_A.add("");
-            if (egg_result3.length > 1 && egg_result3[1] != null) {
-                mLisQuestionr_B.add(egg_result3[1]);
-            } else
-                mLisQuestionr_B.add("");
-        } else {
-            mLisQuestion_A.add("");
-            mLisQuestionr_B.add("");
-        }
-        if (mCauhoi.getsEGG_3_RESULT() != null && mCauhoi.getsEGG_3_RESULT().length() > 0) {
-            String[] egg_result4 = mCauhoi.getsEGG_4_RESULT().split("::");
-            if (egg_result4.length > 0 && egg_result4[0] != null) {
-                mLisQuestion_A.add(egg_result4[0]);
-            } else
+            }
+            if (mCauhoi.getsEGG_3_RESULT() != null && mCauhoi.getsEGG_3_RESULT().length() > 0) {
+                String[] egg_result3 = mCauhoi.getsEGG_3_RESULT().split("::");
+                if (egg_result3.length > 0 && egg_result3[0] != null) {
+                    mLisQuestion_A.add(egg_result3[0]);
+                } else
+                    mLisQuestion_A.add("");
+                if (egg_result3.length > 1 && egg_result3[1] != null) {
+                    mLisQuestionr_B.add(egg_result3[1]);
+                } else
+                    mLisQuestionr_B.add("");
+            } else {
                 mLisQuestion_A.add("");
-            if (egg_result4.length > 1 && egg_result4[1] != null) {
-                mLisQuestionr_B.add(egg_result4[1]);
-            } else
                 mLisQuestionr_B.add("");
-        } else {
-            mLisQuestionr_B.add("");
-            mLisQuestion_A.add("");
-        }
+            }
+            if (mCauhoi.getsEGG_3_RESULT() != null && mCauhoi.getsEGG_3_RESULT().length() > 0) {
+                String[] egg_result4 = mCauhoi.getsEGG_4_RESULT().split("::");
+                if (egg_result4.length > 0 && egg_result4[0] != null) {
+                    mLisQuestion_A.add(egg_result4[0]);
+                } else
+                    mLisQuestion_A.add("");
+                if (egg_result4.length > 1 && egg_result4[1] != null) {
+                    mLisQuestionr_B.add(egg_result4[1]);
+                } else
+                    mLisQuestionr_B.add("");
+            } else {
+                mLisQuestionr_B.add("");
+                mLisQuestion_A.add("");
+            }
 
-        initTraloi();
-        if (mLisQuestion_A.size() > 0) {
-            if (mLisQuestion_A.get(0) != null)
-                initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisQuestion_A.get(0)));
-            else
-                rl_dapanA_1.setVisibility(View.GONE);
+            initTraloi();
+            if (mLisQuestion_A.size() > 0) {
+                if (mLisQuestion_A.get(0) != null)
+                    initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisQuestion_A.get(0)));
+                else
+                    rl_dapanA_1.setVisibility(View.GONE);
            /* if (mLisQuestion_A.get(1) != null)
                 initWebview(webview_dapannoicau_A_2, StringUtil.convert_html(mLisQuestion_A.get(1)));
             else
@@ -366,22 +391,26 @@ public class FragmentReviewNoicau extends BaseFragment {
                 initWebview(webview_dapannoicau_B_4, StringUtil.convert_html(mLisQuestionr_B.get(3)));
             else
                 rl_dapanB_4.setVisibility(View.GONE);*/
-        } else {
-            ll_questioln.setVisibility(View.GONE);
+            } else {
+                ll_questioln.setVisibility(View.GONE);
+            }
+
+
+            rl_dapanA_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+            rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+
+            rl_dapanA_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+            rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+
+            rl_dapanA_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+            rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+
+            rl_dapanA_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+            rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-
-        rl_dapanA_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-        rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-
-        rl_dapanA_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-        rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-
-        rl_dapanA_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-        rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-
-        rl_dapanA_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-        rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
     }
 
     boolean isImageA = false, isImageB = false;

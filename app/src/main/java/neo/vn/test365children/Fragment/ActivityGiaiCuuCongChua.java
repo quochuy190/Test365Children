@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -189,29 +190,14 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
             txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
                     + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
                     + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        showDialogLoading();
-        initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
         new Handler().post(new Runnable() {
             @Override
             public void run() {
+                showDialogLoading();
+                initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
                 initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
                 initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
                 initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-            }
-        });
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
                 initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
             }
         });
@@ -445,6 +431,65 @@ public class ActivityGiaiCuuCongChua extends BaseActivity
                 }.start();
             }
         });
+    }
+    public void initWebview_center(final WebView webview, String link_web) {
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setLoadsImagesAutomatically(true);
+        webview.setBackgroundColor(Color.TRANSPARENT);
+        webview.clearSslPreferences();
+        webview.clearFormData();
+        webview.clearCache(true);
+        webview.clearHistory();
+        webview.clearMatches();
+        webview.getSettings().setPluginState(WebSettings.PluginState.ON);
+        webview.getSettings().setMediaPlaybackRequiresUserGesture(false);
+        //    webSettings .setMediaPlaybackRequiresUserGesture(false);
+        webview.requestFocus(View.FOCUS_DOWN | View.FOCUS_UP);
+        // webSettings.setUseWideViewPort(true);
+        //  webSettings.setLoadWithOverviewMode(true);
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+        webSettings.setDefaultFontSize(18);
+        webSettings.setTextZoom((int) (webSettings.getTextZoom() * 1.1));
+        //  webSettings.setBuiltInZoomControls(true);
+        webSettings.setAllowFileAccess(true);
+        //  webSettings.setAppCacheEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webview.setWebChromeClient(new WebChromeClient());
+        String pish = "<html><body  align='center'>";
+        String pas = "</body></html>";
+        webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(final WebView view, String url) {
+                super.onPageFinished(view, url);
+                new CountDownTimer(1000, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        switch (view.getId()) {
+                            case R.id.webview_debai:
+                                new CountDownTimer(1000, 100) {
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        hideDialogLoading();
+                                    }
+                                }.start();
+                                break;
+                        }
+                    }
+                }.start();
+            }
+        });
+        webview.loadDataWithBaseURL("", pish + StringUtil.convert_html(link_web) + pas,
+                "text/html", "UTF-8", "");
     }
 
     @Override

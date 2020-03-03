@@ -1,8 +1,8 @@
 package neo.vn.test365children.Fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -182,48 +182,53 @@ public class FragmentXemanhtraloi extends BaseFragment {
 
 
     private void initData() {
-        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        if (mCauhoi != null && mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null) {
-            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+        try {
+            Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
+            if (mCauhoi != null && mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null) {
+                if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                    txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                            + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                            + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
          /*   txt_question.setText(Html.fromHtml("Câu " + mCauhoi.getsSubNumberCau() + ": "
                     + mCauhoi.getsHTML_CONTENT()));*/
-            StringUtil.initWebview_Batsau(txt_question, mCauhoi.getsHTML_CONTENT());
-        }
-        String s = Config.URL_IMAGE + mCauhoi.getsImagePath();
-        Glide.with(getContext()).load(s).into(img_question);
-        if (mCauhoi.isDalam()) {
-            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
-            img_anwser_chil.setVisibility(View.VISIBLE);
-            if (mCauhoi.isAnserTrue()) {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
-            } else {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                StringUtil.initWebview_Batsau(txt_question, mCauhoi.getsHTML_CONTENT());
             }
-            isClickXemdiem = true;
-            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
-                mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), mCauhoi.getsANSWER_CHILD(),
-                        mCauhoi.getsANSWER(), true, ""));
-            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
-                mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
-                mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
-            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
-                mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+            String s = Config.URL_IMAGE + mCauhoi.getsImagePath();
+            Glide.with(getContext()).load(s).into(img_question);
+            if (mCauhoi.isDalam()) {
+                btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_gray_black));
+                img_anwser_chil.setVisibility(View.VISIBLE);
+                if (mCauhoi.isAnserTrue()) {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                } else {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                }
+                isClickXemdiem = true;
+                if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
+                    mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), mCauhoi.getsANSWER_CHILD(),
+                            mCauhoi.getsANSWER(), true, ""));
+                if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
+                    mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+                if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
+                    mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
+                if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
+                    mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), mCauhoi.getsANSWER_CHILD(), mCauhoi.getsANSWER(), true, ""));
 
-        } else {
-            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
-                mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
-            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
-                mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(), false, ""));
-            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
-                mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(), false, ""));
-            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
-                mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
+            } else {
+                if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0)
+                    mLis.add(new DapAn("A", mCauhoi.getsHTML_A(), "", mCauhoi.getsANSWER(), false, ""));
+                if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0)
+                    mLis.add(new DapAn("B", mCauhoi.getsHTML_B(), "", mCauhoi.getsANSWER(), false, ""));
+                if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0)
+                    mLis.add(new DapAn("C", mCauhoi.getsHTML_C(), "", mCauhoi.getsANSWER(), false, ""));
+                if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0)
+                    mLis.add(new DapAn("D", mCauhoi.getsHTML_D(), "", mCauhoi.getsANSWER(), false, ""));
+            }
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        adapter.notifyDataSetChanged();
+
     }
 
 

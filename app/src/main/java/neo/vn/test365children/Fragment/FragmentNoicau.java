@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -382,188 +383,194 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
     String[] egg1, egg2, egg3, egg4;
 
     private void initData() {
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
-                != null && mCauhoi.getsSubNumberCau().equals("1")) {
-            showDialogLoading();
-        }
-        text_lable_dapan.setVisibility(View.GONE);
-        ll_dapan_traloi.setVisibility(View.GONE);
-        mLisDapanB = new ArrayList<>();
-        mLisDapanA = new ArrayList<>();
-        mLisAnwser_A = new ArrayList<>();
-        mLisAnwser_B = new ArrayList<>();
-        mLisAnwser_A_traloi = new ArrayList<>();
-        mLisAnwser_B_traloi = new ArrayList<>();
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        if (!mCauhoi.isDalam()) {
-            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
-                egg1 = mCauhoi.getsHTML_A().split("::");
-                map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
+        try {
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                    != null && mCauhoi.getsSubNumberCau().equals("1")) {
+                showDialogLoading();
             }
-            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
-                egg2 = mCauhoi.getsHTML_B().split("::");
-                map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
-            }
-            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
-                egg3 = mCauhoi.getsHTML_C().split("::");
-                map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
-            }
-            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
-                egg4 = mCauhoi.getsHTML_D().split("::");
-                map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
-            }
-            if (egg1 != null) {
-                mLisAnwser_A.add(egg1[0]);
-                mLisAnwser_B.add(egg1[1]);
-                mLisAnwser_B_traloi.add(egg1[1]);
-            }
-            if (egg2 != null) {
-                mLisAnwser_A.add(egg2[0]);
-                mLisAnwser_B.add(egg2[1]);
-                mLisAnwser_B_traloi.add(egg2[1]);
-            }
-            if (egg3 != null) {
-                mLisAnwser_A.add(egg3[0]);
-                mLisAnwser_B.add(egg3[1]);
-                mLisAnwser_B_traloi.add(egg3[1]);
-            }
-            if (egg4 != null) {
-                mLisAnwser_A.add(egg4[0]);
-                mLisAnwser_B.add(egg4[1]);
-                mLisAnwser_B_traloi.add(egg4[1]);
-            }
-            //  initTraloi();
-            if (mLisAnwser_B.size() > 0)
-                Collections.shuffle(mLisAnwser_B);
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+            text_lable_dapan.setVisibility(View.GONE);
+            ll_dapan_traloi.setVisibility(View.GONE);
+            mLisDapanB = new ArrayList<>();
+            mLisDapanA = new ArrayList<>();
+            mLisAnwser_A = new ArrayList<>();
+            mLisAnwser_B = new ArrayList<>();
+            mLisAnwser_A_traloi = new ArrayList<>();
+            mLisAnwser_B_traloi = new ArrayList<>();
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+            if (!mCauhoi.isDalam()) {
+                if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
+                    egg1 = mCauhoi.getsHTML_A().split("::");
+                    map_answer_true.put("egg_1", mCauhoi.getsHTML_A());
                 }
-            });
-        } else {
-            String[] egg1 = mCauhoi.getsHTML_A().split("::");
-            String[] egg2 = mCauhoi.getsHTML_B().split("::");
-            String[] egg3 = mCauhoi.getsHTML_C().split("::");
-            String[] egg4 = mCauhoi.getsHTML_D().split("::");
-
-            String[] egg1_chil = mCauhoi.getsEGG_1_RESULT().split("::");
-            String[] egg2_chil = mCauhoi.getsEGG_2_RESULT().split("::");
-            String[] egg3_chil = mCauhoi.getsEGG_3_RESULT().split("::");
-            String[] egg4_chil = mCauhoi.getsEGG_4_RESULT().split("::");
-            if ((egg1_chil[0] != null)) {
-                mLisAnwser_A.add(egg1_chil[0]);
-            } else {
-                mLisAnwser_A.add("");
-            }
-            if ((egg2_chil[0] != null)) {
-                mLisAnwser_A.add(egg2_chil[0]);
-            } else {
-                mLisAnwser_A.add("");
-            }
-            if ((egg3_chil[0] != null)) {
-                mLisAnwser_A.add(egg3_chil[0]);
-            } else {
-                mLisAnwser_A.add("");
-            }
-            if ((egg4_chil[0] != null)) {
-                mLisAnwser_A.add(egg4_chil[0]);
-            } else {
-                mLisAnwser_A.add("");
-            }
-
-            if ((egg1_chil.length > 1) && (egg1_chil[1] != null)) {
-                mLisAnwser_B.add(egg1_chil[1]);
-            } else {
-                mLisAnwser_B.add("");
-            }
-            if ((egg2_chil.length > 1) && (egg2_chil[1] != null)) {
-                mLisAnwser_B.add(egg2_chil[1]);
-            } else {
-                mLisAnwser_B.add("");
-            }
-            if ((egg3_chil.length > 1) && (egg3_chil[1] != null)) {
-                mLisAnwser_B.add(egg3_chil[1]);
-            } else {
-                mLisAnwser_B.add("");
-            }
-            if ((egg4_chil.length > 1) && (egg4_chil[1] != null)) {
-                mLisAnwser_B.add(egg4_chil[1]);
-            } else {
-                mLisAnwser_B.add("");
-            }
-            if ((egg1.length > 0) && (egg1[0] != null)) {
-                mLisAnwser_A_traloi.add(egg1[0]);
-            } else {
-                mLisAnwser_A_traloi.add("");
-            }
-            if ((egg2.length > 0) && (egg2[0] != null)) {
-                mLisAnwser_A_traloi.add(egg2[0]);
-            } else {
-                mLisAnwser_A_traloi.add("");
-            }
-            if ((egg3.length > 0) && (egg3[0] != null)) {
-                mLisAnwser_A_traloi.add(egg3[0]);
-            } else {
-                mLisAnwser_A_traloi.add("");
-            }
-            if ((egg4.length > 0) && (egg4[0] != null)) {
-                mLisAnwser_A_traloi.add(egg4[0]);
-            } else {
-                mLisAnwser_A_traloi.add("");
-            }
-            if ((egg1.length > 1) && (egg1[1] != null)) {
-                mLisAnwser_B_traloi.add(egg1[1]);
-            } else {
-                mLisAnwser_B_traloi.add("");
-            }
-            if ((egg2.length > 1) && (egg2[1] != null)) {
-                mLisAnwser_B_traloi.add(egg2[1]);
-            } else {
-                mLisAnwser_B_traloi.add("");
-            }
-            if ((egg3.length > 1) && (egg3[1] != null)) {
-                mLisAnwser_B_traloi.add(egg3[1]);
-            } else {
-                mLisAnwser_B_traloi.add("");
-            }
-            if ((egg4.length > 1) && (egg4[1] != null)) {
-                mLisAnwser_B_traloi.add(egg4[1]);
-            } else {
-                mLisAnwser_B_traloi.add("");
-            }
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+                if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
+                    egg2 = mCauhoi.getsHTML_B().split("::");
+                    map_answer_true.put("egg_2", mCauhoi.getsHTML_B());
                 }
-            });
-            rl_dapanA_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-            rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
-
-            rl_dapanA_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-            rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
-
-            rl_dapanA_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-            rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
-
-            rl_dapanA_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-            rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
-        }
-        if (mCauhoi.isDalam()) {
-            img_anwser_chil.setVisibility(View.VISIBLE);
-            if (mCauhoi.isAnserTrue()) {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
+                    egg3 = mCauhoi.getsHTML_C().split("::");
+                    map_answer_true.put("egg_3", mCauhoi.getsHTML_C());
+                }
+                if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
+                    egg4 = mCauhoi.getsHTML_D().split("::");
+                    map_answer_true.put("egg_4", mCauhoi.getsHTML_D());
+                }
+                if (egg1 != null) {
+                    mLisAnwser_A.add(egg1[0]);
+                    mLisAnwser_B.add(egg1[1]);
+                    mLisAnwser_B_traloi.add(egg1[1]);
+                }
+                if (egg2 != null) {
+                    mLisAnwser_A.add(egg2[0]);
+                    mLisAnwser_B.add(egg2[1]);
+                    mLisAnwser_B_traloi.add(egg2[1]);
+                }
+                if (egg3 != null) {
+                    mLisAnwser_A.add(egg3[0]);
+                    mLisAnwser_B.add(egg3[1]);
+                    mLisAnwser_B_traloi.add(egg3[1]);
+                }
+                if (egg4 != null) {
+                    mLisAnwser_A.add(egg4[0]);
+                    mLisAnwser_B.add(egg4[1]);
+                    mLisAnwser_B_traloi.add(egg4[1]);
+                }
+                //  initTraloi();
+                if (mLisAnwser_B.size() > 0)
+                    Collections.shuffle(mLisAnwser_B);
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mLisAnwser_A.get(0) != null)
+                            initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+                    }
+                });
             } else {
-                initTraloi_chil();
-                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-                text_lable_dapan.setVisibility(View.VISIBLE);
-                ll_dapan_traloi.setVisibility(View.VISIBLE);
+                String[] egg1 = mCauhoi.getsHTML_A().split("::");
+                String[] egg2 = mCauhoi.getsHTML_B().split("::");
+                String[] egg3 = mCauhoi.getsHTML_C().split("::");
+                String[] egg4 = mCauhoi.getsHTML_D().split("::");
+
+                String[] egg1_chil = mCauhoi.getsEGG_1_RESULT().split("::");
+                String[] egg2_chil = mCauhoi.getsEGG_2_RESULT().split("::");
+                String[] egg3_chil = mCauhoi.getsEGG_3_RESULT().split("::");
+                String[] egg4_chil = mCauhoi.getsEGG_4_RESULT().split("::");
+                if ((egg1_chil[0] != null)) {
+                    mLisAnwser_A.add(egg1_chil[0]);
+                } else {
+                    mLisAnwser_A.add("");
+                }
+                if ((egg2_chil[0] != null)) {
+                    mLisAnwser_A.add(egg2_chil[0]);
+                } else {
+                    mLisAnwser_A.add("");
+                }
+                if ((egg3_chil[0] != null)) {
+                    mLisAnwser_A.add(egg3_chil[0]);
+                } else {
+                    mLisAnwser_A.add("");
+                }
+                if ((egg4_chil[0] != null)) {
+                    mLisAnwser_A.add(egg4_chil[0]);
+                } else {
+                    mLisAnwser_A.add("");
+                }
+
+                if ((egg1_chil.length > 1) && (egg1_chil[1] != null)) {
+                    mLisAnwser_B.add(egg1_chil[1]);
+                } else {
+                    mLisAnwser_B.add("");
+                }
+                if ((egg2_chil.length > 1) && (egg2_chil[1] != null)) {
+                    mLisAnwser_B.add(egg2_chil[1]);
+                } else {
+                    mLisAnwser_B.add("");
+                }
+                if ((egg3_chil.length > 1) && (egg3_chil[1] != null)) {
+                    mLisAnwser_B.add(egg3_chil[1]);
+                } else {
+                    mLisAnwser_B.add("");
+                }
+                if ((egg4_chil.length > 1) && (egg4_chil[1] != null)) {
+                    mLisAnwser_B.add(egg4_chil[1]);
+                } else {
+                    mLisAnwser_B.add("");
+                }
+                if ((egg1.length > 0) && (egg1[0] != null)) {
+                    mLisAnwser_A_traloi.add(egg1[0]);
+                } else {
+                    mLisAnwser_A_traloi.add("");
+                }
+                if ((egg2.length > 0) && (egg2[0] != null)) {
+                    mLisAnwser_A_traloi.add(egg2[0]);
+                } else {
+                    mLisAnwser_A_traloi.add("");
+                }
+                if ((egg3.length > 0) && (egg3[0] != null)) {
+                    mLisAnwser_A_traloi.add(egg3[0]);
+                } else {
+                    mLisAnwser_A_traloi.add("");
+                }
+                if ((egg4.length > 0) && (egg4[0] != null)) {
+                    mLisAnwser_A_traloi.add(egg4[0]);
+                } else {
+                    mLisAnwser_A_traloi.add("");
+                }
+                if ((egg1.length > 1) && (egg1[1] != null)) {
+                    mLisAnwser_B_traloi.add(egg1[1]);
+                } else {
+                    mLisAnwser_B_traloi.add("");
+                }
+                if ((egg2.length > 1) && (egg2[1] != null)) {
+                    mLisAnwser_B_traloi.add(egg2[1]);
+                } else {
+                    mLisAnwser_B_traloi.add("");
+                }
+                if ((egg3.length > 1) && (egg3[1] != null)) {
+                    mLisAnwser_B_traloi.add(egg3[1]);
+                } else {
+                    mLisAnwser_B_traloi.add("");
+                }
+                if ((egg4.length > 1) && (egg4[1] != null)) {
+                    mLisAnwser_B_traloi.add(egg4[1]);
+                } else {
+                    mLisAnwser_B_traloi.add("");
+                }
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        initWebview(webview_dapannoicau_A_1, StringUtil.convert_html(mLisAnwser_A.get(0)));
+                    }
+                });
+                rl_dapanA_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+                rl_dapanB_1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+
+                rl_dapanA_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+                rl_dapanB_2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+
+                rl_dapanA_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+                rl_dapanB_3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.title_dalam));
+
+                rl_dapanA_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
+                rl_dapanB_4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.btn_danglam));
             }
+            if (mCauhoi.isDalam()) {
+                img_anwser_chil.setVisibility(View.VISIBLE);
+                if (mCauhoi.isAnserTrue()) {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                } else {
+                    initTraloi_chil();
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+                    text_lable_dapan.setVisibility(View.VISIBLE);
+                    ll_dapan_traloi.setVisibility(View.VISIBLE);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     int iHeightmax = 0;
@@ -606,104 +613,107 @@ public class FragmentNoicau extends BaseFragment implements View.OnTouchListener
 
                     @Override
                     public void onFinish() {
-                        int i = 0;
-                        switch (view.getId()) {
-                            case R.id.webview_dapannoicau_A_1:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_dapannoicau_B_1,
-                                                StringUtil.convert_html(mLisAnwser_B.get(0)));
-                                    }
-                                });
-                                break;
-                            case R.id.webview_dapannoicau_A_2:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_dapannoicau_B_2,
-                                                StringUtil.convert_html(mLisAnwser_B.get(1)));
-                                    }
-                                });
-                                break;
-                            case R.id.webview_dapannoicau_A_3:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_dapannoicau_B_3,
-                                                StringUtil.convert_html(mLisAnwser_B.get(2)));
-                                    }
-                                });
-                                break;
-                            case R.id.webview_dapannoicau_A_4:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_dapannoicau_B_4,
-                                                StringUtil.convert_html(mLisAnwser_B.get(3)));
-                                    }
-                                });
+                        try {
+                            int i = 0;
+                            switch (view.getId()) {
+                                case R.id.webview_dapannoicau_A_1:
+                                    new Handler().post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            initWebview(webview_dapannoicau_B_1,
+                                                    StringUtil.convert_html(mLisAnwser_B.get(0)));
+                                        }
+                                    });
+                                    break;
+                                case R.id.webview_dapannoicau_A_2:
+                                    new Handler().post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            initWebview(webview_dapannoicau_B_2,
+                                                    StringUtil.convert_html(mLisAnwser_B.get(1)));
+                                        }
+                                    });
+                                    break;
+                                case R.id.webview_dapannoicau_A_3:
+                                    new Handler().post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            initWebview(webview_dapannoicau_B_3,
+                                                    StringUtil.convert_html(mLisAnwser_B.get(2)));
+                                        }
+                                    });
+                                    break;
+                                case R.id.webview_dapannoicau_A_4:
+                                    new Handler().post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            initWebview(webview_dapannoicau_B_4,
+                                                    StringUtil.convert_html(mLisAnwser_B.get(3)));
+                                        }
+                                    });
 
-                                break;
-                            case R.id.webview_dapannoicau_B_1:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_dapannoicau_A_2,
-                                                StringUtil.convert_html(mLisAnwser_A.get(1)));
+                                    break;
+                                case R.id.webview_dapannoicau_B_1:
+                                    new Handler().post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            initWebview(webview_dapannoicau_A_2,
+                                                    StringUtil.convert_html(mLisAnwser_A.get(1)));
+                                        }
+                                    });
+                                    break;
+                                case R.id.webview_dapannoicau_B_2:
+                                    new Handler().post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            initWebview(webview_dapannoicau_A_3,
+                                                    StringUtil.convert_html(mLisAnwser_A.get(2)));
+                                        }
+                                    });
+                                    break;
+                                case R.id.webview_dapannoicau_B_3:
+                                    new Handler().post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            initWebview(webview_dapannoicau_A_4,
+                                                    StringUtil.convert_html(mLisAnwser_A.get(3)));
+                                        }
+                                    });
+                                    break;
+                                case R.id.webview_dapannoicau_B_4:
+                                    if (rl_dapanA_1.getHeight() > iHeightmax) {
+                                        iHeightmax = rl_dapanA_1.getHeight();
                                     }
-                                });
-                                break;
-                            case R.id.webview_dapannoicau_B_2:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_dapannoicau_A_3,
-                                                StringUtil.convert_html(mLisAnwser_A.get(2)));
+                                    if (rl_dapanA_2.getHeight() > iHeightmax) {
+                                        iHeightmax = rl_dapanA_2.getHeight();
                                     }
-                                });
-                                break;
-                            case R.id.webview_dapannoicau_B_3:
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        initWebview(webview_dapannoicau_A_4,
-                                                StringUtil.convert_html(mLisAnwser_A.get(3)));
+                                    if (rl_dapanA_3.getHeight() > iHeightmax) {
+                                        iHeightmax = rl_dapanA_3.getHeight();
                                     }
-                                });
-                                break;
-                            case R.id.webview_dapannoicau_B_4:
-                                if (rl_dapanA_1.getHeight() > iHeightmax) {
-                                    iHeightmax = rl_dapanA_1.getHeight();
-                                }
-                                if (rl_dapanA_2.getHeight() > iHeightmax) {
-                                    iHeightmax = rl_dapanA_2.getHeight();
-                                }
-                                if (rl_dapanA_3.getHeight() > iHeightmax) {
-                                    iHeightmax = rl_dapanA_3.getHeight();
-                                }
-                                if (rl_dapanA_4.getHeight() > iHeightmax) {
-                                    iHeightmax = rl_dapanA_4.getHeight();
-                                }
-                                if (rl_dapanB_1.getHeight() > iHeightmax) {
-                                    iHeightmax = rl_dapanB_1.getHeight();
-                                }
-                                if (rl_dapanB_2.getHeight() > iHeightmax) {
-                                    iHeightmax = rl_dapanB_2.getHeight();
-                                }
-                                if (rl_dapanB_3.getHeight() > iHeightmax) {
-                                    iHeightmax = rl_dapanB_3.getHeight();
-                                }
-                                if (rl_dapanB_4.getHeight() > iHeightmax) {
-                                    iHeightmax = rl_dapanB_4.getHeight();
-                                }
-                                if (iHeightmax > 0) {
-                                    setHeight(iHeightmax);
-                                }
-                                hideDialogLoading();
-                                break;
+                                    if (rl_dapanA_4.getHeight() > iHeightmax) {
+                                        iHeightmax = rl_dapanA_4.getHeight();
+                                    }
+                                    if (rl_dapanB_1.getHeight() > iHeightmax) {
+                                        iHeightmax = rl_dapanB_1.getHeight();
+                                    }
+                                    if (rl_dapanB_2.getHeight() > iHeightmax) {
+                                        iHeightmax = rl_dapanB_2.getHeight();
+                                    }
+                                    if (rl_dapanB_3.getHeight() > iHeightmax) {
+                                        iHeightmax = rl_dapanB_3.getHeight();
+                                    }
+                                    if (rl_dapanB_4.getHeight() > iHeightmax) {
+                                        iHeightmax = rl_dapanB_4.getHeight();
+                                    }
+                                    if (iHeightmax > 0) {
+                                        setHeight(iHeightmax);
+                                    }
+                                    hideDialogLoading();
+                                    break;
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
-
                     }
                 }.start();
 

@@ -7,9 +7,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -143,6 +143,10 @@ public class FragmentNgheAudio extends BaseFragment implements
         super.onStop();
         EventBus.getDefault().unregister(this);
 
+    }
+
+    public CauhoiDetail getmCauhoi() {
+        return mCauhoi;
     }
 
     @Override
@@ -300,6 +304,7 @@ public class FragmentNgheAudio extends BaseFragment implements
         });
     }
 
+
     private Handler mHandler = new Handler();
     //Make sure you update Seekbar on UI thread
     private Runnable mProgressCallback = new Runnable() {
@@ -336,72 +341,77 @@ public class FragmentNgheAudio extends BaseFragment implements
     }
 
     private void initData() {
-        if (mCauhoi != null) {
-            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-                txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
-                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-            StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-        }
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
-                != null && mCauhoi.getsSubNumberCau().equals("1")) {
-            showDialogLoading();
-        }
-        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
         try {
-            mPlayer.reset();
-            String url = Config.URL_VIDEO + mCauhoi.getsAudioPath();
-            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mPlayer.setDataSource(url);
-            mPlayer.setOnPreparedListener(this);
-            mPlayer.setOnErrorListener(this);
-            mPlayer.prepareAsync();
-            mHandler.postDelayed(mProgressCallback, 0);
-        } catch (IOException e) {
-            Log.e(TAG, "play: ", e);
-        }
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview_center(webview_debai, mCauhoi.getsHTML_CONTENT());
-                initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
-                initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
-                initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
-                initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+            if (mCauhoi != null) {
+                if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                    txt_lable.setText(Html.fromHtml("Bài " + mCauhoi.getsNumberDe() + "_Câu "
+                            + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                            + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+                StringUtil.initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
             }
-        });
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                    != null && mCauhoi.getsSubNumberCau().equals("1")) {
+                showDialogLoading();
+            }
+            Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
+            try {
+                mPlayer.reset();
+                String url = Config.URL_VIDEO + mCauhoi.getsAudioPath();
+                mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mPlayer.setDataSource(url);
+                mPlayer.setOnPreparedListener(this);
+                mPlayer.setOnErrorListener(this);
+                mPlayer.prepareAsync();
+                mHandler.postDelayed(mProgressCallback, 0);
+            } catch (IOException e) {
+                Log.e(TAG, "play: ", e);
+            }
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview_center(webview_debai, mCauhoi.getsHTML_CONTENT());
+                    initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+                    initWebview(webview_anwser_B, mCauhoi.getsHTML_B());
+                    initWebview(webview_anwser_C, mCauhoi.getsHTML_C());
+                    initWebview(webview_anwser_D, mCauhoi.getsHTML_D());
+                }
+            });
 
-        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
-            ll_webview_A.setVisibility(View.VISIBLE);
-        } else {
-            ll_webview_A.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
-            ll_webview_B.setVisibility(View.VISIBLE);
-        } else {
-            ll_webview_B.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
-            ll_webview_C.setVisibility(View.VISIBLE);
-        } else {
-            ll_webview_C.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
-            ll_webview_D.setVisibility(View.VISIBLE);
-        } else {
-            ll_webview_D.setVisibility(View.GONE);
-        }
-        if (mCauhoi.isDalam()) {
-            isClickXemdiem = true;
-            img_anwser_chil.setVisibility(View.VISIBLE);
-            if (mCauhoi.isAnserTrue()) {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
+                ll_webview_A.setVisibility(View.VISIBLE);
             } else {
-                Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
-
+                ll_webview_A.setVisibility(View.GONE);
             }
-            check_anwser_chil();
+            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
+                ll_webview_B.setVisibility(View.VISIBLE);
+            } else {
+                ll_webview_B.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
+                ll_webview_C.setVisibility(View.VISIBLE);
+            } else {
+                ll_webview_C.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
+                ll_webview_D.setVisibility(View.VISIBLE);
+            } else {
+                ll_webview_D.setVisibility(View.GONE);
+            }
+            if (mCauhoi.isDalam()) {
+                isClickXemdiem = true;
+                img_anwser_chil.setVisibility(View.VISIBLE);
+                if (mCauhoi.isAnserTrue()) {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_true).into(img_anwser_chil);
+                } else {
+                    Glide.with(getContext()).load(R.drawable.icon_anwser_false).into(img_anwser_chil);
+
+                }
+                check_anwser_chil();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     public void initWebview_center(final WebView webview, String link_web) {

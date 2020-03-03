@@ -231,47 +231,52 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
     }
 
     private void initData() {
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
-                != null && mCauhoi.getsSubNumberCau().equals("1")) {
-            showDialogLoading();
-        }
-        if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
-            txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
-                    + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
-                    + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
-        Glide.with(this).load(R.drawable.bg_nghe_nhin).into(img_background);
-        initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+        try {
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsNumberDe().equals("1") && mCauhoi.getsSubNumberCau()
+                    != null && mCauhoi.getsSubNumberCau().equals("1")) {
+                showDialogLoading();
             }
-        });
-        if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
-            ll_anwser_A.setVisibility(View.VISIBLE);
-        } else {
-            ll_anwser_A.setVisibility(View.GONE);
+            if (mCauhoi.getsNumberDe() != null && mCauhoi.getsCauhoi_huongdan() != null)
+                txt_lable.setText(Html.fromHtml("Bài" + mCauhoi.getsNumberDe() + "_Câu "
+                        + mCauhoi.getsSubNumberCau() + ": " + mCauhoi.getsCauhoi_huongdan())
+                        + " (" + Float.parseFloat(mCauhoi.getsPOINT()) + " đ)");
+            Glide.with(getActivity()).load(R.drawable.bg_nghe_nhin).into(img_background);
+            initWebview(webview_debai, mCauhoi.getsHTML_CONTENT());
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    initWebview(webview_anwser_A, mCauhoi.getsHTML_A());
+                }
+            });
+            if (mCauhoi.getsHTML_A() != null && mCauhoi.getsHTML_A().length() > 0) {
+                ll_anwser_A.setVisibility(View.VISIBLE);
+            } else {
+                ll_anwser_A.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
+                ll_anwser_B.setVisibility(View.VISIBLE);
+            } else {
+                ll_anwser_B.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
+                ll_anwser_C.setVisibility(View.VISIBLE);
+            } else {
+                ll_anwser_C.setVisibility(View.GONE);
+            }
+            if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
+                ll_anwser_D.setVisibility(View.VISIBLE);
+            } else {
+                ll_anwser_D.setVisibility(View.GONE);
+            }
+            if (mCauhoi.isDalam()) {
+                isClickXemdiem = true;
+                sAnwser = mCauhoi.getsANSWER_CHILD();
+                anwser();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (mCauhoi.getsHTML_B() != null && mCauhoi.getsHTML_B().length() > 0) {
-            ll_anwser_B.setVisibility(View.VISIBLE);
-        } else {
-            ll_anwser_B.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_C() != null && mCauhoi.getsHTML_C().length() > 0) {
-            ll_anwser_C.setVisibility(View.VISIBLE);
-        } else {
-            ll_anwser_C.setVisibility(View.GONE);
-        }
-        if (mCauhoi.getsHTML_D() != null && mCauhoi.getsHTML_D().length() > 0) {
-            ll_anwser_D.setVisibility(View.VISIBLE);
-        } else {
-            ll_anwser_D.setVisibility(View.GONE);
-        }
-        if (mCauhoi.isDalam()) {
-            isClickXemdiem = true;
-            sAnwser = mCauhoi.getsANSWER_CHILD();
-            anwser();
-        }
+
     }
 
     @Override
@@ -362,66 +367,76 @@ public class FragmentBatSauNew extends BaseFragment implements View.OnClickListe
     boolean isdouble_click = false;
 
     private void anwser() {
-        if (!isdouble_click) {
-            isdouble_click = true;
-            btn_xemdiem.setEnabled(true);
-            btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
-            if (sAnwser.length() > 0) {
-                switch (sAnwser) {
-                    case "A":
-                        if (mCauhoi.getsANSWER().equals("A"))
-                            set_anwser("A", true);
-                        else
-                            set_anwser("A", false);
-                        break;
-                    case "B":
-                        if (mCauhoi.getsANSWER().equals("B"))
-                            set_anwser("B", true);
-                        else
-                            set_anwser("B", false);
-                        break;
-                    case "C":
-                        if (mCauhoi.getsANSWER().equals("C"))
-                            set_anwser("C", true);
-                        else
-                            set_anwser("C", false);
-                        break;
-                    case "D":
-                        if (mCauhoi.getsANSWER().equals("D"))
-                            set_anwser("D", true);
-                        else
-                            set_anwser("D", false);
-                        break;
+        try {
+            if (!isdouble_click) {
+                isdouble_click = true;
+                btn_xemdiem.setEnabled(true);
+                btn_xemdiem.setBackground(getResources().getDrawable(R.drawable.btn_1));
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setDalam(true);
+                if (sAnwser.length() > 0) {
+                    switch (sAnwser) {
+                        case "A":
+                            if (mCauhoi.getsANSWER().equals("A"))
+                                set_anwser("A", true);
+                            else
+                                set_anwser("A", false);
+                            break;
+                        case "B":
+                            if (mCauhoi.getsANSWER().equals("B"))
+                                set_anwser("B", true);
+                            else
+                                set_anwser("B", false);
+                            break;
+                        case "C":
+                            if (mCauhoi.getsANSWER().equals("C"))
+                                set_anwser("C", true);
+                            else
+                                set_anwser("C", false);
+                            break;
+                        case "D":
+                            if (mCauhoi.getsANSWER().equals("D"))
+                                set_anwser("D", true);
+                            else
+                                set_anwser("D", false);
+                            break;
+                    }
                 }
+                isTraloi = true;
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isdouble_click = false;
+                    }
+                }, 1000);
+
             }
-            isTraloi = true;
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    isdouble_click = false;
-                }
-            }, 1000);
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     private void set_anwser(String sAnwser, boolean isAnwser) {
-        if (isAnwser) {
+        try {
+            if (isAnwser) {
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
+            } else {
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
+                App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
+                        .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+            }
             App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(true);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("1");
-        } else {
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setAnserTrue(false);
-            App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsRESULT_CHILD("0");
+                    .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        App.mLisCauhoi.get(Integer.parseInt(mCauhoi.getsNumberDe()) - 1).getLisInfo()
-                .get(Integer.parseInt(mCauhoi.getsSubNumberCau()) - 1).setsANSWER_CHILD(sAnwser);
+
     }
 
     int iHeightmax = 0;

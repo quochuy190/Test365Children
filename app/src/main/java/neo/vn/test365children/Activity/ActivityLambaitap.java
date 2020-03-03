@@ -11,9 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,6 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.gson.Gson;
 
@@ -187,6 +188,7 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
             mPlayer.setOnCompletionListener(this);
             mPlayer.prepareAsync();
             mHandler.postDelayed(mProgressCallback, 0);
+            seekBar.setProgress(0);
         } catch (IOException e) {
             Log.e(TAG, "play: ", e);
         }
@@ -292,8 +294,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
     public void onMessageEvent(MessageEvent event) {
         if (event.message.equals("Service")) {
             iCurrenTime = event.time / (1000);
-            Log.e(TAG, "onMessageEvent: " + event.time);
-            Log.e(TAG, "onMessageEvent currentime: " + iCurrenTime);
             if (event.point == 0) {
                 if (event.time < (10 * 60 * 1000)) {
                     txt_time.setTextColor(getResources().getColor(R.color.orange));
@@ -407,7 +407,6 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
         //  objExer.setmLisCauhoi((RealmList<Cauhoi>) App.mLisCauhoi);
         Gson gson = new Gson();
         String json = gson.toJson(objExer);
-        Log.i(TAG, "onMessageEvent: " + json);
         SharedPrefs.getInstance().put(Constants.KEY_SAVE_LIST_EXER_PLAYING, json);
     }
 
@@ -426,7 +425,8 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
 
     @Override
     public void onBackPressed() {
-        if (sUserMe.equals("quochuy190")) {
+        if (sUserMe != null &&
+                sUserMe.equals("quochuy190")) {
             super.onBackPressed();
             if (intent_service != null) {
                 stopService(intent_service);
@@ -520,6 +520,12 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
                 // Fragment fragment =(Fragment)adapterViewpager.getRegisteredFragment(i);
                 Fragment fragment = getSupportFragmentManager().getFragments().get(viewpager_lambai.getCurrentItem());
                 if (fragment instanceof FragmentNgheAudio) {
+                    CauhoiDetail mCauhoi = ((FragmentNgheAudio) fragment).getmCauhoi();
+                    if (!(iAudioCurrent == Integer.parseInt(mCauhoi.getsNumberDe()))) {
+                        iAudioCurrent = Integer.parseInt(mCauhoi.getsNumberDe());
+                        initPlayMp3(mCauhoi.getsAudioPath());
+                    }
+                    Log.e(TAG, "onPageSelected: Đề bài: " + mCauhoi.getsNumberDe() + " - câu:" + mCauhoi.getsSubNumberCau());
                     ll_player.setVisibility(View.VISIBLE);
                 } else {
                     if (mPlayer != null && mPlayer.isPlaying()) {
@@ -540,6 +546,8 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
     private ExerciseAnswer objExer;
     int current = 0;
     boolean isPlay_Again;
+    int iCountAudio = 1;
+    int iAudioCurrent;
 
     private void initData() {
         current = 0;
@@ -582,7 +590,16 @@ public class ActivityLambaitap extends BaseActivity implements ImpBaitap.View, M
                         current++;
                     }
                     if (obj.getsKIEU().equals("9")) {
-                        initPlayMp3(obj.getsPATH_AUDIO());
+                        if (j == 0) {
+                            ll_player.setVisibility(View.VISIBLE);
+                        }
+                        if (!(iCountAudio > 1)) {
+                            iAudioCurrent = j + 1;
+                            initPlayMp3(obj.getsPATH_AUDIO());
+                            iCountAudio++;
+                        } else {
+                            iCountAudio++;
+                        }
                     }
                     for (int i = 0; i < obj.getLisInfo().size(); i++) {
                         maxPage++;
